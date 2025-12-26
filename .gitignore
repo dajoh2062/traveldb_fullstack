@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+
+# Backend (Spring Boot / Maven)
+traveldbBackend/target/
+traveldbBackend/.idea/
+
+# Frontend (React / Vite)
+traveldbFrontend/node_modules/
+traveldbFrontend/dist/
+
+# Env files
+.env
+
