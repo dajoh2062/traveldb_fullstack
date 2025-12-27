@@ -12,3 +12,13 @@ Git push
 
 PROCESS:
 lsof -i :8080
+
+REACT:
+npm install
+npm run dev
+
+FRONTEND:
+http://localhost:5173
+
+BACKEND:
+http://localhost:8080
