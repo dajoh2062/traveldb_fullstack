@@ -360,4 +360,82 @@ INSERT INTO Airports (iata_code, name, country, country_code, is_schengen) VALUE
 ('CPT','Cape Town International','South Africa','ZA',FALSE),
 ('CAI','Cairo International','Egypt','EG',FALSE),
 ('CMN','Mohammed V International','Morocco','MA',FALSE),
-('ADD','Addis Ababa Bole','Ethiopia','ET',FALSE);
+('ADD','Addis Ababa Bole','Ethiopia','ET',FALSE),
+('OSD','Åre Östersund Airport','Sweden','SE',TRUE),
+('UME','Umeå Airport','Sweden','SE',TRUE),
+('LLA','Luleå Airport','Sweden','SE',TRUE),
+('TMP','Tampere–Pirkkala Airport','Finland','FI',TRUE),
+('OUL','Oulu Airport','Finland','FI',TRUE),
+('BGO','Bergen Airport Flesland','Norway','NO',TRUE),
+('SVG','Stavanger Airport','Norway','NO',TRUE),
+('TRD','Trondheim Airport Værnes','Norway','NO',TRUE),
+
+('HAM','Hamburg Airport','Germany','DE',TRUE),
+('DUS','Düsseldorf Airport','Germany','DE',TRUE),
+('CGN','Cologne Bonn Airport','Germany','DE',TRUE),
+('STR','Stuttgart Airport','Germany','DE',TRUE),
+('NUE','Nuremberg Airport','Germany','DE',TRUE),
+
+('TLS','Toulouse–Blagnac Airport','France','FR',TRUE),
+('NCE','Nice Côte d’Azur Airport','France','FR',TRUE),
+('MRS','Marseille Provence Airport','France','FR',TRUE),
+('BOD','Bordeaux–Mérignac Airport','France','FR',TRUE),
+
+('ALC','Alicante–Elche Airport','Spain','ES',TRUE),
+('SVQ','Seville Airport','Spain','ES',TRUE),
+('BIO','Bilbao Airport','Spain','ES',TRUE),
+('TFS','Tenerife South Airport','Spain','ES',TRUE),
+('LPA','Gran Canaria Airport','Spain','ES',TRUE),
+
+('NAP','Naples International Airport','Italy','IT',TRUE),
+('BLQ','Bologna Guglielmo Marconi Airport','Italy','IT',TRUE),
+('VCE','Venice Marco Polo Airport','Italy','IT',TRUE),
+('TRN','Turin Airport','Italy','IT',TRUE),
+
+('BRI','Bari Karol Wojtyła Airport','Italy','IT',TRUE),
+('PSA','Pisa International Airport','Italy','IT',TRUE),
+
+-- UK & Ireland
+('BHX','Birmingham Airport','United Kingdom','GB',FALSE),
+('BRS','Bristol Airport','United Kingdom','GB',FALSE),
+('LPL','Liverpool John Lennon','United Kingdom','GB',FALSE),
+('GLA','Glasgow Airport','United Kingdom','GB',FALSE),
+
+-- USA (expanded hubs + regionals)
+('PHX','Phoenix Sky Harbor','United States','US',FALSE),
+('DFW','Dallas/Fort Worth International','United States','US',FALSE),
+('IAH','George Bush Intercontinental','United States','US',FALSE),
+('LAS','Harry Reid International','United States','US',FALSE),
+('MSP','Minneapolis–Saint Paul','United States','US',FALSE),
+('DTW','Detroit Metropolitan','United States','US',FALSE),
+('PHL','Philadelphia International','United States','US',FALSE),
+('CLT','Charlotte Douglas','United States','US',FALSE),
+('SAN','San Diego International','United States','US',FALSE),
+
+-- Asia (expanded)
+('CTU','Chengdu Shuangliu','China','CN',FALSE),
+('TFU','Chengdu Tianfu','China','CN',FALSE),
+('SZX','Shenzhen Bao’an','China','CN',FALSE),
+('HGH','Hangzhou Xiaoshan','China','CN',FALSE),
+
+('KUL','Kuala Lumpur International','Malaysia','MY',FALSE),
+('CGK','Soekarno–Hatta International','Indonesia','ID',FALSE),
+('HAN','Noi Bai International','Vietnam','VN',FALSE),
+('SGN','Tan Son Nhat International','Vietnam','VN',FALSE),
+
+-- Middle East
+('AUH','Abu Dhabi International','United Arab Emirates','AE',FALSE),
+('KWI','Kuwait International','Kuwait','KW',FALSE),
+('MCT','Muscat International','Oman','OM',FALSE),
+
+-- Africa
+('LOS','Murtala Muhammed International','Nigeria','NG',FALSE),
+('ACC','Kotoka International','Ghana','GH',FALSE),
+('DAR','Julius Nyerere International','Tanzania','TZ',FALSE),
+
+-- South America
+('GRU','São Paulo–Guarulhos','Brazil','BR',FALSE),
+('GIG','Rio de Janeiro–Galeão','Brazil','BR',FALSE),
+('SCL','Arturo Merino Benítez','Chile','CL',FALSE),
+('LIM','Jorge Chávez International','Peru','PE',FALSE),
+('BOG','El Dorado International','Colombia','CO',FALSE);

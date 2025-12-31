@@ -15,6 +15,7 @@ lsof -i :8080
 
 REACT:
 npm install
+npm start
 npm run dev
 
 FRONTEND:
