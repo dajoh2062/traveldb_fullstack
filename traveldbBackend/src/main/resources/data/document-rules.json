@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 1,
+  "datasetVersion": "2026-07-20.1",
+  "generatedAt": "2026-07-20T19:00:00Z",
+  "sources": [
+    {
+      "label": "U.S. Department of State — Visa Waiver Program",
+      "url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html",
+      "sourceType": "GOVERNMENT"
+    },
+    {
+      "label": "UK Visas and Immigration — ETA eligibility",
+      "url": "https://www.gov.uk/guidance/check-when-you-can-get-an-electronic-travel-authorisation-eta",
+      "sourceType": "GOVERNMENT"
+    },
+    {
+      "label": "Government of Canada — entry document requirements",
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+      "sourceType": "GOVERNMENT"
+    },
+    {
+      "label": "Australian Home Affairs — visitor and transit visas",
+      "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing",
+      "sourceType": "GOVERNMENT"
+    },
+    {
+      "label": "Immigration New Zealand — visa waiver countries",
+      "url": "https://www.immigration.govt.nz/visit/what-you-need-to-visit-new-zealand/visa-waiver-countries-and-territories/",
+      "sourceType": "GOVERNMENT"
+    }
+  ],
+  "rules": [
+    {
+      "id": "us-valid-visa-entry",
+      "decisionKey": "US_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["US"],
+      "nationalities": ["*"],
+      "requiredHeldVisaCountries": ["US"],
+      "priority": 300,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "ESTA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "NOT_REQUIRED",
+        "title": "ESTA not required with a valid US visa",
+        "summary": "A traveller using a valid US visa does not need to apply for ESTA for the purpose covered by that visa.",
+        "conditions": ["The visa must be valid and appropriate for the planned travel purpose.", "A visa or ESTA authorises travel to the border but does not guarantee admission."],
+        "sources": [{"label": "U.S. CBP — About ESTA", "url": "https://www.help.cbp.gov/s/article/Article-1437?language=en_US", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "us-valid-visa-transit",
+      "decisionKey": "US_TRANSIT_PERMISSION",
+      "scope": "TRANSIT",
+      "destinationCountries": ["US"],
+      "nationalities": ["*"],
+      "requiredHeldVisaCountries": ["US"],
+      "priority": 300,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "ESTA",
+        "category": "TRANSIT_PERMISSION",
+        "status": "NOT_REQUIRED",
+        "title": "ESTA not required when transiting on a valid US visa",
+        "summary": "A traveller using a valid US visa does not need a separate ESTA for that transit.",
+        "conditions": ["The visa must be valid for the transit and the traveller must remain otherwise admissible."],
+        "sources": [{"label": "U.S. CBP — About ESTA", "url": "https://www.help.cbp.gov/s/article/Article-1437?language=en_US", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "us-vwp-entry",
+      "decisionKey": "US_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["US"],
+      "nationalities": ["AD", "AU", "AT", "BE", "BN", "CL", "HR", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IS", "IE", "IL", "IT", "JP", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NZ", "NO", "PL", "PT", "QA", "SM", "SG", "SK", "SI", "KR", "ES", "SE", "CH", "TW", "GB"],
+      "travelPurposes": ["TOURISM", "BUSINESS"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "ESTA_OR_US_VISA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "CONDITIONAL",
+        "title": "ESTA or an appropriate US visa",
+        "summary": "Eligible Visa Waiver Program travellers normally need an approved ESTA before air travel to the United States unless travelling on a valid visa.",
+        "conditions": ["Visa Waiver Program travel is normally limited to tourism or business stays of 90 days or less.", "Travel history, dual nationality, passport type and carrier eligibility can make a traveller ineligible for the Visa Waiver Program.", "An e-passport is required for Visa Waiver Program travel."],
+        "sources": [{"label": "U.S. Department of State — Visa Waiver Program", "url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "us-vwp-transit",
+      "decisionKey": "US_TRANSIT_PERMISSION",
+      "scope": "TRANSIT",
+      "destinationCountries": ["US"],
+      "nationalities": ["AD", "AU", "AT", "BE", "BN", "CL", "HR", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IS", "IE", "IL", "IT", "JP", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NZ", "NO", "PL", "PT", "QA", "SM", "SG", "SK", "SI", "KR", "ES", "SE", "CH", "TW", "GB"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "ESTA_OR_US_VISA",
+        "category": "TRANSIT_PERMISSION",
+        "status": "CONDITIONAL",
+        "title": "ESTA or US transit/visitor visa",
+        "summary": "The United States generally requires transit passengers to hold ESTA under the Visa Waiver Program or an appropriate US visa.",
+        "conditions": ["The United States does not provide a general sterile international transit exemption.", "Visa Waiver Program eligibility restrictions still apply to transit."],
+        "sources": [{"label": "U.S. Department of State — Transit Visa", "url": "https://travel.state.gov/content/travel/en/us-visas/other-visa-categories/transit.html", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "uk-valid-visa-entry",
+      "decisionKey": "GB_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["GB"],
+      "nationalities": ["*"],
+      "requiredHeldVisaCountries": ["GB"],
+      "priority": 300,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "UK_ETA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "NOT_REQUIRED",
+        "title": "UK ETA not required with valid UK immigration permission",
+        "summary": "A traveller who already has a valid UK visa does not need an ETA for the travel covered by that permission.",
+        "conditions": ["The existing permission must be valid for the planned purpose and dates."],
+        "sources": [{"label": "GOV.UK — Who does not need an ETA", "url": "https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "uk-eta-entry",
+      "decisionKey": "GB_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["GB"],
+      "nationalities": ["AD", "AG", "AR", "AU", "AT", "BS", "BH", "BB", "BE", "BZ", "BR", "BN", "BG", "CA", "CL", "CR", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "GD", "GT", "GY", "HK", "HU", "IS", "IT", "IL", "JP", "KI", "KW", "LV", "LI", "LT", "LU", "MO", "MY", "MV", "MT", "MH", "MU", "MX", "FM", "MC", "NL", "NZ", "NO", "OM", "PW", "PA", "PG", "PY", "PE", "PL", "PT", "QA", "RO", "WS", "SM", "SA", "SC", "SG", "SB", "KR", "SK", "SI", "ES", "KN", "VC", "SE", "CH", "TO", "TV", "AE", "US", "UY", "VA"],
+      "priority": 100,
+      "effectiveFrom": "2026-04-09",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "UK_ETA_OR_VISA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "CONDITIONAL",
+        "title": "UK ETA or existing UK immigration permission",
+        "summary": "Travellers with an ETA-eligible passport normally need an ETA before visiting the UK unless they already hold a visa or another listed exemption.",
+        "conditions": ["Irish citizens and people with valid UK immigration permission are among those who do not need an ETA.", "An ETA does not guarantee entry and is linked to the passport used to apply."],
+        "sources": [{"label": "UK Visas and Immigration — ETA eligibility", "url": "https://www.gov.uk/guidance/check-when-you-can-get-an-electronic-travel-authorisation-eta", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "canada-valid-visa-entry",
+      "decisionKey": "CA_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["CA"],
+      "nationalities": ["*"],
+      "requiredHeldVisaCountries": ["CA"],
+      "priority": 300,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "CANADA_ETA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "NOT_REQUIRED",
+        "title": "Canadian eTA not required with a valid Canadian visa",
+        "summary": "A valid Canadian visitor visa can be used for air travel to Canada without a separate eTA.",
+        "conditions": ["The visa and passport must remain valid for the journey."],
+        "sources": [{"label": "Government of Canada — eTA eligibility", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "canada-valid-visa-transit",
+      "decisionKey": "CA_TRANSIT_PERMISSION",
+      "scope": "TRANSIT",
+      "destinationCountries": ["CA"],
+      "nationalities": ["*"],
+      "requiredHeldVisaCountries": ["CA"],
+      "priority": 300,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "CANADA_ETA",
+        "category": "TRANSIT_PERMISSION",
+        "status": "NOT_REQUIRED",
+        "title": "Canadian eTA not required with a valid Canadian visa",
+        "summary": "A valid Canadian visa can be used for air transit without a separate eTA.",
+        "conditions": ["The visa and passport must remain valid for the transit."],
+        "sources": [{"label": "Government of Canada — Transit through Canada", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/transit.html", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "canada-eta-entry",
+      "decisionKey": "CA_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["CA"],
+      "nationalities": ["AD", "AU", "AT", "BS", "BB", "BE", "BN", "BG", "CL", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HK", "HU", "IS", "IE", "IL", "IT", "JP", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NZ", "NO", "PG", "PL", "PT", "QA", "KR", "RO", "WS", "SM", "SG", "SK", "SI", "SB", "ES", "SE", "CH", "TW", "AE", "VA", "GB"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "CANADA_ETA_OR_VISA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "CONDITIONAL",
+        "title": "Canadian eTA or valid Canadian visa",
+        "summary": "Visa-exempt foreign nationals normally need an eTA to fly to Canada unless they hold a valid Canadian visa or another exemption.",
+        "conditions": ["Canadian citizens and permanent residents use different documents.", "US citizens and qualifying US lawful permanent residents are exempt from the eTA requirement."],
+        "sources": [{"label": "Government of Canada — Entry requirements by country", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "canada-eta-transit",
+      "decisionKey": "CA_TRANSIT_PERMISSION",
+      "scope": "TRANSIT",
+      "destinationCountries": ["CA"],
+      "nationalities": ["AD", "AU", "AT", "BS", "BB", "BE", "BN", "BG", "CL", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HK", "HU", "IS", "IE", "IL", "IT", "JP", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NZ", "NO", "PG", "PL", "PT", "QA", "KR", "RO", "WS", "SM", "SG", "SK", "SI", "SB", "ES", "SE", "CH", "TW", "AE", "VA", "GB"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "CANADA_ETA_OR_VISA",
+        "category": "TRANSIT_PERMISSION",
+        "status": "CONDITIONAL",
+        "title": "Canadian eTA or transit/visitor visa",
+        "summary": "Air passengers transiting Canada generally need the Canadian entry document applicable to their passport, even for a short connection.",
+        "conditions": ["Some nationality-, airport- and itinerary-specific transit-without-visa programmes have strict conditions."],
+        "sources": [{"label": "Government of Canada — Transit through Canada", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/transit.html", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "australia-valid-visa-entry",
+      "decisionKey": "AU_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["AU"],
+      "nationalities": ["*"],
+      "requiredHeldVisaCountries": ["AU"],
+      "priority": 300,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "AUSTRALIAN_VISITOR_PERMISSION",
+        "category": "VISA",
+        "status": "NOT_REQUIRED",
+        "title": "No additional Australian visitor permission identified",
+        "summary": "The supplied profile says the traveller already holds an Australian visa.",
+        "conditions": ["The visa must permit the intended purpose, dates and number of entries."],
+        "sources": [{"label": "Australian Home Affairs — Visa list", "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "australia-evisitor-entry",
+      "decisionKey": "AU_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["AU"],
+      "nationalities": ["AD", "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IS", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NO", "PL", "PT", "RO", "SM", "SK", "SI", "ES", "SE", "CH", "GB"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "AUSTRALIA_EVISITOR_OR_OTHER_VISA",
+        "category": "VISA",
+        "status": "CONDITIONAL",
+        "title": "Australian eVisitor or another suitable visa",
+        "summary": "Eligible European passport holders can apply for an eVisitor, but must hold a valid Australian travel permission before travel.",
+        "conditions": ["Criminal history, purpose, intended stay and passport type can require a different visa.", "The visa is digitally linked to the passport used in the application."],
+        "sources": [{"label": "Australian Home Affairs — eVisitor subclass 651", "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "australia-transit-without-visa",
+      "decisionKey": "AU_TRANSIT_PERMISSION",
+      "scope": "TRANSIT",
+      "destinationCountries": ["AU"],
+      "nationalities": ["AD", "AR", "AT", "BE", "BN", "BG", "CA", "CL", "HR", "CY", "CZ", "DK", "EE", "FM", "FJ", "FI", "FR", "DE", "GR", "HU", "IS", "ID", "IE", "IT", "JP", "KI", "LV", "LI", "LT", "LU", "MY", "MT", "MH", "MX", "MC", "NR", "NL", "NZ", "NO", "OM", "PW", "PG", "PH", "PL", "PT", "QA", "RO", "WS", "SM", "SG", "SK", "SI", "SB", "ZA", "KR", "ES", "SE", "CH", "TH", "TO", "TV", "AE", "GB", "US", "UY", "VU", "VA"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "AU_TRANSIT_VISA",
+        "category": "TRANSIT_PERMISSION",
+        "status": "CONDITIONAL",
+        "title": "Australian transit-without-visa conditions may apply",
+        "summary": "Eligible passport holders can transit without an Australian visa only when every transit condition is met.",
+        "conditions": ["Departure must be by aircraft to a third country within 8 hours.", "The traveller must hold documents for the destination and must not clear immigration, leave the transit lounge or collect baggage."],
+        "sources": [{"label": "Australian Home Affairs — Transit without a visa", "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/transit-771/travellers-eligible-to-transit-without-visa", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "new-zealand-valid-visa-entry",
+      "decisionKey": "NZ_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["NZ"],
+      "nationalities": ["*"],
+      "requiredHeldVisaCountries": ["NZ"],
+      "priority": 300,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "NZETA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "NOT_REQUIRED",
+        "title": "NZeTA not required with a valid New Zealand visa",
+        "summary": "A traveller using a valid New Zealand visa does not need a separate NZeTA.",
+        "conditions": ["The visa must permit the intended purpose and dates."],
+        "sources": [{"label": "Immigration New Zealand — NZeTA", "url": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "new-zealand-nzeta-entry",
+      "decisionKey": "NZ_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["NZ"],
+      "nationalities": ["AD", "AR", "AT", "BH", "BE", "BR", "BN", "BG", "CA", "CL", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HK", "HU", "IS", "IE", "IL", "IT", "JP", "KR", "KW", "LV", "LI", "LT", "LU", "MO", "MY", "MT", "MU", "MX", "MC", "NL", "NO", "OM", "PL", "PT", "QA", "RO", "SM", "SA", "SC", "SG", "SK", "SI", "ES", "SE", "CH", "TW", "AE", "GB", "US", "UY", "VA"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "NZETA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "CONDITIONAL",
+        "title": "New Zealand Electronic Travel Authority (NZeTA)",
+        "summary": "Visa-waiver travellers normally need an NZeTA before travel and receive a visitor visa on arrival if entry is granted.",
+        "conditions": ["Passport-specific restrictions apply to some nationalities.", "Travellers must meet health, character, genuine-visitor, onward-travel and funds requirements.", "Australian citizens travelling on Australian passports are exempt."],
+        "sources": [{"label": "Immigration New Zealand — Visa waiver countries", "url": "https://www.immigration.govt.nz/visit/what-you-need-to-visit-new-zealand/visa-waiver-countries-and-territories/", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "new-zealand-nzeta-transit",
+      "decisionKey": "NZ_TRANSIT_PERMISSION",
+      "scope": "TRANSIT",
+      "destinationCountries": ["NZ"],
+      "nationalities": ["AD", "AR", "AT", "BH", "BE", "BR", "BN", "BG", "CA", "CL", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HK", "HU", "IS", "IE", "IL", "IT", "JP", "KR", "KW", "LV", "LI", "LT", "LU", "MO", "MY", "MT", "MU", "MX", "MC", "NL", "NO", "OM", "PL", "PT", "QA", "RO", "SM", "SA", "SC", "SG", "SK", "SI", "ES", "SE", "CH", "TW", "AE", "GB", "US", "UY", "VA"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-20",
+      "reviewAfter": "2026-10-20",
+      "output": {
+        "code": "NZETA_OR_TRANSIT_VISA",
+        "category": "TRANSIT_PERMISSION",
+        "status": "CONDITIONAL",
+        "title": "NZeTA or New Zealand transit visa",
+        "summary": "Eligible transit passengers need an NZeTA; other passengers may need a transit visa.",
+        "conditions": ["Visa-free transit is limited to Auckland International Airport and normally no more than 24 hours.", "The exact rule depends on passport, destination and whether the traveller leaves the transit area."],
+        "sources": [{"label": "Immigration New Zealand — NZeTA", "url": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/", "sourceType": "GOVERNMENT"}]
+      }
+    }
+  ]
+}

@@ -20,11 +20,20 @@ public class TravelController {
         return service.checkJourney(req);
     }
     @GetMapping("/airports/search")
-    public List<Airport> searchAirports(@RequestParam String q) {
-        if (q == null || q.length() < 2) {
-            return List.of();
+    public TravelService.AirportSearchResponse searchAirports(
+            @RequestParam String q,
+            @RequestParam(defaultValue = "0") int offset,
+            @RequestParam(defaultValue = "50") int limit
+    ) {
+        if (q == null || q.isBlank()) {
+            return new TravelService.AirportSearchResponse(List.of(), 0, 0, limit, false);
         }
-        return service.searchAirports(q);
-}
+        return service.searchAirports(q, offset, limit);
+    }
+
+    @GetMapping("/countries")
+    public List<Country> countries() {
+        return service.getCountries();
+    }
 
 }

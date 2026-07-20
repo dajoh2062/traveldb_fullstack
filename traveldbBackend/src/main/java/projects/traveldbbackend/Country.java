@@ -8,7 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Country {
+    private long sourceId;
     private String countryId;
     private String countryNameEn;
+    private String continent;
+    private String wikipediaUrl;
+    private String keywords;
     private boolean schengen;
 }

@@ -1,0 +1,10 @@
+{
+  "generatedAt": "2026-07-20T18:56:08.337Z",
+  "sources": {
+    "airports": "https://davidmegginson.github.io/ourairports-data/airports.csv",
+    "countries": "https://davidmegginson.github.io/ourairports-data/countries.csv"
+  },
+  "countryCount": 249,
+  "airportCount": 9056,
+  "filter": "non-closed airports with a unique three-letter IATA code"
+}

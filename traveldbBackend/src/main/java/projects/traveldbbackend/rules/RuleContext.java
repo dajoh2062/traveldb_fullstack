@@ -6,8 +6,23 @@ import java.util.List;
 
 public record RuleContext(
         String nationality,
-        List<Airport> route
+        List<Airport> route,
+        boolean hasCheckedBaggage,
+        TicketArrangement ticketArrangement,
+        ThroughCheckStatus throughCheckStatus
 ) {
+    public enum TicketArrangement {
+        SINGLE_BOOKING,
+        SEPARATE_TICKETS,
+        UNKNOWN
+    }
+
+    public enum ThroughCheckStatus {
+        YES,
+        NO,
+        UNKNOWN
+    }
+
     public Airport origin() {
         return route.get(0);
     }
