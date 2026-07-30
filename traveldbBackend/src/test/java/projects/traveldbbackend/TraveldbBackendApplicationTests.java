@@ -31,6 +31,15 @@ class TraveldbBackendApplicationTests {
     }
 
     @Test
+    void usesConsumerFriendlyBaggageDefaults() {
+        TravelService.BaggageOptions defaults = TravelService.BaggageOptions.defaults();
+
+        assertTrue(defaults.checkedBaggage());
+        assertEquals("SINGLE_BOOKING", defaults.ticketArrangement());
+        assertEquals("YES", defaults.checkedThrough());
+    }
+
+    @Test
     void exactIataCodeIsRankedFirst() {
         assertEquals("JFK", repository.searchAirports("jfk").getFirst().getIataCode());
     }
@@ -197,8 +206,9 @@ class TraveldbBackendApplicationTests {
 
         assertEquals("TRAVELDB_LOCAL_RULES", response.documentCheck().provider());
         assertFalse(response.documentCheck().liveData());
-        assertEquals("LOCAL_VERSIONED_RULE_SNAPSHOT", response.documentCheck().coverage());
-        assertTrue(response.requiredDocuments().isEmpty());
+        assertEquals("LOCAL_RULES_WITH_VERIFY_FALLBACK", response.documentCheck().coverage());
+        assertTrue(response.documentActions().contains("TRANSIT_PERMISSION"));
+        assertTrue(response.documentActions().contains("ENTRY_PERMISSION"));
         assertTrue(response.documentCheck().requirements().stream()
                 .anyMatch(requirement -> requirement.scope() == DocumentRequirement.Scope.TRANSIT
                         && requirement.countryCode().equals("AE")
@@ -210,6 +220,199 @@ class TraveldbBackendApplicationTests {
                 .allMatch(source -> source.sourceType().equals("GOVERNMENT")));
         assertTrue(response.documentCheck().warnings().stream()
                 .anyMatch(warning -> warning.contains("no external requirements service was contacted")));
+    }
+
+    @Test
+    void placesUsAndAustralianAuthorizationsAtTheBorderAirports() {
+        TravelService.JourneyResponse response = travelService.checkJourney(
+                request(List.of("OSL", "JFK", "BNE", "MEL"), "SINGLE_BOOKING", "YES")
+        );
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ESTA_OR_US_VISA")
+                        && requirement.status() == DocumentRequirement.Status.CONDITIONAL
+                        && requirement.scope() == DocumentRequirement.Scope.ENTRY
+                        && "US".equals(requirement.countryCode())
+                        && "JFK".equals(requirement.airportCode())
+        ));
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("AUSTRALIA_VISITOR_VISA")
+                        && requirement.status() == DocumentRequirement.Status.CONDITIONAL
+                        && requirement.scope() == DocumentRequirement.Scope.ENTRY
+                        && "AU".equals(requirement.countryCode())
+                        && "BNE".equals(requirement.airportCode())
+        ));
+        assertFalse(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                "AU_TRANSIT_VISA".equals(requirement.code()) && "BNE".equals(requirement.airportCode())
+        ));
+        assertFalse(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.scope() == DocumentRequirement.Scope.ENTRY
+                        && "MEL".equals(requirement.airportCode())
+        ));
+        assertTrue(response.documentActions().contains("ESTA_OR_US_VISA"));
+        assertTrue(response.documentActions().contains("AUSTRALIA_VISITOR_VISA"));
+    }
+
+    @Test
+    void basicUsEntryStillReturnsTheEstaOrVisaRequirement() {
+        TravelService.JourneyResponse response = travelService.checkJourney(
+                request(List.of("OSL", "JFK"), "SINGLE_BOOKING", "YES")
+        );
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ESTA_OR_US_VISA")
+                        && requirement.status() == DocumentRequirement.Status.CONDITIONAL
+                        && requirement.scope() == DocumentRequirement.Scope.ENTRY
+                        && "JFK".equals(requirement.airportCode())
+        ));
+    }
+
+    @Test
+    void appliesUsEstaRulesToPuertoRicoAndTheUsVirginIslands() {
+        TravelService.JourneyResponse puertoRico = travelService.checkJourney(
+                request(List.of("OSL", "SJU"), "SINGLE_BOOKING", "YES")
+        );
+        assertTrue(puertoRico.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ESTA_OR_US_VISA")
+                        && "PR".equals(requirement.countryCode())
+                        && "SJU".equals(requirement.airportCode())
+        ));
+
+        TravelService.JourneyResponse virginIslands = travelService.checkJourney(
+                request(List.of("OSL", "STT"), "SINGLE_BOOKING", "YES")
+        );
+        assertTrue(virginIslands.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ESTA_OR_US_VISA")
+                        && "VI".equals(requirement.countryCode())
+                        && "STT".equals(requirement.airportCode())
+        ));
+    }
+
+    @Test
+    void selectedPassportCountryDrivesElectronicAuthorizationEligibility() {
+        TravelService.JourneyResponse response = travelService.checkJourney(
+                new TravelService.JourneyRequest(
+                        "NO",
+                        List.of("OSL", "JFK"),
+                        new TravelService.BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                        new TravelService.DocumentOptions(
+                                "NO",
+                                "BR",
+                                LocalDate.of(2029, 5, 10),
+                                LocalDate.of(2026, 9, 14),
+                                "TOURISM",
+                                30,
+                                List.of(),
+                                List.of()
+                        )
+                )
+        );
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ENTRY_PERMISSION")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+                        && "JFK".equals(requirement.airportCode())
+        ));
+        assertFalse(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ESTA_OR_US_VISA")
+        ));
+    }
+
+    @Test
+    void workAndStudyPurposesDoNotReuseVisitorAuthorizationRules() {
+        TravelService.JourneyResponse response = travelService.checkJourney(
+                documentRequest(List.of("OSL", "JFK"), "WORK", List.of())
+        );
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ENTRY_PERMISSION")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+                        && "JFK".equals(requirement.airportCode())
+        ));
+        assertFalse(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ESTA_OR_US_VISA")
+        ));
+    }
+
+    @Test
+    void returnsTheAustralianEtaPathForAnEligibleUsPassport() {
+        TravelService.JourneyResponse response = travelService.checkJourney(
+                new TravelService.JourneyRequest("US", List.of("LAX", "SYD"))
+        );
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("AUSTRALIA_VISITOR_VISA")
+                        && requirement.title().equals("Australian ETA or another suitable visa")
+                        && requirement.status() == DocumentRequirement.Status.CONDITIONAL
+                        && "SYD".equals(requirement.airportCode())
+        ));
+    }
+
+    @Test
+    void requiresAustralianEntryPermissionBeforeAnIntermediateDomesticLeg() {
+        TravelService.JourneyResponse response = travelService.checkJourney(
+                request(List.of("OSL", "SYD", "MEL", "AKL"), "SINGLE_BOOKING", "YES")
+        );
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("AUSTRALIA_VISITOR_VISA")
+                        && requirement.scope() == DocumentRequirement.Scope.ENTRY
+                        && "SYD".equals(requirement.airportCode())
+        ));
+        assertFalse(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("AU_TRANSIT_VISA")
+                        && "SYD".equals(requirement.airportCode())
+        ));
+    }
+
+    @Test
+    void baggageCollectionAtAnAustralianTransitStopRequiresEntryPermission() {
+        TravelService.JourneyResponse response = travelService.checkJourney(
+                request(List.of("OSL", "SYD", "AKL"), "SEPARATE_TICKETS", "NO")
+        );
+
+        assertTrue(response.pickupAt().contains("SYD"));
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("AUSTRALIA_VISITOR_VISA")
+                        && requirement.scope() == DocumentRequirement.Scope.ENTRY
+                        && "SYD".equals(requirement.airportCode())
+        ));
+        assertFalse(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("AU_TRANSIT_VISA")
+                        && "SYD".equals(requirement.airportCode())
+        ));
+    }
+
+    @Test
+    void unknownFinalCountryCoverageUsesItsFirstArrivalAirport() {
+        TravelService.JourneyResponse response = travelService.checkJourney(
+                request(List.of("OSL", "GRU", "GIG"), "SINGLE_BOOKING", "YES")
+        );
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ENTRY_PERMISSION")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+                        && requirement.scope() == DocumentRequirement.Scope.ENTRY
+                        && "BR".equals(requirement.countryCode())
+                        && "GRU".equals(requirement.airportCode())
+        ));
+        assertFalse(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.scope() == DocumentRequirement.Scope.ENTRY
+                        && "GIG".equals(requirement.airportCode())
+        ));
+    }
+
+    @Test
+    void keepsReviewedTravelDocumentsForIntraSchengenJourneys() {
+        TravelService.JourneyResponse response = travelService.checkJourney(
+                request(List.of("OSL", "CDG"), "SINGLE_BOOKING", "YES")
+        );
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("EU_EEA_CH_TRAVEL_DOCUMENT")
+                        && requirement.status() == DocumentRequirement.Status.REQUIRED
+                        && "CDG".equals(requirement.airportCode())
+        ));
     }
 
     @Test
@@ -227,11 +430,39 @@ class TraveldbBackendApplicationTests {
                 documentRequest(List.of("OSL", "JFK"), "TOURISM", List.of("US"))
         );
         assertTrue(usVisaHolder.documentCheck().requirements().stream().anyMatch(requirement ->
-                requirement.code().equals("ESTA")
-                        && requirement.status() == DocumentRequirement.Status.NOT_REQUIRED
+                requirement.code().equals("US_VISA_VALIDITY")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
         ));
         assertFalse(usVisaHolder.documentCheck().requirements().stream().anyMatch(requirement ->
                 requirement.code().equals("ESTA_OR_US_VISA")
+        ));
+    }
+
+    @Test
+    void distinguishesAustralianElectronicVisaEligibilityBoundaries() {
+        TravelService.JourneyResponse bulgarian = travelService.checkJourney(
+                new TravelService.JourneyRequest("BG", List.of("OSL", "SYD"))
+        );
+        assertTrue(bulgarian.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.title().equals("Australian eVisitor or another suitable visa")
+                        && "SYD".equals(requirement.airportCode())
+        ));
+
+        TravelService.JourneyResponse vatican = travelService.checkJourney(
+                new TravelService.JourneyRequest("VA", List.of("OSL", "SYD"))
+        );
+        assertTrue(vatican.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.title().equals("Australian visa — eVisitor or ETA may be available")
+                        && "SYD".equals(requirement.airportCode())
+        ));
+
+        TravelService.JourneyResponse indian = travelService.checkJourney(
+                new TravelService.JourneyRequest("IN", List.of("OSL", "SYD"))
+        );
+        assertTrue(indian.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ENTRY_PERMISSION")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+                        && "SYD".equals(requirement.airportCode())
         ));
     }
 

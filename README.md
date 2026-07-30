@@ -37,6 +37,18 @@ OurAirports data is released into the public domain and carries no guarantee of 
 
 Journey checks use a versioned rule snapshot evaluated entirely by the backend; no third-party API is called at runtime. External sources are used only by an explicit data-import workflow. See [traveldbBackend/DOCUMENT_REQUIREMENTS.md](traveldbBackend/DOCUMENT_REQUIREMENTS.md) for the rule schema, source policy, request fields and update process.
 
+The consumer form collects the traveller details that materially affect a result—passport issuer and expiry, residence, departure date, age, purpose, and any visas or residence permits already held. Passport numbers and account registration are not required.
+
+Current reviewed rule coverage includes common electronic permissions and transit cases for the United States, United Kingdom, Canada, Australia and New Zealand, plus conservative entry-document guidance for Germany, Spain, France, Italy and the Netherlands. Unreviewed outcomes remain clearly marked `VERIFY`.
+
+## Product safeguards
+
+- Structured field validation is applied in both the browser and API.
+- API failures use stable `application/problem+json` responses without internal details.
+- Every reviewed rule includes an HTTPS authority citation and a review date.
+- Stale rules automatically downgrade to verification-only guidance.
+- The deterministic offline audit rejects stale snapshots, duplicate rules and unreviewed source domains.
+
 ## Development
 
 Backend:
@@ -61,9 +73,14 @@ Run verification:
 
 ```powershell
 cd traveldbBackend
+node --test scripts/document-rules-audit.test.mjs
+node scripts/audit-document-rules.mjs --as-of 2026-07-30
 mvn.cmd test
 
 cd ..\traveldbFrontend
+npm.cmd test
 npm.cmd run lint
 npm.cmd run build
 ```
+
+Use the actual review date for `--as-of` when auditing a refreshed rule snapshot.

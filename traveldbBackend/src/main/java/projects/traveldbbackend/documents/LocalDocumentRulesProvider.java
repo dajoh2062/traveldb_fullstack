@@ -3,7 +3,6 @@ package projects.traveldbbackend.documents;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
-import projects.traveldbbackend.Airport;
 import projects.traveldbbackend.documents.DocumentRequirement.Category;
 import projects.traveldbbackend.documents.DocumentRequirement.DocumentSource;
 import projects.traveldbbackend.documents.DocumentRequirement.Scope;
@@ -57,11 +56,16 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                     .filter(requirement -> requirement.scope() == Scope.JOURNEY)
                     .toList());
         } else {
-            journeyRules.forEach(rule -> requirements.add(toRequirement(rule, null, staleRuleIds)));
+            journeyRules.forEach(rule -> requirements.add(toRequirement(rule, null, null, staleRuleIds)));
         }
 
-        for (CountryVisit visit : countryVisits(input.route())) {
-            List<Rule> visitRules = selectRules(input, visit.countryCode(), visit.scope(), travelDate);
+        for (DocumentRouteVisitResolver.CountryVisit visit : DocumentRouteVisitResolver.resolve(
+                input.route(),
+                input.entryAirportCodes()
+        )) {
+            List<Rule> visitRules = visit.scope() == Scope.ENTRY && hasNonVisitorPurpose(input.travelPurpose())
+                    ? List.of()
+                    : selectRules(input, visit.countryCode(), visit.scope(), travelDate);
             if (visitRules.isEmpty()) {
                 requirements.addAll(conservative.requirements().stream()
                         .filter(requirement -> requirement.scope() == visit.scope()
@@ -70,7 +74,12 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                                 && !"ENTRY_CONDITIONS".equals(requirement.code()))
                         .toList());
             } else {
-                visitRules.forEach(rule -> requirements.add(toRequirement(rule, visit.airportCode(), staleRuleIds)));
+                visitRules.forEach(rule -> requirements.add(toRequirement(
+                        rule,
+                        visit.countryCode(),
+                        visit.airportCode(),
+                        staleRuleIds
+                )));
             }
 
             if (visit.scope() == Scope.ENTRY) {
@@ -92,10 +101,14 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
             warnings.add("No departure date was supplied; effective-date matching used today's date.");
         }
 
+        boolean hasPermissionFallback = requirements.stream().anyMatch(requirement ->
+                "ENTRY_PERMISSION".equals(requirement.code())
+                        || "TRANSIT_PERMISSION".equals(requirement.code()));
+
         return new DocumentCheckResult(
                 "TRAVELDB_LOCAL_RULES",
                 false,
-                "LOCAL_VERSIONED_RULE_SNAPSHOT",
+                hasPermissionFallback ? "LOCAL_RULES_WITH_VERIFY_FALLBACK" : "LOCAL_VERSIONED_RULE_SNAPSHOT",
                 Instant.now(),
                 List.copyOf(requirements),
                 conservative.missingInputs(),
@@ -115,11 +128,14 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
             LocalDate travelDate
     ) {
         Map<String, Rule> decisions = new LinkedHashMap<>();
+        String documentCountryCode = input.passportIssuingCountryCode() == null
+                ? input.nationalityCountryCode()
+                : input.passportIssuingCountryCode();
         snapshot.rules().stream()
                 .filter(rule -> rule.scope() == scope)
                 .filter(rule -> matches(rule.destinationCountries(), destinationCountryCode))
-                .filter(rule -> matches(rule.nationalities(), input.nationalityCountryCode()))
-                .filter(rule -> !contains(rule.excludedNationalities(), input.nationalityCountryCode()))
+                .filter(rule -> matches(rule.nationalities(), documentCountryCode))
+                .filter(rule -> !contains(rule.excludedNationalities(), documentCountryCode))
                 .filter(rule -> matchesOptional(rule.residenceCountries(), input.residenceCountryCode()))
                 .filter(rule -> matchesOptional(rule.passportIssuingCountries(), input.passportIssuingCountryCode()))
                 .filter(rule -> matchesOptional(rule.travelPurposes(), normalize(input.travelPurpose())))
@@ -133,9 +149,14 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
         return List.copyOf(decisions.values());
     }
 
-    private DocumentRequirement toRequirement(Rule rule, String airportCode, Set<String> staleRuleIds) {
+    private DocumentRequirement toRequirement(
+            Rule rule,
+            String countryCode,
+            String airportCode,
+            Set<String> staleRuleIds
+    ) {
         boolean stale = rule.reviewAfter() != null && rule.reviewAfter().isBefore(LocalDate.now());
-        Status status = stale && (rule.status() == Status.REQUIRED || rule.status() == Status.NOT_REQUIRED)
+        Status status = stale && rule.status() != Status.VERIFY
                 ? Status.VERIFY
                 : rule.status();
         List<String> conditions = new ArrayList<>(rule.conditions());
@@ -147,7 +168,7 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 rule.category(),
                 status,
                 rule.scope(),
-                firstSpecificCountry(rule.destinationCountries()),
+                countryCode,
                 airportCode,
                 rule.title(),
                 stale ? "This stored rule needs review before it can be treated as definitive. " + rule.summary() : rule.summary(),
@@ -183,18 +204,9 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 && (rule.maximumAge() == null || age <= rule.maximumAge());
     }
 
-    private String firstSpecificCountry(List<String> countries) {
-        return countries.stream().filter(country -> !"*".equals(country)).findFirst().orElse(null);
-    }
-
-    private List<CountryVisit> countryVisits(List<Airport> route) {
-        List<CountryVisit> visits = new ArrayList<>();
-        for (int index = 1; index < route.size(); index++) {
-            Airport airport = route.get(index);
-            Scope scope = index == route.size() - 1 ? Scope.ENTRY : Scope.TRANSIT;
-            visits.add(new CountryVisit(airport.getCountryCode(), airport.getIataCode(), scope));
-        }
-        return visits;
+    private boolean hasNonVisitorPurpose(String travelPurpose) {
+        String purpose = normalize(travelPurpose);
+        return "WORK".equals(purpose) || "STUDY".equals(purpose) || "OTHER".equals(purpose);
     }
 
     private Snapshot loadSnapshot(ObjectMapper objectMapper, Resource resource) {
@@ -345,5 +357,4 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
             List<DocumentSource> sources
     ) {}
 
-    private record CountryVisit(String countryCode, String airportCode, Scope scope) {}
 }

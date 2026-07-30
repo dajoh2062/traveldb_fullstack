@@ -15,5 +15,33 @@ public record DocumentCheckInput(
         String travelPurpose,
         Integer travelerAge,
         List<String> residencePermitCountryCodes,
-        List<String> visaCountryCodes
-) {}
+        List<String> visaCountryCodes,
+        List<String> entryAirportCodes
+) {
+    public DocumentCheckInput(
+            String nationalityCountryCode,
+            List<Airport> route,
+            String residenceCountryCode,
+            String passportIssuingCountryCode,
+            LocalDate passportExpiryDate,
+            LocalDate departureDate,
+            String travelPurpose,
+            Integer travelerAge,
+            List<String> residencePermitCountryCodes,
+            List<String> visaCountryCodes
+    ) {
+        this(
+                nationalityCountryCode,
+                route,
+                residenceCountryCode,
+                passportIssuingCountryCode,
+                passportExpiryDate,
+                departureDate,
+                travelPurpose,
+                travelerAge,
+                residencePermitCountryCodes,
+                visaCountryCodes,
+                List.of()
+        );
+    }
+}

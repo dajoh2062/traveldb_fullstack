@@ -1,7 +1,6 @@
 package projects.traveldbbackend.documents;
 
 import org.springframework.stereotype.Component;
-import projects.traveldbbackend.Airport;
 import projects.traveldbbackend.documents.DocumentRequirement.Category;
 import projects.traveldbbackend.documents.DocumentRequirement.DocumentSource;
 import projects.traveldbbackend.documents.DocumentRequirement.Scope;
@@ -48,7 +47,11 @@ public class ConservativeDocumentProvider implements DocumentRequirementsProvide
                 List.of(IATA_TRAVEL_CENTRE, TRAVELDOC)
         ));
 
-        for (CountryVisit visit : countryVisits(input.route())) {
+        List<DocumentRouteVisitResolver.CountryVisit> visits = DocumentRouteVisitResolver.resolve(
+                input.route(),
+                input.entryAirportCodes()
+        );
+        for (DocumentRouteVisitResolver.CountryVisit visit : visits) {
             boolean transit = visit.scope() == Scope.TRANSIT;
             requirements.add(new DocumentRequirement(
                     transit ? "TRANSIT_PERMISSION" : "ENTRY_PERMISSION",
@@ -68,19 +71,20 @@ public class ConservativeDocumentProvider implements DocumentRequirementsProvide
             ));
         }
 
-        Airport destination = input.route().getLast();
-        requirements.add(new DocumentRequirement(
-                "ENTRY_CONDITIONS",
-                Category.OTHER,
-                Status.VERIFY,
-                Scope.ENTRY,
-                destination.getCountryCode(),
-                destination.getIataCode(),
-                "Additional entry evidence",
-                "Border authorities may request onward travel, accommodation details, sufficient funds, insurance, health documents or declarations.",
-                List.of("Rules can differ for minors and non-tourist travel.", "Check whether an online arrival or customs form must be completed before departure."),
-                List.of(IATA_TRAVEL_CENTRE, TRAVELDOC)
-        ));
+        visits.stream()
+                .filter(visit -> visit.scope() == Scope.ENTRY)
+                .forEach(entry -> requirements.add(new DocumentRequirement(
+                        "ENTRY_CONDITIONS",
+                        Category.OTHER,
+                        Status.VERIFY,
+                        Scope.ENTRY,
+                        entry.countryCode(),
+                        entry.airportCode(),
+                        "Additional entry evidence",
+                        "Border authorities may request onward travel, accommodation details, sufficient funds, insurance, health documents or declarations.",
+                        List.of("Rules can differ for minors and non-tourist travel.", "Check whether an online arrival or customs form must be completed before departure."),
+                        List.of(IATA_TRAVEL_CENTRE, TRAVELDOC)
+                )));
 
         return new DocumentCheckResult(
                 "TRAVELDB_CONSERVATIVE",
@@ -104,19 +108,8 @@ public class ConservativeDocumentProvider implements DocumentRequirementsProvide
         return missing;
     }
 
-    private List<CountryVisit> countryVisits(List<Airport> route) {
-        List<CountryVisit> visits = new ArrayList<>();
-        for (int i = 1; i < route.size(); i++) {
-            Airport airport = route.get(i);
-            Scope scope = i == route.size() - 1 ? Scope.ENTRY : Scope.TRANSIT;
-            visits.add(new CountryVisit(airport.getCountryCode(), airport.getIataCode(), scope));
-        }
-        return List.copyOf(visits);
-    }
-
     private boolean blank(String value) {
         return value == null || value.isBlank();
     }
 
-    private record CountryVisit(String countryCode, String airportCode, Scope scope) {}
 }

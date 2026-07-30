@@ -8,6 +8,7 @@ import java.text.Normalizer;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 @Repository
 public class TravelRepository {
@@ -86,6 +87,24 @@ public class TravelRepository {
                 "SELECT source_id, country_id, country_name_en, continent, wikipedia_url, keywords, is_schengen FROM Countries ORDER BY country_name_en",
                 COUNTRY_MAPPER
         );
+    }
+
+    public Optional<Airport> findAirport(String iata) {
+        return jdbc.query(
+                "SELECT * FROM Airports WHERE iata_code = ?",
+                AIRPORT_MAPPER,
+                iata
+        ).stream().findFirst();
+    }
+
+    public boolean countryExists(String countryId) {
+        if (countryId == null || countryId.isBlank()) return false;
+        Integer matches = jdbc.queryForObject(
+                "SELECT COUNT(*) FROM Countries WHERE country_id = ?",
+                Integer.class,
+                countryId.trim().toUpperCase(Locale.ROOT)
+        );
+        return matches != null && matches > 0;
     }
 
     private List<AirportSearchEntry> getAirportSearchIndex() {

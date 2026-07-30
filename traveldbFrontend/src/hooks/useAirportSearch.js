@@ -16,6 +16,7 @@ export default function useAirportSearch() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [searchError, setSearchError] = useState("");
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function useAirportSearch() {
     const controller = new AbortController();
     const timer = window.setTimeout(() => {
       fetch(`/api/airports/search?q=${encodeURIComponent(trimmedQuery)}&offset=0&limit=${PAGE_SIZE}`, { signal: controller.signal })
-        .then(response => response.ok ? response.json() : Promise.reject())
+        .then(response => response.ok ? response.json() : Promise.reject(new Error("Airport search unavailable")))
         .then(payload => {
           const searchResult = unpackSearchResponse(payload);
           airportSearchCache.set(cacheKey, searchResult);
@@ -39,6 +40,7 @@ export default function useAirportSearch() {
           if (!controller.signal.aborted) {
             setSuggestions([]);
             setTotal(0);
+            setSearchError("Airport search is temporarily unavailable.");
           }
         })
         .finally(() => { if (!controller.signal.aborted) setIsSearching(false); });
@@ -59,6 +61,7 @@ export default function useAirportSearch() {
     setTotal(cachedResult?.total ?? 0);
     setIsSearching(Boolean(value.trim()) && !cachedResult);
     setIsLoadingMore(false);
+    setSearchError("");
     setIsOpen(true);
   }
 
@@ -90,6 +93,7 @@ export default function useAirportSearch() {
       setTotal(nextPage.total);
     } catch {
       // Keep the already loaded results available if a later page fails.
+      setSearchError("More airports could not be loaded. Try again.");
     } finally {
       setIsLoadingMore(false);
     }
@@ -102,6 +106,7 @@ export default function useAirportSearch() {
     setIsSearching(false);
     setIsLoadingMore(false);
     setTotal(0);
+    setSearchError("");
     setIsOpen(false);
   }
 
@@ -113,6 +118,7 @@ export default function useAirportSearch() {
     isSearching,
     loadMore,
     query,
+    searchError,
     setIsOpen,
     suggestions,
     total,

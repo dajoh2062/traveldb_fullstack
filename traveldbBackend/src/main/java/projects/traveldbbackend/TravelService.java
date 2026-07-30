@@ -19,15 +19,18 @@ public class TravelService {
     private final TravelRepository repo;
     private final RuleEngine engine;
     private final DocumentRequirementsService documentRequirements;
+    private final JourneyRequestValidator requestValidator;
 
     public TravelService(
             TravelRepository repo,
             RuleEngine engine,
-            DocumentRequirementsService documentRequirements
+            DocumentRequirementsService documentRequirements,
+            JourneyRequestValidator requestValidator
     ) {
         this.repo = repo;
         this.engine = engine;
         this.documentRequirements = documentRequirements;
+        this.requestValidator = requestValidator;
     }
 
     // Request DTO
@@ -52,7 +55,7 @@ public class TravelService {
             String checkedThrough
     ) {
         public static BaggageOptions defaults() {
-            return new BaggageOptions(true, "UNKNOWN", "UNKNOWN");
+            return new BaggageOptions(true, "SINGLE_BOOKING", "YES");
         }
     }
 
@@ -75,7 +78,7 @@ public class TravelService {
     public record JourneyResponse(
             boolean pickupRequired,
             List<String> pickupAt,
-            List<String> requiredDocuments,
+            List<String> documentActions,
             DocumentCheckResult documentCheck,
             List<BaggageAdvice> baggageStops,
             String baggageGuidanceReviewed,
@@ -114,30 +117,10 @@ public class TravelService {
     ) {}
 
     public JourneyResponse checkJourney(JourneyRequest req) {
-        if (req == null || req.route() == null || req.route().size() < 2) {
-            return new JourneyResponse(
-                    false,
-                    List.of(),
-                    List.of(),
-                    DocumentCheckResult.unavailable("Route must contain at least two airports."),
-                    List.of(),
-                    "2026-07-20",
-                    List.of(),
-                    List.of("Route must contain at least two airports.")
-            );
-        }
-
-        List<Airport> airports = req.route().stream()
-                .map(String::trim)
-                .map(String::toUpperCase)
-                .map(repo::getAirport)
-                .toList();
-
-        String nat = req.nationalityCountryCode() == null
-                ? ""
-                : req.nationalityCountryCode().trim().toUpperCase();
-
-        BaggageOptions baggage = req.baggage() == null ? BaggageOptions.defaults() : req.baggage();
+        JourneyRequestValidator.ValidatedJourney validated = requestValidator.validate(req);
+        List<Airport> airports = validated.airports();
+        String nat = validated.nationalityCountryCode();
+        BaggageOptions baggage = validated.baggage();
         RuleContext ctx = new RuleContext(
                 nat,
                 airports,
@@ -146,18 +129,19 @@ public class TravelService {
                 parseThroughCheckStatus(baggage.checkedThrough())
         );
         RuleResult result = engine.evaluate(ctx);
-        DocumentOptions documents = req.documents() == null ? DocumentOptions.defaults() : req.documents();
+        DocumentOptions documents = validated.documents();
         DocumentCheckResult documentCheck = documentRequirements.check(new DocumentCheckInput(
                 nat,
                 airports,
-                normalizeCountryCode(documents.residenceCountryCode()),
-                normalizeCountryCode(documents.passportIssuingCountryCode()),
+                documents.residenceCountryCode(),
+                documents.passportIssuingCountryCode(),
                 documents.passportExpiryDate(),
                 documents.departureDate(),
                 documents.travelPurpose(),
                 documents.travelerAge(),
-                safeList(documents.residencePermitCountryCodes()),
-                safeList(documents.visaCountryCodes())
+                documents.residencePermitCountryCodes(),
+                documents.visaCountryCodes(),
+                result.baggagePickupAt().stream().toList()
         ));
 
         // Rule evaluation can involve multiple independent baggage rules. Build
@@ -172,7 +156,8 @@ public class TravelService {
                 !pickupAt.isEmpty(),
                 pickupAt,
                 documentCheck.requirements().stream()
-                        .filter(requirement -> requirement.status() == DocumentRequirement.Status.REQUIRED)
+                        .filter(requirement -> requirement.status() != DocumentRequirement.Status.NOT_REQUIRED)
+                        .filter(requirement -> !"ENTRY_CONDITIONS".equals(requirement.code()))
                         .map(DocumentRequirement::code)
                         .distinct()
                         .toList(),
@@ -182,15 +167,6 @@ public class TravelService {
                 result.assumptions().stream().toList(),
                 result.notes().stream().toList()
         );
-    }
-
-    private String normalizeCountryCode(String value) {
-        return value == null ? null : value.trim().toUpperCase();
-    }
-
-    private List<String> safeList(List<String> values) {
-        if (values == null) return List.of();
-        return values.stream().map(this::normalizeCountryCode).filter(value -> value != null && !value.isBlank()).toList();
     }
 
     private RuleContext.TicketArrangement parseTicketArrangement(String value) {

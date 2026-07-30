@@ -12,7 +12,7 @@ const throughCheckOptions = [
   { value: "UNKNOWN", label: "Not sure yet" },
 ];
 
-function SegmentedControl({ label, hint, value, options, onChange, disabled = false }) {
+function SegmentedControl({ label, value, options, onChange, disabled = false }) {
   return (
     <fieldset className="baggage-question" disabled={disabled}>
       <legend>{label}</legend>
@@ -29,7 +29,6 @@ function SegmentedControl({ label, hint, value, options, onChange, disabled = fa
           </button>
         ))}
       </div>
-      <small>{hint}</small>
     </fieldset>
   );
 }
@@ -39,15 +38,11 @@ export default function BaggageSetup({ baggage, onChange }) {
     <section className="baggage-setup" aria-labelledby="baggage-setup-title">
       <div className="baggage-setup-heading">
         <span className="baggage-setup-icon"><Icon name="suitcase" size={19} /></span>
-        <div>
-          <h3 id="baggage-setup-title">Baggage details</h3>
-          <p>These details prevent the checker from assuming every airline transfers bags in the same way.</p>
-        </div>
+        <h3 id="baggage-setup-title">Baggage</h3>
       </div>
       <div className="baggage-question-grid">
         <SegmentedControl
-          hint="Carry-on bags never need baggage reclaim."
-          label="Travelling with checked baggage?"
+          label="Checked baggage?"
           onChange={value => onChange("checkedBaggage", value)}
           options={[
             { value: true, label: "Yes" },
@@ -57,16 +52,14 @@ export default function BaggageSetup({ baggage, onChange }) {
         />
         <SegmentedControl
           disabled={!baggage.checkedBaggage}
-          hint="Separate bookings normally require a self-transfer."
-          label="How are the flights booked?"
+          label="Booking"
           onChange={value => onChange("ticketArrangement", value)}
           options={ticketOptions}
           value={baggage.ticketArrangement}
         />
         <SegmentedControl
           disabled={!baggage.checkedBaggage}
-          hint="Use the destination printed on your baggage tag, if known."
-          label="Where will the bag be tagged to?"
+          label="Bag tag destination"
           onChange={value => onChange("checkedThrough", value)}
           options={throughCheckOptions}
           value={baggage.checkedThrough}

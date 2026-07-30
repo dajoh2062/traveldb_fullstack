@@ -4,6 +4,7 @@ import Icon from "./Icon";
 
 export default function NationalitySearch({
   countries,
+  error,
   isLoading,
   nationality,
   query,
@@ -11,6 +12,7 @@ export default function NationalitySearch({
   onSelect,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const suggestions = useMemo(() => {
     const normalizedQuery = normalizeSearch(query);
@@ -41,7 +43,7 @@ export default function NationalitySearch({
 
   return (
     <div
-      className="field nationality-field"
+      className={`field nationality-field ${error ? "has-error" : ""}`}
       onBlur={event => {
         if (!event.currentTarget.contains(event.relatedTarget)) setIsOpen(false);
       }}
@@ -52,19 +54,30 @@ export default function NationalitySearch({
         <input
           aria-autocomplete="list"
           aria-controls="nationality-suggestions"
-          aria-describedby="nationality-hint"
+          aria-describedby={error ? "nationality-error" : undefined}
+          aria-activedescendant={isOpen && suggestions[activeIndex] ? `nationality-option-${suggestions[activeIndex].countryId}` : undefined}
           aria-expanded={isOpen}
+          aria-invalid={Boolean(error)}
           autoComplete="off"
           id="nationality-search"
           onChange={event => {
             onQueryChange(event.target.value);
             setIsOpen(true);
+            setActiveIndex(0);
           }}
           onFocus={() => setIsOpen(true)}
           onKeyDown={event => {
+            if (event.key === "ArrowDown" && suggestions.length > 0) {
+              event.preventDefault();
+              setActiveIndex(index => Math.min(index + 1, suggestions.length - 1));
+            }
+            if (event.key === "ArrowUp" && suggestions.length > 0) {
+              event.preventDefault();
+              setActiveIndex(index => Math.max(index - 1, 0));
+            }
             if (event.key === "Enter" && suggestions.length > 0) {
               event.preventDefault();
-              selectCountry(suggestions[0]);
+              selectCountry(suggestions[activeIndex] ?? suggestions[0]);
             }
             if (event.key === "Escape") setIsOpen(false);
           }}
@@ -74,15 +87,18 @@ export default function NationalitySearch({
         />
         {nationality && <span className="selected-code">{nationality}</span>}
       </span>
-      <small id="nationality-hint">Search by country, nationality, or two-letter code</small>
+      {error && <span className="field-error" id="nationality-error" role="alert">{error}</span>}
       {isOpen && (
         <div className="dropdown" id="nationality-suggestions" role="listbox">
           {isLoading && <div className="dropdown-status"><Icon name="loader" size={16} /> Loading countries…</div>}
           {!isLoading && suggestions.length === 0 && <div className="dropdown-status">No countries found</div>}
-          {suggestions.map(country => (
+          {suggestions.map((country, index) => (
             <button
-              className="dropdown-item country-option"
+              aria-selected={index === activeIndex}
+              className={`dropdown-item country-option ${index === activeIndex ? "is-active" : ""}`}
+              id={`nationality-option-${country.countryId}`}
               key={country.countryId}
+              onMouseMove={() => setActiveIndex(index)}
               onClick={() => selectCountry(country)}
               role="option"
               type="button"

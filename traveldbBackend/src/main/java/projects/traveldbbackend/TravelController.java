@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:5173")
 public class TravelController {
 
     private final TravelService service;
@@ -16,7 +15,7 @@ public class TravelController {
     }
 
     @PostMapping("/journey/check")
-    public TravelService.JourneyResponse check(@RequestBody TravelService.JourneyRequest req) {
+    public TravelService.JourneyResponse check(@RequestBody(required = false) TravelService.JourneyRequest req) {
         return service.checkJourney(req);
     }
     @GetMapping("/airports/search")

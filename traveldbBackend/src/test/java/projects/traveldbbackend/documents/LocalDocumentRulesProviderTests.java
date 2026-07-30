@@ -57,7 +57,7 @@ class LocalDocumentRulesProviderTests {
                       "output":{
                         "code":"HIGH",
                         "category":"VISA",
-                        "status":"REQUIRED",
+                        "status":"CONDITIONAL",
                         "title":"High priority",
                         "summary":"Stored decision.",
                         "conditions":["Preserve sentence casing."],

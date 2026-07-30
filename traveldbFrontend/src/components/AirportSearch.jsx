@@ -1,7 +1,9 @@
+import { useState } from "react";
 import useAirportSearch from "../hooks/useAirportSearch";
 import Icon from "./Icon";
 
 export default function AirportSearch({ onSelect }) {
+  const [activeIndex, setActiveIndex] = useState(0);
   const {
     clearSearch,
     hasMore,
@@ -10,11 +12,13 @@ export default function AirportSearch({ onSelect }) {
     isSearching,
     loadMore,
     query,
+    searchError,
     setIsOpen,
     suggestions,
-    total,
     updateQuery,
   } = useAirportSearch();
+
+  const resolvedActiveIndex = suggestions.length === 0 ? 0 : Math.min(activeIndex, suggestions.length - 1);
 
   function selectAirport(airport) {
     if (onSelect(airport) !== false) clearSearch();
@@ -32,16 +36,28 @@ export default function AirportSearch({ onSelect }) {
         <Icon name="search" size={20} />
         <input
           aria-autocomplete="list"
+          aria-activedescendant={isOpen && suggestions[resolvedActiveIndex] ? `airport-option-${suggestions[resolvedActiveIndex].iataCode}` : undefined}
           aria-controls="airport-suggestions"
           aria-expanded={isOpen}
           autoComplete="off"
           id="airport-search"
-          onChange={event => updateQuery(event.target.value)}
+          onChange={event => {
+            updateQuery(event.target.value);
+            setActiveIndex(0);
+          }}
           onFocus={() => { if (query.trim()) setIsOpen(true); }}
           onKeyDown={event => {
+            if (event.key === "ArrowDown" && suggestions.length > 0) {
+              event.preventDefault();
+              setActiveIndex(index => Math.min(index + 1, suggestions.length - 1));
+            }
+            if (event.key === "ArrowUp" && suggestions.length > 0) {
+              event.preventDefault();
+              setActiveIndex(index => Math.max(index - 1, 0));
+            }
             if (event.key === "Enter" && suggestions.length > 0) {
               event.preventDefault();
-              selectAirport(suggestions[0]);
+              selectAirport(suggestions[resolvedActiveIndex] ?? suggestions[0]);
             }
             if (event.key === "Escape") setIsOpen(false);
           }}
@@ -51,18 +67,24 @@ export default function AirportSearch({ onSelect }) {
         />
         {isSearching && <Icon name="loader" size={17} />}
       </span>
-      <small>IATA code matches are ranked first</small>
       {isOpen && query.trim() && (
         <div className="dropdown airport-dropdown">
           <div className="airport-dropdown-results" id="airport-suggestions" role="listbox">
             {isSearching && suggestions.length === 0 && (
               <div className="dropdown-status"><Icon name="loader" size={16} /> Searching airports…</div>
             )}
-            {!isSearching && suggestions.length === 0 && <div className="dropdown-status">No airports found</div>}
-            {suggestions.map(airport => (
+            {!isSearching && suggestions.length === 0 && (
+              <div className={`dropdown-status ${searchError ? "search-error" : ""}`}>
+                {searchError || "No airports found"}
+              </div>
+            )}
+            {suggestions.map((airport, index) => (
               <button
-                className="dropdown-item"
+                aria-selected={index === resolvedActiveIndex}
+                className={`dropdown-item ${index === resolvedActiveIndex ? "is-active" : ""}`}
+                id={`airport-option-${airport.iataCode}`}
                 key={airport.iataCode}
+                onMouseMove={() => setActiveIndex(index)}
                 onClick={() => selectAirport(airport)}
                 role="option"
                 type="button"
@@ -76,21 +98,19 @@ export default function AirportSearch({ onSelect }) {
               </button>
             ))}
           </div>
-          {suggestions.length > 0 && (
+          {suggestions.length > 0 && hasMore && (
             <div className="airport-results-footer" aria-live="polite">
-              <span>Showing {suggestions.length} of {total} {total === 1 ? "airport" : "airports"}</span>
-              {hasMore && (
-                <button
-                  className="load-more-airports"
-                  disabled={isLoadingMore}
-                  onClick={loadMore}
-                  type="button"
-                >
-                  {isLoadingMore ? <><Icon name="loader" size={14} /> Loading…</> : "Show more airports"}
-                </button>
-              )}
+              <button
+                className="load-more-airports"
+                disabled={isLoadingMore}
+                onClick={loadMore}
+                type="button"
+              >
+                {isLoadingMore ? <><Icon name="loader" size={14} /> Loading...</> : "Show more"}
+              </button>
             </div>
           )}
+          {searchError && suggestions.length > 0 && <div className="airport-search-warning">{searchError}</div>}
         </div>
       )}
     </div>

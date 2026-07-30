@@ -1,34 +1,15 @@
-import { routeSummary, routeStats } from "../utils/journey";
+import { routeSummary } from "../utils/journey";
 import Icon from "./Icon";
 
-export default function RouteTimeline({ route, onMove, onRemove }) {
-  const { flightCount, transitCount, accessibilityLabel } = routeStats(route);
-
+export default function RouteTimeline({ error, route, onMove, onRemove }) {
   return (
-    <div className={`route-builder ${route.length === 0 ? "is-empty" : ""}`}>
+    <div className={`route-builder ${route.length === 0 ? "is-empty" : ""} ${error ? "has-error" : ""}`}>
       <div className="route-header">
-        <span>Your route</span>
-        {route.length > 0 && (
-          <div className="route-stats" aria-label={accessibilityLabel}>
-            <span>{route.length} {route.length === 1 ? "airport" : "airports"}</span>
-            {route.length > 1 && (
-              <>
-                <span>{flightCount} {flightCount === 1 ? "flight" : "flights"}</span>
-                <span>{transitCount === 0 ? "Direct" : `${transitCount} ${transitCount === 1 ? "transit" : "transits"}`}</span>
-              </>
-            )}
-          </div>
-        )}
+        <span>Route</span>
       </div>
 
       {route.length === 0 ? (
-        <div className="empty-route">
-          <span className="empty-route-icon"><Icon name="location" size={22} /></span>
-          <div>
-            <strong>Your route will appear here</strong>
-            <p>Start by searching for your departure airport.</p>
-          </div>
-        </div>
+        <p className="empty-route">Add your departure and destination.</p>
       ) : (
         <div className="route-list" aria-label={`Current route: ${routeSummary(route)}`}>
           {route.map((airport, index) => {
@@ -43,7 +24,7 @@ export default function RouteTimeline({ route, onMove, onRemove }) {
                   )}
                 </div>
                 <div className="route-stop-card">
-                  <div className="route-stop-role"><span>{kind}</span><small>Stop {index + 1}</small></div>
+                  <div className="route-stop-role"><span>{kind}</span></div>
                   <strong className="route-code">{airport.iataCode}</strong>
                   <div className="route-stop-details">
                     <strong>{airport.name}</strong>
@@ -86,6 +67,7 @@ export default function RouteTimeline({ route, onMove, onRemove }) {
           })}
         </div>
       )}
+      {error && <span className="route-error" role="alert">{error}</span>}
     </div>
   );
 }

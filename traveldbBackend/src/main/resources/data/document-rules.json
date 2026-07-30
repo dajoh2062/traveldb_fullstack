@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "2026-07-20.1",
-  "generatedAt": "2026-07-20T19:00:00Z",
+  "datasetVersion": "2026-07-30.4",
+  "generatedAt": "2026-07-30T17:00:00Z",
   "sources": [
     {
       "label": "U.S. Department of State — Visa Waiver Program",
@@ -27,6 +27,21 @@
       "label": "Immigration New Zealand — visa waiver countries",
       "url": "https://www.immigration.govt.nz/visit/what-you-need-to-visit-new-zealand/visa-waiver-countries-and-territories/",
       "sourceType": "GOVERNMENT"
+    },
+    {
+      "label": "European Union — travel documents for EU nationals",
+      "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/eu-citizen/index_en.htm",
+      "sourceType": "GOVERNMENT"
+    },
+    {
+      "label": "European Union — travel documents for non-EU nationals",
+      "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
+      "sourceType": "GOVERNMENT"
+    },
+    {
+      "label": "European External Action Service — Travelling in Europe",
+      "url": "https://www.eeas.europa.eu/sites/default/files/documents/2025/travelling%20in%20europe%202024-NA0223115ENN.pdf",
+      "sourceType": "GOVERNMENT"
     }
   ],
   "rules": [
@@ -34,83 +49,88 @@
       "id": "us-valid-visa-entry",
       "decisionKey": "US_ENTRY_PERMISSION",
       "scope": "ENTRY",
-      "destinationCountries": ["US"],
+      "destinationCountries": ["US", "PR", "VI"],
       "nationalities": ["*"],
       "requiredHeldVisaCountries": ["US"],
       "priority": 300,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-11-27",
       "output": {
-        "code": "ESTA",
-        "category": "ELECTRONIC_AUTHORIZATION",
-        "status": "NOT_REQUIRED",
-        "title": "ESTA not required with a valid US visa",
-        "summary": "A traveller using a valid US visa does not need to apply for ESTA for the purpose covered by that visa.",
+        "code": "US_VISA_VALIDITY",
+        "category": "VISA",
+        "status": "VERIFY",
+        "title": "Confirm your U.S. visa covers this trip",
+        "summary": "The supplied profile records a U.S. visa, but its class, validity, purpose and permitted entries must be checked before relying on it instead of ESTA.",
         "conditions": ["The visa must be valid and appropriate for the planned travel purpose.", "A visa or ESTA authorises travel to the border but does not guarantee admission."],
-        "sources": [{"label": "U.S. CBP — About ESTA", "url": "https://www.help.cbp.gov/s/article/Article-1437?language=en_US", "sourceType": "GOVERNMENT"}]
+        "sources": [{"label": "U.S. CBP — Travel on a valid visa", "url": "https://www.help.cbp.gov/s/article/Article1882?language=en_US", "sourceType": "GOVERNMENT"}]
       }
     },
     {
       "id": "us-valid-visa-transit",
       "decisionKey": "US_TRANSIT_PERMISSION",
       "scope": "TRANSIT",
-      "destinationCountries": ["US"],
+      "destinationCountries": ["US", "PR", "VI"],
       "nationalities": ["*"],
       "requiredHeldVisaCountries": ["US"],
       "priority": 300,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-11-27",
       "output": {
-        "code": "ESTA",
-        "category": "TRANSIT_PERMISSION",
-        "status": "NOT_REQUIRED",
-        "title": "ESTA not required when transiting on a valid US visa",
-        "summary": "A traveller using a valid US visa does not need a separate ESTA for that transit.",
+        "code": "US_TRANSIT_VISA_VALIDITY",
+        "category": "VISA",
+        "status": "VERIFY",
+        "title": "Confirm your U.S. visa covers this transit",
+        "summary": "The supplied profile records a U.S. visa, but its class and validity must be checked before relying on it instead of ESTA for transit.",
         "conditions": ["The visa must be valid for the transit and the traveller must remain otherwise admissible."],
-        "sources": [{"label": "U.S. CBP — About ESTA", "url": "https://www.help.cbp.gov/s/article/Article-1437?language=en_US", "sourceType": "GOVERNMENT"}]
+        "sources": [{"label": "U.S. CBP — Travel on a valid visa", "url": "https://www.help.cbp.gov/s/article/Article1882?language=en_US", "sourceType": "GOVERNMENT"}]
       }
     },
     {
       "id": "us-vwp-entry",
       "decisionKey": "US_ENTRY_PERMISSION",
       "scope": "ENTRY",
-      "destinationCountries": ["US"],
+      "destinationCountries": ["US", "PR", "VI"],
       "nationalities": ["AD", "AU", "AT", "BE", "BN", "CL", "HR", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IS", "IE", "IL", "IT", "JP", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NZ", "NO", "PL", "PT", "QA", "SM", "SG", "SK", "SI", "KR", "ES", "SE", "CH", "TW", "GB"],
-      "travelPurposes": ["TOURISM", "BUSINESS"],
       "priority": 100,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-11-27",
       "output": {
         "code": "ESTA_OR_US_VISA",
         "category": "ELECTRONIC_AUTHORIZATION",
         "status": "CONDITIONAL",
-        "title": "ESTA or an appropriate US visa",
+        "title": "Approved ESTA or valid U.S. visa",
         "summary": "Eligible Visa Waiver Program travellers normally need an approved ESTA before air travel to the United States unless travelling on a valid visa.",
         "conditions": ["Visa Waiver Program travel is normally limited to tourism or business stays of 90 days or less.", "Travel history, dual nationality, passport type and carrier eligibility can make a traveller ineligible for the Visa Waiver Program.", "An e-passport is required for Visa Waiver Program travel."],
-        "sources": [{"label": "U.S. Department of State — Visa Waiver Program", "url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html", "sourceType": "GOVERNMENT"}]
+        "sources": [
+          {"label": "U.S. Department of State — Visa Waiver Program", "url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html", "sourceType": "GOVERNMENT"},
+          {"label": "U.S. CBP — ESTA territory and passport guidance", "url": "https://www.help.cbp.gov/s/article/Article-1441?language=en_US", "sourceType": "GOVERNMENT"}
+        ]
       }
     },
     {
       "id": "us-vwp-transit",
       "decisionKey": "US_TRANSIT_PERMISSION",
       "scope": "TRANSIT",
-      "destinationCountries": ["US"],
+      "destinationCountries": ["US", "PR", "VI"],
       "nationalities": ["AD", "AU", "AT", "BE", "BN", "CL", "HR", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IS", "IE", "IL", "IT", "JP", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NZ", "NO", "PL", "PT", "QA", "SM", "SG", "SK", "SI", "KR", "ES", "SE", "CH", "TW", "GB"],
       "priority": 100,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-11-27",
       "output": {
         "code": "ESTA_OR_US_VISA",
         "category": "TRANSIT_PERMISSION",
         "status": "CONDITIONAL",
-        "title": "ESTA or US transit/visitor visa",
+        "title": "Approved ESTA or valid U.S. visa",
         "summary": "The United States generally requires transit passengers to hold ESTA under the Visa Waiver Program or an appropriate US visa.",
         "conditions": ["The United States does not provide a general sterile international transit exemption.", "Visa Waiver Program eligibility restrictions still apply to transit."],
-        "sources": [{"label": "U.S. Department of State — Transit Visa", "url": "https://travel.state.gov/content/travel/en/us-visas/other-visa-categories/transit.html", "sourceType": "GOVERNMENT"}]
+        "sources": [
+          {"label": "U.S. Department of State — Transit Visa", "url": "https://travel.state.gov/content/travel/en/us-visas/other-visa-categories/transit.html", "sourceType": "GOVERNMENT"},
+          {"label": "U.S. CBP — ESTA for transit", "url": "https://www.help.cbp.gov/s/article/Article-1441?language=en_US", "sourceType": "GOVERNMENT"}
+        ]
       }
     },
     {
@@ -122,14 +142,14 @@
       "requiredHeldVisaCountries": ["GB"],
       "priority": 300,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-11-27",
       "output": {
-        "code": "UK_ETA",
-        "category": "ELECTRONIC_AUTHORIZATION",
-        "status": "NOT_REQUIRED",
-        "title": "UK ETA not required with valid UK immigration permission",
-        "summary": "A traveller who already has a valid UK visa does not need an ETA for the travel covered by that permission.",
+        "code": "UK_PERMISSION_VALIDITY",
+        "category": "VISA",
+        "status": "VERIFY",
+        "title": "Confirm your UK permission covers this trip",
+        "summary": "The supplied profile records UK immigration permission, but its type, validity and permitted purpose must be checked before relying on it instead of an ETA.",
         "conditions": ["The existing permission must be valid for the planned purpose and dates."],
         "sources": [{"label": "GOV.UK — Who does not need an ETA", "url": "https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta", "sourceType": "GOVERNMENT"}]
       }
@@ -166,11 +186,11 @@
       "lastVerified": "2026-07-20",
       "reviewAfter": "2026-10-20",
       "output": {
-        "code": "CANADA_ETA",
-        "category": "ELECTRONIC_AUTHORIZATION",
-        "status": "NOT_REQUIRED",
-        "title": "Canadian eTA not required with a valid Canadian visa",
-        "summary": "A valid Canadian visitor visa can be used for air travel to Canada without a separate eTA.",
+        "code": "CANADA_VISA_VALIDITY",
+        "category": "VISA",
+        "status": "VERIFY",
+        "title": "Confirm your Canadian visa covers this trip",
+        "summary": "The supplied profile records a Canadian visa, but its type, validity and permitted purpose must be checked before relying on it instead of an eTA.",
         "conditions": ["The visa and passport must remain valid for the journey."],
         "sources": [{"label": "Government of Canada — eTA eligibility", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html", "sourceType": "GOVERNMENT"}]
       }
@@ -187,11 +207,11 @@
       "lastVerified": "2026-07-20",
       "reviewAfter": "2026-10-20",
       "output": {
-        "code": "CANADA_ETA",
-        "category": "TRANSIT_PERMISSION",
-        "status": "NOT_REQUIRED",
-        "title": "Canadian eTA not required with a valid Canadian visa",
-        "summary": "A valid Canadian visa can be used for air transit without a separate eTA.",
+        "code": "CANADA_TRANSIT_VISA_VALIDITY",
+        "category": "VISA",
+        "status": "VERIFY",
+        "title": "Confirm your Canadian visa covers this transit",
+        "summary": "The supplied profile records a Canadian visa, but its type and validity must be checked before relying on it instead of an eTA for transit.",
         "conditions": ["The visa and passport must remain valid for the transit."],
         "sources": [{"label": "Government of Canada — Transit through Canada", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/transit.html", "sourceType": "GOVERNMENT"}]
       }
@@ -248,13 +268,36 @@
       "lastVerified": "2026-07-20",
       "reviewAfter": "2026-10-20",
       "output": {
-        "code": "AUSTRALIAN_VISITOR_PERMISSION",
+        "code": "AUSTRALIAN_VISA_VALIDITY",
         "category": "VISA",
-        "status": "NOT_REQUIRED",
-        "title": "No additional Australian visitor permission identified",
-        "summary": "The supplied profile says the traveller already holds an Australian visa.",
+        "status": "VERIFY",
+        "title": "Confirm your Australian visa covers this trip",
+        "summary": "The supplied profile records an Australian visa, but its type, validity, purpose and permitted entries must be checked.",
         "conditions": ["The visa must permit the intended purpose, dates and number of entries."],
         "sources": [{"label": "Australian Home Affairs — Visa list", "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "australia-eta-evisitor-entry",
+      "decisionKey": "AU_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["AU"],
+      "nationalities": ["AD", "AT", "BE", "DK", "FI", "FR", "DE", "GR", "IS", "IE", "IT", "LI", "LU", "MT", "MC", "NL", "NO", "PT", "SM", "ES", "SE", "CH", "GB", "VA"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-11-27",
+      "output": {
+        "code": "AUSTRALIA_VISITOR_VISA",
+        "category": "VISA",
+        "status": "CONDITIONAL",
+        "title": "Australian visa — eVisitor or ETA may be available",
+        "summary": "Eligible passport holders must hold a valid Australian visa before travel; eVisitor 651 or ETA 601 may be available.",
+        "conditions": ["Criminal history, purpose, intended stay and passport type can require a different visa.", "The visa is digitally linked to the passport used in the application."],
+        "sources": [
+          {"label": "Australian Home Affairs — eVisitor subclass 651", "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651", "sourceType": "GOVERNMENT"},
+          {"label": "Australian Home Affairs — Electronic Travel Authority 601", "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601", "sourceType": "GOVERNMENT"}
+        ]
       }
     },
     {
@@ -262,19 +305,39 @@
       "decisionKey": "AU_ENTRY_PERMISSION",
       "scope": "ENTRY",
       "destinationCountries": ["AU"],
-      "nationalities": ["AD", "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IS", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NO", "PL", "PT", "RO", "SM", "SK", "SI", "ES", "SE", "CH", "GB"],
+      "nationalities": ["BG", "HR", "CY", "CZ", "EE", "HU", "LV", "LT", "PL", "RO", "SK", "SI"],
       "priority": 100,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-11-27",
       "output": {
-        "code": "AUSTRALIA_EVISITOR_OR_OTHER_VISA",
+        "code": "AUSTRALIA_VISITOR_VISA",
         "category": "VISA",
         "status": "CONDITIONAL",
         "title": "Australian eVisitor or another suitable visa",
-        "summary": "Eligible European passport holders can apply for an eVisitor, but must hold a valid Australian travel permission before travel.",
+        "summary": "Eligible European passport holders must hold a valid Australian visa before travel; eVisitor 651 may be available.",
         "conditions": ["Criminal history, purpose, intended stay and passport type can require a different visa.", "The visa is digitally linked to the passport used in the application."],
         "sources": [{"label": "Australian Home Affairs — eVisitor subclass 651", "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "australia-eta-entry",
+      "decisionKey": "AU_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["AU"],
+      "nationalities": ["BN", "CA", "HK", "JP", "MY", "SG", "KR", "TW", "US"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-11-27",
+      "output": {
+        "code": "AUSTRALIA_VISITOR_VISA",
+        "category": "VISA",
+        "status": "CONDITIONAL",
+        "title": "Australian ETA or another suitable visa",
+        "summary": "Eligible passport holders must hold a valid Australian visa before travel; ETA 601 may be available.",
+        "conditions": ["Criminal history, purpose, intended stay and passport type can require a different visa.", "The ETA is digitally linked to the passport used in the application."],
+        "sources": [{"label": "Australian Home Affairs — Electronic Travel Authority 601", "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601", "sourceType": "GOVERNMENT"}]
       }
     },
     {
@@ -285,15 +348,15 @@
       "nationalities": ["AD", "AR", "AT", "BE", "BN", "BG", "CA", "CL", "HR", "CY", "CZ", "DK", "EE", "FM", "FJ", "FI", "FR", "DE", "GR", "HU", "IS", "ID", "IE", "IT", "JP", "KI", "LV", "LI", "LT", "LU", "MY", "MT", "MH", "MX", "MC", "NR", "NL", "NZ", "NO", "OM", "PW", "PG", "PH", "PL", "PT", "QA", "RO", "WS", "SM", "SG", "SK", "SI", "SB", "ZA", "KR", "ES", "SE", "CH", "TH", "TO", "TV", "AE", "GB", "US", "UY", "VU", "VA"],
       "priority": 100,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-11-27",
       "output": {
         "code": "AU_TRANSIT_VISA",
         "category": "TRANSIT_PERMISSION",
         "status": "CONDITIONAL",
         "title": "Australian transit-without-visa conditions may apply",
         "summary": "Eligible passport holders can transit without an Australian visa only when every transit condition is met.",
-        "conditions": ["Departure must be by aircraft to a third country within 8 hours.", "The traveller must hold documents for the destination and must not clear immigration, leave the transit lounge or collect baggage."],
+        "conditions": ["The traveller must arrive by aircraft and hold a confirmed onward ticket to depart by aircraft for a third country within 8 hours.", "The traveller must hold documents for the destination and must not clear immigration, leave the transit lounge or collect baggage."],
         "sources": [{"label": "Australian Home Affairs — Transit without a visa", "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/transit-771/travellers-eligible-to-transit-without-visa", "sourceType": "GOVERNMENT"}]
       }
     },
@@ -309,11 +372,11 @@
       "lastVerified": "2026-07-20",
       "reviewAfter": "2026-10-20",
       "output": {
-        "code": "NZETA",
-        "category": "ELECTRONIC_AUTHORIZATION",
-        "status": "NOT_REQUIRED",
-        "title": "NZeTA not required with a valid New Zealand visa",
-        "summary": "A traveller using a valid New Zealand visa does not need a separate NZeTA.",
+        "code": "NZ_VISA_VALIDITY",
+        "category": "VISA",
+        "status": "VERIFY",
+        "title": "Confirm your New Zealand visa covers this trip",
+        "summary": "The supplied profile records a New Zealand visa, but its type, validity and permitted purpose must be checked before relying on it instead of an NZeTA.",
         "conditions": ["The visa must permit the intended purpose and dates."],
         "sources": [{"label": "Immigration New Zealand — NZeTA", "url": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/", "sourceType": "GOVERNMENT"}]
       }
@@ -356,6 +419,226 @@
         "summary": "Eligible transit passengers need an NZeTA; other passengers may need a transit visa.",
         "conditions": ["Visa-free transit is limited to Auckland International Airport and normally no more than 24 hours.", "The exact rule depends on passport, destination and whether the traveller leaves the transit area."],
         "sources": [{"label": "Immigration New Zealand — NZeTA", "url": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "schengen-de-free-movement-document",
+      "decisionKey": "DE_ENTRY_DOCUMENTS",
+      "scope": "ENTRY",
+      "destinationCountries": ["DE"],
+      "nationalities": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "CH"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-10-30",
+      "output": {
+        "code": "EU_EEA_CH_TRAVEL_DOCUMENT",
+        "category": "TRAVEL_DOCUMENT",
+        "status": "REQUIRED",
+        "title": "Valid passport or national identity card",
+        "summary": "EU citizens and citizens of Iceland, Liechtenstein, Norway and Switzerland can travel to Germany with a valid passport or eligible national identity card.",
+        "conditions": ["The travel document must be valid on the day of travel.", "Children and minors must have their own passport or eligible identity card.", "Temporary border controls and local identity checks can require the document to be presented."],
+        "sources": [
+          {"label": "European Union — travel documents for EU nationals", "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/eu-citizen/index_en.htm", "sourceType": "GOVERNMENT"},
+          {"label": "European External Action Service — Travelling in Europe", "url": "https://www.eeas.europa.eu/sites/default/files/documents/2025/travelling%20in%20europe%202024-NA0223115ENN.pdf", "sourceType": "GOVERNMENT"}
+        ]
+      }
+    },
+    {
+      "id": "schengen-de-third-country-entry-documents",
+      "decisionKey": "DE_ENTRY_DOCUMENTS",
+      "scope": "ENTRY",
+      "destinationCountries": ["DE"],
+      "nationalities": ["*"],
+      "excludedNationalities": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "CH"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-10-30",
+      "output": {
+        "code": "SCHENGEN_ENTRY_DOCUMENTS",
+        "category": "TRAVEL_DOCUMENT",
+        "status": "VERIFY",
+        "title": "Verify Schengen passport and visa requirements",
+        "summary": "Non-EU/EEA/Swiss travellers need a qualifying passport for Germany and may also need a Schengen visa; this local snapshot does not infer the visa decision.",
+        "conditions": ["The passport should have been issued within the previous 10 years on entry and normally remain valid for at least 3 months after the planned departure from the EU.", "Visa need depends on nationality and can also be affected by residence documents, family status, passport type, purpose and length of stay.", "Verify the exact result with the responsible German consulate or the official EU guidance before booking."],
+        "sources": [{"label": "European Union — travel documents for non-EU nationals", "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "schengen-es-free-movement-document",
+      "decisionKey": "ES_ENTRY_DOCUMENTS",
+      "scope": "ENTRY",
+      "destinationCountries": ["ES"],
+      "nationalities": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "CH"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-10-30",
+      "output": {
+        "code": "EU_EEA_CH_TRAVEL_DOCUMENT",
+        "category": "TRAVEL_DOCUMENT",
+        "status": "REQUIRED",
+        "title": "Valid passport or national identity card",
+        "summary": "EU citizens and citizens of Iceland, Liechtenstein, Norway and Switzerland can travel to Spain with a valid passport or eligible national identity card.",
+        "conditions": ["The travel document must be valid on the day of travel.", "Children and minors must have their own passport or eligible identity card.", "Temporary border controls and local identity checks can require the document to be presented."],
+        "sources": [
+          {"label": "European Union — travel documents for EU nationals", "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/eu-citizen/index_en.htm", "sourceType": "GOVERNMENT"},
+          {"label": "European External Action Service — Travelling in Europe", "url": "https://www.eeas.europa.eu/sites/default/files/documents/2025/travelling%20in%20europe%202024-NA0223115ENN.pdf", "sourceType": "GOVERNMENT"}
+        ]
+      }
+    },
+    {
+      "id": "schengen-es-third-country-entry-documents",
+      "decisionKey": "ES_ENTRY_DOCUMENTS",
+      "scope": "ENTRY",
+      "destinationCountries": ["ES"],
+      "nationalities": ["*"],
+      "excludedNationalities": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "CH"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-10-30",
+      "output": {
+        "code": "SCHENGEN_ENTRY_DOCUMENTS",
+        "category": "TRAVEL_DOCUMENT",
+        "status": "VERIFY",
+        "title": "Verify Schengen passport and visa requirements",
+        "summary": "Non-EU/EEA/Swiss travellers need a qualifying passport for Spain and may also need a Schengen visa; this local snapshot does not infer the visa decision.",
+        "conditions": ["The passport should have been issued within the previous 10 years on entry and normally remain valid for at least 3 months after the planned departure from the EU.", "Visa need depends on nationality and can also be affected by residence documents, family status, passport type, purpose and length of stay.", "Verify the exact result with the responsible Spanish consulate or the official EU guidance before booking."],
+        "sources": [{"label": "European Union — travel documents for non-EU nationals", "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "schengen-fr-free-movement-document",
+      "decisionKey": "FR_ENTRY_DOCUMENTS",
+      "scope": "ENTRY",
+      "destinationCountries": ["FR"],
+      "nationalities": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "CH"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-10-30",
+      "output": {
+        "code": "EU_EEA_CH_TRAVEL_DOCUMENT",
+        "category": "TRAVEL_DOCUMENT",
+        "status": "REQUIRED",
+        "title": "Valid passport or national identity card",
+        "summary": "EU citizens and citizens of Iceland, Liechtenstein, Norway and Switzerland can travel to France with a valid passport or eligible national identity card.",
+        "conditions": ["The travel document must be valid on the day of travel.", "Children and minors must have their own passport or eligible identity card.", "Temporary border controls and local identity checks can require the document to be presented."],
+        "sources": [
+          {"label": "European Union — travel documents for EU nationals", "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/eu-citizen/index_en.htm", "sourceType": "GOVERNMENT"},
+          {"label": "European External Action Service — Travelling in Europe", "url": "https://www.eeas.europa.eu/sites/default/files/documents/2025/travelling%20in%20europe%202024-NA0223115ENN.pdf", "sourceType": "GOVERNMENT"}
+        ]
+      }
+    },
+    {
+      "id": "schengen-fr-third-country-entry-documents",
+      "decisionKey": "FR_ENTRY_DOCUMENTS",
+      "scope": "ENTRY",
+      "destinationCountries": ["FR"],
+      "nationalities": ["*"],
+      "excludedNationalities": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "CH"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-10-30",
+      "output": {
+        "code": "SCHENGEN_ENTRY_DOCUMENTS",
+        "category": "TRAVEL_DOCUMENT",
+        "status": "VERIFY",
+        "title": "Verify Schengen passport and visa requirements",
+        "summary": "Non-EU/EEA/Swiss travellers need a qualifying passport for France and may also need a Schengen visa; this local snapshot does not infer the visa decision.",
+        "conditions": ["The passport should have been issued within the previous 10 years on entry and normally remain valid for at least 3 months after the planned departure from the EU.", "Visa need depends on nationality and can also be affected by residence documents, family status, passport type, purpose and length of stay.", "Verify the exact result with the responsible French consulate or the official EU guidance before booking."],
+        "sources": [{"label": "European Union — travel documents for non-EU nationals", "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "schengen-it-free-movement-document",
+      "decisionKey": "IT_ENTRY_DOCUMENTS",
+      "scope": "ENTRY",
+      "destinationCountries": ["IT"],
+      "nationalities": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "CH"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-10-30",
+      "output": {
+        "code": "EU_EEA_CH_TRAVEL_DOCUMENT",
+        "category": "TRAVEL_DOCUMENT",
+        "status": "REQUIRED",
+        "title": "Valid passport or national identity card",
+        "summary": "EU citizens and citizens of Iceland, Liechtenstein, Norway and Switzerland can travel to Italy with a valid passport or eligible national identity card.",
+        "conditions": ["The travel document must be valid on the day of travel.", "Children and minors must have their own passport or eligible identity card.", "Temporary border controls and local identity checks can require the document to be presented."],
+        "sources": [
+          {"label": "European Union — travel documents for EU nationals", "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/eu-citizen/index_en.htm", "sourceType": "GOVERNMENT"},
+          {"label": "European External Action Service — Travelling in Europe", "url": "https://www.eeas.europa.eu/sites/default/files/documents/2025/travelling%20in%20europe%202024-NA0223115ENN.pdf", "sourceType": "GOVERNMENT"}
+        ]
+      }
+    },
+    {
+      "id": "schengen-it-third-country-entry-documents",
+      "decisionKey": "IT_ENTRY_DOCUMENTS",
+      "scope": "ENTRY",
+      "destinationCountries": ["IT"],
+      "nationalities": ["*"],
+      "excludedNationalities": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "CH"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-10-30",
+      "output": {
+        "code": "SCHENGEN_ENTRY_DOCUMENTS",
+        "category": "TRAVEL_DOCUMENT",
+        "status": "VERIFY",
+        "title": "Verify Schengen passport and visa requirements",
+        "summary": "Non-EU/EEA/Swiss travellers need a qualifying passport for Italy and may also need a Schengen visa; this local snapshot does not infer the visa decision.",
+        "conditions": ["The passport should have been issued within the previous 10 years on entry and normally remain valid for at least 3 months after the planned departure from the EU.", "Visa need depends on nationality and can also be affected by residence documents, family status, passport type, purpose and length of stay.", "Verify the exact result with the responsible Italian consulate or the official EU guidance before booking."],
+        "sources": [{"label": "European Union — travel documents for non-EU nationals", "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "schengen-nl-free-movement-document",
+      "decisionKey": "NL_ENTRY_DOCUMENTS",
+      "scope": "ENTRY",
+      "destinationCountries": ["NL"],
+      "nationalities": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "CH"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-10-30",
+      "output": {
+        "code": "EU_EEA_CH_TRAVEL_DOCUMENT",
+        "category": "TRAVEL_DOCUMENT",
+        "status": "REQUIRED",
+        "title": "Valid passport or national identity card",
+        "summary": "EU citizens and citizens of Iceland, Liechtenstein, Norway and Switzerland can travel to the Netherlands with a valid passport or eligible national identity card.",
+        "conditions": ["The travel document must be valid on the day of travel.", "Children and minors must have their own passport or eligible identity card.", "Temporary border controls and local identity checks can require the document to be presented."],
+        "sources": [
+          {"label": "European Union — travel documents for EU nationals", "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/eu-citizen/index_en.htm", "sourceType": "GOVERNMENT"},
+          {"label": "European External Action Service — Travelling in Europe", "url": "https://www.eeas.europa.eu/sites/default/files/documents/2025/travelling%20in%20europe%202024-NA0223115ENN.pdf", "sourceType": "GOVERNMENT"}
+        ]
+      }
+    },
+    {
+      "id": "schengen-nl-third-country-entry-documents",
+      "decisionKey": "NL_ENTRY_DOCUMENTS",
+      "scope": "ENTRY",
+      "destinationCountries": ["NL"],
+      "nationalities": ["*"],
+      "excludedNationalities": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "CH"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-30",
+      "reviewAfter": "2026-10-30",
+      "output": {
+        "code": "SCHENGEN_ENTRY_DOCUMENTS",
+        "category": "TRAVEL_DOCUMENT",
+        "status": "VERIFY",
+        "title": "Verify Schengen passport and visa requirements",
+        "summary": "Non-EU/EEA/Swiss travellers need a qualifying passport for the Netherlands and may also need a Schengen visa; this local snapshot does not infer the visa decision.",
+        "conditions": ["The passport should have been issued within the previous 10 years on entry and normally remain valid for at least 3 months after the planned departure from the EU.", "Visa need depends on nationality and can also be affected by residence documents, family status, passport type, purpose and length of stay.", "Verify the exact result with the responsible Dutch consulate or the official EU guidance before booking."],
+        "sources": [{"label": "European Union — travel documents for non-EU nationals", "url": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm", "sourceType": "GOVERNMENT"}]
       }
     }
   ]
