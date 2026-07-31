@@ -1,88 +1,73 @@
-# Travel-document requirements
+# Travel-document rules
 
-TravelDB evaluates document requirements entirely inside the backend. A journey check never calls TravelDoc, Timatic, Sherpa, a government website, or any other external service.
+TravelDB evaluates travel-document rules from a versioned JSON snapshot bundled with the backend. Journey requests never call TravelDoc, Timatic, Sherpa, or a government website.
 
-## Runtime architecture
+## Runtime design
 
-The bundled `src/main/resources/data/document-rules.json` snapshot contains normalized, versioned rules and official source citations. `LocalDocumentRulesProvider` loads and validates it when Spring starts, then evaluates:
+| Component | Responsibility |
+| --- | --- |
+| `DocumentRouteVisitResolver` | Finds the first airport at which each immigration jurisdiction is reached. |
+| `TravelService` | Builds the traveller and route context, including baggage collection points. |
+| `DocumentRequirementsProvider` | Defines the provider boundary used by journey checks. |
+| `DocumentRuleSnapshotLoader` | Parses and validates `document-rules.json` during startup. |
+| `LocalDocumentRulesProvider` | Matches the loaded rules and merges location-specific fallback guidance. |
+| `ConservativeDocumentProvider` | Produces location-specific `VERIFY` guidance when local coverage is missing. |
 
-- nationality and passport issuer;
-- destination and every transit country independently;
-- residence and permits;
-- visas the traveller already holds;
-- travel purpose and age;
-- travel date, rule effective dates and expiry dates;
-- rule priority and decision-key overrides.
+The resolver treats consecutive domestic airports as one country visit and consecutive Schengen airports as one Schengen visit. A transit point is evaluated with entry rules when the itinerary continues domestically or within Schengen, or when the baggage engine requires the traveller to collect a checked bag there.
 
-Higher-priority rules replace lower-priority alternatives in the same decision group. For example, a rule recognizing an already-held destination visa overrides an ETA rule for the same country.
+For example, `OSL -> JFK -> BNE -> MEL` places U.S. permission checks at JFK and Australian entry checks at BNE, not MEL.
 
-Rules past their `reviewAfter` date are automatically downgraded from `REQUIRED` or `NOT_REQUIRED` to `VERIFY`. Missing coverage also returns conservative verification guidance rather than inventing a visa decision.
+Within a visit, higher-priority rules replace lower-priority rules with the same `decisionKey`. This lets a rule for an already-held destination visa override a general ETA rule. A rule past its `reviewAfter` date is downgraded from `REQUIRED` or `NOT_REQUIRED` to `VERIFY` at runtime.
 
-## Fail-closed route coverage
+## Snapshot contract
 
-Document checks are attached to the first airport where the traveller reaches each immigration jurisdiction. Consecutive domestic airports are treated as one visit, and consecutive Schengen airports are treated as one Schengen visit. A connection is evaluated with entry rules when the itinerary contains an onward domestic/intra-Schengen flight or the baggage engine says the traveller must collect a checked bag there. For example, `OSL -> JFK -> BNE -> MEL` places the U.S. permission at JFK and Australian entry at BNE, not at MEL.
+The bundled snapshot is [`src/main/resources/data/document-rules.json`](src/main/resources/data/document-rules.json). It contains:
 
-The automated coverage test runs every ISO passport nationality against every ISO destination country in both transit and entry positions for a standard adult tourist profile. Each position must return either a reviewed local permission decision or a location-specific `VERIFY` result. The consumer interface displays `REQUIRED`, `CONDITIONAL`, and `VERIFY` results; it never turns missing rule coverage into a no-documents message.
+- `schemaVersion`, currently `1`;
+- a `datasetVersion` in `YYYY-MM-DD.N` form and a matching UTC `generatedAt` timestamp;
+- snapshot-level official sources; and
+- a list of rules.
 
-This exhaustive test is a safety guarantee, not a claim that the bundled snapshot knows every immigration outcome. A definitive worldwide product still needs a licensed, continuously maintained source such as IATA Timatic or an equivalent requirements API. Until that provider is integrated, unsupported or under-specified cases must remain verification-only.
+Each rule has a stable ID and decision key, a journey/entry/transit scope, matching conditions, priority, effective dates, review dates, structured output, and at least one HTTPS government source.
 
-## Snapshot format
+Current reviewed coverage includes common electronic permissions and transit cases for the United States, United Kingdom, Canada, Australia, and New Zealand. Germany, Spain, France, Italy, and the Netherlands also have an initial Schengen entry-document set. Those rules cover eligible EU/EEA/Swiss identity documents and common passport-validity constraints, but do not infer nationality-specific visa-free entry.
 
-Every rule has:
+The coverage test checks every ISO passport nationality against every ISO destination in transit and entry positions for a standard adult tourist profile. Every case must return either a reviewed decision or a location-specific `VERIFY` result. This is fail-closed route coverage, not a claim that the snapshot contains every immigration rule.
 
-- a stable ID and decision key;
-- entry, transit or journey scope;
-- matching conditions;
-- priority and effective dates;
-- last-verified and review-after dates;
-- structured output status, category, explanation and exceptions;
-- at least one HTTPS government source.
+## Refreshing the snapshot
 
-The current seed snapshot contains officially sourced rules for commonly used electronic permissions and transit cases in the United States, United Kingdom, Canada, Australia and New Zealand. It also has an initial Schengen entry-document set for Germany, Spain, France, Italy and the Netherlands:
+External access is allowed only as part of this explicit maintenance workflow.
 
-- EU/EEA/Swiss citizens are told to carry a valid passport or eligible national identity card;
-- other nationals receive the common passport-age and validity guidance plus an explicit `VERIFY` result for their nationality-specific visa position.
+1. Open every cited government or public-authority page. Confirm the rule, affected travellers, effective date, and exceptions. Search results and third-party summaries are not evidence.
+2. Update the candidate JSON. Set changed rules' `lastVerified` dates, keep `reviewAfter` within 120 days, increment `datasetVersion`, and make the version date match `generatedAt`.
+3. Import to a candidate file:
 
-The Schengen rules deliberately do not infer visa-free entry from nationality alone. Countries without a reviewed rule still return conservative `VERIFY` guidance.
+   ```powershell
+   cd traveldbBackend
+   node scripts/import-document-rules.mjs --input C:\path\to\document-rules.json --output target\document-rules.candidate.json
+   ```
 
-## Updating data
+4. Audit and test the candidate. Replace the example audit date with the actual review date:
 
-External data access is allowed only during an explicit collection/import operation. It is not part of the application runtime.
+   ```powershell
+   node scripts/audit-document-rules.mjs --input target\document-rules.candidate.json --as-of 2026-07-30
+   node --test scripts/document-rules-audit.test.mjs
+   ```
 
-### Controlled refresh workflow
+5. Review the diff rule by rule. A document-only rule must not suppress an unknown visa outcome; add a `VERIFY` decision when visa entitlement is not encoded.
+6. Import the approved file into the bundled snapshot, then run the full backend suite:
 
-1. Open every cited page on the responsible government's or public authority's site. Confirm the rule text, affected nationalities, destinations, effective date and exceptions. Search results and third-party summaries are not evidence.
-2. Update the candidate JSON. Set each changed rule's `lastVerified` to the review date and `reviewAfter` to no more than 120 days later. Increase `datasetVersion` using `YYYY-MM-DD.N` and set `generatedAt` to the same UTC date.
-3. Import into a candidate file instead of overwriting the shipped snapshot immediately:
+   ```powershell
+   node scripts/import-document-rules.mjs --input target\document-rules.candidate.json
+   node scripts/audit-document-rules.mjs --as-of 2026-07-30
+   .\mvnw.cmd test
+   ```
 
-```powershell
-cd traveldbBackend
-node scripts/import-document-rules.mjs --input C:\path\to\document-rules.json --output target\document-rules.candidate.json
-```
+The audit is offline and deterministic. It rejects stale data, review windows longer than 120 days, malformed dates or tokens, duplicate rule IDs, insecure citations, and source hosts outside `OFFICIAL_SOURCE_HOST_SUFFIXES` in `scripts/document-rules-audit-lib.mjs`. It cannot confirm that a URL still resolves or that its page still supports the rule; the reviewer must do that.
 
-4. Run the deterministic audit with an explicit review date:
+The importer also accepts an HTTPS URL for a one-time download. Do not use URL import in application code. TravelDoc's public checker is not scraped; a licensed export can only be used when the vendor provides an authorized data format.
 
-```powershell
-node scripts/audit-document-rules.mjs --input target\document-rules.candidate.json --as-of 2026-07-30
-node --test scripts/document-rules-audit.test.mjs
-```
-
-The audit rejects stale snapshots and rules, review windows longer than 120 days, malformed dates or tokens, duplicate IDs, insecure citations and source hosts outside the reviewed public-authority allowlist. The explicit `--as-of` value makes the same candidate produce the same freshness result in local development and CI. The audit is intentionally offline: a reviewer must still open each URL to confirm that it resolves and still supports the rule. Adding a new authority domain requires an intentional update to `OFFICIAL_SOURCE_HOST_SUFFIXES` in `scripts/document-rules-audit-lib.mjs`.
-
-5. Review the candidate diff rule by rule. In particular, confirm that a document-only rule does not suppress an unknown visa outcome; pair it with a `VERIFY` decision when visa entitlement is not encoded.
-6. Import the approved candidate into `src/main/resources/data/document-rules.json`, then run both the audit and the backend tests:
-
-```powershell
-node scripts/import-document-rules.mjs --input target\document-rules.candidate.json
-node scripts/audit-document-rules.mjs --as-of 2026-07-30
-mvn.cmd test
-```
-
-The dates above are examples; use the actual review date. The importer also accepts an HTTPS URL for a one-time download. It rejects duplicate IDs, unsupported schemas, non-HTTPS citations and rules without a government source. Never use the URL-import option in the application runtime.
-
-TravelDoc's public checker is not scraped. A licensed TravelDoc export can be transformed into the local snapshot when the vendor supplies an authorized data format.
-
-## Journey request document profile
+## Journey request profile
 
 ```json
 {
@@ -101,15 +86,13 @@ TravelDoc's public checker is not scraped. A licensed TravelDoc export can be tr
 }
 ```
 
-The response contains `REQUIRED`, `NOT_REQUIRED`, `CONDITIONAL` or `VERIFY` requirements, the affected entry/transit location, exceptions, source URLs, missing inputs, snapshot version messaging and the check timestamp. Its concise top-level list is named `documentActions` because it includes mandatory, conditional and verification items; clients must not interpret every action as a confirmed requirement.
+The response includes `REQUIRED`, `NOT_REQUIRED`, `CONDITIONAL`, and `VERIFY` requirements, their entry or transit locations, exceptions, sources, missing inputs, snapshot version, and check time. The short top-level `documentActions` list includes mandatory, conditional, and verification items; clients must not treat every item as a confirmed requirement.
 
-## Accuracy rules
+## Safety invariants
 
-- Never infer that every non-citizen needs a visa.
-- Never treat Schengen membership alone as a visa decision.
-- Never let a passport, health or arrival-form rule imply that an unresolved visa decision is satisfied.
-- Never treat missing local coverage as visa-free entry.
-- Evaluate repeated transit countries as separate itinerary stops.
+- Missing local coverage must never become a visa-free result.
+- Schengen membership alone is not a visa decision.
+- Passport, health, or arrival-form rules cannot resolve an unknown visa decision.
+- Repeated visits to a country are evaluated as separate itinerary stops.
 - Expired review dates reduce confidence automatically.
-- Admission remains a decision for the relevant border authority.
-- Never describe exhaustive fail-closed test coverage as exhaustive immigration-rule coverage.
+- Final admission decisions belong to the relevant border authority.

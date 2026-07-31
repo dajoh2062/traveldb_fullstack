@@ -10,18 +10,14 @@ public class RuleEngine {
     private final List<Rule> rules;
 
     public RuleEngine(List<Rule> rules) {
-        // Spring injects all Rule beans.
-        // We keep their @Order.
-        this.rules = rules;
+        this.rules = List.copyOf(rules);
     }
 
-    public RuleResult evaluate(RuleContext ctx) {
+    public RuleResult evaluate(RuleContext context) {
         RuleResult result = new RuleResult();
-
-        for (Rule r : rules) {
-            r.apply(ctx, result);
+        for (Rule rule : rules) {
+            rule.apply(context, result);
         }
-
         return result;
     }
 }

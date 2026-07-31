@@ -1,12 +1,17 @@
 import Icon from "./Icon";
 
-const ticketOptions = [
+const CHECKED_BAGGAGE_OPTIONS = [
+  { value: true, label: "Yes" },
+  { value: false, label: "Carry-on only" },
+];
+
+const TICKET_OPTIONS = [
   { value: "SINGLE_BOOKING", label: "One booking" },
   { value: "SEPARATE_TICKETS", label: "Separate tickets" },
   { value: "UNKNOWN", label: "Not sure" },
 ];
 
-const throughCheckOptions = [
+const THROUGH_CHECK_OPTIONS = [
   { value: "YES", label: "Final destination" },
   { value: "NO", label: "Connection airport" },
   { value: "UNKNOWN", label: "Not sure yet" },
@@ -44,24 +49,21 @@ export default function BaggageSetup({ baggage, onChange }) {
         <SegmentedControl
           label="Checked baggage?"
           onChange={value => onChange("checkedBaggage", value)}
-          options={[
-            { value: true, label: "Yes" },
-            { value: false, label: "Carry-on only" },
-          ]}
+          options={CHECKED_BAGGAGE_OPTIONS}
           value={baggage.checkedBaggage}
         />
         <SegmentedControl
           disabled={!baggage.checkedBaggage}
           label="Booking"
           onChange={value => onChange("ticketArrangement", value)}
-          options={ticketOptions}
+          options={TICKET_OPTIONS}
           value={baggage.ticketArrangement}
         />
         <SegmentedControl
           disabled={!baggage.checkedBaggage}
           label="Bag tag destination"
           onChange={value => onChange("checkedThrough", value)}
-          options={throughCheckOptions}
+          options={THROUGH_CHECK_OPTIONS}
           value={baggage.checkedThrough}
         />
       </div>

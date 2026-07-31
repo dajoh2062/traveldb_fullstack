@@ -2,7 +2,7 @@ package projects.traveldbbackend.documents;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
-import projects.traveldbbackend.Airport;
+import projects.traveldbbackend.model.Airport;
 import projects.traveldbbackend.documents.DocumentRequirement.Scope;
 import tools.jackson.databind.ObjectMapper;
 

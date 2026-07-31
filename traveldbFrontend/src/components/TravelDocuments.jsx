@@ -1,7 +1,10 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Icon from "./Icon";
+import CountrySelect from "./documents/CountrySelect";
+import FieldError from "./documents/FieldError";
+import HeldCountryList from "./documents/HeldCountryList";
 
-const PURPOSES = [
+const TRAVEL_PURPOSE_OPTIONS = [
   { value: "TOURISM", label: "Holiday or visiting" },
   { value: "BUSINESS", label: "Business" },
   { value: "TRANSIT", label: "Transit only" },
@@ -15,98 +18,6 @@ function localDateString(date = new Date()) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
-}
-
-function FieldError({ id, message }) {
-  if (!message) return null;
-  return <span className="field-error" id={id} role="alert">{message}</span>;
-}
-
-function CountrySelect({ countries, error, id, label, onChange, value }) {
-  const errorId = `${id}-error`;
-  return (
-    <label className={`field document-field ${error ? "has-error" : ""}`} htmlFor={id}>
-      <span className="field-label">{label}</span>
-      <span className="select-shell">
-        <select
-          aria-describedby={error ? errorId : undefined}
-          aria-invalid={Boolean(error)}
-          disabled={countries.length === 0}
-          id={id}
-          onChange={event => onChange(event.target.value)}
-          value={value}
-        >
-          <option value="">{countries.length === 0 ? "Countries unavailable" : "Select a country"}</option>
-          {countries.map(country => (
-            <option key={country.countryId} value={country.countryId}>
-              {country.countryNameEn}
-            </option>
-          ))}
-        </select>
-      </span>
-      <FieldError id={errorId} message={error} />
-    </label>
-  );
-}
-
-function HeldCountryList({ countries, label, onChange, values }) {
-  const [selection, setSelection] = useState("");
-  const availableCountries = useMemo(
-    () => countries.filter(country => !values.includes(country.countryId)),
-    [countries, values],
-  );
-
-  function addCountry() {
-    if (!selection || values.includes(selection)) return;
-    onChange([...values, selection]);
-    setSelection("");
-  }
-
-  return (
-    <div className="held-document-list">
-      <span className="field-label">{label}</span>
-      <div className="held-document-picker">
-        <span className="select-shell compact">
-          <select
-            aria-label={`Add a country to ${label.toLowerCase()}`}
-            onChange={event => setSelection(event.target.value)}
-            value={selection}
-          >
-            <option value="">Select a country</option>
-            {availableCountries.map(country => (
-              <option key={country.countryId} value={country.countryId}>
-                {country.countryNameEn}
-              </option>
-            ))}
-          </select>
-        </span>
-        <button className="secondary-button" disabled={!selection} onClick={addCountry} type="button">
-          Add
-        </button>
-      </div>
-      {values.length > 0 ? (
-        <ul className="country-chip-list" aria-label={label}>
-          {values.map(code => {
-            const countryName = countries.find(country => country.countryId === code)?.countryNameEn ?? code;
-            return (
-              <li key={code}>
-                <span>{countryName}</span>
-                <button
-                  aria-label={`Remove ${countryName}`}
-                  onClick={() => onChange(values.filter(value => value !== code))}
-                  type="button"
-                >
-                  <Icon name="close" size={13} />
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        <small>None added</small>
-      )}
-    </div>
-  );
 }
 
 export default function TravelDocuments({ countries, documents, errors = {}, onChange }) {
@@ -154,7 +65,10 @@ export default function TravelDocuments({ countries, documents, errors = {}, onC
           <FieldError id="departure-date-error" message={errors.departureDate} />
         </label>
 
-        <label className={`field document-field ${errors.passportExpiryDate ? "has-error" : ""}`} htmlFor="passport-expiry">
+        <label
+          className={`field document-field ${errors.passportExpiryDate ? "has-error" : ""}`}
+          htmlFor="passport-expiry"
+        >
           <span className="field-label">Passport expiry</span>
           <span className="input-shell document-input">
             <input
@@ -180,7 +94,9 @@ export default function TravelDocuments({ countries, documents, errors = {}, onC
               onChange={event => onChange("travelPurpose", event.target.value)}
               value={documents.travelPurpose}
             >
-              {PURPOSES.map(purpose => <option key={purpose.value} value={purpose.value}>{purpose.label}</option>)}
+              {TRAVEL_PURPOSE_OPTIONS.map(purpose => (
+                <option key={purpose.value} value={purpose.value}>{purpose.label}</option>
+              ))}
             </select>
           </span>
           <FieldError id="travel-purpose-error" message={errors.travelPurpose} />

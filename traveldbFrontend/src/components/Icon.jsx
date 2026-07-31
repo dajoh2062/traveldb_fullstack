@@ -2,26 +2,22 @@ import {
   ArrowDown,
   ArrowRight,
   ArrowUp,
-  BadgeCheck,
   Check,
   CircleHelp,
   ExternalLink,
   FileText,
   Globe2,
-  Info,
   LoaderCircle,
   Luggage,
-  MapPin,
   Moon,
   Plane,
   Search,
-  ShieldCheck,
   Sun,
   TriangleAlert,
   X,
 } from "lucide-react";
 
-const icons = {
+const ICONS = {
   alert: TriangleAlert,
   arrow: ArrowRight,
   down: ArrowDown,
@@ -29,23 +25,19 @@ const icons = {
   close: X,
   document: FileText,
   globe: Globe2,
-  info: Info,
   loader: LoaderCircle,
-  location: MapPin,
   moon: Moon,
   plane: Plane,
   search: Search,
-  shield: ShieldCheck,
   suitcase: Luggage,
   sun: Sun,
   up: ArrowUp,
-  verified: BadgeCheck,
   help: CircleHelp,
   external: ExternalLink,
 };
 
 export default function Icon({ name, size = 20, strokeWidth = 1.8 }) {
-  const LucideIcon = icons[name];
+  const LucideIcon = ICONS[name];
   return (
     <LucideIcon
       aria-hidden="true"

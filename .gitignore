@@ -1,14 +1,25 @@
-# OS
+# OS metadata
 .DS_Store
+Thumbs.db
 
-# Backend (Spring Boot / Maven)
+# Java / Maven
 traveldbBackend/target/
-traveldbBackend/.idea/
+.idea/
+*.iml
 
-# Frontend (React / Vite)
+# Node / Vite
 traveldbFrontend/node_modules/
 traveldbFrontend/dist/
+coverage/
 
-# Env files
+# Local configuration
 .env
+.env.*
+!.env.example
+*.local
 
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -1,6 +1,7 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import process from "node:process";
 
 const SCRIPT_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
 const BACKEND_DIRECTORY = path.resolve(SCRIPT_DIRECTORY, "..");
@@ -96,7 +97,8 @@ function buildBatchedInserts(table, columns, values, batchSize = 400) {
   for (let start = 0; start < values.length; start += batchSize) {
     const batch = values.slice(start, start + batchSize);
     statements.push(
-      `INSERT INTO ${table} (${columns.join(", ")}) VALUES\n${batch.map(row => `(${row.join(",")})`).join(",\n")};`
+      `INSERT INTO ${table} (${columns.join(", ")}) VALUES\n`
+        + `${batch.map(row => `(${row.join(",")})`).join(",\n")};`,
     );
   }
   return statements.join("\n\n");
@@ -115,46 +117,31 @@ function choosePreferredAirport(current, candidate) {
   return Number(candidate.id) < Number(current.id) ? candidate : current;
 }
 
-async function preserveAirlineSeed() {
-  const airlineSeedPath = path.join(DATA_DIRECTORY, "airlines.sql");
-  try {
-    const existingAirlineSeed = await readFile(airlineSeedPath, "utf8");
-    if (existingAirlineSeed.includes("INSERT INTO Airlines")) return;
-  } catch {
-    // First migration from the original monolithic seed file.
-  }
-
-  const legacySeedPath = path.join(RESOURCES_DIRECTORY, "data.sql");
-  const legacySeed = await readFile(legacySeedPath, "utf8");
-  const airlineInsert = legacySeed.match(/INSERT INTO Airlines[\s\S]*?;(?=\s*INSERT INTO Airports)/)?.[0];
-  if (!airlineInsert) throw new Error("Could not find the airline seed block in data.sql");
-  await writeFile(
-    airlineSeedPath,
-    `-- Curated airline seed data.\n${airlineInsert.trim()}\n`,
-    "utf8"
-  );
-}
-
-async function main() {
-  const [countryRows, airportRows] = await Promise.all([
-    downloadCsv(SOURCES.countries),
-    downloadCsv(SOURCES.airports),
-  ]);
-
-  const countries = countryRows
+function selectCountries(countryRows) {
+  return countryRows
     .filter(country => /^[A-Z]{2}$/.test(country.code))
     .sort((left, right) => left.name.localeCompare(right.name));
-  const countriesByCode = new Map(countries.map(country => [country.code, country]));
+}
 
-  const airportByIata = new Map();
+function selectAirports(airportRows, countriesByCode) {
+  const airportsByIata = new Map();
   for (const airport of airportRows) {
     const iataCode = airport.iata_code?.trim().toUpperCase();
-    if (!/^[A-Z]{3}$/.test(iataCode) || airport.type === "closed" || !countriesByCode.has(airport.iso_country)) continue;
-    airportByIata.set(iataCode, choosePreferredAirport(airportByIata.get(iataCode), airport));
-  }
-  const airports = [...airportByIata.values()].sort((left, right) => left.iata_code.localeCompare(right.iata_code));
+    const hasKnownCountry = countriesByCode.has(airport.iso_country);
+    if (!/^[A-Z]{3}$/.test(iataCode) || airport.type === "closed" || !hasKnownCountry) {
+      continue;
+    }
 
-  const countryValues = countries.map(country => [
+    const preferred = choosePreferredAirport(airportsByIata.get(iataCode), airport);
+    airportsByIata.set(iataCode, preferred);
+  }
+
+  return [...airportsByIata.values()]
+    .sort((left, right) => left.iata_code.localeCompare(right.iata_code));
+}
+
+function buildCountryRows(countries) {
+  return countries.map(country => [
     sqlNumber(country.id),
     sqlText(country.code),
     sqlText(country.name),
@@ -163,8 +150,10 @@ async function main() {
     sqlText(country.keywords),
     sqlBoolean(SCHENGEN_COUNTRIES.has(country.code)),
   ]);
+}
 
-  const airportValues = airports.map(airport => {
+function buildAirportRows(airports, countriesByCode) {
+  return airports.map(airport => {
     const country = countriesByCode.get(airport.iso_country);
     return [
       sqlNumber(airport.id),
@@ -190,28 +179,74 @@ async function main() {
       sqlBoolean(SCHENGEN_COUNTRIES.has(airport.iso_country)),
     ];
   });
+}
 
+async function writeGeneratedData(countries, airports, countriesByCode) {
   await mkdir(DATA_DIRECTORY, { recursive: true });
-  await preserveAirlineSeed();
 
   const generatedAt = new Date().toISOString();
-  await writeFile(
-    path.join(DATA_DIRECTORY, "countries.sql"),
-    `-- Generated ${generatedAt} from ${SOURCES.countries}\n-- OurAirports data is released into the public domain.\n${buildBatchedInserts("Countries", ["source_id", "country_id", "country_name_en", "continent", "wikipedia_url", "keywords", "is_schengen"], countryValues)}\n`,
-    "utf8"
+  const countryInserts = buildBatchedInserts(
+    "Countries",
+    ["source_id", "country_id", "country_name_en", "continent", "wikipedia_url", "keywords", "is_schengen"],
+    buildCountryRows(countries),
   );
-  await writeFile(
-    path.join(DATA_DIRECTORY, "airports.sql"),
-    `-- Generated ${generatedAt} from ${SOURCES.airports}\n-- Includes every non-closed airport with a unique three-letter IATA code.\n-- OurAirports data is released into the public domain.\n${buildBatchedInserts("Airports", ["source_id", "ident", "iata_code", "icao_code", "gps_code", "local_code", "name", "municipality", "region_code", "country", "country_code", "continent", "airport_type", "scheduled_service", "latitude_deg", "longitude_deg", "elevation_ft", "official_url", "wikipedia_url", "keywords", "is_schengen"], airportValues)}\n`,
-    "utf8"
+  const airportInserts = buildBatchedInserts(
+    "Airports",
+    [
+      "source_id", "ident", "iata_code", "icao_code", "gps_code", "local_code",
+      "name", "municipality", "region_code", "country", "country_code", "continent",
+      "airport_type", "scheduled_service", "latitude_deg", "longitude_deg",
+      "elevation_ft", "official_url", "wikipedia_url", "keywords", "is_schengen",
+    ],
+    buildAirportRows(airports, countriesByCode),
   );
-  await writeFile(
-    path.join(DATA_DIRECTORY, "ourairports-metadata.json"),
-    `${JSON.stringify({ generatedAt, sources: SOURCES, countryCount: countries.length, airportCount: airports.length, filter: "non-closed airports with a unique three-letter IATA code" }, null, 2)}\n`,
-    "utf8"
-  );
+  const metadata = {
+    generatedAt,
+    sources: SOURCES,
+    countryCount: countries.length,
+    airportCount: airports.length,
+    filter: "non-closed airports with a unique three-letter IATA code",
+  };
+
+  await Promise.all([
+    writeFile(
+      path.join(DATA_DIRECTORY, "countries.sql"),
+      `-- Generated ${generatedAt} from ${SOURCES.countries}\n`
+        + `-- OurAirports data is released into the public domain.\n${countryInserts}\n`,
+      "utf8",
+    ),
+    writeFile(
+      path.join(DATA_DIRECTORY, "airports.sql"),
+      `-- Generated ${generatedAt} from ${SOURCES.airports}\n`
+        + "-- Includes every non-closed airport with a unique three-letter IATA code.\n"
+        + `-- OurAirports data is released into the public domain.\n${airportInserts}\n`,
+      "utf8",
+    ),
+    writeFile(
+      path.join(DATA_DIRECTORY, "ourairports-metadata.json"),
+      `${JSON.stringify(metadata, null, 2)}\n`,
+      "utf8",
+    ),
+  ]);
+}
+
+async function main() {
+  const [countryRows, airportRows] = await Promise.all([
+    downloadCsv(SOURCES.countries),
+    downloadCsv(SOURCES.airports),
+  ]);
+  const countries = selectCountries(countryRows);
+  const countriesByCode = new Map(countries.map(country => [country.code, country]));
+  const airports = selectAirports(airportRows, countriesByCode);
+
+  await writeGeneratedData(countries, airports, countriesByCode);
 
   console.log(`Generated ${countries.length} countries and ${airports.length} airports.`);
 }
 
-await main();
+try {
+  await main();
+} catch (error) {
+  console.error(`OurAirports sync failed: ${error.message}`);
+  process.exitCode = 1;
+}

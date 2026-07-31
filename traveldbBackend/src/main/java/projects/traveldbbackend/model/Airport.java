@@ -1,4 +1,4 @@
-package projects.traveldbbackend;
+package projects.traveldbbackend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

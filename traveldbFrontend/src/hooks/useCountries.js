@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchCountries } from "../api/travelApi";
 
 export default function useCountries() {
   const [countries, setCountries] = useState([]);
@@ -8,8 +9,7 @@ export default function useCountries() {
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch("/api/countries", { signal: controller.signal })
-      .then(response => response.ok ? response.json() : Promise.reject(new Error("Country service unavailable")))
+    fetchCountries({ signal: controller.signal })
       .then(setCountries)
       .catch(() => {
         if (!controller.signal.aborted) {

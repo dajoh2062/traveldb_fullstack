@@ -6,7 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import projects.traveldbbackend.service.JourneyRequestValidator;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -32,6 +34,28 @@ class TravelControllerValidationTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.documentCheck.provider").value("TRAVELDB_LOCAL_RULES"));
+    }
+
+    @Test
+    void returnsAirportSearchResultsWithTheExistingResponseShape() throws Exception {
+        mockMvc.perform(get("/api/airports/search")
+                        .param("q", "jfk")
+                        .param("limit", "10"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.airports[0].iataCode").value("JFK"))
+                .andExpect(jsonPath("$.airports[0].scheduledService").isBoolean())
+                .andExpect(jsonPath("$.offset").value(0))
+                .andExpect(jsonPath("$.limit").value(10))
+                .andExpect(jsonPath("$.hasMore").isBoolean());
+    }
+
+    @Test
+    void returnsCountriesWithTheExistingResponseShape() throws Exception {
+        mockMvc.perform(get("/api/countries"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[?(@.countryId == 'NO')].countryNameEn").value("Norway"));
     }
 
     @Test

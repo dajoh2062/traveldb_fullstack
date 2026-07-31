@@ -1,8 +1,13 @@
-package projects.traveldbbackend;
+package projects.traveldbbackend.service;
 
 import org.springframework.stereotype.Component;
 import projects.traveldbbackend.api.InvalidJourneyRequestException;
 import projects.traveldbbackend.api.InvalidJourneyRequestException.FieldViolation;
+import projects.traveldbbackend.api.dto.BaggageOptions;
+import projects.traveldbbackend.api.dto.DocumentOptions;
+import projects.traveldbbackend.api.dto.JourneyRequest;
+import projects.traveldbbackend.model.Airport;
+import projects.traveldbbackend.repository.TravelRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,8 +20,10 @@ import java.util.regex.Pattern;
 @Component
 public class JourneyRequestValidator {
 
-    static final int MAX_ROUTE_AIRPORTS = 20;
+    public static final int MAX_ROUTE_AIRPORTS = 20;
+
     private static final int MAX_COUNTRY_LIST_SIZE = 50;
+    private static final int MAX_TRAVELER_AGE = 120;
     private static final Pattern COUNTRY_CODE = Pattern.compile("[A-Z]{2}");
     private static final Pattern AIRPORT_CODE = Pattern.compile("[A-Z]{3}");
 
@@ -26,7 +33,7 @@ public class JourneyRequestValidator {
         this.repository = repository;
     }
 
-    public ValidatedJourney validate(TravelService.JourneyRequest request) {
+    public ValidatedJourney validate(JourneyRequest request) {
         if (request == null) {
             throw new InvalidJourneyRequestException(List.of(
                     new FieldViolation("request", "Request body must be a JSON object.")
@@ -42,12 +49,12 @@ public class JourneyRequestValidator {
         );
         List<Airport> airports = validateRoute(request.route(), violations);
 
-        TravelService.DocumentOptions rawDocuments = request.documents() == null
-                ? TravelService.DocumentOptions.defaults()
+        DocumentOptions documentOptions = request.documents() == null
+                ? DocumentOptions.defaults()
                 : request.documents();
-        TravelService.DocumentOptions documents = validateDocuments(rawDocuments, violations);
-        TravelService.BaggageOptions baggage = request.baggage() == null
-                ? TravelService.BaggageOptions.defaults()
+        DocumentOptions documents = validateDocuments(documentOptions, violations);
+        BaggageOptions baggage = request.baggage() == null
+                ? BaggageOptions.defaults()
                 : request.baggage();
 
         if (!violations.isEmpty()) {
@@ -81,6 +88,7 @@ public class JourneyRequestValidator {
                 violations.add(new FieldViolation(field, "Must be a three-letter IATA airport code."));
                 continue;
             }
+
             repository.findAirport(code).ifPresentOrElse(
                     airports::add,
                     () -> violations.add(new FieldViolation(field, "Unknown airport code: " + code + "."))
@@ -89,8 +97,8 @@ public class JourneyRequestValidator {
         return airports;
     }
 
-    private TravelService.DocumentOptions validateDocuments(
-            TravelService.DocumentOptions documents,
+    private DocumentOptions validateDocuments(
+            DocumentOptions documents,
             List<FieldViolation> violations
     ) {
         String residenceCountry = validateCountryCode(
@@ -139,22 +147,21 @@ public class JourneyRequestValidator {
             ));
         }
 
-        Integer age = documents.travelerAge();
-        if (age != null && (age < 0 || age > 120)) {
+        Integer travelerAge = documents.travelerAge();
+        if (travelerAge != null && (travelerAge < 0 || travelerAge > MAX_TRAVELER_AGE)) {
             violations.add(new FieldViolation(
                     "documents.travelerAge",
-                    "Traveler age must be between 0 and 120."
+                    "Traveler age must be between 0 and " + MAX_TRAVELER_AGE + "."
             ));
         }
 
-        String purpose = normalize(documents.travelPurpose());
-        return new TravelService.DocumentOptions(
+        return new DocumentOptions(
                 residenceCountry,
                 passportCountry,
                 passportExpiryDate,
                 departureDate,
-                purpose,
-                age,
+                normalize(documents.travelPurpose()),
+                travelerAge,
                 residencePermits,
                 visas
         );
@@ -165,7 +172,9 @@ public class JourneyRequestValidator {
             String field,
             List<FieldViolation> violations
     ) {
-        if (values == null) return List.of();
+        if (values == null) {
+            return List.of();
+        }
         if (values.size() > MAX_COUNTRY_LIST_SIZE) {
             violations.add(new FieldViolation(
                     field,
@@ -182,7 +191,9 @@ public class JourneyRequestValidator {
                     true,
                     violations
             );
-            if (normalized != null) normalizedValues.add(normalized);
+            if (normalized != null) {
+                normalizedValues.add(normalized);
+            }
         }
         return List.copyOf(normalizedValues);
     }
@@ -195,7 +206,9 @@ public class JourneyRequestValidator {
     ) {
         String normalized = normalize(value);
         if (normalized == null) {
-            if (required) violations.add(new FieldViolation(field, "Country code is required."));
+            if (required) {
+                violations.add(new FieldViolation(field, "Country code is required."));
+            }
             return null;
         }
         if (!COUNTRY_CODE.matcher(normalized).matches()) {
@@ -209,15 +222,17 @@ public class JourneyRequestValidator {
         return normalized;
     }
 
-    private String normalize(String value) {
-        if (value == null || value.isBlank()) return null;
+    private static String normalize(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
         return value.trim().toUpperCase(Locale.ROOT);
     }
 
     public record ValidatedJourney(
             String nationalityCountryCode,
             List<Airport> airports,
-            TravelService.BaggageOptions baggage,
-            TravelService.DocumentOptions documents
+            BaggageOptions baggage,
+            DocumentOptions documents
     ) {}
 }

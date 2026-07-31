@@ -1,12 +1,12 @@
 import { airportLabel } from "../utils/journey";
 import Icon from "./Icon";
 
-const baggageStatus = {
+const BAGGAGE_STATUS = {
   REQUIRED: { label: "Pick up and recheck", icon: "alert" },
   CONFIRM: { label: "Confirm with airline", icon: "help" },
 };
 
-const documentStatus = {
+const DOCUMENT_STATUS = {
   REQUIRED: { className: "required", icon: "alert", label: "Required" },
   CONDITIONAL: { className: "conditional", icon: "help", label: "Check" },
   VERIFY: { className: "verify", icon: "help", label: "Verify" },
@@ -16,20 +16,26 @@ function actionableBaggageStops(stops = []) {
   return stops.filter(stop => stop.status === "REQUIRED" || stop.status === "CONFIRM");
 }
 
-function actionableDocumentItems(requirements = []) {
+function actionableDocumentRequirements(requirements = []) {
   const seen = new Set();
 
   return requirements.filter(requirement => {
-    if (!documentStatus[requirement.status] || requirement.code === "ENTRY_CONDITIONS") return false;
-    const key = [
-      requirement.code ?? requirement.title,
-      requirement.scope ?? "JOURNEY",
-      requirement.airportCode ?? requirement.countryCode ?? "ALL",
-    ].join(":");
+    if (!DOCUMENT_STATUS[requirement.status] || requirement.code === "ENTRY_CONDITIONS") return false;
+
+    const key = documentRequirementKey(requirement);
     if (seen.has(key)) return false;
+
     seen.add(key);
     return true;
   });
+}
+
+function documentRequirementKey(requirement) {
+  return [
+    requirement.code ?? requirement.title,
+    requirement.scope ?? "JOURNEY",
+    requirement.airportCode ?? requirement.countryCode ?? "ALL",
+  ].join(":");
 }
 
 function documentLocation(requirement, route) {
@@ -52,7 +58,7 @@ function sourceLabel(source, sourceCount) {
 
 export default function JourneyResults({ result, route }) {
   const baggageStops = actionableBaggageStops(result.baggageStops);
-  const documents = actionableDocumentItems(result.documentCheck?.requirements);
+  const documentRequirements = actionableDocumentRequirements(result.documentCheck?.requirements);
   const hasMissingDetails = (result.documentCheck?.missingInputs?.length ?? 0) > 0;
 
   return (
@@ -69,11 +75,16 @@ export default function JourneyResults({ result, route }) {
           {baggageStops.length > 0 ? (
             <ol className="simple-result-list">
               {baggageStops.map((stop, index) => {
-                const status = baggageStatus[stop.status];
+                const status = BAGGAGE_STATUS[stop.status];
                 return (
-                  <li className={`simple-result-item ${stop.status.toLowerCase()}`} key={`${stop.airportCode}-${index}`}>
+                  <li
+                    className={`simple-result-item ${stop.status.toLowerCase()}`}
+                    key={`${stop.airportCode}-${index}`}
+                  >
                     <strong>{airportLabel(stop.airportCode, route)}</strong>
-                    <span><Icon name={status.icon} size={14} /> {status.label}</span>
+                    <span>
+                      <Icon name={status.icon} size={14} /> {status.label}
+                    </span>
                   </li>
                 );
               })}
@@ -89,19 +100,17 @@ export default function JourneyResults({ result, route }) {
             <h3 id="document-results-title">Travel documents</h3>
           </div>
 
-          {documents.length > 0 ? (
+          {documentRequirements.length > 0 ? (
             <ul className="simple-result-list">
-              {documents.map(document => {
-                const status = documentStatus[document.status];
+              {documentRequirements.map(document => {
+                const status = DOCUMENT_STATUS[document.status];
                 const sources = documentSources(document);
-                const key = [
-                  document.code ?? document.title,
-                  document.scope ?? "JOURNEY",
-                  document.airportCode ?? document.countryCode ?? "ALL",
-                ].join(":");
 
                 return (
-                  <li className={`simple-result-item document ${status.className}`} key={key}>
+                  <li
+                    className={`simple-result-item document ${status.className}`}
+                    key={documentRequirementKey(document)}
+                  >
                     <div className="document-result-copy">
                       <strong>{document.title}</strong>
                       <small>{documentLocation(document, route)}</small>
@@ -116,13 +125,17 @@ export default function JourneyResults({ result, route }) {
                         </div>
                       )}
                     </div>
-                    <span><Icon name={status.icon} size={14} /> {status.label}</span>
+                    <span>
+                      <Icon name={status.icon} size={14} /> {status.label}
+                    </span>
                   </li>
                 );
               })}
             </ul>
           ) : (
-            <p className="empty-result">Requirements could not be confirmed. Check official immigration guidance.</p>
+            <p className="empty-result">
+              Requirements could not be confirmed. Check official immigration guidance.
+            </p>
           )}
           {hasMissingDetails && (
             <p className="result-note">Use Advanced search for a more precise result.</p>

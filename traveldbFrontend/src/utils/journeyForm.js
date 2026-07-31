@@ -17,6 +17,16 @@ export const initialBaggageProfile = {
 
 const countryCodePattern = /^[A-Za-z]{2}$/;
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+const documentFieldKeys = new Set([
+  "residenceCountryCode",
+  "passportIssuingCountryCode",
+  "passportExpiryDate",
+  "departureDate",
+  "travelPurpose",
+  "travelerAge",
+  "residencePermitCountryCodes",
+  "visaCountryCodes",
+]);
 
 function isCountryCode(value) {
   return typeof value === "string" && countryCodePattern.test(value.trim());
@@ -59,6 +69,27 @@ function normalizeRoute(route) {
     .map(stop => typeof stop === "string" ? stop : stop?.iataCode)
     .filter(code => typeof code === "string" && code.trim())
     .map(code => code.trim().toUpperCase());
+}
+
+function formFieldKey(apiField = "") {
+  if (apiField === "nationalityCountryCode") return "nationality";
+  if (apiField === "route" || apiField.startsWith("route[")) return "route";
+  if (apiField.startsWith("documents.")) {
+    return apiField.slice("documents.".length).split("[")[0];
+  }
+  return apiField;
+}
+
+export function mapApiErrorsToFields(errors = []) {
+  return Object.fromEntries(
+    errors.map(error => [formFieldKey(error.field), error.message]),
+  );
+}
+
+export function removeDocumentFieldErrors(errors) {
+  return Object.fromEntries(
+    Object.entries(errors).filter(([field]) => !documentFieldKeys.has(field)),
+  );
 }
 
 export function validateJourneyForm({ nationality, route, documents, includeDocumentDetails = true } = {}) {

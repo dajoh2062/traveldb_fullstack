@@ -13,16 +13,4 @@ public record DocumentCheckResult(
         List<String> warnings,
         List<DocumentRequirement.DocumentSource> verificationSources
 ) {
-    public static DocumentCheckResult unavailable(String warning) {
-        return new DocumentCheckResult(
-                "TRAVELDB_CONSERVATIVE",
-                false,
-                "VERIFY_WITH_AUTHORITATIVE_PROVIDER",
-                Instant.now(),
-                List.of(),
-                List.of(),
-                List.of(warning),
-                List.of()
-        );
-    }
 }

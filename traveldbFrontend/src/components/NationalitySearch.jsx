@@ -2,6 +2,42 @@ import { useMemo, useState } from "react";
 import { normalizeSearch } from "../utils/search";
 import Icon from "./Icon";
 
+const MAX_SUGGESTIONS = 8;
+const NO_MATCH_SCORE = 6;
+
+function countrySearchScore(country, query) {
+  if (!query) return NO_MATCH_SCORE;
+
+  const code = normalizeSearch(country.countryId);
+  const name = normalizeSearch(country.countryNameEn);
+  const keywords = normalizeSearch(country.keywords ?? "");
+
+  if (code === query) return 0;
+  if (code.startsWith(query)) return 1;
+  if (name === query) return 2;
+  if (name.startsWith(query)) return 3;
+  if (name.includes(query)) return 4;
+  if (keywords.includes(query)) return 5;
+  return NO_MATCH_SCORE;
+}
+
+function findCountrySuggestions(countries, query) {
+  const normalizedQuery = normalizeSearch(query);
+
+  return countries
+    .map(country => ({
+      country,
+      score: countrySearchScore(country, normalizedQuery),
+    }))
+    .filter(({ score }) => !normalizedQuery || score < NO_MATCH_SCORE)
+    .sort((left, right) => (
+      left.score - right.score
+      || left.country.countryNameEn.localeCompare(right.country.countryNameEn)
+    ))
+    .slice(0, MAX_SUGGESTIONS)
+    .map(({ country }) => country);
+}
+
 export default function NationalitySearch({
   countries,
   error,
@@ -13,41 +49,50 @@ export default function NationalitySearch({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const suggestions = useMemo(() => {
-    const normalizedQuery = normalizeSearch(query);
-    return countries
-      .map(country => {
-        const code = normalizeSearch(country.countryId);
-        const name = normalizeSearch(country.countryNameEn);
-        const keywords = normalizeSearch(country.keywords ?? "");
-        let score = 6;
-        if (code === normalizedQuery) score = 0;
-        else if (code.startsWith(normalizedQuery)) score = 1;
-        else if (name === normalizedQuery) score = 2;
-        else if (name.startsWith(normalizedQuery)) score = 3;
-        else if (name.includes(normalizedQuery)) score = 4;
-        else if (keywords.includes(normalizedQuery)) score = 5;
-        return { country, score };
-      })
-      .filter(item => !normalizedQuery || item.score < 6)
-      .sort((a, b) => a.score - b.score || a.country.countryNameEn.localeCompare(b.country.countryNameEn))
-      .slice(0, 8)
-      .map(item => item.country);
-  }, [countries, query]);
+  const suggestions = useMemo(
+    () => findCountrySuggestions(countries, query),
+    [countries, query],
+  );
+  const resolvedActiveIndex = suggestions.length === 0
+    ? 0
+    : Math.min(activeIndex, suggestions.length - 1);
 
   function selectCountry(country) {
     onSelect(country);
     setIsOpen(false);
   }
 
+  function handleBlur(event) {
+    if (!event.currentTarget.contains(event.relatedTarget)) setIsOpen(false);
+  }
+
+  function handleQueryChange(event) {
+    onQueryChange(event.target.value);
+    setIsOpen(true);
+    setActiveIndex(0);
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "Escape") {
+      setIsOpen(false);
+      return;
+    }
+    if (suggestions.length === 0) return;
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveIndex(index => Math.min(index + 1, suggestions.length - 1));
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveIndex(index => Math.max(index - 1, 0));
+    } else if (event.key === "Enter") {
+      event.preventDefault();
+      selectCountry(suggestions[resolvedActiveIndex]);
+    }
+  }
+
   return (
-    <div
-      className={`field nationality-field ${error ? "has-error" : ""}`}
-      onBlur={event => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setIsOpen(false);
-      }}
-    >
+    <div className={`field nationality-field ${error ? "has-error" : ""}`} onBlur={handleBlur}>
       <label className="field-label" htmlFor="nationality-search">Passport nationality</label>
       <span className="input-shell">
         <Icon name="globe" size={19} />
@@ -55,32 +100,18 @@ export default function NationalitySearch({
           aria-autocomplete="list"
           aria-controls="nationality-suggestions"
           aria-describedby={error ? "nationality-error" : undefined}
-          aria-activedescendant={isOpen && suggestions[activeIndex] ? `nationality-option-${suggestions[activeIndex].countryId}` : undefined}
+          aria-activedescendant={
+            isOpen && suggestions[resolvedActiveIndex]
+              ? `nationality-option-${suggestions[resolvedActiveIndex].countryId}`
+              : undefined
+          }
           aria-expanded={isOpen}
           aria-invalid={Boolean(error)}
           autoComplete="off"
           id="nationality-search"
-          onChange={event => {
-            onQueryChange(event.target.value);
-            setIsOpen(true);
-            setActiveIndex(0);
-          }}
+          onChange={handleQueryChange}
           onFocus={() => setIsOpen(true)}
-          onKeyDown={event => {
-            if (event.key === "ArrowDown" && suggestions.length > 0) {
-              event.preventDefault();
-              setActiveIndex(index => Math.min(index + 1, suggestions.length - 1));
-            }
-            if (event.key === "ArrowUp" && suggestions.length > 0) {
-              event.preventDefault();
-              setActiveIndex(index => Math.max(index - 1, 0));
-            }
-            if (event.key === "Enter" && suggestions.length > 0) {
-              event.preventDefault();
-              selectCountry(suggestions[activeIndex] ?? suggestions[0]);
-            }
-            if (event.key === "Escape") setIsOpen(false);
-          }}
+          onKeyDown={handleKeyDown}
           placeholder="Search country or code"
           role="combobox"
           value={query}
@@ -90,12 +121,16 @@ export default function NationalitySearch({
       {error && <span className="field-error" id="nationality-error" role="alert">{error}</span>}
       {isOpen && (
         <div className="dropdown" id="nationality-suggestions" role="listbox">
-          {isLoading && <div className="dropdown-status"><Icon name="loader" size={16} /> Loading countries…</div>}
-          {!isLoading && suggestions.length === 0 && <div className="dropdown-status">No countries found</div>}
+          {isLoading && (
+            <div className="dropdown-status"><Icon name="loader" size={16} /> Loading countries…</div>
+          )}
+          {!isLoading && suggestions.length === 0 && (
+            <div className="dropdown-status">No countries found</div>
+          )}
           {suggestions.map((country, index) => (
             <button
-              aria-selected={index === activeIndex}
-              className={`dropdown-item country-option ${index === activeIndex ? "is-active" : ""}`}
+              aria-selected={index === resolvedActiveIndex}
+              className={`dropdown-item country-option ${index === resolvedActiveIndex ? "is-active" : ""}`}
               id={`nationality-option-${country.countryId}`}
               key={country.countryId}
               onMouseMove={() => setActiveIndex(index)}

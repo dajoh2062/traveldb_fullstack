@@ -41,10 +41,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ApiErrorResponse> handleUnreadableRequest(
-            HttpMessageNotReadableException error,
-            HttpServletRequest request
-    ) {
+    public ResponseEntity<ApiErrorResponse> handleUnreadableRequest(HttpServletRequest request) {
         return problem(
                 HttpStatus.BAD_REQUEST,
                 "malformed-json",
@@ -57,10 +54,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    public ResponseEntity<ApiErrorResponse> handleUnsupportedMediaType(
-            HttpMediaTypeNotSupportedException error,
-            HttpServletRequest request
-    ) {
+    public ResponseEntity<ApiErrorResponse> handleUnsupportedMediaType(HttpServletRequest request) {
         return problem(
                 HttpStatus.UNSUPPORTED_MEDIA_TYPE,
                 "unsupported-media-type",
@@ -111,10 +105,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ApiErrorResponse> handleUnsupportedMethod(
-            HttpRequestMethodNotSupportedException error,
-            HttpServletRequest request
-    ) {
+    public ResponseEntity<ApiErrorResponse> handleUnsupportedMethod(HttpServletRequest request) {
         return problem(
                 HttpStatus.METHOD_NOT_ALLOWED,
                 "method-not-allowed",
@@ -127,10 +118,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleResourceNotFound(
-            NoResourceFoundException error,
-            HttpServletRequest request
-    ) {
+    public ResponseEntity<ApiErrorResponse> handleResourceNotFound(HttpServletRequest request) {
         return problem(
                 HttpStatus.NOT_FOUND,
                 "not-found",

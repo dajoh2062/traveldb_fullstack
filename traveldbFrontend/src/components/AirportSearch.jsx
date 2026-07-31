@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useAirportSearch from "../hooks/useAirportSearch";
+import { airportLocation } from "../utils/journey";
 import Icon from "./Icon";
 
 export default function AirportSearch({ onSelect }) {
@@ -24,43 +25,53 @@ export default function AirportSearch({ onSelect }) {
     if (onSelect(airport) !== false) clearSearch();
   }
 
+  function handleBlur(event) {
+    if (!event.currentTarget.contains(event.relatedTarget)) setIsOpen(false);
+  }
+
+  function handleQueryChange(event) {
+    updateQuery(event.target.value);
+    setActiveIndex(0);
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "Escape") {
+      setIsOpen(false);
+      return;
+    }
+    if (suggestions.length === 0) return;
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveIndex(index => Math.min(index + 1, suggestions.length - 1));
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveIndex(index => Math.max(index - 1, 0));
+    } else if (event.key === "Enter") {
+      event.preventDefault();
+      selectAirport(suggestions[resolvedActiveIndex]);
+    }
+  }
+
   return (
-    <div
-      className="field airport-field"
-      onBlur={event => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setIsOpen(false);
-      }}
-    >
+    <div className="field airport-field" onBlur={handleBlur}>
       <label className="field-label" htmlFor="airport-search">Add an airport</label>
       <span className="input-shell">
         <Icon name="search" size={20} />
         <input
           aria-autocomplete="list"
-          aria-activedescendant={isOpen && suggestions[resolvedActiveIndex] ? `airport-option-${suggestions[resolvedActiveIndex].iataCode}` : undefined}
+          aria-activedescendant={
+            isOpen && suggestions[resolvedActiveIndex]
+              ? `airport-option-${suggestions[resolvedActiveIndex].iataCode}`
+              : undefined
+          }
           aria-controls="airport-suggestions"
           aria-expanded={isOpen}
           autoComplete="off"
           id="airport-search"
-          onChange={event => {
-            updateQuery(event.target.value);
-            setActiveIndex(0);
-          }}
+          onChange={handleQueryChange}
           onFocus={() => { if (query.trim()) setIsOpen(true); }}
-          onKeyDown={event => {
-            if (event.key === "ArrowDown" && suggestions.length > 0) {
-              event.preventDefault();
-              setActiveIndex(index => Math.min(index + 1, suggestions.length - 1));
-            }
-            if (event.key === "ArrowUp" && suggestions.length > 0) {
-              event.preventDefault();
-              setActiveIndex(index => Math.max(index - 1, 0));
-            }
-            if (event.key === "Enter" && suggestions.length > 0) {
-              event.preventDefault();
-              selectAirport(suggestions[resolvedActiveIndex] ?? suggestions[0]);
-            }
-            if (event.key === "Escape") setIsOpen(false);
-          }}
+          onKeyDown={handleKeyDown}
           placeholder="City, airport, IATA code, or country"
           role="combobox"
           value={query}
@@ -71,7 +82,9 @@ export default function AirportSearch({ onSelect }) {
         <div className="dropdown airport-dropdown">
           <div className="airport-dropdown-results" id="airport-suggestions" role="listbox">
             {isSearching && suggestions.length === 0 && (
-              <div className="dropdown-status"><Icon name="loader" size={16} /> Searching airports…</div>
+              <div className="dropdown-status">
+                <Icon name="loader" size={16} /> Searching airports…
+              </div>
             )}
             {!isSearching && suggestions.length === 0 && (
               <div className={`dropdown-status ${searchError ? "search-error" : ""}`}>
@@ -92,7 +105,7 @@ export default function AirportSearch({ onSelect }) {
                 <span className="airport-code">{airport.iataCode}</span>
                 <span className="airport-meta">
                   <strong>{airport.name}</strong>
-                  <small>{airport.city ? `${airport.city} · ${airport.country}` : airport.country}</small>
+                  <small>{airportLocation(airport)}</small>
                 </span>
                 <Icon name="arrow" size={18} />
               </button>
@@ -106,11 +119,17 @@ export default function AirportSearch({ onSelect }) {
                 onClick={loadMore}
                 type="button"
               >
-                {isLoadingMore ? <><Icon name="loader" size={14} /> Loading...</> : "Show more"}
+                {isLoadingMore ? (
+                  <><Icon name="loader" size={14} /> Loading...</>
+                ) : (
+                  "Show more"
+                )}
               </button>
             </div>
           )}
-          {searchError && suggestions.length > 0 && <div className="airport-search-warning">{searchError}</div>}
+          {searchError && suggestions.length > 0 && (
+            <div className="airport-search-warning">{searchError}</div>
+          )}
         </div>
       )}
     </div>

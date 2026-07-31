@@ -1,4 +1,4 @@
-package projects.traveldbbackend;
+package projects.traveldbbackend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Country {
+
     private long sourceId;
     private String countryId;
     private String countryNameEn;

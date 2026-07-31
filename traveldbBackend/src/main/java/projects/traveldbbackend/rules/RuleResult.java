@@ -1,24 +1,21 @@
 package projects.traveldbbackend.rules;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class RuleResult {
 
-    private final Set<String> requiredDocuments = new LinkedHashSet<>();
     private final Set<String> baggagePickupAt = new LinkedHashSet<>();
     private final List<BaggageAdvice> baggageAdvice = new ArrayList<>();
     private final Set<String> assumptions = new LinkedHashSet<>();
     private final Set<String> notes = new LinkedHashSet<>();
 
-    public Set<String> requiredDocuments() {
-        return requiredDocuments;
-    }
-
     public Set<String> baggagePickupAt() {
-        return baggagePickupAt;
+        return Collections.unmodifiableSet(baggagePickupAt);
     }
 
     public List<BaggageAdvice> baggageAdvice() {
@@ -26,22 +23,16 @@ public class RuleResult {
     }
 
     public Set<String> assumptions() {
-        return assumptions;
+        return Collections.unmodifiableSet(assumptions);
     }
 
     public Set<String> notes() {
-        return notes;
+        return Collections.unmodifiableSet(notes);
     }
 
-    public void addDocument(String doc) {
-        if (doc != null && !doc.isBlank()) {
-            requiredDocuments.add(doc.trim());
-        }
-    }
-
-    public void addBaggagePickupAt(String iata) {
-        if (iata != null && !iata.isBlank()) {
-            baggagePickupAt.add(iata.trim().toUpperCase());
+    public void addBaggagePickupAt(String airportCode) {
+        if (airportCode != null && !airportCode.isBlank()) {
+            baggagePickupAt.add(airportCode.trim().toUpperCase(Locale.ROOT));
         }
     }
 
@@ -56,15 +47,15 @@ public class RuleResult {
         }
     }
 
-    public void addAssumption(String a) {
-        if (a != null && !a.isBlank()) {
-            assumptions.add(a.trim());
+    public void addAssumption(String assumption) {
+        if (assumption != null && !assumption.isBlank()) {
+            assumptions.add(assumption.trim());
         }
     }
 
-    public void addNote(String n) {
-        if (n != null && !n.isBlank()) {
-            notes.add(n.trim());
+    public void addNote(String note) {
+        if (note != null && !note.isBlank()) {
+            notes.add(note.trim());
         }
     }
 }

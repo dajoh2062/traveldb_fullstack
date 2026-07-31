@@ -1,13 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { searchAirports } from "../api/travelApi";
 import { normalizeSearch } from "../utils/search";
 
 const airportSearchCache = new Map();
 const PAGE_SIZE = 50;
-
-function unpackSearchResponse(payload) {
-  if (Array.isArray(payload)) return { airports: payload, total: payload.length };
-  return { airports: payload.airports ?? [], total: payload.total ?? 0 };
-}
 
 export default function useAirportSearch() {
   const queryRef = useRef("");
@@ -28,10 +24,8 @@ export default function useAirportSearch() {
 
     const controller = new AbortController();
     const timer = window.setTimeout(() => {
-      fetch(`/api/airports/search?q=${encodeURIComponent(trimmedQuery)}&offset=0&limit=${PAGE_SIZE}`, { signal: controller.signal })
-        .then(response => response.ok ? response.json() : Promise.reject(new Error("Airport search unavailable")))
-        .then(payload => {
-          const searchResult = unpackSearchResponse(payload);
+      searchAirports(trimmedQuery, { limit: PAGE_SIZE, signal: controller.signal })
+        .then(searchResult => {
           airportSearchCache.set(cacheKey, searchResult);
           setSuggestions(searchResult.airports);
           setTotal(searchResult.total);
@@ -74,11 +68,10 @@ export default function useAirportSearch() {
     setIsLoadingMore(true);
 
     try {
-      const response = await fetch(
-        `/api/airports/search?q=${encodeURIComponent(requestedQuery)}&offset=${offset}&limit=${PAGE_SIZE}`
-      );
-      if (!response.ok) throw new Error("Airport search failed");
-      const nextPage = unpackSearchResponse(await response.json());
+      const nextPage = await searchAirports(requestedQuery, {
+        limit: PAGE_SIZE,
+        offset,
+      });
       if (normalizeSearch(queryRef.current) !== cacheKey) return;
 
       setSuggestions(currentSuggestions => {
@@ -121,7 +114,6 @@ export default function useAirportSearch() {
     searchError,
     setIsOpen,
     suggestions,
-    total,
     updateQuery,
   };
 }

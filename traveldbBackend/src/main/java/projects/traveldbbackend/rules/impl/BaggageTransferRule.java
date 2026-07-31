@@ -2,7 +2,7 @@ package projects.traveldbbackend.rules.impl;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import projects.traveldbbackend.Airport;
+import projects.traveldbbackend.model.Airport;
 import projects.traveldbbackend.rules.BaggageAdvice;
 import projects.traveldbbackend.rules.Rule;
 import projects.traveldbbackend.rules.RuleContext;

@@ -2,7 +2,7 @@ package projects.traveldbbackend.documents;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ByteArrayResource;
-import projects.traveldbbackend.Airport;
+import projects.traveldbbackend.model.Airport;
 import tools.jackson.databind.ObjectMapper;
 
 import java.nio.charset.StandardCharsets;

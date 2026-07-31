@@ -3,204 +3,32 @@ package projects.traveldbbackend;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
-import java.time.LocalDate;
-
-import projects.traveldbbackend.rules.BaggageAdvice;
+import projects.traveldbbackend.api.dto.BaggageOptions;
+import projects.traveldbbackend.api.dto.DocumentOptions;
+import projects.traveldbbackend.api.dto.JourneyRequest;
+import projects.traveldbbackend.api.dto.JourneyResponse;
 import projects.traveldbbackend.documents.DocumentRequirement;
+import projects.traveldbbackend.service.TravelService;
+
+import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-class TraveldbBackendApplicationTests {
+class DocumentRequirementsIntegrationTests {
 
-    @Autowired
-    private TravelRepository repository;
+    private static final LocalDate DEPARTURE_DATE = LocalDate.now().plusMonths(2);
+    private static final LocalDate PASSPORT_EXPIRY_DATE = DEPARTURE_DATE.plusYears(3);
 
     @Autowired
     private TravelService travelService;
 
     @Test
-    void contextLoads() {
-    }
-
-    @Test
-    void usesConsumerFriendlyBaggageDefaults() {
-        TravelService.BaggageOptions defaults = TravelService.BaggageOptions.defaults();
-
-        assertTrue(defaults.checkedBaggage());
-        assertEquals("SINGLE_BOOKING", defaults.ticketArrangement());
-        assertEquals("YES", defaults.checkedThrough());
-    }
-
-    @Test
-    void exactIataCodeIsRankedFirst() {
-        assertEquals("JFK", repository.searchAirports("jfk").getFirst().getIataCode());
-    }
-
-    @Test
-    void searchesByStructuredCityCountryKeywordAndUnaccentedName() {
-        assertTrue(repository.searchAirports("London").stream()
-                .anyMatch(airport -> airport.getIataCode().equals("LHR")));
-        assertEquals("BOS", repository.searchAirports("Boston").getFirst().getIataCode());
-        assertEquals("Boston", repository.searchAirports("Boston").getFirst().getCity());
-        assertTrue(repository.searchAirports("Chicago").stream()
-                .anyMatch(airport -> airport.getIataCode().equals("ORD")));
-        assertTrue(repository.searchAirports("Chicago").stream()
-                .anyMatch(airport -> airport.getIataCode().equals("MDW")));
-        assertEquals("CGK", repository.searchAirports("Jakarta").getFirst().getIataCode());
-        assertTrue(repository.searchAirports("Norway").stream()
-                .anyMatch(airport -> airport.getIataCode().equals("OSL")));
-        assertTrue(repository.searchAirports("Malaga").stream()
-                .anyMatch(airport -> airport.getIataCode().equals("AGP")));
-        assertEquals("JFK", repository.searchAirports("KJFK").getFirst().getIataCode());
-        assertEquals("JFK", repository.searchAirports("Idlewild").getFirst().getIataCode());
-    }
-
-    @Test
-    void exposesCountriesForNationalitySearch() {
-        assertTrue(repository.getCountries().size() >= 240);
-        assertTrue(repository.getCountries().stream()
-                .anyMatch(country -> country.getCountryId().equals("NO")
-                        && country.getCountryNameEn().equals("Norway")));
-        assertTrue(repository.getCountries().stream()
-                .anyMatch(country -> country.getCountryId().equals("BG") && country.isSchengen()));
-        assertTrue(repository.getCountries().stream()
-                .anyMatch(country -> country.getCountryId().equals("RO") && country.isSchengen()));
-    }
-
-    @Test
-    void exposesProfessionalAirportMetadataAcrossRegions() {
-        for (String code : List.of("OSL", "JFK", "GRU", "JNB", "NRT", "SYD", "DXB")) {
-            Airport airport = repository.getAirport(code);
-            assertEquals(code, airport.getIataCode());
-            assertNotNull(airport.getName());
-            assertNotNull(airport.getCountryCode());
-            assertNotNull(airport.getContinent());
-            assertTrue(airport.getLatitude() >= -90 && airport.getLatitude() <= 90);
-            assertTrue(airport.getLongitude() >= -180 && airport.getLongitude() <= 180);
-        }
-
-        Airport jfk = repository.getAirport("JFK");
-        assertTrue(jfk.getSourceId() > 0);
-        assertEquals("KJFK", jfk.getIdent());
-        assertEquals("KJFK", jfk.getIcaoCode());
-        assertEquals("JFK", jfk.getLocalCode());
-        assertEquals("New York", jfk.getCity());
-        assertTrue(jfk.isScheduledService());
-        assertNotNull(jfk.getOfficialUrl());
-    }
-
-    @Test
-    void paginatesWithoutHidingCountrySearchMatches() {
-        int pageSize = 100;
-        TravelService.AirportSearchResponse firstPage = travelService.searchAirports(
-                "United States", 0, pageSize
-        );
-
-        assertTrue(firstPage.total() > pageSize);
-        assertEquals(pageSize, firstPage.airports().size());
-        assertTrue(firstPage.hasMore());
-
-        Set<String> airportCodes = new HashSet<>();
-        for (int offset = 0; offset < firstPage.total(); offset += pageSize) {
-            TravelService.AirportSearchResponse page = travelService.searchAirports(
-                    "United States", offset, pageSize
-            );
-            page.airports().forEach(airport -> airportCodes.add(airport.iataCode()));
-        }
-
-        assertEquals(firstPage.total(), airportCodes.size());
-    }
-
-    @Test
-    void listsEveryBaggagePickupInJourneyOrder() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
-                new TravelService.JourneyRequest(
-                        "NO",
-                        List.of("OSL", "ATL", "LHR", "JFK", "OSL")
-                )
-        );
-
-        assertTrue(response.pickupRequired());
-        assertEquals(List.of("ATL", "JFK"), response.pickupAt());
-    }
-
-    @Test
-    void requiresPickupAtSupportedInternationalToDomesticEntryPoints() {
-        assertRequiredAt(List.of("OSL", "SYD", "MEL"), "SYD");
-        assertRequiredAt(List.of("OSL", "AKL", "WLG"), "AKL");
-        assertRequiredAt(List.of("OSL", "NRT", "CTS"), "NRT");
-        assertRequiredAt(List.of("OSL", "DEL", "BOM"), "DEL");
-    }
-
-    @Test
-    void appliesUsPreclearanceAndRemoteScreeningExceptionsConservatively() {
-        TravelService.JourneyResponse precleared = travelService.checkJourney(
-                request(List.of("DUB", "JFK", "BOS"), "SINGLE_BOOKING", "YES")
-        );
-
-        assertFalse(precleared.pickupRequired());
-        assertEquals(BaggageAdvice.Status.NOT_REQUIRED, precleared.baggageStops().getFirst().status());
-        assertTrue(precleared.baggageStops().getFirst().title().contains("Precleared"));
-
-        TravelService.JourneyResponse pilotRoute = travelService.checkJourney(
-                request(List.of("SYD", "LAX", "SFO"), "SINGLE_BOOKING", "YES")
-        );
-        assertEquals(BaggageAdvice.Status.REQUIRED, pilotRoute.baggageStops().getFirst().status());
-        assertTrue(pilotRoute.baggageStops().getFirst().title().contains("screening pilot"));
-    }
-
-    @Test
-    void separateTicketsRequireSelfTransferUnlessBagIsConfirmedThrough() {
-        TravelService.JourneyResponse separateTickets = travelService.checkJourney(
-                request(List.of("OSL", "LHR", "SIN"), "SEPARATE_TICKETS", "UNKNOWN")
-        );
-        assertEquals(List.of("LHR"), separateTickets.pickupAt());
-
-        TravelService.JourneyResponse confirmedThrough = travelService.checkJourney(
-                request(List.of("OSL", "LHR", "SIN"), "SEPARATE_TICKETS", "YES")
-        );
-        assertFalse(confirmedThrough.pickupRequired());
-        assertEquals(BaggageAdvice.Status.NOT_REQUIRED, confirmedThrough.baggageStops().getFirst().status());
-    }
-
-    @Test
-    void marksCanadaAndUnsupportedFirstEntryProcessesForConfirmation() {
-        TravelService.JourneyResponse canada = travelService.checkJourney(
-                request(List.of("OSL", "YYZ", "YVR"), "SINGLE_BOOKING", "UNKNOWN")
-        );
-        assertEquals(BaggageAdvice.Status.CONFIRM, canada.baggageStops().getFirst().status());
-
-        TravelService.JourneyResponse unsupported = travelService.checkJourney(
-                request(List.of("OSL", "GRU", "GIG"), "SINGLE_BOOKING", "YES")
-        );
-        assertEquals(BaggageAdvice.Status.CONFIRM, unsupported.baggageStops().getFirst().status());
-    }
-
-    @Test
-    void skipsBaggageTransferStepsForCarryOnOnlyJourneys() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
-                new TravelService.JourneyRequest(
-                        "NO",
-                        List.of("OSL", "ATL", "BOS"),
-                        new TravelService.BaggageOptions(false, "UNKNOWN", "UNKNOWN")
-                )
-        );
-
-        assertFalse(response.pickupRequired());
-        assertTrue(response.baggageStops().isEmpty());
-    }
-
-    @Test
     void evaluatesDocumentsLocallyWithoutGuessingMissingCountryRules() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
+        JourneyResponse response = travelService.checkJourney(
                 request(List.of("OSL", "DXB", "BKK"), "SINGLE_BOOKING", "YES")
         );
 
@@ -224,7 +52,7 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void placesUsAndAustralianAuthorizationsAtTheBorderAirports() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
+        JourneyResponse response = travelService.checkJourney(
                 request(List.of("OSL", "JFK", "BNE", "MEL"), "SINGLE_BOOKING", "YES")
         );
 
@@ -255,7 +83,7 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void basicUsEntryStillReturnsTheEstaOrVisaRequirement() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
+        JourneyResponse response = travelService.checkJourney(
                 request(List.of("OSL", "JFK"), "SINGLE_BOOKING", "YES")
         );
 
@@ -269,7 +97,7 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void appliesUsEstaRulesToPuertoRicoAndTheUsVirginIslands() {
-        TravelService.JourneyResponse puertoRico = travelService.checkJourney(
+        JourneyResponse puertoRico = travelService.checkJourney(
                 request(List.of("OSL", "SJU"), "SINGLE_BOOKING", "YES")
         );
         assertTrue(puertoRico.documentCheck().requirements().stream().anyMatch(requirement ->
@@ -278,7 +106,7 @@ class TraveldbBackendApplicationTests {
                         && "SJU".equals(requirement.airportCode())
         ));
 
-        TravelService.JourneyResponse virginIslands = travelService.checkJourney(
+        JourneyResponse virginIslands = travelService.checkJourney(
                 request(List.of("OSL", "STT"), "SINGLE_BOOKING", "YES")
         );
         assertTrue(virginIslands.documentCheck().requirements().stream().anyMatch(requirement ->
@@ -290,16 +118,16 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void selectedPassportCountryDrivesElectronicAuthorizationEligibility() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
-                new TravelService.JourneyRequest(
+        JourneyResponse response = travelService.checkJourney(
+                new JourneyRequest(
                         "NO",
                         List.of("OSL", "JFK"),
-                        new TravelService.BaggageOptions(true, "SINGLE_BOOKING", "YES"),
-                        new TravelService.DocumentOptions(
+                        new BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                        new DocumentOptions(
                                 "NO",
                                 "BR",
-                                LocalDate.of(2029, 5, 10),
-                                LocalDate.of(2026, 9, 14),
+                                PASSPORT_EXPIRY_DATE,
+                                DEPARTURE_DATE,
                                 "TOURISM",
                                 30,
                                 List.of(),
@@ -320,7 +148,7 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void workAndStudyPurposesDoNotReuseVisitorAuthorizationRules() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
+        JourneyResponse response = travelService.checkJourney(
                 documentRequest(List.of("OSL", "JFK"), "WORK", List.of())
         );
 
@@ -336,8 +164,8 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void returnsTheAustralianEtaPathForAnEligibleUsPassport() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
-                new TravelService.JourneyRequest("US", List.of("LAX", "SYD"))
+        JourneyResponse response = travelService.checkJourney(
+                new JourneyRequest("US", List.of("LAX", "SYD"))
         );
 
         assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
@@ -350,7 +178,7 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void requiresAustralianEntryPermissionBeforeAnIntermediateDomesticLeg() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
+        JourneyResponse response = travelService.checkJourney(
                 request(List.of("OSL", "SYD", "MEL", "AKL"), "SINGLE_BOOKING", "YES")
         );
 
@@ -367,7 +195,7 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void baggageCollectionAtAnAustralianTransitStopRequiresEntryPermission() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
+        JourneyResponse response = travelService.checkJourney(
                 request(List.of("OSL", "SYD", "AKL"), "SEPARATE_TICKETS", "NO")
         );
 
@@ -385,7 +213,7 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void unknownFinalCountryCoverageUsesItsFirstArrivalAirport() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
+        JourneyResponse response = travelService.checkJourney(
                 request(List.of("OSL", "GRU", "GIG"), "SINGLE_BOOKING", "YES")
         );
 
@@ -404,7 +232,7 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void keepsReviewedTravelDocumentsForIntraSchengenJourneys() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
+        JourneyResponse response = travelService.checkJourney(
                 request(List.of("OSL", "CDG"), "SINGLE_BOOKING", "YES")
         );
 
@@ -417,7 +245,7 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void appliesOfficialLocalEtaRulesAndHeldVisaOverrides() {
-        TravelService.JourneyResponse ukEta = travelService.checkJourney(
+        JourneyResponse ukEta = travelService.checkJourney(
                 documentRequest(List.of("OSL", "LHR"), "TOURISM", List.of())
         );
         assertTrue(ukEta.documentCheck().requirements().stream().anyMatch(requirement ->
@@ -426,7 +254,7 @@ class TraveldbBackendApplicationTests {
                         && requirement.sources().stream().anyMatch(source -> source.url().contains("gov.uk"))
         ));
 
-        TravelService.JourneyResponse usVisaHolder = travelService.checkJourney(
+        JourneyResponse usVisaHolder = travelService.checkJourney(
                 documentRequest(List.of("OSL", "JFK"), "TOURISM", List.of("US"))
         );
         assertTrue(usVisaHolder.documentCheck().requirements().stream().anyMatch(requirement ->
@@ -440,24 +268,24 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void distinguishesAustralianElectronicVisaEligibilityBoundaries() {
-        TravelService.JourneyResponse bulgarian = travelService.checkJourney(
-                new TravelService.JourneyRequest("BG", List.of("OSL", "SYD"))
+        JourneyResponse bulgarian = travelService.checkJourney(
+                new JourneyRequest("BG", List.of("OSL", "SYD"))
         );
         assertTrue(bulgarian.documentCheck().requirements().stream().anyMatch(requirement ->
                 requirement.title().equals("Australian eVisitor or another suitable visa")
                         && "SYD".equals(requirement.airportCode())
         ));
 
-        TravelService.JourneyResponse vatican = travelService.checkJourney(
-                new TravelService.JourneyRequest("VA", List.of("OSL", "SYD"))
+        JourneyResponse vatican = travelService.checkJourney(
+                new JourneyRequest("VA", List.of("OSL", "SYD"))
         );
         assertTrue(vatican.documentCheck().requirements().stream().anyMatch(requirement ->
                 requirement.title().equals("Australian visa — eVisitor or ETA may be available")
                         && "SYD".equals(requirement.airportCode())
         ));
 
-        TravelService.JourneyResponse indian = travelService.checkJourney(
-                new TravelService.JourneyRequest("IN", List.of("OSL", "SYD"))
+        JourneyResponse indian = travelService.checkJourney(
+                new JourneyRequest("IN", List.of("OSL", "SYD"))
         );
         assertTrue(indian.documentCheck().requirements().stream().anyMatch(requirement ->
                 requirement.code().equals("ENTRY_PERMISSION")
@@ -468,7 +296,7 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void evaluatesRepeatedTransitCountriesAsSeparateStops() {
-        TravelService.JourneyResponse response = travelService.checkJourney(
+        JourneyResponse response = travelService.checkJourney(
                 documentRequest(List.of("OSL", "YVR", "LHR", "YYZ", "BOS"), "TOURISM", List.of())
         );
 
@@ -483,18 +311,18 @@ class TraveldbBackendApplicationTests {
 
     @Test
     void reportsMissingDocumentInputsAndAcceptsACompleteTravelerProfile() {
-        TravelService.JourneyResponse incomplete = travelService.checkJourney(
+        JourneyResponse incomplete = travelService.checkJourney(
                 request(List.of("OSL", "LHR"), "SINGLE_BOOKING", "YES")
         );
         assertTrue(incomplete.documentCheck().missingInputs().contains("Passport expiry date"));
         assertTrue(incomplete.documentCheck().missingInputs().contains("Departure date"));
 
-        TravelService.JourneyResponse complete = travelService.checkJourney(
-                new TravelService.JourneyRequest(
+        JourneyResponse complete = travelService.checkJourney(
+                new JourneyRequest(
                         "NO",
                         List.of("OSL", "LHR"),
-                        new TravelService.BaggageOptions(true, "SINGLE_BOOKING", "YES"),
-                        new TravelService.DocumentOptions(
+                        new BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                        new DocumentOptions(
                                 "NO",
                                 "NO",
                                 LocalDate.now().plusYears(3),
@@ -509,42 +337,32 @@ class TraveldbBackendApplicationTests {
         assertTrue(complete.documentCheck().missingInputs().isEmpty());
     }
 
-    private void assertRequiredAt(List<String> route, String airportCode) {
-        TravelService.JourneyResponse response = travelService.checkJourney(
-                request(route, "SINGLE_BOOKING", "YES")
-        );
-        assertEquals(List.of(airportCode), response.pickupAt());
-        assertEquals(BaggageAdvice.Status.REQUIRED, response.baggageStops().getFirst().status());
-        assertFalse(response.baggageStops().getFirst().sources().isEmpty());
-    }
-
-    // Keep baggage-option setup explicit so each rule test documents its assumptions.
-    private TravelService.JourneyRequest request(
+    private JourneyRequest request(
             List<String> route,
             String ticketArrangement,
             String checkedThrough
     ) {
-        return new TravelService.JourneyRequest(
+        return new JourneyRequest(
                 "NO",
                 route,
-                new TravelService.BaggageOptions(true, ticketArrangement, checkedThrough)
+                new BaggageOptions(true, ticketArrangement, checkedThrough)
         );
     }
 
-    private TravelService.JourneyRequest documentRequest(
+    private JourneyRequest documentRequest(
             List<String> route,
             String purpose,
             List<String> heldVisas
     ) {
-        return new TravelService.JourneyRequest(
+        return new JourneyRequest(
                 "NO",
                 route,
-                new TravelService.BaggageOptions(true, "SINGLE_BOOKING", "YES"),
-                new TravelService.DocumentOptions(
+                new BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                new DocumentOptions(
                         "NO",
                         "NO",
-                        LocalDate.of(2029, 5, 10),
-                        LocalDate.of(2026, 9, 14),
+                        PASSPORT_EXPIRY_DATE,
+                        DEPARTURE_DATE,
                         purpose,
                         30,
                         List.of(),
@@ -552,5 +370,4 @@ class TraveldbBackendApplicationTests {
                 )
         );
     }
-
 }

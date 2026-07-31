@@ -3,6 +3,8 @@ import {
   buildJourneyRequest,
   initialBaggageProfile,
   initialDocumentProfile,
+  mapApiErrorsToFields,
+  removeDocumentFieldErrors,
   validateJourneyForm,
 } from "./journeyForm";
 
@@ -200,6 +202,32 @@ describe("buildJourneyRequest", () => {
       travelerAge: null,
       residencePermitCountryCodes: [],
       visaCountryCodes: [],
+    });
+  });
+});
+
+describe("API error mapping", () => {
+  it("maps nested API fields back to the form fields", () => {
+    expect(mapApiErrorsToFields([
+      { field: "nationalityCountryCode", message: "Choose a nationality" },
+      { field: "route[1]", message: "Unknown airport" },
+      { field: "documents.visaCountryCodes[0]", message: "Unknown country" },
+    ])).toEqual({
+      nationality: "Choose a nationality",
+      route: "Unknown airport",
+      visaCountryCodes: "Unknown country",
+    });
+  });
+
+  it("keeps journey errors when advanced document fields are hidden", () => {
+    expect(removeDocumentFieldErrors({
+      nationality: "Choose a nationality",
+      route: "Add another airport",
+      departureDate: "Choose a date",
+      travelerAge: "Enter an age",
+    })).toEqual({
+      nationality: "Choose a nationality",
+      route: "Add another airport",
     });
   });
 });

@@ -87,9 +87,8 @@ main { width: min(1120px, calc(100% - 64px)); margin: 0 auto; }
 .stop-marker.origin { color: var(--primary); background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 35%, var(--border)); }
 .stop-marker.destination { color: var(--success); background: var(--success-soft); border-color: color-mix(in srgb, var(--success) 35%, var(--border)); }
 .route-stop-card { min-width: 0; min-height: 68px; display: grid; grid-template-columns: 112px 60px minmax(0, 1fr) 94px; align-items: center; gap: 18px; padding: 13px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow-sm); }
-.route-stop-role span, .route-stop-role small { display: block; }
+.route-stop-role span { display: block; }
 .route-stop-role span { color: var(--text); font-size: 11px; font-weight: 700; }
-.route-stop-role small { margin-top: 3px; color: var(--text-faint); font-size: 9px; }
 .route-code { color: var(--primary); font-size: 18px; letter-spacing: .02em; }
 .route-stop-details { min-width: 0; }
 .route-stop-details strong, .route-stop-details span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

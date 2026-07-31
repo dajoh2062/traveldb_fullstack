@@ -1,6 +1,6 @@
 package projects.traveldbbackend.documents;
 
-import projects.traveldbbackend.Airport;
+import projects.traveldbbackend.model.Airport;
 
 import java.time.LocalDate;
 import java.util.List;

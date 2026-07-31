@@ -39,7 +39,9 @@ export default function JourneyPlanner({
           <div className="service-error" role="alert">
             <Icon name="alert" size={18} />
             <span>{countryError}</span>
-            <button onClick={onRetryCountries} type="button">Try again</button>
+            <button onClick={onRetryCountries} type="button">
+              Try again
+            </button>
           </div>
         )}
         <div className="form-grid">
@@ -54,7 +56,12 @@ export default function JourneyPlanner({
           />
           <AirportSearch onSelect={onAddAirport} />
         </div>
-        <RouteTimeline error={fieldErrors.route} route={route} onMove={onMoveAirport} onRemove={onRemoveAirport} />
+        <RouteTimeline
+          error={fieldErrors.route}
+          onMove={onMoveAirport}
+          onRemove={onRemoveAirport}
+          route={route}
+        />
         <label className="advanced-search-toggle">
           <input
             aria-controls="advanced-document-fields"
@@ -66,7 +73,9 @@ export default function JourneyPlanner({
           />
           <span>
             <strong>Advanced search</strong>
-            <small id="advanced-search-description">Add passport and traveller details.</small>
+            <small id="advanced-search-description">
+              Add passport and traveller details.
+            </small>
           </span>
         </label>
         <div hidden={!advancedSearch} id="advanced-document-fields">
@@ -79,10 +88,17 @@ export default function JourneyPlanner({
         </div>
         <BaggageSetup baggage={baggage} onChange={onBaggageChange} />
         {error && (
-          <div className="error-message" id="journey-form-error" role="alert" tabIndex="-1"><Icon name="alert" size={19} /><span>{error}</span></div>
+          <div className="error-message" id="journey-form-error" role="alert" tabIndex="-1">
+            <Icon name="alert" size={19} />
+            <span>{error}</span>
+          </div>
         )}
         <button className="primary-button" disabled={isLoading} type="submit">
-          {isLoading ? <><span className="spinner" /> Checking...</> : <>Check trip <Icon name="arrow" size={19} /></>}
+          {isLoading ? (
+            <><span className="spinner" /> Checking...</>
+          ) : (
+            <>Check trip <Icon name="arrow" size={19} /></>
+          )}
         </button>
       </form>
     </section>

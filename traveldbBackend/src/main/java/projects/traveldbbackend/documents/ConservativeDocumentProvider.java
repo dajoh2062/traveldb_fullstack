@@ -25,11 +25,6 @@ public class ConservativeDocumentProvider implements DocumentRequirementsProvide
     );
 
     @Override
-    public boolean isAvailable() {
-        return true;
-    }
-
-    @Override
     public DocumentCheckResult check(DocumentCheckInput input) {
         List<DocumentRequirement> requirements = new ArrayList<>();
         List<String> missingInputs = missingInputs(input);

@@ -1,7 +1,7 @@
 package projects.traveldbbackend.documents;
 
 import org.junit.jupiter.api.Test;
-import projects.traveldbbackend.Airport;
+import projects.traveldbbackend.model.Airport;
 import projects.traveldbbackend.documents.DocumentRequirement.Scope;
 
 import java.util.List;

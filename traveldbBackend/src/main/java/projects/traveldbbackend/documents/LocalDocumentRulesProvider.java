@@ -1,16 +1,14 @@
 package projects.traveldbbackend.documents;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
-import projects.traveldbbackend.documents.DocumentRequirement.Category;
-import projects.traveldbbackend.documents.DocumentRequirement.DocumentSource;
 import projects.traveldbbackend.documents.DocumentRequirement.Scope;
 import projects.traveldbbackend.documents.DocumentRequirement.Status;
-import tools.jackson.databind.JsonNode;
+import projects.traveldbbackend.documents.DocumentRuleSnapshot.Rule;
 import tools.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,10 +21,19 @@ import java.util.Map;
 import java.util.Set;
 
 @Component
+@Primary
 public class LocalDocumentRulesProvider implements DocumentRequirementsProvider {
 
+    private static final String PROVIDER_NAME = "TRAVELDB_LOCAL_RULES";
+    private static final String ENTRY_CONDITIONS = "ENTRY_CONDITIONS";
+    private static final Set<String> PERMISSION_FALLBACK_CODES = Set.of(
+            "ENTRY_PERMISSION",
+            "TRANSIT_PERMISSION"
+    );
+    private static final Set<String> NON_VISITOR_PURPOSES = Set.of("WORK", "STUDY", "OTHER");
+
     private final ConservativeDocumentProvider conservativeProvider;
-    private final Snapshot snapshot;
+    private final DocumentRuleSnapshot snapshot;
 
     public LocalDocumentRulesProvider(
             ConservativeDocumentProvider conservativeProvider,
@@ -34,91 +41,104 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
             @Value("${traveldb.documents.rules-location:classpath:data/document-rules.json}") Resource snapshotResource
     ) {
         this.conservativeProvider = conservativeProvider;
-        this.snapshot = loadSnapshot(objectMapper, snapshotResource);
-    }
-
-    @Override
-    public boolean isAvailable() {
-        return true;
+        this.snapshot = DocumentRuleSnapshotLoader.load(objectMapper, snapshotResource);
     }
 
     @Override
     public DocumentCheckResult check(DocumentCheckInput input) {
-        DocumentCheckResult conservative = conservativeProvider.check(input);
+        DocumentCheckResult conservativeResult = conservativeProvider.check(input);
         LocalDate travelDate = input.departureDate() == null ? LocalDate.now() : input.departureDate();
         List<DocumentRequirement> requirements = new ArrayList<>();
-        List<String> warnings = new ArrayList<>();
         Set<String> staleRuleIds = new LinkedHashSet<>();
 
-        List<Rule> journeyRules = selectRules(input, null, Scope.JOURNEY, travelDate);
-        if (journeyRules.isEmpty()) {
-            requirements.addAll(conservative.requirements().stream()
-                    .filter(requirement -> requirement.scope() == Scope.JOURNEY)
-                    .toList());
-        } else {
-            journeyRules.forEach(rule -> requirements.add(toRequirement(rule, null, null, staleRuleIds)));
-        }
-
+        addJourneyRequirements(input, travelDate, conservativeResult, requirements, staleRuleIds);
         for (DocumentRouteVisitResolver.CountryVisit visit : DocumentRouteVisitResolver.resolve(
                 input.route(),
                 input.entryAirportCodes()
         )) {
-            List<Rule> visitRules = visit.scope() == Scope.ENTRY && hasNonVisitorPurpose(input.travelPurpose())
-                    ? List.of()
-                    : selectRules(input, visit.countryCode(), visit.scope(), travelDate);
-            if (visitRules.isEmpty()) {
-                requirements.addAll(conservative.requirements().stream()
-                        .filter(requirement -> requirement.scope() == visit.scope()
-                                && visit.countryCode().equals(requirement.countryCode())
-                                && visit.airportCode().equals(requirement.airportCode())
-                                && !"ENTRY_CONDITIONS".equals(requirement.code()))
-                        .toList());
-            } else {
-                visitRules.forEach(rule -> requirements.add(toRequirement(
-                        rule,
-                        visit.countryCode(),
-                        visit.airportCode(),
-                        staleRuleIds
-                )));
-            }
-
-            if (visit.scope() == Scope.ENTRY) {
-                requirements.addAll(conservative.requirements().stream()
-                        .filter(requirement -> "ENTRY_CONDITIONS".equals(requirement.code())
-                                && visit.countryCode().equals(requirement.countryCode())
-                                && visit.airportCode().equals(requirement.airportCode()))
-                        .toList());
-            }
+            addVisitRequirements(
+                    input,
+                    visit,
+                    travelDate,
+                    conservativeResult,
+                    requirements,
+                    staleRuleIds
+            );
         }
 
-        warnings.add("TravelDB evaluated this journey locally from rule snapshot " + snapshot.datasetVersion()
-                + "; no external requirements service was contacted.");
-        if (!staleRuleIds.isEmpty()) {
-            warnings.add("Some local rules are past their review date and were downgraded to verification-only: "
-                    + String.join(", ", staleRuleIds) + ".");
-        }
-        if (input.departureDate() == null) {
-            warnings.add("No departure date was supplied; effective-date matching used today's date.");
-        }
-
-        boolean hasPermissionFallback = requirements.stream().anyMatch(requirement ->
-                "ENTRY_PERMISSION".equals(requirement.code())
-                        || "TRANSIT_PERMISSION".equals(requirement.code()));
+        List<String> warnings = buildWarnings(input, staleRuleIds);
+        boolean hasPermissionFallback = requirements.stream()
+                .map(DocumentRequirement::code)
+                .anyMatch(PERMISSION_FALLBACK_CODES::contains);
 
         return new DocumentCheckResult(
-                "TRAVELDB_LOCAL_RULES",
+                PROVIDER_NAME,
                 false,
                 hasPermissionFallback ? "LOCAL_RULES_WITH_VERIFY_FALLBACK" : "LOCAL_VERSIONED_RULE_SNAPSHOT",
                 Instant.now(),
                 List.copyOf(requirements),
-                conservative.missingInputs(),
-                List.copyOf(warnings),
+                conservativeResult.missingInputs(),
+                warnings,
                 snapshot.sources()
         );
     }
 
-    public String datasetVersion() {
-        return snapshot.datasetVersion();
+    private void addJourneyRequirements(
+            DocumentCheckInput input,
+            LocalDate travelDate,
+            DocumentCheckResult conservativeResult,
+            List<DocumentRequirement> requirements,
+            Set<String> staleRuleIds
+    ) {
+        List<Rule> rules = selectRules(input, null, Scope.JOURNEY, travelDate);
+        if (rules.isEmpty()) {
+            conservativeResult.requirements().stream()
+                    .filter(requirement -> requirement.scope() == Scope.JOURNEY)
+                    .forEach(requirements::add);
+            return;
+        }
+
+        rules.stream()
+                .map(rule -> toRequirement(rule, null, null, staleRuleIds))
+                .forEach(requirements::add);
+    }
+
+    private void addVisitRequirements(
+            DocumentCheckInput input,
+            DocumentRouteVisitResolver.CountryVisit visit,
+            LocalDate travelDate,
+            DocumentCheckResult conservativeResult,
+            List<DocumentRequirement> requirements,
+            Set<String> staleRuleIds
+    ) {
+        List<Rule> rules = visit.scope() == Scope.ENTRY && hasNonVisitorPurpose(input.travelPurpose())
+                ? List.of()
+                : selectRules(input, visit.countryCode(), visit.scope(), travelDate);
+
+        if (rules.isEmpty()) {
+            conservativeRequirementsForVisit(conservativeResult, visit, false).forEach(requirements::add);
+        } else {
+            rules.stream()
+                    .map(rule -> toRequirement(rule, visit.countryCode(), visit.airportCode(), staleRuleIds))
+                    .forEach(requirements::add);
+        }
+
+        if (visit.scope() == Scope.ENTRY) {
+            conservativeRequirementsForVisit(conservativeResult, visit, true).forEach(requirements::add);
+        }
+    }
+
+    private List<DocumentRequirement> conservativeRequirementsForVisit(
+            DocumentCheckResult conservativeResult,
+            DocumentRouteVisitResolver.CountryVisit visit,
+            boolean entryConditionsOnly
+    ) {
+        return conservativeResult.requirements().stream()
+                .filter(requirement -> requirement.scope() == visit.scope())
+                .filter(requirement -> visit.countryCode().equals(requirement.countryCode()))
+                .filter(requirement -> visit.airportCode().equals(requirement.airportCode()))
+                .filter(requirement -> entryConditionsOnly == ENTRY_CONDITIONS.equals(requirement.code()))
+                .toList();
     }
 
     private List<Rule> selectRules(
@@ -127,18 +147,19 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
             Scope scope,
             LocalDate travelDate
     ) {
-        Map<String, Rule> decisions = new LinkedHashMap<>();
         String documentCountryCode = input.passportIssuingCountryCode() == null
                 ? input.nationalityCountryCode()
                 : input.passportIssuingCountryCode();
+        Map<String, Rule> decisions = new LinkedHashMap<>();
+
         snapshot.rules().stream()
                 .filter(rule -> rule.scope() == scope)
                 .filter(rule -> matches(rule.destinationCountries(), destinationCountryCode))
                 .filter(rule -> matches(rule.nationalities(), documentCountryCode))
                 .filter(rule -> !contains(rule.excludedNationalities(), documentCountryCode))
-                .filter(rule -> matchesOptional(rule.residenceCountries(), input.residenceCountryCode()))
-                .filter(rule -> matchesOptional(rule.passportIssuingCountries(), input.passportIssuingCountryCode()))
-                .filter(rule -> matchesOptional(rule.travelPurposes(), normalize(input.travelPurpose())))
+                .filter(rule -> matches(rule.residenceCountries(), input.residenceCountryCode()))
+                .filter(rule -> matches(rule.passportIssuingCountries(), input.passportIssuingCountryCode()))
+                .filter(rule -> matches(rule.travelPurposes(), normalize(input.travelPurpose())))
                 .filter(rule -> matchesAge(rule, input.travelerAge()))
                 .filter(rule -> containsAll(input.visaCountryCodes(), rule.requiredHeldVisaCountries()))
                 .filter(rule -> containsAll(input.residencePermitCountryCodes(), rule.requiredResidencePermitCountries()))
@@ -156,13 +177,16 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
             Set<String> staleRuleIds
     ) {
         boolean stale = rule.reviewAfter() != null && rule.reviewAfter().isBefore(LocalDate.now());
-        Status status = stale && rule.status() != Status.VERIFY
-                ? Status.VERIFY
-                : rule.status();
+        Status status = stale && rule.status() != Status.VERIFY ? Status.VERIFY : rule.status();
         List<String> conditions = new ArrayList<>(rule.conditions());
         conditions.add("Local rule " + rule.id() + " was last verified " + rule.lastVerified() + ".");
-        if (stale) staleRuleIds.add(rule.id());
+        if (stale) {
+            staleRuleIds.add(rule.id());
+        }
 
+        String summary = stale
+                ? "This stored rule needs review before it can be treated as definitive. " + rule.summary()
+                : rule.summary();
         return new DocumentRequirement(
                 rule.code(),
                 rule.category(),
@@ -171,190 +195,65 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 countryCode,
                 airportCode,
                 rule.title(),
-                stale ? "This stored rule needs review before it can be treated as definitive. " + rule.summary() : rule.summary(),
+                summary,
                 List.copyOf(conditions),
                 rule.sources()
         );
     }
 
-    private boolean matches(List<String> allowed, String value) {
-        if (allowed.isEmpty() || allowed.contains("*")) return true;
-        return value != null && allowed.contains(normalize(value));
+    private List<String> buildWarnings(DocumentCheckInput input, Set<String> staleRuleIds) {
+        List<String> warnings = new ArrayList<>();
+        warnings.add("TravelDB evaluated this journey locally from rule snapshot " + snapshot.datasetVersion()
+                + "; no external requirements service was contacted.");
+        if (!staleRuleIds.isEmpty()) {
+            warnings.add("Some local rules are past their review date and were downgraded to verification-only: "
+                    + String.join(", ", staleRuleIds) + ".");
+        }
+        if (input.departureDate() == null) {
+            warnings.add("No departure date was supplied; effective-date matching used today's date.");
+        }
+        return List.copyOf(warnings);
     }
 
-    private boolean matchesOptional(List<String> allowed, String value) {
-        return allowed.isEmpty() || allowed.contains("*") || (value != null && allowed.contains(normalize(value)));
+    private static boolean matches(List<String> allowed, String value) {
+        return allowed.isEmpty()
+                || allowed.contains("*")
+                || value != null && allowed.contains(normalize(value));
     }
 
-    private boolean contains(List<String> values, String value) {
+    private static boolean contains(List<String> values, String value) {
         return value != null && values.contains(normalize(value));
     }
 
-    private boolean containsAll(List<String> held, List<String> required) {
-        if (required.isEmpty()) return true;
+    private static boolean containsAll(List<String> held, List<String> required) {
+        if (required.isEmpty()) {
+            return true;
+        }
+
         Set<String> normalizedHeld = new LinkedHashSet<>();
-        if (held != null) held.forEach(value -> normalizedHeld.add(normalize(value)));
+        if (held != null) {
+            held.forEach(value -> normalizedHeld.add(normalize(value)));
+        }
         return normalizedHeld.containsAll(required);
     }
 
-    private boolean matchesAge(Rule rule, Integer age) {
-        if (rule.minimumAge() == null && rule.maximumAge() == null) return true;
-        if (age == null) return false;
+    private static boolean matchesAge(Rule rule, Integer age) {
+        if (rule.minimumAge() == null && rule.maximumAge() == null) {
+            return true;
+        }
+        if (age == null) {
+            return false;
+        }
         return (rule.minimumAge() == null || age >= rule.minimumAge())
                 && (rule.maximumAge() == null || age <= rule.maximumAge());
     }
 
-    private boolean hasNonVisitorPurpose(String travelPurpose) {
+    private static boolean hasNonVisitorPurpose(String travelPurpose) {
         String purpose = normalize(travelPurpose);
-        return "WORK".equals(purpose) || "STUDY".equals(purpose) || "OTHER".equals(purpose);
+        return purpose != null && NON_VISITOR_PURPOSES.contains(purpose);
     }
 
-    private Snapshot loadSnapshot(ObjectMapper objectMapper, Resource resource) {
-        try (var input = resource.getInputStream()) {
-            JsonNode root = objectMapper.readTree(input);
-            if (root.path("schemaVersion").asInt() != 1) {
-                throw new IllegalStateException("Unsupported document-rule schema version.");
-            }
-            String datasetVersion = requiredText(root, "datasetVersion");
-            Instant generatedAt = Instant.parse(requiredText(root, "generatedAt"));
-            List<DocumentSource> sources = parseSources(root.path("sources"));
-            List<Rule> rules = new ArrayList<>();
-            Set<String> ids = new LinkedHashSet<>();
-            for (JsonNode node : root.path("rules")) {
-                Rule rule = parseRule(node);
-                if (!ids.add(rule.id())) throw new IllegalStateException("Duplicate document rule id: " + rule.id());
-                rules.add(rule);
-            }
-            if (rules.isEmpty()) throw new IllegalStateException("Document-rule snapshot contains no rules.");
-            return new Snapshot(datasetVersion, generatedAt, List.copyOf(sources), List.copyOf(rules));
-        } catch (IOException | RuntimeException error) {
-            throw new IllegalStateException("Could not load local document-rule snapshot from " + resource, error);
-        }
-    }
-
-    private Rule parseRule(JsonNode node) {
-        JsonNode output = node.path("output");
-        return new Rule(
-                requiredText(node, "id"),
-                requiredText(node, "decisionKey"),
-                Scope.valueOf(requiredText(node, "scope")),
-                tokenList(node.path("destinationCountries")),
-                tokenList(node.path("nationalities")),
-                tokenList(node.path("excludedNationalities")),
-                tokenList(node.path("residenceCountries")),
-                tokenList(node.path("passportIssuingCountries")),
-                tokenList(node.path("travelPurposes")),
-                nullableInt(node.path("minimumAge")),
-                nullableInt(node.path("maximumAge")),
-                tokenList(node.path("requiredHeldVisaCountries")),
-                tokenList(node.path("requiredResidencePermitCountries")),
-                node.path("priority").asInt(),
-                nullableDate(node.path("effectiveFrom")),
-                nullableDate(node.path("effectiveTo")),
-                nullableDate(node.path("lastVerified")),
-                nullableDate(node.path("reviewAfter")),
-                requiredText(output, "code"),
-                Category.valueOf(requiredText(output, "category")),
-                Status.valueOf(requiredText(output, "status")),
-                requiredText(output, "title"),
-                requiredText(output, "summary"),
-                stringList(output.path("conditions")),
-                parseSources(output.path("sources"))
-        );
-    }
-
-    private List<DocumentSource> parseSources(JsonNode node) {
-        List<DocumentSource> sources = new ArrayList<>();
-        if (!node.isArray()) return sources;
-        node.forEach(source -> {
-            String sourceType = requiredText(source, "sourceType");
-            if (!"GOVERNMENT".equals(sourceType)) {
-                throw new IllegalStateException("Local document rules must cite government sources.");
-            }
-            sources.add(new DocumentSource(
-                    requiredText(source, "label"),
-                    requiredHttpsUrl(source, "url"),
-                    sourceType
-            ));
-        });
-        return List.copyOf(sources);
-    }
-
-    private List<String> tokenList(JsonNode node) {
-        if (!node.isArray()) return List.of();
-        List<String> values = new ArrayList<>();
-        node.forEach(value -> {
-            if (value.isTextual() && !value.asText().isBlank()) values.add(normalize(value.asText()));
-        });
-        return List.copyOf(values);
-    }
-
-    private List<String> stringList(JsonNode node) {
-        if (!node.isArray()) return List.of();
-        List<String> values = new ArrayList<>();
-        node.forEach(value -> {
-            if (value.isTextual() && !value.asText().isBlank()) values.add(value.asText().trim());
-        });
-        return List.copyOf(values);
-    }
-
-    private String requiredText(JsonNode node, String field) {
-        String value = node.path(field).asText().trim();
-        if (value.isBlank()) throw new IllegalStateException("Missing document-rule field: " + field);
-        return value;
-    }
-
-    private String requiredHttpsUrl(JsonNode node, String field) {
-        String value = requiredText(node, field);
-        if (!value.startsWith("https://")) throw new IllegalStateException("Rule sources must use HTTPS: " + value);
-        return value;
-    }
-
-    private Integer nullableInt(JsonNode node) {
-        return node.isIntegralNumber() ? node.asInt() : null;
-    }
-
-    private LocalDate nullableDate(JsonNode node) {
-        return node.isTextual() && !node.asText().isBlank() ? LocalDate.parse(node.asText()) : null;
-    }
-
-    private String normalize(String value) {
+    private static String normalize(String value) {
         return value == null ? null : value.trim().toUpperCase(Locale.ROOT);
     }
-
-    private record Snapshot(
-            String datasetVersion,
-            Instant generatedAt,
-            List<DocumentSource> sources,
-            List<Rule> rules
-    ) {}
-
-    private record Rule(
-            String id,
-            String decisionKey,
-            Scope scope,
-            List<String> destinationCountries,
-            List<String> nationalities,
-            List<String> excludedNationalities,
-            List<String> residenceCountries,
-            List<String> passportIssuingCountries,
-            List<String> travelPurposes,
-            Integer minimumAge,
-            Integer maximumAge,
-            List<String> requiredHeldVisaCountries,
-            List<String> requiredResidencePermitCountries,
-            int priority,
-            LocalDate effectiveFrom,
-            LocalDate effectiveTo,
-            LocalDate lastVerified,
-            LocalDate reviewAfter,
-            String code,
-            Category category,
-            Status status,
-            String title,
-            String summary,
-            List<String> conditions,
-            List<DocumentSource> sources
-    ) {}
-
 }
