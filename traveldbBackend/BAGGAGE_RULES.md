@@ -38,7 +38,7 @@ The result depends on:
 
 ## Maintenance
 
-The guidance was last reviewed on **2026-07-20**. A rule update normally touches these files together:
+The guidance was last reviewed against the linked online sources on **2026-07-31**. A rule update normally touches these files together:
 
 - `src/main/java/projects/traveldbbackend/rules/impl/BaggageTransferRule.java` for conditions, wording, and sources;
 - `src/test/java/projects/traveldbbackend/BaggageRulesIntegrationTests.java` for journey-level regression coverage; and

@@ -168,4 +168,61 @@ class TravelControllerValidationTests {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors[0].field").value("documents.passportExpiryDate"));
     }
+
+    @Test
+    void reportsNestedTravelDocumentValidationErrors() throws Exception {
+        mockMvc.perform(post("/api/journey/check")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "nationalityCountryCode":"NO",
+                                  "route":["OSL","LHR"],
+                                  "documents":{
+                                    "departureDate":"2030-06-01",
+                                    "travelDocuments":[
+                                      {"type":"SPACE_PASS","primary":true},
+                                      {"type":"OTHER","customType":" ","primary":true},
+                                      {"type":"PASSPORT","expiryDate":"2020-01-01"}
+                                    ]
+                                  }
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errors[?(@.field == 'documents.travelDocuments[0].type')]").exists())
+                .andExpect(jsonPath("$.errors[?(@.field == 'documents.travelDocuments[1].primary')]").exists())
+                .andExpect(jsonPath("$.errors[?(@.field == 'documents.travelDocuments[1].customType')]").exists())
+                .andExpect(jsonPath("$.errors[?(@.field == 'documents.travelDocuments[2].issuingCountryCode')]").exists())
+                .andExpect(jsonPath("$.errors[?(@.field == 'documents.travelDocuments[2].expiryDate')]").exists());
+    }
+
+    @Test
+    void requiresOnePrimaryDocumentAndLimitsTheDocumentList() throws Exception {
+        mockMvc.perform(post("/api/journey/check")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "nationalityCountryCode":"NO",
+                                  "route":["OSL","LHR"],
+                                  "documents":{
+                                    "travelDocuments":[
+                                      {"type":"PASSPORT","issuingCountryCode":"NO"}
+                                    ]
+                                  }
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errors[?(@.field == 'documents.travelDocuments')]").exists());
+
+        String document = "{\"type\":\"PASSPORT\",\"issuingCountryCode\":\"NO\",\"primary\":true}";
+        String tooManyDocuments = String.join(",", java.util.Collections.nCopies(
+                JourneyRequestValidator.MAX_TRAVEL_DOCUMENTS + 1,
+                document
+        ));
+        mockMvc.perform(post("/api/journey/check")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"nationalityCountryCode\":\"NO\",\"route\":[\"OSL\",\"LHR\"],"
+                                + "\"documents\":{\"travelDocuments\":[" + tooManyDocuments + "]}}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errors[?(@.field == 'documents.travelDocuments')]").exists());
+    }
 }

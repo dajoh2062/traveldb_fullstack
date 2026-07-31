@@ -11,7 +11,13 @@ const route = [
 
 const result = {
   baggageStops: [
-    { airportCode: "JFK", status: "REQUIRED", explanation: "Verbose baggage explanation" },
+    {
+      airportCode: "JFK",
+      status: "REQUIRED",
+      title: "Collect at the first U.S. arrival",
+      explanation: "Collect checked baggage for border processing before the onward flight.",
+      sources: [{ label: "U.S. CBP baggage guidance", url: "https://www.cbp.gov/travel" }],
+    },
     { airportCode: "BNE", status: "CONFIRM", explanation: "Verbose uncertain explanation" },
     { airportCode: "MEL", status: "NOT_REQUIRED", explanation: "No action needed" },
   ],
@@ -74,7 +80,13 @@ describe("JourneyResults", () => {
     const baggage = screen.getByRole("region", { name: "Baggage pickup" });
     expect(within(baggage).getAllByRole("listitem")).toHaveLength(2);
     expect(within(baggage).getByText("John F. Kennedy Airport (JFK)")).toBeInTheDocument();
+    expect(within(baggage).getByText("Collect at the first U.S. arrival")).toBeInTheDocument();
+    expect(within(baggage).getByText("Collect checked baggage for border processing before the onward flight.")).toBeInTheDocument();
     expect(within(baggage).getByText("Pick up and recheck")).toBeInTheDocument();
+    expect(within(baggage).getByRole("link", { name: "U.S. CBP baggage guidance" })).toHaveAttribute(
+      "href",
+      "https://www.cbp.gov/travel",
+    );
     expect(within(baggage).getByText("Brisbane International Airport (BNE)")).toBeInTheDocument();
     expect(within(baggage).getByText("Confirm with airline")).toBeInTheDocument();
     expect(within(baggage).queryByText("Melbourne Airport (MEL)")).not.toBeInTheDocument();
@@ -82,6 +94,7 @@ describe("JourneyResults", () => {
     const documents = screen.getByRole("region", { name: "Travel documents" });
     expect(within(documents).getAllByRole("listitem")).toHaveLength(4);
     expect(within(documents).getByText("Valid passport")).toBeInTheDocument();
+    expect(within(documents).getByText("Verbose passport summary")).toBeInTheDocument();
     expect(within(documents).getByText("Approved ESTA or valid U.S. visa")).toBeInTheDocument();
     expect(within(documents).getByText("John F. Kennedy Airport (JFK)")).toBeInTheDocument();
     expect(within(documents).getByText("Australian visa — eVisitor or ETA may be available")).toBeInTheDocument();
@@ -100,9 +113,8 @@ describe("JourneyResults", () => {
     expect(screen.queryByText("Visa not required")).not.toBeInTheDocument();
     expect(screen.queryByText("Additional entry evidence")).not.toBeInTheDocument();
 
-    expect(screen.queryByText("Verbose baggage explanation")).not.toBeInTheDocument();
-    expect(screen.queryByText("Verbose passport summary")).not.toBeInTheDocument();
     expect(screen.getByText("Use Advanced search for a more precise result.")).toBeInTheDocument();
+    expect(screen.getByText(/Each recommendation links to its supporting authority or carrier guidance/)).toBeInTheDocument();
   });
 
   it("never presents missing coverage as no documents required", () => {

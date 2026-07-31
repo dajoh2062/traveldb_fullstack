@@ -1,5 +1,6 @@
 package projects.traveldbbackend.repository;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -7,9 +8,13 @@ import projects.traveldbbackend.model.Airport;
 import projects.traveldbbackend.model.Country;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -23,8 +28,14 @@ public class TravelRepository {
             FROM Countries
             ORDER BY country_name_en
             """;
+    private static final int SEARCH_CACHE_CAPACITY = 128;
     private static final int NO_MATCH = Integer.MAX_VALUE;
     private static final Pattern DIACRITICS = Pattern.compile("\\p{M}+");
+    private static final Comparator<AirportMatch> AIRPORT_MATCH_ORDER = Comparator
+            .comparingInt(AirportMatch::score)
+            .thenComparing(match -> !match.airport().isScheduledService())
+            .thenComparingInt(match -> airportTypePriority(match.airport().getAirportType()))
+            .thenComparing(match -> match.airport().getIataCode());
 
     private static final RowMapper<Country> COUNTRY_MAPPER = (resultSet, rowNumber) -> new Country(
             resultSet.getLong("source_id"),
@@ -61,10 +72,25 @@ public class TravelRepository {
     );
 
     private final JdbcTemplate jdbc;
+    private final Map<String, List<Airport>> airportSearchCache = Collections.synchronizedMap(
+            new LinkedHashMap<>(SEARCH_CACHE_CAPACITY, 0.75f, true) {
+                @Override
+                protected boolean removeEldestEntry(Map.Entry<String, List<Airport>> eldest) {
+                    return size() > SEARCH_CACHE_CAPACITY;
+                }
+            }
+    );
     private volatile List<AirportSearchEntry> airportSearchIndex;
+    private volatile List<Country> countries;
 
     public TravelRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
+    }
+
+    @PostConstruct
+    void warmSearchData() {
+        airportSearchIndex();
+        countries();
     }
 
     public Airport getAirport(String iataCode) {
@@ -81,19 +107,28 @@ public class TravelRepository {
             return List.of();
         }
 
-        return airportSearchIndex().stream()
-                .map(entry -> new AirportMatch(entry.airport(), matchScore(entry, normalizedQuery)))
-                .filter(match -> match.score() != NO_MATCH)
-                .sorted(Comparator.comparingInt(AirportMatch::score)
-                        .thenComparing(match -> !match.airport().isScheduledService())
-                        .thenComparingInt(match -> airportTypePriority(match.airport().getAirportType()))
-                        .thenComparing(match -> match.airport().getIataCode()))
+        List<Airport> cachedResult = cachedSearch(normalizedQuery);
+        if (cachedResult != null) {
+            return cachedResult;
+        }
+
+        List<AirportMatch> matches = new ArrayList<>();
+        for (AirportSearchEntry entry : airportSearchIndex()) {
+            int score = matchScore(entry, normalizedQuery);
+            if (score != NO_MATCH) {
+                matches.add(new AirportMatch(entry.airport(), score));
+            }
+        }
+        matches.sort(AIRPORT_MATCH_ORDER);
+
+        List<Airport> result = matches.stream()
                 .map(AirportMatch::airport)
                 .toList();
+        return cacheSearch(normalizedQuery, result);
     }
 
     public List<Country> getCountries() {
-        return jdbc.query(LOAD_COUNTRIES_SQL, COUNTRY_MAPPER);
+        return countries();
     }
 
     public boolean countryExists(String countryCode) {
@@ -123,6 +158,37 @@ public class TravelRepository {
             }
         }
         return cachedIndex;
+    }
+
+    private List<Country> countries() {
+        List<Country> cachedCountries = countries;
+        if (cachedCountries == null) {
+            synchronized (this) {
+                cachedCountries = countries;
+                if (cachedCountries == null) {
+                    cachedCountries = List.copyOf(jdbc.query(LOAD_COUNTRIES_SQL, COUNTRY_MAPPER));
+                    countries = cachedCountries;
+                }
+            }
+        }
+        return cachedCountries;
+    }
+
+    private List<Airport> cachedSearch(String normalizedQuery) {
+        synchronized (airportSearchCache) {
+            return airportSearchCache.get(normalizedQuery);
+        }
+    }
+
+    private List<Airport> cacheSearch(String normalizedQuery, List<Airport> result) {
+        synchronized (airportSearchCache) {
+            List<Airport> existingResult = airportSearchCache.get(normalizedQuery);
+            if (existingResult != null) {
+                return existingResult;
+            }
+            airportSearchCache.put(normalizedQuery, result);
+            return result;
+        }
     }
 
     private static int matchScore(AirportSearchEntry airport, String query) {

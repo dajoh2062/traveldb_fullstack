@@ -2,12 +2,13 @@ import { useState } from "react";
 import { checkJourney, JourneyApiError } from "../api/travelApi";
 import {
   buildJourneyRequest,
+  createInitialDocumentProfile,
   initialBaggageProfile,
-  initialDocumentProfile,
   mapApiErrorsToFields,
   removeDocumentFieldErrors,
   validateJourneyForm,
 } from "../utils/journeyForm";
+import { isPassportLikeDocument } from "../utils/travelDocuments";
 
 const MAX_AIRPORTS_PER_ROUTE = 20;
 const JOURNEY_CHECK_TIMEOUT_MS = 15_000;
@@ -16,7 +17,7 @@ export default function useJourneyPlanner() {
   const [nationality, setNationality] = useState("");
   const [nationalityQuery, setNationalityQuery] = useState("");
   const [route, setRoute] = useState([]);
-  const [documents, setDocuments] = useState(() => ({ ...initialDocumentProfile }));
+  const [documents, setDocuments] = useState(createInitialDocumentProfile);
   const [baggage, setBaggage] = useState(() => ({ ...initialBaggageProfile }));
   const [advancedSearch, setAdvancedSearch] = useState(false);
   const [result, setResult] = useState(null);
@@ -51,11 +52,18 @@ export default function useJourneyPlanner() {
     setNationalityQuery(country.countryNameEn);
     setDocuments(currentDocuments => ({
       ...currentDocuments,
-      passportIssuingCountryCode: currentDocuments.passportIssuingCountryCode || country.countryId,
       residenceCountryCode: currentDocuments.residenceCountryCode || country.countryId,
+      travelDocuments: currentDocuments.travelDocuments.map(document => (
+        document.primary
+        && isPassportLikeDocument(document.type)
+        && !document.issuingCountryCode
+          ? { ...document, issuingCountryCode: country.countryId }
+          : document
+      )),
     }));
     clearResultAndError();
     clearFieldError("nationality");
+    clearFieldError("travelDocuments");
   }
 
   function addAirport(airport) {
@@ -102,6 +110,7 @@ export default function useJourneyPlanner() {
     setDocuments(currentDocuments => ({ ...currentDocuments, [field]: value }));
     clearResultAndError();
     clearFieldError(field);
+    if (field === "departureDate") clearFieldError("travelDocuments");
   }
 
   function updateBaggage(field, value) {
@@ -152,7 +161,7 @@ export default function useJourneyPlanner() {
       setResult(await checkJourney(request, { signal: controller.signal }));
     } catch (requestError) {
       if (requestError instanceof JourneyApiError && requestError.fieldErrors.length > 0) {
-        setFieldErrors(mapApiErrorsToFields(requestError.fieldErrors));
+        setFieldErrors(mapApiErrorsToFields(requestError.fieldErrors, documents));
       }
       setError(
         requestError.name === "AbortError"

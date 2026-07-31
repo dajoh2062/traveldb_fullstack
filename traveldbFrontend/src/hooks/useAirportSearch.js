@@ -3,10 +3,32 @@ import { searchAirports } from "../api/travelApi";
 import { normalizeSearch } from "../utils/search";
 
 const airportSearchCache = new Map();
+const CACHE_CAPACITY = 100;
 const PAGE_SIZE = 50;
+
+function readCachedSearch(cacheKey) {
+  const cachedResult = airportSearchCache.get(cacheKey);
+  if (!cachedResult) return undefined;
+
+  // Refresh the entry so the least recently used searches expire first.
+  airportSearchCache.delete(cacheKey);
+  airportSearchCache.set(cacheKey, cachedResult);
+  return cachedResult;
+}
+
+function cacheSearch(cacheKey, searchResult) {
+  airportSearchCache.delete(cacheKey);
+  airportSearchCache.set(cacheKey, searchResult);
+
+  if (airportSearchCache.size > CACHE_CAPACITY) {
+    const oldestKey = airportSearchCache.keys().next().value;
+    airportSearchCache.delete(oldestKey);
+  }
+}
 
 export default function useAirportSearch() {
   const queryRef = useRef("");
+  const loadMoreRequestRef = useRef(null);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +48,8 @@ export default function useAirportSearch() {
     const timer = window.setTimeout(() => {
       searchAirports(trimmedQuery, { limit: PAGE_SIZE, signal: controller.signal })
         .then(searchResult => {
-          airportSearchCache.set(cacheKey, searchResult);
+          cacheSearch(cacheKey, searchResult);
+          if (controller.signal.aborted || normalizeSearch(queryRef.current) !== cacheKey) return;
           setSuggestions(searchResult.airports);
           setTotal(searchResult.total);
         })
@@ -47,8 +70,11 @@ export default function useAirportSearch() {
   }, [query]);
 
   function updateQuery(value) {
+    loadMoreRequestRef.current?.controller.abort();
+    loadMoreRequestRef.current = null;
+
     const cacheKey = normalizeSearch(value);
-    const cachedResult = airportSearchCache.get(cacheKey);
+    const cachedResult = readCachedSearch(cacheKey);
     queryRef.current = value;
     setQuery(value);
     setSuggestions(cachedResult?.airports ?? []);
@@ -65,14 +91,24 @@ export default function useAirportSearch() {
     const requestedQuery = query.trim();
     const cacheKey = normalizeSearch(requestedQuery);
     const offset = suggestions.length;
+    const request = {
+      cacheKey,
+      controller: new AbortController(),
+    };
+    loadMoreRequestRef.current = request;
     setIsLoadingMore(true);
 
     try {
       const nextPage = await searchAirports(requestedQuery, {
         limit: PAGE_SIZE,
         offset,
+        signal: request.controller.signal,
       });
-      if (normalizeSearch(queryRef.current) !== cacheKey) return;
+      if (
+        loadMoreRequestRef.current !== request
+        || request.controller.signal.aborted
+        || normalizeSearch(queryRef.current) !== request.cacheKey
+      ) return;
 
       setSuggestions(currentSuggestions => {
         const knownCodes = new Set(currentSuggestions.map(airport => airport.iataCode));
@@ -80,19 +116,30 @@ export default function useAirportSearch() {
           ...currentSuggestions,
           ...nextPage.airports.filter(airport => !knownCodes.has(airport.iataCode)),
         ];
-        airportSearchCache.set(cacheKey, { airports: combined, total: nextPage.total });
+        cacheSearch(request.cacheKey, { airports: combined, total: nextPage.total });
         return combined;
       });
       setTotal(nextPage.total);
     } catch {
+      if (
+        loadMoreRequestRef.current !== request
+        || request.controller.signal.aborted
+        || normalizeSearch(queryRef.current) !== request.cacheKey
+      ) return;
+
       // Keep the already loaded results available if a later page fails.
       setSearchError("More airports could not be loaded. Try again.");
     } finally {
-      setIsLoadingMore(false);
+      if (loadMoreRequestRef.current === request) {
+        loadMoreRequestRef.current = null;
+        setIsLoadingMore(false);
+      }
     }
   }
 
   function clearSearch() {
+    loadMoreRequestRef.current?.controller.abort();
+    loadMoreRequestRef.current = null;
     queryRef.current = "";
     setQuery("");
     setSuggestions([]);

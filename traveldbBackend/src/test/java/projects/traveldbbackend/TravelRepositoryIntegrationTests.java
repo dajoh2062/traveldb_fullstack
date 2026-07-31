@@ -4,12 +4,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import projects.traveldbbackend.model.Airport;
+import projects.traveldbbackend.model.Country;
 import projects.traveldbbackend.repository.TravelRepository;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -21,6 +24,25 @@ class TravelRepositoryIntegrationTests {
     @Test
     void exactIataCodeIsRankedFirst() {
         assertEquals("JFK", repository.searchAirports("jfk").getFirst().getIataCode());
+    }
+
+    @Test
+    void reusesRankedResultsForEquivalentQueries() {
+        List<Airport> firstSearch = repository.searchAirports("London");
+
+        assertSame(firstSearch, repository.searchAirports("  LONDON  "));
+        assertSame(firstSearch, repository.searchAirports("Lóndon"));
+    }
+
+    @Test
+    void expiresOldSearchesInsteadOfGrowingTheCacheWithoutLimit() {
+        List<Airport> firstSearch = repository.searchAirports("London");
+
+        for (int index = 0; index < 128; index++) {
+            repository.searchAirports("cache-capacity-probe-" + index);
+        }
+
+        assertNotSame(firstSearch, repository.searchAirports("London"));
     }
 
     @Test
@@ -44,13 +66,16 @@ class TravelRepositoryIntegrationTests {
 
     @Test
     void exposesCountriesForNationalitySearch() {
-        assertTrue(repository.getCountries().size() >= 240);
-        assertTrue(repository.getCountries().stream()
+        List<Country> countries = repository.getCountries();
+
+        assertSame(countries, repository.getCountries());
+        assertTrue(countries.size() >= 240);
+        assertTrue(countries.stream()
                 .anyMatch(country -> country.getCountryId().equals("NO")
                         && country.getCountryNameEn().equals("Norway")));
-        assertTrue(repository.getCountries().stream()
+        assertTrue(countries.stream()
                 .anyMatch(country -> country.getCountryId().equals("BG") && country.isSchengen()));
-        assertTrue(repository.getCountries().stream()
+        assertTrue(countries.stream()
                 .anyMatch(country -> country.getCountryId().equals("RO") && country.isSchengen()));
     }
 

@@ -14,7 +14,7 @@ export default function useCountries() {
       .catch(() => {
         if (!controller.signal.aborted) {
           setCountries([]);
-          setError("Country and passport options could not be loaded.");
+          setError("Country options could not be loaded.");
         }
       })
       .finally(() => { if (!controller.signal.aborted) setIsLoading(false); });

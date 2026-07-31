@@ -36,21 +36,21 @@ function TestPlanner() {
 }
 
 describe("JourneyPlanner advanced search", () => {
-  it("keeps passport details hidden until the user opts in", () => {
+  it("keeps travel document details hidden until the user opts in", () => {
     render(<TestPlanner />);
 
     const toggle = screen.getByRole("checkbox", { name: "Advanced search" });
     expect(toggle).not.toBeChecked();
-    expect(screen.queryByRole("heading", { name: "Passport details" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Traveller and travel documents" })).not.toBeInTheDocument();
 
     fireEvent.click(toggle);
 
     expect(toggle).toBeChecked();
-    expect(screen.getByRole("heading", { name: "Passport details" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Traveller and travel documents" })).toBeInTheDocument();
     expect(screen.getByRole("spinbutton", { name: "Age on departure" })).toHaveValue(42);
 
     fireEvent.click(toggle);
-    expect(screen.queryByRole("heading", { name: "Passport details" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Traveller and travel documents" })).not.toBeInTheDocument();
 
     fireEvent.click(toggle);
     expect(screen.getByRole("spinbutton", { name: "Age on departure" })).toHaveValue(42);

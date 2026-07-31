@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import projects.traveldbbackend.api.dto.TravelDocument;
+import projects.traveldbbackend.api.dto.TravelDocument.Type;
 import projects.traveldbbackend.documents.DocumentRequirement.Scope;
 import projects.traveldbbackend.documents.DocumentRequirement.Status;
 import projects.traveldbbackend.documents.DocumentRuleSnapshot.Rule;
@@ -26,6 +28,8 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
 
     private static final String PROVIDER_NAME = "TRAVELDB_LOCAL_RULES";
     private static final String ENTRY_CONDITIONS = "ENTRY_CONDITIONS";
+    private static final String DOCUMENT_ACCEPTANCE_PREFIX = "DOCUMENT_ACCEPTANCE_";
+    private static final String EU_TRAVEL_DOCUMENT = "EU_EEA_CH_TRAVEL_DOCUMENT";
     private static final Set<String> PERMISSION_FALLBACK_CODES = Set.of(
             "ENTRY_PERMISSION",
             "TRANSIT_PERMISSION"
@@ -70,11 +74,15 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
         boolean hasPermissionFallback = requirements.stream()
                 .map(DocumentRequirement::code)
                 .anyMatch(PERMISSION_FALLBACK_CODES::contains);
+        boolean hasRestrictedPrimaryDocument = hasRegisteredDocuments(input)
+                && !hasOrdinaryPassportPrimary(input);
 
         return new DocumentCheckResult(
                 PROVIDER_NAME,
                 false,
-                hasPermissionFallback ? "LOCAL_RULES_WITH_VERIFY_FALLBACK" : "LOCAL_VERSIONED_RULE_SNAPSHOT",
+                hasPermissionFallback || hasRestrictedPrimaryDocument
+                        ? "LOCAL_RULES_WITH_VERIFY_FALLBACK"
+                        : "LOCAL_VERSIONED_RULE_SNAPSHOT",
                 Instant.now(),
                 List.copyOf(requirements),
                 conservativeResult.missingInputs(),
@@ -100,6 +108,9 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
 
         rules.stream()
                 .map(rule -> toRequirement(rule, null, null, staleRuleIds))
+                .forEach(requirements::add);
+        conservativeResult.requirements().stream()
+                .filter(requirement -> requirement.code().startsWith(DOCUMENT_ACCEPTANCE_PREFIX))
                 .forEach(requirements::add);
     }
 
@@ -147,6 +158,8 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
             Scope scope,
             LocalDate travelDate
     ) {
+        boolean restrictNationalityRules = hasRegisteredDocuments(input)
+                && !hasOrdinaryPassportPrimary(input);
         String documentCountryCode = input.passportIssuingCountryCode() == null
                 ? input.nationalityCountryCode()
                 : input.passportIssuingCountryCode();
@@ -154,6 +167,8 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
 
         snapshot.rules().stream()
                 .filter(rule -> rule.scope() == scope)
+                .filter(rule -> !restrictNationalityRules
+                        || isNationalIdPrimary(input) && EU_TRAVEL_DOCUMENT.equals(rule.code()))
                 .filter(rule -> matches(rule.destinationCountries(), destinationCountryCode))
                 .filter(rule -> matches(rule.nationalities(), documentCountryCode))
                 .filter(rule -> !contains(rule.excludedNationalities(), documentCountryCode))
@@ -212,7 +227,45 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
         if (input.departureDate() == null) {
             warnings.add("No departure date was supplied; effective-date matching used today's date.");
         }
+        if (hasRegisteredDocuments(input) && !hasOrdinaryPassportPrimary(input)) {
+            warnings.add(isNationalIdPrimary(input)
+                    ? "Only reviewed EU, EEA and Swiss identity-card rules were considered for the selected national identity card; other route decisions were limited to verification guidance."
+                    : "The selected primary document is not an ordinary passport; nationality-based passport rules were limited to verification guidance.");
+        }
         return List.copyOf(warnings);
+    }
+
+    private static boolean hasRegisteredDocuments(DocumentCheckInput input) {
+        return input.travelDocuments() != null && !input.travelDocuments().isEmpty();
+    }
+
+    private static boolean hasOrdinaryPassportPrimary(DocumentCheckInput input) {
+        return primaryDocumentType(input) == Type.PASSPORT;
+    }
+
+    private static boolean isNationalIdPrimary(DocumentCheckInput input) {
+        return primaryDocumentType(input) == Type.NATIONAL_ID_CARD;
+    }
+
+    private static Type primaryDocumentType(DocumentCheckInput input) {
+        if (input.travelDocuments() == null) {
+            return null;
+        }
+        return input.travelDocuments().stream()
+                .filter(document -> Boolean.TRUE.equals(document.primary()))
+                .map(TravelDocument::type)
+                .map(LocalDocumentRulesProvider::parseDocumentType)
+                .filter(type -> type != null)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private static Type parseDocumentType(String value) {
+        try {
+            return Type.valueOf(value);
+        } catch (IllegalArgumentException | NullPointerException ignored) {
+            return null;
+        }
     }
 
     private static boolean matches(List<String> allowed, String value) {

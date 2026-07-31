@@ -1,8 +1,7 @@
-import { useState } from "react";
 import Icon from "./Icon";
 import CountrySelect from "./documents/CountrySelect";
 import FieldError from "./documents/FieldError";
-import HeldCountryList from "./documents/HeldCountryList";
+import TravelDocumentList from "./documents/TravelDocumentList";
 
 const TRAVEL_PURPOSE_OPTIONS = [
   { value: "TOURISM", label: "Holiday or visiting" },
@@ -21,30 +20,24 @@ function localDateString(date = new Date()) {
 }
 
 export default function TravelDocuments({ countries, documents, errors = {}, onChange }) {
-  const [showAdditional, setShowAdditional] = useState(false);
   const today = localDateString();
 
   return (
     <section className="document-setup" aria-labelledby="document-setup-title">
       <div className="setup-heading">
         <span className="setup-icon"><Icon name="document" size={19} /></span>
-        <h3 id="document-setup-title">Passport details</h3>
+        <div className="setup-heading-copy">
+          <h3 id="document-setup-title">Traveller and travel documents</h3>
+          <p>Tell us which documents you plan to carry. Do not enter document numbers.</p>
+        </div>
       </div>
 
       <div className="document-form-grid">
         <CountrySelect
           countries={countries}
-          error={errors.passportIssuingCountryCode}
-          id="passport-issuer"
-          label="Passport country"
-          onChange={value => onChange("passportIssuingCountryCode", value)}
-          value={documents.passportIssuingCountryCode}
-        />
-        <CountrySelect
-          countries={countries}
           error={errors.residenceCountryCode}
           id="residence-country"
-          label="Residence"
+          label="Country of residence"
           onChange={value => onChange("residenceCountryCode", value)}
           value={documents.residenceCountryCode}
         />
@@ -63,25 +56,6 @@ export default function TravelDocuments({ countries, documents, errors = {}, onC
             />
           </span>
           <FieldError id="departure-date-error" message={errors.departureDate} />
-        </label>
-
-        <label
-          className={`field document-field ${errors.passportExpiryDate ? "has-error" : ""}`}
-          htmlFor="passport-expiry"
-        >
-          <span className="field-label">Passport expiry</span>
-          <span className="input-shell document-input">
-            <input
-              aria-describedby={errors.passportExpiryDate ? "passport-expiry-error" : undefined}
-              aria-invalid={Boolean(errors.passportExpiryDate)}
-              id="passport-expiry"
-              min={documents.departureDate || today}
-              onInput={event => onChange("passportExpiryDate", event.currentTarget.value)}
-              type="date"
-              value={documents.passportExpiryDate}
-            />
-          </span>
-          <FieldError id="passport-expiry-error" message={errors.passportExpiryDate} />
         </label>
 
         <label className={`field document-field ${errors.travelPurpose ? "has-error" : ""}`} htmlFor="travel-purpose">
@@ -122,32 +96,13 @@ export default function TravelDocuments({ countries, documents, errors = {}, onC
         </label>
       </div>
 
-      <button
-        aria-expanded={showAdditional}
-        className="additional-documents-toggle"
-        onClick={() => setShowAdditional(value => !value)}
-        type="button"
-      >
-        <strong>Visas or residence permits held</strong>
-        <Icon name={showAdditional ? "up" : "down"} size={17} />
-      </button>
-
-      {showAdditional && (
-        <div className="held-documents-grid">
-          <HeldCountryList
-            countries={countries}
-            label="Valid visas held"
-            onChange={value => onChange("visaCountryCodes", value)}
-            values={documents.visaCountryCodes}
-          />
-          <HeldCountryList
-            countries={countries}
-            label="Residence permits held"
-            onChange={value => onChange("residencePermitCountryCodes", value)}
-            values={documents.residencePermitCountryCodes}
-          />
-        </div>
-      )}
+      <TravelDocumentList
+        countries={countries}
+        documents={documents.travelDocuments}
+        errors={errors.travelDocuments}
+        minimumExpiryDate={documents.departureDate || today}
+        onChange={value => onChange("travelDocuments", value)}
+      />
     </section>
   );
 }

@@ -1,4 +1,4 @@
--- Generated 2026-07-20T18:56:08.337Z from https://davidmegginson.github.io/ourairports-data/countries.csv
+-- Generated 2026-07-31T13:11:13.274Z from https://davidmegginson.github.io/ourairports-data/countries.csv
 -- OurAirports data is released into the public domain.
 INSERT INTO Countries (source_id, country_id, country_name_en, continent, wikipedia_url, keywords, is_schengen) VALUES
 (302619,'AF','Afghanistan','AS','https://en.wikipedia.org/wiki/Afghanistan',NULL,FALSE),

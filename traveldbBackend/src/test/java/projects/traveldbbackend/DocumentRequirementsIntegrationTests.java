@@ -1,12 +1,16 @@
 package projects.traveldbbackend;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import projects.traveldbbackend.api.dto.BaggageOptions;
 import projects.traveldbbackend.api.dto.DocumentOptions;
 import projects.traveldbbackend.api.dto.JourneyRequest;
 import projects.traveldbbackend.api.dto.JourneyResponse;
+import projects.traveldbbackend.api.dto.TravelDocument;
+import projects.traveldbbackend.api.dto.TravelDocument.Type;
 import projects.traveldbbackend.documents.DocumentRequirement;
 import projects.traveldbbackend.service.TravelService;
 
@@ -335,6 +339,381 @@ class DocumentRequirementsIntegrationTests {
                 )
         );
         assertTrue(complete.documentCheck().missingInputs().isEmpty());
+    }
+
+    @Test
+    void registersMultipleDocumentsAndUsesARegisteredVisaInExistingRules() {
+        JourneyResponse response = travelService.checkJourney(new JourneyRequest(
+                "NO",
+                List.of("OSL", "JFK"),
+                new BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                new DocumentOptions(
+                        "NO",
+                        null,
+                        null,
+                        DEPARTURE_DATE,
+                        "TOURISM",
+                        30,
+                        List.of(),
+                        List.of(),
+                        List.of(
+                                new TravelDocument(
+                                        "PASSPORT",
+                                        null,
+                                        "NO",
+                                        PASSPORT_EXPIRY_DATE,
+                                        true
+                                ),
+                                new TravelDocument(
+                                        "VISA",
+                                        null,
+                                        "US",
+                                        PASSPORT_EXPIRY_DATE,
+                                        false
+                                ),
+                                new TravelDocument(
+                                        "SEAFARER_IDENTITY_DOCUMENT",
+                                        null,
+                                        "NO",
+                                        PASSPORT_EXPIRY_DATE,
+                                        false
+                                )
+                        )
+                )
+        ));
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("US_VISA_VALIDITY")
+        ));
+        assertEquals(3, response.documentCheck().requirements().stream()
+                .filter(requirement -> requirement.code().startsWith("DOCUMENT_ACCEPTANCE_"))
+                .count());
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.title().contains("seafarer")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+                        && requirement.sources().stream()
+                        .anyMatch(source -> source.url().contains("ilo.org"))
+        ));
+    }
+
+    @Test
+    void anAlternativePrimaryDocumentKeepsPassportWaiverRulesVerificationOnly() {
+        JourneyResponse response = travelService.checkJourney(new JourneyRequest(
+                "NO",
+                List.of("OSL", "JFK"),
+                new BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                new DocumentOptions(
+                        "NO",
+                        null,
+                        null,
+                        DEPARTURE_DATE,
+                        "TOURISM",
+                        30,
+                        List.of(),
+                        List.of(),
+                        List.of(
+                                new TravelDocument(
+                                        "REFUGEE_TRAVEL_DOCUMENT",
+                                        null,
+                                        "NO",
+                                        PASSPORT_EXPIRY_DATE,
+                                        true
+                                ),
+                                new TravelDocument(
+                                        "PASSPORT",
+                                        null,
+                                        "NO",
+                                        PASSPORT_EXPIRY_DATE,
+                                        false
+                                )
+                        )
+                )
+        ));
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ENTRY_PERMISSION")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+        ));
+        assertFalse(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ESTA_OR_US_VISA")
+        ));
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.title().contains("refugee")
+                        && requirement.sources().stream()
+                        .anyMatch(source -> source.url().contains("unhcr.org"))
+        ));
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = Type.class, names = {
+            "DIPLOMATIC_PASSPORT",
+            "SERVICE_PASSPORT",
+            "OFFICIAL_PASSPORT",
+            "MILITARY_PASSPORT"
+    })
+    void aSpecialPassportDoesNotActivateOrdinaryPassportWaivers(Type specialPassportType) {
+        JourneyResponse response = travelService.checkJourney(new JourneyRequest(
+                "NO",
+                List.of("OSL", "JFK"),
+                new BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                new DocumentOptions(
+                        "NO",
+                        null,
+                        null,
+                        DEPARTURE_DATE,
+                        "TOURISM",
+                        30,
+                        List.of(),
+                        List.of(),
+                        List.of(
+                                new TravelDocument(
+                                        specialPassportType.name(),
+                                        null,
+                                        "NO",
+                                        PASSPORT_EXPIRY_DATE,
+                                        true
+                                ),
+                                new TravelDocument(
+                                        "PASSPORT",
+                                        null,
+                                        "NO",
+                                        PASSPORT_EXPIRY_DATE,
+                                        false
+                                )
+                        )
+                )
+        ));
+
+        assertFalse(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ESTA_OR_US_VISA")
+        ));
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ENTRY_PERMISSION")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+        ));
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().startsWith("DOCUMENT_ACCEPTANCE_")
+                        && requirement.title().contains(specialPassportType.displayName())
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+        ));
+    }
+
+    @Test
+    void anOrdinaryPrimaryPassportStillActivatesWaiversWithOtherPassportsRegistered() {
+        JourneyResponse response = travelService.checkJourney(new JourneyRequest(
+                "NO",
+                List.of("OSL", "JFK"),
+                new BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                new DocumentOptions(
+                        "NO",
+                        null,
+                        null,
+                        DEPARTURE_DATE,
+                        "TOURISM",
+                        30,
+                        List.of(),
+                        List.of(),
+                        List.of(
+                                new TravelDocument(
+                                        "PASSPORT",
+                                        null,
+                                        "NO",
+                                        PASSPORT_EXPIRY_DATE,
+                                        true
+                                ),
+                                new TravelDocument(
+                                        "DIPLOMATIC_PASSPORT",
+                                        null,
+                                        "SE",
+                                        PASSPORT_EXPIRY_DATE,
+                                        false
+                                ),
+                                new TravelDocument(
+                                        "PASSPORT",
+                                        null,
+                                        "BR",
+                                        PASSPORT_EXPIRY_DATE,
+                                        false
+                                )
+                        )
+                )
+        ));
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ESTA_OR_US_VISA")
+                        && requirement.status() == DocumentRequirement.Status.CONDITIONAL
+        ));
+    }
+
+    @Test
+    void thePrimaryPassportFromTheNewListDrivesNationalityRules() {
+        JourneyResponse response = travelService.checkJourney(new JourneyRequest(
+                "NO",
+                List.of("OSL", "JFK"),
+                new BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                new DocumentOptions(
+                        "NO",
+                        "NO",
+                        PASSPORT_EXPIRY_DATE,
+                        DEPARTURE_DATE,
+                        "TOURISM",
+                        30,
+                        List.of(),
+                        List.of(),
+                        List.of(
+                                new TravelDocument(
+                                        "PASSPORT",
+                                        null,
+                                        "NO",
+                                        PASSPORT_EXPIRY_DATE,
+                                        false
+                                ),
+                                new TravelDocument(
+                                        "PASSPORT",
+                                        null,
+                                        "BR",
+                                        PASSPORT_EXPIRY_DATE,
+                                        true
+                                )
+                        )
+                )
+        ));
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ENTRY_PERMISSION")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+        ));
+        assertFalse(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ESTA_OR_US_VISA")
+        ));
+    }
+
+    @Test
+    void coversAuditedTaiwanEntryAndBoliviaTransitRules() {
+        JourneyResponse taiwanToUk = travelService.checkJourney(
+                new JourneyRequest("TW", List.of("TPE", "LHR"))
+        );
+        assertTrue(taiwanToUk.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("UK_ETA_OR_VISA")
+                        && "LHR".equals(requirement.airportCode())
+        ));
+
+        JourneyResponse boliviaViaAuckland = travelService.checkJourney(
+                new JourneyRequest("BO", List.of("OSL", "AKL", "SYD"))
+        );
+        assertTrue(boliviaViaAuckland.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("NZETA_OR_TRANSIT_VISA")
+                        && "AKL".equals(requirement.airportCode())
+        ));
+    }
+
+    @Test
+    void keepsCanadianEtaPassportQualifiersVisible() {
+        JourneyResponse romanianEntry = travelService.checkJourney(
+                new JourneyRequest("RO", List.of("OTP", "YYZ"))
+        );
+        assertTrue(romanianEntry.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("CANADA_ETA_OR_VISA")
+                        && requirement.scope() == DocumentRequirement.Scope.ENTRY
+                        && requirement.summary().contains("electronic passport")
+        ));
+
+        JourneyResponse romanianTransit = travelService.checkJourney(
+                new JourneyRequest("RO", List.of("OTP", "YYZ", "JFK"))
+        );
+        assertTrue(romanianTransit.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("CANADA_ETA_OR_VISA")
+                        && requirement.scope() == DocumentRequirement.Scope.TRANSIT
+                        && requirement.summary().contains("non-electronic passports")
+        ));
+
+        JourneyResponse taiwanEntry = travelService.checkJourney(
+                new JourneyRequest("TW", List.of("TPE", "YYZ"))
+        );
+        assertTrue(taiwanEntry.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("CANADA_ETA_OR_VISA")
+                        && requirement.scope() == DocumentRequirement.Scope.ENTRY
+                        && requirement.summary().contains("personal identification number")
+        ));
+
+        JourneyResponse taiwanTransit = travelService.checkJourney(
+                new JourneyRequest("TW", List.of("TPE", "YVR", "LAX"))
+        );
+        assertTrue(taiwanTransit.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("CANADA_ETA_OR_VISA")
+                        && requirement.scope() == DocumentRequirement.Scope.TRANSIT
+                        && requirement.summary().contains("personal identification number")
+        ));
+    }
+
+    @Test
+    void aNationalIdentityCardCanUseReviewedRegionalTravelDocumentRules() {
+        JourneyResponse response = travelService.checkJourney(new JourneyRequest(
+                "NO",
+                List.of("OSL", "CDG"),
+                new BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                new DocumentOptions(
+                        "NO",
+                        null,
+                        null,
+                        DEPARTURE_DATE,
+                        "TOURISM",
+                        30,
+                        List.of(),
+                        List.of(),
+                        List.of(new TravelDocument(
+                                "NATIONAL_ID_CARD",
+                                null,
+                                "NO",
+                                PASSPORT_EXPIRY_DATE,
+                                true
+                        ))
+                )
+        ));
+
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("EU_EEA_CH_TRAVEL_DOCUMENT")
+                        && requirement.status() == DocumentRequirement.Status.REQUIRED
+                        && "CDG".equals(requirement.airportCode())
+        ));
+    }
+
+    @Test
+    void acceptsEverySupportedDocumentTypeInOneTravelerProfile() {
+        List<TravelDocument> documents = java.util.Arrays.stream(Type.values())
+                .map(type -> new TravelDocument(
+                        type.name(),
+                        type == Type.OTHER ? "Border crossing card" : null,
+                        type.issuingCountryRequired() ? "NO" : null,
+                        PASSPORT_EXPIRY_DATE,
+                        type == Type.PASSPORT
+                ))
+                .toList();
+
+        JourneyResponse response = travelService.checkJourney(new JourneyRequest(
+                "NO",
+                List.of("OSL", "LHR"),
+                new BaggageOptions(true, "SINGLE_BOOKING", "YES"),
+                new DocumentOptions(
+                        "NO",
+                        null,
+                        null,
+                        DEPARTURE_DATE,
+                        "TOURISM",
+                        30,
+                        List.of(),
+                        List.of(),
+                        documents
+                )
+        ));
+
+        assertEquals(Type.values().length, response.documentCheck().requirements().stream()
+                .filter(requirement -> requirement.code().startsWith("DOCUMENT_ACCEPTANCE_"))
+                .count());
+        assertTrue(response.documentCheck().requirements().stream().anyMatch(requirement ->
+                requirement.title().equals("Verify Border crossing card acceptance")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+        ));
     }
 
     private JourneyRequest request(

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "2026-07-30.4",
-  "generatedAt": "2026-07-30T17:00:00Z",
+  "datasetVersion": "2026-07-31.1",
+  "generatedAt": "2026-07-31T00:00:00Z",
   "sources": [
     {
       "label": "U.S. Department of State — Visa Waiver Program",
@@ -162,8 +162,8 @@
       "nationalities": ["AD", "AG", "AR", "AU", "AT", "BS", "BH", "BB", "BE", "BZ", "BR", "BN", "BG", "CA", "CL", "CR", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "GD", "GT", "GY", "HK", "HU", "IS", "IT", "IL", "JP", "KI", "KW", "LV", "LI", "LT", "LU", "MO", "MY", "MV", "MT", "MH", "MU", "MX", "FM", "MC", "NL", "NZ", "NO", "OM", "PW", "PA", "PG", "PY", "PE", "PL", "PT", "QA", "RO", "WS", "SM", "SA", "SC", "SG", "SB", "KR", "SK", "SI", "ES", "KN", "VC", "SE", "CH", "TO", "TV", "AE", "US", "UY", "VA"],
       "priority": 100,
       "effectiveFrom": "2026-04-09",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
       "output": {
         "code": "UK_ETA_OR_VISA",
         "category": "ELECTRONIC_AUTHORIZATION",
@@ -171,6 +171,26 @@
         "title": "UK ETA or existing UK immigration permission",
         "summary": "Travellers with an ETA-eligible passport normally need an ETA before visiting the UK unless they already hold a visa or another listed exemption.",
         "conditions": ["Irish citizens and people with valid UK immigration permission are among those who do not need an ETA.", "An ETA does not guarantee entry and is linked to the passport used to apply."],
+        "sources": [{"label": "UK Visas and Immigration — ETA eligibility", "url": "https://www.gov.uk/guidance/check-when-you-can-get-an-electronic-travel-authorisation-eta", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "uk-eta-taiwan-entry",
+      "decisionKey": "GB_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["GB"],
+      "nationalities": ["TW"],
+      "priority": 100,
+      "effectiveFrom": "2026-04-09",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
+      "output": {
+        "code": "UK_ETA_OR_VISA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "CONDITIONAL",
+        "title": "UK ETA or existing UK immigration permission",
+        "summary": "Travellers using a qualifying Taiwan passport normally need an ETA before visiting the UK unless they already hold a visa or another listed exemption.",
+        "conditions": ["The Taiwan passport must include the identification number issued by the competent authority.", "An ETA does not guarantee entry and is linked to the passport used to apply."],
         "sources": [{"label": "UK Visas and Immigration — ETA eligibility", "url": "https://www.gov.uk/guidance/check-when-you-can-get-an-electronic-travel-authorisation-eta", "sourceType": "GOVERNMENT"}]
       }
     },
@@ -183,8 +203,8 @@
       "requiredHeldVisaCountries": ["CA"],
       "priority": 300,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
       "output": {
         "code": "CANADA_VISA_VALIDITY",
         "category": "VISA",
@@ -204,8 +224,8 @@
       "requiredHeldVisaCountries": ["CA"],
       "priority": 300,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
       "output": {
         "code": "CANADA_TRANSIT_VISA_VALIDITY",
         "category": "VISA",
@@ -221,11 +241,11 @@
       "decisionKey": "CA_ENTRY_PERMISSION",
       "scope": "ENTRY",
       "destinationCountries": ["CA"],
-      "nationalities": ["AD", "AU", "AT", "BS", "BB", "BE", "BN", "BG", "CL", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HK", "HU", "IS", "IE", "IL", "IT", "JP", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NZ", "NO", "PG", "PL", "PT", "QA", "KR", "RO", "WS", "SM", "SG", "SK", "SI", "SB", "ES", "SE", "CH", "TW", "AE", "VA", "GB"],
+      "nationalities": ["AD", "AU", "AT", "BS", "BB", "BE", "BN", "BG", "CL", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HK", "HU", "IS", "IE", "IL", "IT", "JP", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NZ", "NO", "PG", "PL", "PT", "QA", "KR", "WS", "SM", "SG", "SK", "SI", "SB", "ES", "SE", "CH", "AE", "VA", "GB"],
       "priority": 100,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
       "output": {
         "code": "CANADA_ETA_OR_VISA",
         "category": "ELECTRONIC_AUTHORIZATION",
@@ -237,15 +257,55 @@
       }
     },
     {
+      "id": "canada-eta-romania-entry",
+      "decisionKey": "CA_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["CA"],
+      "nationalities": ["RO"],
+      "priority": 110,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
+      "output": {
+        "code": "CANADA_ETA_OR_VISA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "CONDITIONAL",
+        "title": "Canadian eTA with a qualifying Romanian passport",
+        "summary": "Romanian citizens need an electronic passport to use an eTA for air travel to Canada; holders of non-electronic passports need a visitor visa.",
+        "conditions": ["The passport must be electronic; a temporary or other non-electronic Romanian passport does not qualify for an eTA."],
+        "sources": [{"label": "Government of Canada — Entry requirements by country", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "canada-eta-taiwan-entry",
+      "decisionKey": "CA_ENTRY_PERMISSION",
+      "scope": "ENTRY",
+      "destinationCountries": ["CA"],
+      "nationalities": ["TW"],
+      "priority": 110,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
+      "output": {
+        "code": "CANADA_ETA_OR_VISA",
+        "category": "ELECTRONIC_AUTHORIZATION",
+        "status": "CONDITIONAL",
+        "title": "Canadian eTA with a qualifying Taiwan passport",
+        "summary": "Taiwan passport holders qualify for an eTA only with an ordinary passport issued by Taiwan's Ministry of Foreign Affairs that includes the personal identification number.",
+        "conditions": ["A different Taiwan passport requires a visitor visa for travel to Canada."],
+        "sources": [{"label": "Government of Canada — Entry requirements by country", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
       "id": "canada-eta-transit",
       "decisionKey": "CA_TRANSIT_PERMISSION",
       "scope": "TRANSIT",
       "destinationCountries": ["CA"],
-      "nationalities": ["AD", "AU", "AT", "BS", "BB", "BE", "BN", "BG", "CL", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HK", "HU", "IS", "IE", "IL", "IT", "JP", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NZ", "NO", "PG", "PL", "PT", "QA", "KR", "RO", "WS", "SM", "SG", "SK", "SI", "SB", "ES", "SE", "CH", "TW", "AE", "VA", "GB"],
+      "nationalities": ["AD", "AU", "AT", "BS", "BB", "BE", "BN", "BG", "CL", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HK", "HU", "IS", "IE", "IL", "IT", "JP", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NZ", "NO", "PG", "PL", "PT", "QA", "KR", "WS", "SM", "SG", "SK", "SI", "SB", "ES", "SE", "CH", "AE", "VA", "GB"],
       "priority": 100,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
       "output": {
         "code": "CANADA_ETA_OR_VISA",
         "category": "TRANSIT_PERMISSION",
@@ -257,6 +317,46 @@
       }
     },
     {
+      "id": "canada-eta-romania-transit",
+      "decisionKey": "CA_TRANSIT_PERMISSION",
+      "scope": "TRANSIT",
+      "destinationCountries": ["CA"],
+      "nationalities": ["RO"],
+      "priority": 110,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
+      "output": {
+        "code": "CANADA_ETA_OR_VISA",
+        "category": "TRANSIT_PERMISSION",
+        "status": "CONDITIONAL",
+        "title": "Canadian eTA with a qualifying Romanian passport",
+        "summary": "Romanian citizens need an electronic passport to use an eTA when flying through Canada; holders of non-electronic passports need a transit or visitor visa.",
+        "conditions": ["The passport must be electronic; a temporary or other non-electronic Romanian passport does not qualify for an eTA."],
+        "sources": [{"label": "Government of Canada — Entry requirements by country", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "canada-eta-taiwan-transit",
+      "decisionKey": "CA_TRANSIT_PERMISSION",
+      "scope": "TRANSIT",
+      "destinationCountries": ["CA"],
+      "nationalities": ["TW"],
+      "priority": 110,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
+      "output": {
+        "code": "CANADA_ETA_OR_VISA",
+        "category": "TRANSIT_PERMISSION",
+        "status": "CONDITIONAL",
+        "title": "Canadian eTA with a qualifying Taiwan passport",
+        "summary": "Taiwan passport holders qualify for an eTA when flying through Canada only with an ordinary passport issued by Taiwan's Ministry of Foreign Affairs that includes the personal identification number.",
+        "conditions": ["A different Taiwan passport requires a transit or visitor visa for travel through Canada."],
+        "sources": [{"label": "Government of Canada — Entry requirements by country", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
       "id": "australia-valid-visa-entry",
       "decisionKey": "AU_ENTRY_PERMISSION",
       "scope": "ENTRY",
@@ -265,8 +365,8 @@
       "requiredHeldVisaCountries": ["AU"],
       "priority": 300,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
       "output": {
         "code": "AUSTRALIAN_VISA_VALIDITY",
         "category": "VISA",
@@ -369,8 +469,8 @@
       "requiredHeldVisaCountries": ["NZ"],
       "priority": 300,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
       "output": {
         "code": "NZ_VISA_VALIDITY",
         "category": "VISA",
@@ -389,8 +489,8 @@
       "nationalities": ["AD", "AR", "AT", "BH", "BE", "BR", "BN", "BG", "CA", "CL", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HK", "HU", "IS", "IE", "IL", "IT", "JP", "KR", "KW", "LV", "LI", "LT", "LU", "MO", "MY", "MT", "MU", "MX", "MC", "NL", "NO", "OM", "PL", "PT", "QA", "RO", "SM", "SA", "SC", "SG", "SK", "SI", "ES", "SE", "CH", "TW", "AE", "GB", "US", "UY", "VA"],
       "priority": 100,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
       "output": {
         "code": "NZETA",
         "category": "ELECTRONIC_AUTHORIZATION",
@@ -409,8 +509,8 @@
       "nationalities": ["AD", "AR", "AT", "BH", "BE", "BR", "BN", "BG", "CA", "CL", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HK", "HU", "IS", "IE", "IL", "IT", "JP", "KR", "KW", "LV", "LI", "LT", "LU", "MO", "MY", "MT", "MU", "MX", "MC", "NL", "NO", "OM", "PL", "PT", "QA", "RO", "SM", "SA", "SC", "SG", "SK", "SI", "ES", "SE", "CH", "TW", "AE", "GB", "US", "UY", "VA"],
       "priority": 100,
       "effectiveFrom": "2026-01-01",
-      "lastVerified": "2026-07-20",
-      "reviewAfter": "2026-10-20",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
       "output": {
         "code": "NZETA_OR_TRANSIT_VISA",
         "category": "TRANSIT_PERMISSION",
@@ -419,6 +519,26 @@
         "summary": "Eligible transit passengers need an NZeTA; other passengers may need a transit visa.",
         "conditions": ["Visa-free transit is limited to Auckland International Airport and normally no more than 24 hours.", "The exact rule depends on passport, destination and whether the traveller leaves the transit area."],
         "sources": [{"label": "Immigration New Zealand — NZeTA", "url": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/", "sourceType": "GOVERNMENT"}]
+      }
+    },
+    {
+      "id": "new-zealand-transit-waiver-nzeta",
+      "decisionKey": "NZ_TRANSIT_PERMISSION",
+      "scope": "TRANSIT",
+      "destinationCountries": ["NZ"],
+      "nationalities": ["BS", "BM", "BO", "CN", "CO", "CR", "EC", "FM", "FJ", "ID", "KI", "NR", "PW", "PA", "PG", "PY", "PE", "PH", "MH", "WS", "SB", "TH", "TO", "TV", "VU", "VE"],
+      "priority": 100,
+      "effectiveFrom": "2026-01-01",
+      "lastVerified": "2026-07-31",
+      "reviewAfter": "2026-11-28",
+      "output": {
+        "code": "NZETA_OR_TRANSIT_VISA",
+        "category": "TRANSIT_PERMISSION",
+        "status": "CONDITIONAL",
+        "title": "NZeTA for Auckland transit",
+        "summary": "Transit-visa-waiver passport holders need an NZeTA before passing through Auckland International Airport.",
+        "conditions": ["Transit must remain in Auckland Airport's international transit area and normally cannot exceed 24 hours.", "A different New Zealand airport or leaving the transit area requires visitor entry permission."],
+        "sources": [{"label": "Immigration New Zealand — Transit visa waiver countries", "url": "https://www.immigration.govt.nz/visit/transiting-through-new-zealand/transit-visa-waiver-countries-and-territories/", "sourceType": "GOVERNMENT"}]
       }
     },
     {

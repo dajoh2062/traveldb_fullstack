@@ -25,7 +25,7 @@ import java.util.Locale;
 public class TravelService {
 
     private static final int MAX_AIRPORT_SEARCH_RESULTS = 100;
-    private static final String BAGGAGE_GUIDANCE_REVIEWED = "2026-07-20";
+    private static final String BAGGAGE_GUIDANCE_REVIEWED = "2026-07-31";
     private static final String ENTRY_CONDITIONS = "ENTRY_CONDITIONS";
 
     private final TravelRepository repository;
@@ -71,7 +71,8 @@ public class TravelService {
                 documents.travelerAge(),
                 documents.residencePermitCountryCodes(),
                 documents.visaCountryCodes(),
-                List.copyOf(ruleResult.baggagePickupAt())
+                List.copyOf(ruleResult.baggagePickupAt()),
+                documents.travelDocuments()
         ));
 
         List<String> pickupAirports = airports.stream()

@@ -2,6 +2,7 @@ package projects.traveldbbackend.documents;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ByteArrayResource;
+import projects.traveldbbackend.api.dto.TravelDocument;
 import projects.traveldbbackend.model.Airport;
 import tools.jackson.databind.ObjectMapper;
 
@@ -109,6 +110,65 @@ class LocalDocumentRulesProviderTests {
                   }]
                 }
                 """));
+    }
+
+    @Test
+    void keepsPerDocumentVerificationGuidanceAlongsideLocalJourneyRules() {
+        LocalDocumentRulesProvider provider = provider("""
+                {
+                  "schemaVersion": 1,
+                  "datasetVersion": "test-journey-guidance",
+                  "generatedAt": "2026-01-01T00:00:00Z",
+                  "sources": [{"label":"Authority","url":"https://authority.example/rules","sourceType":"GOVERNMENT"}],
+                  "rules": [{
+                    "id":"journey-rule",
+                    "decisionKey":"JOURNEY_DOCUMENT",
+                    "scope":"JOURNEY",
+                    "nationalities":["NO"],
+                    "priority":10,
+                    "lastVerified":"2026-01-01",
+                    "reviewAfter":"2030-01-01",
+                    "output":{
+                      "code":"LOCAL_JOURNEY_RULE",
+                      "category":"PASSPORT_VALIDITY",
+                      "status":"VERIFY",
+                      "title":"Local journey rule",
+                      "summary":"Stored journey guidance.",
+                      "conditions":[],
+                      "sources":[{"label":"Authority","url":"https://authority.example/journey","sourceType":"GOVERNMENT"}]
+                    }
+                  }]
+                }
+                """);
+        DocumentCheckInput input = new DocumentCheckInput(
+                "NO",
+                List.of(airport("AAA", "NO"), airport("BBB", "XY")),
+                "NO",
+                "NO",
+                LocalDate.of(2030, 1, 1),
+                LocalDate.of(2026, 8, 1),
+                "TOURISM",
+                30,
+                List.of(),
+                List.of(),
+                List.of(),
+                List.of(new TravelDocument(
+                        "PASSPORT",
+                        null,
+                        "NO",
+                        LocalDate.of(2030, 1, 1),
+                        true
+                ))
+        );
+
+        DocumentCheckResult result = provider.check(input);
+
+        assertTrue(result.requirements().stream()
+                .anyMatch(requirement -> requirement.code().equals("LOCAL_JOURNEY_RULE")));
+        assertTrue(result.requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("DOCUMENT_ACCEPTANCE_1")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+        ));
     }
 
     private LocalDocumentRulesProvider provider(String json) {

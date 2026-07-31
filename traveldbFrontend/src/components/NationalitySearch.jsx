@@ -1,42 +1,8 @@
 import { useMemo, useState } from "react";
-import { normalizeSearch } from "../utils/search";
+import { buildCountrySearchIndex, searchCountryIndex } from "../utils/search";
 import Icon from "./Icon";
 
 const MAX_SUGGESTIONS = 8;
-const NO_MATCH_SCORE = 6;
-
-function countrySearchScore(country, query) {
-  if (!query) return NO_MATCH_SCORE;
-
-  const code = normalizeSearch(country.countryId);
-  const name = normalizeSearch(country.countryNameEn);
-  const keywords = normalizeSearch(country.keywords ?? "");
-
-  if (code === query) return 0;
-  if (code.startsWith(query)) return 1;
-  if (name === query) return 2;
-  if (name.startsWith(query)) return 3;
-  if (name.includes(query)) return 4;
-  if (keywords.includes(query)) return 5;
-  return NO_MATCH_SCORE;
-}
-
-function findCountrySuggestions(countries, query) {
-  const normalizedQuery = normalizeSearch(query);
-
-  return countries
-    .map(country => ({
-      country,
-      score: countrySearchScore(country, normalizedQuery),
-    }))
-    .filter(({ score }) => !normalizedQuery || score < NO_MATCH_SCORE)
-    .sort((left, right) => (
-      left.score - right.score
-      || left.country.countryNameEn.localeCompare(right.country.countryNameEn)
-    ))
-    .slice(0, MAX_SUGGESTIONS)
-    .map(({ country }) => country);
-}
 
 export default function NationalitySearch({
   countries,
@@ -49,9 +15,13 @@ export default function NationalitySearch({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const countrySearchIndex = useMemo(
+    () => buildCountrySearchIndex(countries),
+    [countries],
+  );
   const suggestions = useMemo(
-    () => findCountrySuggestions(countries, query),
-    [countries, query],
+    () => searchCountryIndex(countrySearchIndex, query, MAX_SUGGESTIONS),
+    [countrySearchIndex, query],
   );
   const resolvedActiveIndex = suggestions.length === 0
     ? 0
@@ -93,7 +63,7 @@ export default function NationalitySearch({
 
   return (
     <div className={`field nationality-field ${error ? "has-error" : ""}`} onBlur={handleBlur}>
-      <label className="field-label" htmlFor="nationality-search">Passport nationality</label>
+      <label className="field-label" htmlFor="nationality-search">Traveller nationality</label>
       <span className="input-shell">
         <Icon name="globe" size={19} />
         <input
@@ -141,7 +111,7 @@ export default function NationalitySearch({
               <span className="airport-code">{country.countryId}</span>
               <span className="airport-meta">
                 <strong>{country.countryNameEn}</strong>
-                <small>Passport nationality</small>
+                <small>Traveller nationality</small>
               </span>
               {country.countryId === nationality && <Icon name="check" size={17} />}
             </button>

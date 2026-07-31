@@ -49,11 +49,15 @@ function documentSources(requirement) {
   return governmentSources.length > 0 ? governmentSources : sources.slice(0, 1);
 }
 
+function baggageSources(stop) {
+  return (stop.sources ?? []).slice(0, 2);
+}
+
 function sourceLabel(source, sourceCount) {
   if (source.label?.includes("eVisitor")) return "eVisitor 651";
   if (source.label?.includes("Electronic Travel Authority")) return "ETA 601";
-  if (sourceCount === 1 && source.sourceType === "GOVERNMENT") return "Official guidance";
-  return source.sourceType === "GOVERNMENT" ? source.label : "Check guidance";
+  if (source.label) return source.label;
+  return sourceCount === 1 ? "Supporting source" : "Source";
 }
 
 export default function JourneyResults({ result, route }) {
@@ -76,12 +80,27 @@ export default function JourneyResults({ result, route }) {
             <ol className="simple-result-list">
               {baggageStops.map((stop, index) => {
                 const status = BAGGAGE_STATUS[stop.status];
+                const sources = baggageSources(stop);
                 return (
                   <li
                     className={`simple-result-item ${stop.status.toLowerCase()}`}
                     key={`${stop.airportCode}-${index}`}
                   >
-                    <strong>{airportLabel(stop.airportCode, route)}</strong>
+                    <div className="document-result-copy">
+                      <strong>{stop.title ?? airportLabel(stop.airportCode, route)}</strong>
+                      {stop.title && <small>{airportLabel(stop.airportCode, route)}</small>}
+                      {stop.explanation && <small>{stop.explanation}</small>}
+                      {sources.length > 0 && (
+                        <div className="document-source-links">
+                          {sources.map(source => (
+                            <a href={source.url} key={source.url} rel="noreferrer" target="_blank">
+                              {source.label ?? "Baggage guidance"}
+                              <Icon name="external" size={12} />
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                     <span>
                       <Icon name={status.icon} size={14} /> {status.label}
                     </span>
@@ -114,6 +133,7 @@ export default function JourneyResults({ result, route }) {
                     <div className="document-result-copy">
                       <strong>{document.title}</strong>
                       <small>{documentLocation(document, route)}</small>
+                      {document.summary && <small>{document.summary}</small>}
                       {sources.length > 0 && (
                         <div className="document-source-links">
                           {sources.map(source => (
@@ -142,6 +162,10 @@ export default function JourneyResults({ result, route }) {
           )}
         </section>
       </div>
+
+      <p className="result-note">
+        Each recommendation links to its supporting authority or carrier guidance. Recheck it before travel.
+      </p>
     </section>
   );
 }

@@ -83,11 +83,11 @@ Backend checks, run from `traveldbBackend`:
 
 ```powershell
 node --test scripts/document-rules-audit.test.mjs
-node scripts/audit-document-rules.mjs --as-of 2026-07-30
+node scripts/audit-document-rules.mjs --as-of 2026-07-31
 .\mvnw.cmd test
 ```
 
-The bundled snapshot was reviewed on `2026-07-30`. When refreshing it, replace that value with the actual source-review date. An explicit date keeps freshness checks reproducible.
+The bundled document snapshot and baggage guidance were reviewed against their linked online sources on `2026-07-31`. When refreshing either dataset, use the actual source-review date. An explicit date keeps freshness checks reproducible.
 
 Frontend checks, run from `traveldbFrontend`:
 

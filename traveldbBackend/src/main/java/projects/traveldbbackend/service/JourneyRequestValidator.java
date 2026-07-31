@@ -6,6 +6,8 @@ import projects.traveldbbackend.api.InvalidJourneyRequestException.FieldViolatio
 import projects.traveldbbackend.api.dto.BaggageOptions;
 import projects.traveldbbackend.api.dto.DocumentOptions;
 import projects.traveldbbackend.api.dto.JourneyRequest;
+import projects.traveldbbackend.api.dto.TravelDocument;
+import projects.traveldbbackend.api.dto.TravelDocument.Type;
 import projects.traveldbbackend.model.Airport;
 import projects.traveldbbackend.repository.TravelRepository;
 
@@ -21,8 +23,10 @@ import java.util.regex.Pattern;
 public class JourneyRequestValidator {
 
     public static final int MAX_ROUTE_AIRPORTS = 20;
+    public static final int MAX_TRAVEL_DOCUMENTS = 20;
 
     private static final int MAX_COUNTRY_LIST_SIZE = 50;
+    private static final int MAX_CUSTOM_DOCUMENT_TYPE_LENGTH = 80;
     private static final int MAX_TRAVELER_AGE = 120;
     private static final Pattern COUNTRY_CODE = Pattern.compile("[A-Z]{2}");
     private static final Pattern AIRPORT_CODE = Pattern.compile("[A-Z]{3}");
@@ -147,6 +151,28 @@ public class JourneyRequestValidator {
             ));
         }
 
+        List<TravelDocument> travelDocuments = validateTravelDocuments(
+                documents.travelDocuments(),
+                departureDate,
+                today,
+                violations
+        );
+        residencePermits = mergeHeldDocumentCountries(
+                residencePermits,
+                travelDocuments,
+                Type.RESIDENCE_PERMIT
+        );
+        visas = mergeHeldDocumentCountries(visas, travelDocuments, Type.VISA);
+
+        TravelDocument primaryDocument = travelDocuments.stream()
+                .filter(document -> Boolean.TRUE.equals(document.primary()))
+                .findFirst()
+                .orElse(null);
+        if (primaryDocument != null && Type.valueOf(primaryDocument.type()) == Type.PASSPORT) {
+            passportCountry = primaryDocument.issuingCountryCode();
+            passportExpiryDate = primaryDocument.expiryDate();
+        }
+
         Integer travelerAge = documents.travelerAge();
         if (travelerAge != null && (travelerAge < 0 || travelerAge > MAX_TRAVELER_AGE)) {
             violations.add(new FieldViolation(
@@ -163,8 +189,134 @@ public class JourneyRequestValidator {
                 normalize(documents.travelPurpose()),
                 travelerAge,
                 residencePermits,
-                visas
+                visas,
+                travelDocuments
         );
+    }
+
+    private List<TravelDocument> validateTravelDocuments(
+            List<TravelDocument> documents,
+            LocalDate departureDate,
+            LocalDate today,
+            List<FieldViolation> violations
+    ) {
+        if (documents == null) {
+            return List.of();
+        }
+        if (documents.size() > MAX_TRAVEL_DOCUMENTS) {
+            violations.add(new FieldViolation(
+                    "documents.travelDocuments",
+                    "Cannot contain more than " + MAX_TRAVEL_DOCUMENTS + " documents."
+            ));
+        }
+
+        int primaryCount = 0;
+        List<TravelDocument> normalizedDocuments = new ArrayList<>();
+        int documentsToValidate = Math.min(documents.size(), MAX_TRAVEL_DOCUMENTS);
+        for (int index = 0; index < documentsToValidate; index++) {
+            TravelDocument document = documents.get(index);
+            String field = "documents.travelDocuments[" + index + "]";
+            if (document == null) {
+                violations.add(new FieldViolation(field, "Document must be a JSON object."));
+                continue;
+            }
+
+            if (Boolean.TRUE.equals(document.primary())) {
+                primaryCount++;
+                if (primaryCount > 1) {
+                    violations.add(new FieldViolation(
+                            field + ".primary",
+                            "Only one travel document can be primary."
+                    ));
+                }
+            }
+
+            String normalizedType = normalize(document.type());
+            Type type = parseDocumentType(normalizedType, field + ".type", violations);
+            String customType = trimToNull(document.customType());
+            if (type == Type.OTHER && customType == null) {
+                violations.add(new FieldViolation(
+                        field + ".customType",
+                        "Describe the document when type is OTHER."
+                ));
+            }
+            if (customType != null && customType.length() > MAX_CUSTOM_DOCUMENT_TYPE_LENGTH) {
+                violations.add(new FieldViolation(
+                        field + ".customType",
+                        "Cannot be longer than " + MAX_CUSTOM_DOCUMENT_TYPE_LENGTH + " characters."
+                ));
+            }
+
+            String issuingCountry = validateCountryCode(
+                    document.issuingCountryCode(),
+                    field + ".issuingCountryCode",
+                    type != null && type.issuingCountryRequired(),
+                    violations
+            );
+            LocalDate expiryDate = document.expiryDate();
+            if (expiryDate != null && expiryDate.isBefore(today)) {
+                violations.add(new FieldViolation(
+                        field + ".expiryDate",
+                        "Document expiry date cannot be in the past."
+                ));
+            } else if (expiryDate != null
+                    && departureDate != null
+                    && expiryDate.isBefore(departureDate)) {
+                violations.add(new FieldViolation(
+                        field + ".expiryDate",
+                        "Document must not expire before the departure date."
+                ));
+            }
+
+            if (type != null) {
+                normalizedDocuments.add(new TravelDocument(
+                        type.name(),
+                        customType,
+                        issuingCountry,
+                        expiryDate,
+                        Boolean.TRUE.equals(document.primary())
+                ));
+            }
+        }
+
+        if (!documents.isEmpty() && primaryCount == 0) {
+            violations.add(new FieldViolation(
+                    "documents.travelDocuments",
+                    "Select exactly one primary travel document."
+            ));
+        }
+        return List.copyOf(normalizedDocuments);
+    }
+
+    private Type parseDocumentType(
+            String value,
+            String field,
+            List<FieldViolation> violations
+    ) {
+        if (value == null) {
+            violations.add(new FieldViolation(field, "Document type is required."));
+            return null;
+        }
+        try {
+            return Type.valueOf(value);
+        } catch (IllegalArgumentException ignored) {
+            violations.add(new FieldViolation(field, "Unsupported travel document type: " + value + "."));
+            return null;
+        }
+    }
+
+    private List<String> mergeHeldDocumentCountries(
+            List<String> legacyCountries,
+            List<TravelDocument> travelDocuments,
+            Type type
+    ) {
+        Set<String> countries = new LinkedHashSet<>(legacyCountries);
+        travelDocuments.stream()
+                .filter(document -> type.name().equals(document.type()))
+                .map(TravelDocument::issuingCountryCode)
+                .filter(countryCode -> countryCode != null)
+                .forEach(countries::add);
+        return List.copyOf(countries);
     }
 
     private List<String> validateCountryCodeList(
@@ -227,6 +379,13 @@ public class JourneyRequestValidator {
             return null;
         }
         return value.trim().toUpperCase(Locale.ROOT);
+    }
+
+    private static String trimToNull(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+        return value.trim();
     }
 
     public record ValidatedJourney(
