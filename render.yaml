@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: traveldb-api
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./traveldbBackend/Dockerfile
+    dockerContext: ./traveldbBackend
+    healthCheckPath: /api/countries
