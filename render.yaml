@@ -6,4 +6,7 @@ services:
     region: frankfurt
     dockerfilePath: ./traveldbBackend/Dockerfile
     dockerContext: ./traveldbBackend
+    buildFilter:
+      paths:
+        - traveldbBackend/**
     healthCheckPath: /api/health

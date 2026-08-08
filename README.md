@@ -109,6 +109,7 @@ browser protections. The country list is cached at Vercel for one hour to reduce
 
 The backend deploys from `traveldbBackend/Dockerfile` using the root `render.yaml`. The production
 container runs as an unprivileged user, uses graceful shutdown, and compresses JSON responses.
+Vercel skips Dependabot branches, and Render rebuilds only when backend files change.
 Public API traffic is protected by the following deliberately conservative limits:
 
 - 60 read requests and 10 write requests per client per minute;
