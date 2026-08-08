@@ -1,5 +1,7 @@
 package projects.traveldbbackend.api;
 
+import org.springframework.http.CacheControl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +14,9 @@ import projects.traveldbbackend.api.dto.JourneyResponse;
 import projects.traveldbbackend.model.Country;
 import projects.traveldbbackend.service.TravelService;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -20,6 +24,7 @@ public class TravelController {
 
     private static final String DEFAULT_SEARCH_OFFSET = "0";
     private static final String DEFAULT_SEARCH_LIMIT = "50";
+    private static final CacheControl COUNTRY_CACHE = CacheControl.maxAge(Duration.ofHours(1)).cachePublic();
 
     private final TravelService travelService;
 
@@ -45,7 +50,15 @@ public class TravelController {
     }
 
     @GetMapping("/countries")
-    public List<Country> listCountries() {
-        return travelService.getCountries();
+    public ResponseEntity<List<Country>> listCountries() {
+        return ResponseEntity.ok()
+                .cacheControl(COUNTRY_CACHE)
+                .header("Vercel-CDN-Cache-Control", "public, max-age=3600")
+                .body(travelService.getCountries());
+    }
+
+    @GetMapping("/health")
+    public Map<String, String> health() {
+        return Map.of("status", "ok");
     }
 }

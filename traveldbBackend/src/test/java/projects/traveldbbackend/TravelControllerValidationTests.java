@@ -11,6 +11,7 @@ import projects.traveldbbackend.service.JourneyRequestValidator;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -55,7 +56,15 @@ class TravelControllerValidationTests {
         mockMvc.perform(get("/api/countries"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(header().string("Vercel-CDN-Cache-Control", "public, max-age=3600"))
                 .andExpect(jsonPath("$[?(@.countryId == 'NO')].countryNameEn").value("Norway"));
+    }
+
+    @Test
+    void healthEndpointIsAvailable() throws Exception {
+        mockMvc.perform(get("/api/health"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("ok"));
     }
 
     @Test
