@@ -3,6 +3,8 @@ import useAirportSearch from "../hooks/useAirportSearch";
 import { airportLocation } from "../utils/journey";
 import Icon from "./Icon";
 
+const MAX_SEARCH_LENGTH = 100;
+
 export default function AirportSearch({ onSelect }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const {
@@ -69,6 +71,7 @@ export default function AirportSearch({ onSelect }) {
           aria-expanded={isOpen}
           autoComplete="off"
           id="airport-search"
+          maxLength={MAX_SEARCH_LENGTH}
           onChange={handleQueryChange}
           onFocus={() => { if (query.trim()) setIsOpen(true); }}
           onKeyDown={handleKeyDown}

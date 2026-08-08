@@ -6,7 +6,7 @@ Requests do not call an immigration or airport-data service at runtime. Results 
 
 ## Run it locally
 
-You need Java 21 and Node.js 20.19 or newer.
+You need Java 21 and Node.js 22.
 
 Start the backend in one PowerShell terminal:
 
@@ -74,6 +74,7 @@ H2 is recreated from the SQL seed files each time the backend starts. The docume
 | `GET` | `/api/countries` | List countries used by the traveller form |
 | `GET` | `/api/airports/search?q=osl&offset=0&limit=50` | Search airports by code, name, or location |
 | `POST` | `/api/journey/check` | Evaluate baggage handling and document actions for an itinerary |
+| `GET` | `/api/health` | Lightweight Render health check |
 
 See [the document-rule guide](traveldbBackend/DOCUMENT_REQUIREMENTS.md#journey-request-profile) for an example journey payload.
 
@@ -97,6 +98,30 @@ npm run check
 ```
 
 `npm run check` runs the frontend tests, ESLint, and the production build.
+
+GitHub Actions runs both backend and frontend checks for every pull request and every push to `main`.
+
+## Deployment and security controls
+
+The frontend deploys from `traveldbFrontend` on Vercel. Its `vercel.json` proxies `/api` to the
+Render service and adds a restrictive content-security policy, anti-framing headers, and other
+browser protections. The country list is cached at Vercel for one hour to reduce origin traffic.
+
+The backend deploys from `traveldbBackend/Dockerfile` using the root `render.yaml`. The production
+container runs as an unprivileged user, uses graceful shutdown, and compresses JSON responses.
+Public API traffic is protected by the following deliberately conservative limits:
+
+- 60 read requests and 10 write requests per client per minute;
+- 120 API requests per Render instance per minute;
+- 100 characters per airport search query;
+- 64 KB for request bodies that provide a `Content-Length` header.
+
+The rate limiter is intentionally in-memory because the deployment uses one Render instance. Its
+counters reset when the service restarts. If the backend is scaled horizontally, replace it with a
+shared limiter before relying on these limits for abuse prevention.
+
+No runtime secrets are required. Keep credentials and local overrides in ignored `.env` files, and
+do not enable the H2 console or cross-origin API access in production.
 
 ## Updating reference data
 

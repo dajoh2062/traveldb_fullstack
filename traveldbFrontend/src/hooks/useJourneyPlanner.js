@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { checkJourney, JourneyApiError } from "../api/travelApi";
 import {
   buildJourneyRequest,
@@ -14,6 +14,7 @@ const MAX_AIRPORTS_PER_ROUTE = 20;
 const JOURNEY_CHECK_TIMEOUT_MS = 15_000;
 
 export default function useJourneyPlanner() {
+  const activeRequestRef = useRef(null);
   const [nationality, setNationality] = useState("");
   const [nationalityQuery, setNationalityQuery] = useState("");
   const [route, setRoute] = useState([]);
@@ -24,6 +25,8 @@ export default function useJourneyPlanner() {
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => () => activeRequestRef.current?.abort(), []);
 
   function clearFieldError(field) {
     setFieldErrors(currentErrors => {
@@ -152,14 +155,19 @@ export default function useJourneyPlanner() {
       documents,
       includeDocumentDetails: advancedSearch,
     });
+    activeRequestRef.current?.abort();
     const controller = new AbortController();
+    activeRequestRef.current = controller;
     const timeout = window.setTimeout(() => controller.abort(), JOURNEY_CHECK_TIMEOUT_MS);
 
     setIsLoading(true);
     setFieldErrors({});
     try {
-      setResult(await checkJourney(request, { signal: controller.signal }));
+      const journeyResult = await checkJourney(request, { signal: controller.signal });
+      if (activeRequestRef.current !== controller) return;
+      setResult(journeyResult);
     } catch (requestError) {
+      if (activeRequestRef.current !== controller) return;
       if (requestError instanceof JourneyApiError && requestError.fieldErrors.length > 0) {
         setFieldErrors(mapApiErrorsToFields(requestError.fieldErrors, documents));
       }
@@ -170,7 +178,10 @@ export default function useJourneyPlanner() {
       );
     } finally {
       window.clearTimeout(timeout);
-      setIsLoading(false);
+      if (activeRequestRef.current === controller) {
+        activeRequestRef.current = null;
+        setIsLoading(false);
+      }
     }
   }
 

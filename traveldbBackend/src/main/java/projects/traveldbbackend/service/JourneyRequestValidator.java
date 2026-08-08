@@ -30,6 +30,13 @@ public class JourneyRequestValidator {
     private static final int MAX_TRAVELER_AGE = 120;
     private static final Pattern COUNTRY_CODE = Pattern.compile("[A-Z]{2}");
     private static final Pattern AIRPORT_CODE = Pattern.compile("[A-Z]{3}");
+    private static final Set<String> TICKET_ARRANGEMENTS = Set.of(
+            "SINGLE_BOOKING", "SEPARATE_TICKETS", "UNKNOWN"
+    );
+    private static final Set<String> THROUGH_CHECK_STATUSES = Set.of("YES", "NO", "UNKNOWN");
+    private static final Set<String> TRAVEL_PURPOSES = Set.of(
+            "TOURISM", "BUSINESS", "VISIT", "TRANSIT", "STUDY", "WORK", "OTHER"
+    );
 
     private final TravelRepository repository;
 
@@ -57,9 +64,10 @@ public class JourneyRequestValidator {
                 ? DocumentOptions.defaults()
                 : request.documents();
         DocumentOptions documents = validateDocuments(documentOptions, violations);
-        BaggageOptions baggage = request.baggage() == null
-                ? BaggageOptions.defaults()
-                : request.baggage();
+        BaggageOptions baggage = validateBaggage(
+                request.baggage() == null ? BaggageOptions.defaults() : request.baggage(),
+                violations
+        );
 
         if (!violations.isEmpty()) {
             throw new InvalidJourneyRequestException(violations);
@@ -181,17 +189,69 @@ public class JourneyRequestValidator {
             ));
         }
 
+        String travelPurpose = validateOption(
+                documents.travelPurpose(),
+                "documents.travelPurpose",
+                null,
+                TRAVEL_PURPOSES,
+                violations
+        );
+
         return new DocumentOptions(
                 residenceCountry,
                 passportCountry,
                 passportExpiryDate,
                 departureDate,
-                normalize(documents.travelPurpose()),
+                travelPurpose,
                 travelerAge,
                 residencePermits,
                 visas,
                 travelDocuments
         );
+    }
+
+    private BaggageOptions validateBaggage(
+            BaggageOptions baggage,
+            List<FieldViolation> violations
+    ) {
+        String ticketArrangement = validateOption(
+                baggage.ticketArrangement(),
+                "baggage.ticketArrangement",
+                "UNKNOWN",
+                TICKET_ARRANGEMENTS,
+                violations
+        );
+        String checkedThrough = validateOption(
+                baggage.checkedThrough(),
+                "baggage.checkedThrough",
+                "UNKNOWN",
+                THROUGH_CHECK_STATUSES,
+                violations
+        );
+
+        return new BaggageOptions(
+                baggage.checkedBaggage() == null || baggage.checkedBaggage(),
+                ticketArrangement,
+                checkedThrough
+        );
+    }
+
+    private String validateOption(
+            String value,
+            String field,
+            String defaultValue,
+            Set<String> allowedValues,
+            List<FieldViolation> violations
+    ) {
+        String normalized = normalize(value);
+        if (normalized == null) {
+            return defaultValue;
+        }
+        if (!allowedValues.contains(normalized)) {
+            violations.add(new FieldViolation(field, "Select a supported value."));
+            return defaultValue;
+        }
+        return normalized;
     }
 
     private List<TravelDocument> validateTravelDocuments(

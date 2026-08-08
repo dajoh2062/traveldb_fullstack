@@ -52,6 +52,27 @@ class TravelControllerValidationTests {
     }
 
     @Test
+    void normalizesBlankAirportSearchPaging() throws Exception {
+        mockMvc.perform(get("/api/airports/search")
+                        .param("q", "   ")
+                        .param("offset", "-5")
+                        .param("limit", "-10"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.airports").isEmpty())
+                .andExpect(jsonPath("$.offset").value(0))
+                .andExpect(jsonPath("$.limit").value(1));
+    }
+
+    @Test
+    void rejectsOversizedAirportSearchText() throws Exception {
+        mockMvc.perform(get("/api/airports/search")
+                        .param("q", "a".repeat(101)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("INVALID_PARAMETER"))
+                .andExpect(jsonPath("$.errors[0].field").value("q"));
+    }
+
+    @Test
     void returnsCountriesWithTheExistingResponseShape() throws Exception {
         mockMvc.perform(get("/api/countries"))
                 .andExpect(status().isOk())
@@ -146,6 +167,28 @@ class TravelControllerValidationTests {
                         .content("{\"nationalityCountryCode\":\"NO\",\"route\":[" + route + "]}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors[?(@.field == 'route')]").exists());
+    }
+
+    @Test
+    void rejectsUnsupportedBaggageAndTravelPurposeOptions() throws Exception {
+        mockMvc.perform(post("/api/journey/check")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "nationalityCountryCode":"NO",
+                                  "route":["OSL","LHR"],
+                                  "baggage":{
+                                    "checkedBaggage":true,
+                                    "ticketArrangement":"MAYBE",
+                                    "checkedThrough":"SOMETIMES"
+                                  },
+                                  "documents":{"travelPurpose":"VACATION"}
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errors[?(@.field == 'baggage.ticketArrangement')]").exists())
+                .andExpect(jsonPath("$.errors[?(@.field == 'baggage.checkedThrough')]").exists())
+                .andExpect(jsonPath("$.errors[?(@.field == 'documents.travelPurpose')]").exists());
     }
 
     @Test

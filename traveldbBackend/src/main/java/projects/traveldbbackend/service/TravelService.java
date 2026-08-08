@@ -1,6 +1,7 @@
 package projects.traveldbbackend.service;
 
 import org.springframework.stereotype.Service;
+import projects.traveldbbackend.api.InvalidRequestParameterException;
 import projects.traveldbbackend.api.dto.AirportSearchItem;
 import projects.traveldbbackend.api.dto.AirportSearchResponse;
 import projects.traveldbbackend.api.dto.BaggageOptions;
@@ -25,6 +26,7 @@ import java.util.Locale;
 public class TravelService {
 
     private static final int MAX_AIRPORT_SEARCH_RESULTS = 100;
+    public static final int MAX_AIRPORT_SEARCH_QUERY_LENGTH = 100;
     private static final String BAGGAGE_GUIDANCE_REVIEWED = "2026-07-31";
     private static final String ENTRY_CONDITIONS = "ENTRY_CONDITIONS";
 
@@ -102,7 +104,17 @@ public class TravelService {
     public AirportSearchResponse searchAirports(String query, int offset, int limit) {
         int pageOffset = Math.max(0, offset);
         int pageSize = Math.max(1, Math.min(limit, MAX_AIRPORT_SEARCH_RESULTS));
-        List<Airport> matches = repository.searchAirports(query);
+        String searchQuery = query == null ? "" : query.trim();
+        if (searchQuery.length() > MAX_AIRPORT_SEARCH_QUERY_LENGTH) {
+            throw new InvalidRequestParameterException(
+                    "q",
+                    "Search text cannot exceed " + MAX_AIRPORT_SEARCH_QUERY_LENGTH + " characters."
+            );
+        }
+
+        List<Airport> matches = searchQuery.isEmpty()
+                ? List.of()
+                : repository.searchAirports(searchQuery);
         int fromIndex = Math.min(pageOffset, matches.size());
         int toIndex = Math.min(fromIndex + pageSize, matches.size());
 

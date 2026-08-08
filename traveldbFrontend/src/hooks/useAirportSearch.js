@@ -5,6 +5,7 @@ import { normalizeSearch } from "../utils/search";
 const airportSearchCache = new Map();
 const CACHE_CAPACITY = 100;
 const PAGE_SIZE = 50;
+const SEARCH_DEBOUNCE_MS = 200;
 
 function readCachedSearch(cacheKey) {
   const cachedResult = airportSearchCache.get(cacheKey);
@@ -61,7 +62,7 @@ export default function useAirportSearch() {
           }
         })
         .finally(() => { if (!controller.signal.aborted) setIsSearching(false); });
-    }, /^[a-z]{3}$/i.test(trimmedQuery) ? 0 : 35);
+    }, /^[a-z]{3}$/i.test(trimmedQuery) ? 0 : SEARCH_DEBOUNCE_MS);
 
     return () => {
       window.clearTimeout(timer);

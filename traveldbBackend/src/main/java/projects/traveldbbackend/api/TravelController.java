@@ -43,9 +43,6 @@ public class TravelController {
             @RequestParam(defaultValue = DEFAULT_SEARCH_OFFSET) int offset,
             @RequestParam(defaultValue = DEFAULT_SEARCH_LIMIT) int limit
     ) {
-        if (q == null || q.isBlank()) {
-            return new AirportSearchResponse(List.of(), 0, 0, limit, false);
-        }
         return travelService.searchAirports(q, offset, limit);
     }
 

@@ -93,7 +93,7 @@ export default function JourneyResults({ result, route }) {
                       {sources.length > 0 && (
                         <div className="document-source-links">
                           {sources.map(source => (
-                            <a href={source.url} key={source.url} rel="noreferrer" target="_blank">
+                            <a href={source.url} key={source.url} rel="noopener noreferrer" target="_blank">
                               {source.label ?? "Baggage guidance"}
                               <Icon name="external" size={12} />
                             </a>
@@ -137,7 +137,7 @@ export default function JourneyResults({ result, route }) {
                       {sources.length > 0 && (
                         <div className="document-source-links">
                           {sources.map(source => (
-                            <a href={source.url} key={source.url} rel="noreferrer" target="_blank">
+                            <a href={source.url} key={source.url} rel="noopener noreferrer" target="_blank">
                               {sourceLabel(source, sources.length)}
                               <Icon name="external" size={12} />
                             </a>

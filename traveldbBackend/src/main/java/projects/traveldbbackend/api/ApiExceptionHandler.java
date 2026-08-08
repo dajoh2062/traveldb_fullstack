@@ -104,6 +104,25 @@ public class ApiExceptionHandler {
         );
     }
 
+    @ExceptionHandler(InvalidRequestParameterException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidParameter(
+            InvalidRequestParameterException error,
+            HttpServletRequest request
+    ) {
+        return problem(
+                HttpStatus.BAD_REQUEST,
+                "invalid-parameter",
+                "Invalid request parameter",
+                "INVALID_PARAMETER",
+                "A request parameter has an invalid value.",
+                request,
+                List.of(new InvalidJourneyRequestException.FieldViolation(
+                        error.getParameter(),
+                        error.getMessage()
+                ))
+        );
+    }
+
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ApiErrorResponse> handleUnsupportedMethod(HttpServletRequest request) {
         return problem(
