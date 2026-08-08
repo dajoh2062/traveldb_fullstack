@@ -6,7 +6,7 @@ Requests do not call an immigration or airport-data service at runtime. Results 
 
 ## Run it locally
 
-You need Java 21 and Node.js 22.
+You need Java 21 and Node.js 24.
 
 Start the backend in one PowerShell terminal:
 
