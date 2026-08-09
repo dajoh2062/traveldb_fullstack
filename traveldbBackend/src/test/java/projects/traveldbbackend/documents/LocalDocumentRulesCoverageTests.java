@@ -3,6 +3,7 @@ package projects.traveldbbackend.documents;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 import projects.traveldbbackend.model.Airport;
+import projects.traveldbbackend.documents.DocumentRequirement.Category;
 import projects.traveldbbackend.documents.DocumentRequirement.Scope;
 import tools.jackson.databind.ObjectMapper;
 
@@ -72,10 +73,17 @@ class LocalDocumentRulesCoverageTests {
             if (fallbackCode.equals(requirement.code())) {
                 return requirement.status() == DocumentRequirement.Status.VERIFY;
             }
-            return !requirement.sources().isEmpty()
+            return isPermissionCategory(requirement.category())
+                    && !requirement.sources().isEmpty()
                     && requirement.sources().stream()
                     .allMatch(source -> "GOVERNMENT".equals(source.sourceType()));
         });
+    }
+
+    private boolean isPermissionCategory(Category category) {
+        return category == Category.VISA
+                || category == Category.ELECTRONIC_AUTHORIZATION
+                || category == Category.TRANSIT_PERMISSION;
     }
 
     private DocumentCheckInput input(String nationality, List<Airport> route) {

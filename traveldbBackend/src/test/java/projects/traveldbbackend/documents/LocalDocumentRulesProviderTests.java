@@ -2,12 +2,16 @@ package projects.traveldbbackend.documents;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.UrlResource;
 import projects.traveldbbackend.api.dto.TravelDocument;
 import projects.traveldbbackend.model.Airport;
 import tools.jackson.databind.ObjectMapper;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,7 +24,7 @@ class LocalDocumentRulesProviderTests {
     void resolvesDecisionPriorityAndDowngradesRulesPastTheirReviewDate() {
         LocalDocumentRulesProvider provider = provider("""
                 {
-                  "schemaVersion": 1,
+                  "schemaVersion": 2,
                   "datasetVersion": "test-1",
                   "generatedAt": "2026-01-01T00:00:00Z",
                   "sources": [{"label":"Authority","url":"https://authority.example/rules","sourceType":"GOVERNMENT"}],
@@ -62,6 +66,7 @@ class LocalDocumentRulesProviderTests {
                         "title":"High priority",
                         "summary":"Stored decision.",
                         "conditions":["Preserve sentence casing."],
+                        "keyFacts":[{"label":"Maximum stay","value":"Up to 30 days"}],
                         "sources":[{"label":"Authority","url":"https://authority.example/high","sourceType":"GOVERNMENT"}]
                       }
                     }
@@ -78,6 +83,11 @@ class LocalDocumentRulesProviderTests {
         assertEquals("HIGH", matched.getFirst().code());
         assertEquals(DocumentRequirement.Status.VERIFY, matched.getFirst().status());
         assertTrue(matched.getFirst().conditions().contains("Preserve sentence casing."));
+        assertEquals(List.of(new DocumentRequirement.KeyFact("Maximum stay", "Up to 30 days")),
+                matched.getFirst().keyFacts());
+        assertEquals(LocalDate.of(2020, 1, 1), matched.getFirst().lastVerified());
+        assertEquals(LocalDate.of(2020, 6, 1), matched.getFirst().reviewAfter());
+        assertEquals("test-1", result.datasetVersion());
         assertTrue(result.warnings().stream().anyMatch(warning -> warning.contains("high-priority")));
     }
 
@@ -85,7 +95,7 @@ class LocalDocumentRulesProviderTests {
     void rejectsSnapshotsWithoutHttpsGovernmentSources() {
         assertThrows(IllegalStateException.class, () -> provider("""
                 {
-                  "schemaVersion": 1,
+                  "schemaVersion": 2,
                   "datasetVersion": "invalid",
                   "generatedAt": "2026-01-01T00:00:00Z",
                   "sources": [],
@@ -113,10 +123,67 @@ class LocalDocumentRulesProviderTests {
     }
 
     @Test
+    void rejectsNonFileUrlRuleResourcesBeforeAttemptingToDownloadThem() {
+        assertThrows(IllegalStateException.class, () -> new LocalDocumentRulesProvider(
+                new ConservativeDocumentProvider(),
+                new ObjectMapper(),
+                new UrlResource("https://authority.example/document-rules.json")
+        ));
+        assertThrows(IllegalStateException.class, () -> new LocalDocumentRulesProvider(
+                new ConservativeDocumentProvider(),
+                new ObjectMapper(),
+                new UrlResource("ftp://authority.example/document-rules.json")
+        ));
+    }
+
+    @Test
+    void aDocumentOnlyRuleCannotSuppressAnUnknownEntryPermissionDecision() {
+        LocalDocumentRulesProvider provider = provider("""
+                {
+                  "schemaVersion": 2,
+                  "datasetVersion": "test-document-only",
+                  "generatedAt": "2026-08-09T00:00:00Z",
+                  "sources": [{"label":"Authority","url":"https://authority.example/rules","sourceType":"GOVERNMENT"}],
+                  "rules": [{
+                    "id":"passport-rule",
+                    "decisionKey":"XY_TRAVEL_DOCUMENT",
+                    "scope":"ENTRY",
+                    "destinationCountries":["XY"],
+                    "nationalities":["NO"],
+                    "priority":10,
+                    "lastVerified":"2026-08-09",
+                    "reviewAfter":"2026-12-01",
+                    "output":{
+                      "code":"PASSPORT_RULE",
+                      "category":"TRAVEL_DOCUMENT",
+                      "status":"REQUIRED",
+                      "title":"Carry a passport",
+                      "summary":"A passport is required.",
+                      "conditions":[],
+                      "sources":[{"label":"Authority","url":"https://authority.example/passports","sourceType":"GOVERNMENT"}]
+                    }
+                  }]
+                }
+                """);
+
+        DocumentCheckResult result = provider.check(input());
+
+        assertTrue(result.requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("PASSPORT_RULE")
+        ));
+        assertTrue(result.requirements().stream().anyMatch(requirement ->
+                requirement.code().equals("ENTRY_PERMISSION")
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+                        && "BBB".equals(requirement.airportCode())
+        ));
+        assertEquals("LOCAL_RULES_WITH_VERIFY_FALLBACK", result.coverage());
+    }
+
+    @Test
     void keepsPerDocumentVerificationGuidanceAlongsideLocalJourneyRules() {
         LocalDocumentRulesProvider provider = provider("""
                 {
-                  "schemaVersion": 1,
+                  "schemaVersion": 2,
                   "datasetVersion": "test-journey-guidance",
                   "generatedAt": "2026-01-01T00:00:00Z",
                   "sources": [{"label":"Authority","url":"https://authority.example/rules","sourceType":"GOVERNMENT"}],
@@ -175,7 +242,8 @@ class LocalDocumentRulesProviderTests {
         return new LocalDocumentRulesProvider(
                 new ConservativeDocumentProvider(),
                 new ObjectMapper(),
-                new ByteArrayResource(json.getBytes(StandardCharsets.UTF_8))
+                new ByteArrayResource(json.getBytes(StandardCharsets.UTF_8)),
+                Clock.fixed(Instant.parse("2026-08-09T12:00:00Z"), ZoneOffset.UTC)
         );
     }
 

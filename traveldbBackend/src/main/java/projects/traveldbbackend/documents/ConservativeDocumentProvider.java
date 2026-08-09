@@ -121,7 +121,8 @@ public class ConservativeDocumentProvider implements DocumentRequirementsProvide
                 requirements,
                 missingInputs,
                 List.of("No licensed live requirements provider is configured. TravelDB has not made a visa-eligibility decision."),
-                List.of(IATA_TRAVEL_CENTRE, TRAVELDOC)
+                List.of(IATA_TRAVEL_CENTRE, TRAVELDOC),
+                null
         );
     }
 

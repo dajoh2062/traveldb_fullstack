@@ -32,6 +32,21 @@ test("rejects a verification date after the explicit audit date", () => {
   assert.ok(audit.errors.includes("rule test-entry lastVerified is after audit date 2026-07-30"));
 });
 
+test("rejects malformed or duplicate key facts", () => {
+  const value = snapshot();
+  value.rules[0].output.keyFacts = [
+    { label: "Maximum stay", value: "Up to 90 days" },
+    { label: "maximum stay", value: "" },
+  ];
+
+  const audit = auditDocumentRulesSnapshot(value, { asOf: "2026-07-30" });
+
+  assert.ok(audit.errors.includes("rule test-entry.output.keyFacts[1].value must be non-empty text"));
+  assert.ok(audit.errors.includes(
+    "rule test-entry.output.keyFacts contains duplicate label: maximum stay",
+  ));
+});
+
 function snapshot() {
   const source = {
     label: "European Union authority",
@@ -39,7 +54,7 @@ function snapshot() {
     sourceType: "GOVERNMENT",
   };
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     datasetVersion: "2026-07-30.1",
     generatedAt: "2026-07-30T12:00:00Z",
     sources: [source],
@@ -60,6 +75,7 @@ function snapshot() {
         title: "Travel document",
         summary: "A travel document is required.",
         conditions: [],
+        keyFacts: [{ label: "Accepted document", value: "Valid passport" }],
         sources: [{ ...source }],
       },
     }],

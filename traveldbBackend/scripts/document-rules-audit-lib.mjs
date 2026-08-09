@@ -49,7 +49,7 @@ export function auditDocumentRulesSnapshot(snapshot, options = {}) {
     return result(["Snapshot must be a JSON object"], warnings, null);
   }
 
-  if (snapshot.schemaVersion !== 1) errors.push("schemaVersion must be 1");
+  if (snapshot.schemaVersion !== 2) errors.push("schemaVersion must be 2");
 
   const versionMatch = typeof snapshot.datasetVersion === "string"
     ? snapshot.datasetVersion.match(DATASET_VERSION)
@@ -200,7 +200,35 @@ function validateOutput(output, path, errors) {
       || output.conditions.some(value => typeof value !== "string" || !value.trim())) {
     errors.push(`${path}.conditions must be an array of non-empty strings`);
   }
+  validateKeyFacts(output.keyFacts, `${path}.keyFacts`, errors);
   validateSources(output.sources, `${path}.sources`, errors);
+}
+
+function validateKeyFacts(keyFacts, path, errors) {
+  if (keyFacts === undefined) return;
+  if (!Array.isArray(keyFacts) || keyFacts.length > 6) {
+    errors.push(`${path} must be an array with at most 6 facts`);
+    return;
+  }
+
+  const labels = new Set();
+  for (const [index, fact] of keyFacts.entries()) {
+    const factPath = `${path}[${index}]`;
+    if (!fact || typeof fact !== "object" || Array.isArray(fact)) {
+      errors.push(`${factPath} must be an object`);
+      continue;
+    }
+    for (const field of ["label", "value"]) {
+      if (typeof fact[field] !== "string" || !fact[field].trim()) {
+        errors.push(`${factPath}.${field} must be non-empty text`);
+      }
+    }
+    if (typeof fact.label === "string" && fact.label.trim()) {
+      const normalizedLabel = fact.label.trim().toLowerCase();
+      if (labels.has(normalizedLabel)) errors.push(`${path} contains duplicate label: ${fact.label.trim()}`);
+      labels.add(normalizedLabel);
+    }
+  }
 }
 
 function validateSources(sources, path, errors) {

@@ -86,8 +86,8 @@ function compareRules(left, right) {
 }
 
 function validateSnapshot(snapshot) {
-  if (snapshot?.schemaVersion !== 1) {
-    throw new Error("schemaVersion must be 1");
+  if (snapshot?.schemaVersion !== 2) {
+    throw new Error("schemaVersion must be 2");
   }
   if (!snapshot.datasetVersion || !Date.parse(snapshot.generatedAt)) {
     throw new Error("datasetVersion and a valid generatedAt timestamp are required");
@@ -123,6 +123,11 @@ function validateRule(rule, ruleIds) {
   }
   if (!Array.isArray(rule.output.sources) || rule.output.sources.length === 0) {
     throw new Error(`Rule ${rule.id} must cite at least one source`);
+  }
+  if (rule.output.keyFacts !== undefined && (!Array.isArray(rule.output.keyFacts)
+      || rule.output.keyFacts.length > 6
+      || rule.output.keyFacts.some(fact => !fact?.label?.trim() || !fact?.value?.trim()))) {
+    throw new Error(`Rule ${rule.id} has invalid keyFacts`);
   }
 
   for (const source of rule.output.sources) {

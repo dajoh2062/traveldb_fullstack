@@ -22,6 +22,7 @@ const result = {
     { airportCode: "MEL", status: "NOT_REQUIRED", explanation: "No action needed" },
   ],
   documentCheck: {
+    datasetVersion: "2026-07-31.1",
     missingInputs: ["Departure date"],
     requirements: [
       {
@@ -30,6 +31,17 @@ const result = {
         status: "REQUIRED",
         title: "Valid passport",
         summary: "Verbose passport summary",
+        keyFacts: [
+          { label: "Passport", value: "Norwegian ordinary passport" },
+          { label: "Validity", value: "Valid for the whole journey" },
+        ],
+        conditions: [
+          "Carry the passport used for this check.",
+          "The passport must be undamaged.",
+          "Each child needs a separate passport.",
+          "Local rule passport-validity was last verified 2026-07-30.",
+        ],
+        lastVerified: "2026-07-30",
         sources: [{ label: "Passport authority", url: "https://example.gov/passports", sourceType: "GOVERNMENT" }],
       },
       { code: "PASSPORT", scope: "JOURNEY", status: "REQUIRED", title: "Valid passport", summary: "Duplicate" },
@@ -40,6 +52,10 @@ const result = {
         scope: "TRANSIT",
         status: "CONDITIONAL",
         title: "Approved ESTA or valid U.S. visa",
+        keyFacts: [
+          { label: "Visa-free stay", value: "Up to 90 days" },
+          { label: "Before travel", value: "ESTA required unless you have a valid U.S. visa" },
+        ],
         sources: [{ label: "U.S. government", url: "https://travel.state.gov/", sourceType: "GOVERNMENT" }],
       },
       {
@@ -92,13 +108,25 @@ describe("JourneyResults", () => {
     expect(within(baggage).queryByText("Melbourne Airport (MEL)")).not.toBeInTheDocument();
 
     const documents = screen.getByRole("region", { name: "Travel documents" });
-    expect(within(documents).getAllByRole("listitem")).toHaveLength(4);
+    expect(within(documents).getAllByRole("listitem")).toHaveLength(5);
     expect(within(documents).getByText("Valid passport")).toBeInTheDocument();
     expect(within(documents).getByText("Verbose passport summary")).toBeInTheDocument();
+    expect(within(documents).getByText("Norwegian ordinary passport")).toBeInTheDocument();
+    expect(within(documents).getByText("Valid for the whole journey")).toBeInTheDocument();
+    expect(within(documents).getByText("Carry the passport used for this check.")).toBeInTheDocument();
+    expect(within(documents).getByText("The passport must be undamaged.")).toBeInTheDocument();
+    expect(within(documents).getByText("1 more condition")).toBeInTheDocument();
+    expect(within(documents).getByText("Each child needs a separate passport.")).toBeInTheDocument();
+    expect(within(documents).queryByText(/Local rule passport-validity/)).not.toBeInTheDocument();
+    expect(within(documents).getByText("Rule verified 30 Jul 2026")).toBeInTheDocument();
     expect(within(documents).getByText("Approved ESTA or valid U.S. visa")).toBeInTheDocument();
-    expect(within(documents).getByText("John F. Kennedy Airport (JFK)")).toBeInTheDocument();
+    expect(within(documents).getByText("Visa-free stay")).toBeInTheDocument();
+    expect(within(documents).getByText("Up to 90 days")).toBeInTheDocument();
+    expect(within(documents).getByText("Before travel")).toBeInTheDocument();
+    expect(within(documents).getByText("ESTA required unless you have a valid U.S. visa")).toBeInTheDocument();
+    expect(within(documents).getByText("Transit at John F. Kennedy Airport (JFK)")).toBeInTheDocument();
     expect(within(documents).getByText("Australian visa — eVisitor or ETA may be available")).toBeInTheDocument();
-    expect(within(documents).getByText("Brisbane International Airport (BNE)")).toBeInTheDocument();
+    expect(within(documents).getByText("Entry at Brisbane International Airport (BNE)")).toBeInTheDocument();
     expect(within(documents).getByRole("link", { name: "eVisitor 651" })).toHaveAttribute(
       "href",
       "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651",
@@ -108,12 +136,14 @@ describe("JourneyResults", () => {
       "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601",
     );
     expect(within(documents).getByText("Passport validity")).toBeInTheDocument();
-    expect(within(documents).getAllByText("Check")).toHaveLength(2);
-    expect(within(documents).getByText("Verify")).toBeInTheDocument();
-    expect(screen.queryByText("Visa not required")).not.toBeInTheDocument();
+    expect(within(documents).getAllByText("Required unless exempt")).toHaveLength(2);
+    expect(within(documents).getByText("Could not confirm")).toBeInTheDocument();
+    expect(within(documents).getByText("Visa not required")).toBeInTheDocument();
+    expect(within(documents).getByText("Not required")).toBeInTheDocument();
     expect(screen.queryByText("Additional entry evidence")).not.toBeInTheDocument();
 
-    expect(screen.getByText("Use Advanced search for a more precise result.")).toBeInTheDocument();
+    expect(within(documents).getByText("Local rule set 2026-07-31.1")).toBeInTheDocument();
+    expect(screen.getByText("Add departure date in Advanced search for a more precise result.")).toBeInTheDocument();
     expect(screen.getByText("6 items to review")).toBeInTheDocument();
     expect(screen.getByText("Check the linked guidance again before travel.")).toBeInTheDocument();
   });
@@ -146,8 +176,8 @@ describe("JourneyResults", () => {
     }} route={route} />);
 
     expect(screen.getAllByText("Transit permission")).toHaveLength(2);
-    expect(screen.getByText("John F. Kennedy Airport (JFK)")).toBeInTheDocument();
-    expect(screen.getByText("Brisbane International Airport (BNE)")).toBeInTheDocument();
+    expect(screen.getByText("Transit at John F. Kennedy Airport (JFK)")).toBeInTheDocument();
+    expect(screen.getByText("Transit at Brisbane International Airport (BNE)")).toBeInTheDocument();
   });
 
   it("does not present conditional transit guidance as definitely required", () => {
@@ -164,7 +194,7 @@ describe("JourneyResults", () => {
       },
     }} route={route} />);
 
-    expect(screen.getByText("Check")).toBeInTheDocument();
+    expect(screen.getByText("Required unless exempt")).toBeInTheDocument();
     expect(screen.queryByText("One required")).not.toBeInTheDocument();
   });
 });

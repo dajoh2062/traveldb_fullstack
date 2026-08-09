@@ -11,6 +11,7 @@ public record DocumentCheckResult(
         List<DocumentRequirement> requirements,
         List<String> missingInputs,
         List<String> warnings,
-        List<DocumentRequirement.DocumentSource> verificationSources
+        List<DocumentRequirement.DocumentSource> verificationSources,
+        String datasetVersion
 ) {
 }

@@ -23,14 +23,16 @@ Within a visit, higher-priority rules replace lower-priority rules with the same
 
 The bundled snapshot is [`src/main/resources/data/document-rules.json`](src/main/resources/data/document-rules.json). It contains:
 
-- `schemaVersion`, currently `1`;
+- `schemaVersion`, currently `2`;
 - a `datasetVersion` in `YYYY-MM-DD.N` form and a matching UTC `generatedAt` timestamp;
 - snapshot-level official sources; and
 - a list of rules.
 
-Each rule has a stable ID and decision key, a journey/entry/transit scope, matching conditions, priority, effective dates, review dates, structured output, and at least one HTTPS government source.
+Each rule has a stable ID and decision key, a journey/entry/transit scope, matching conditions, priority, effective dates, review dates, structured output, and at least one HTTPS government source. Version 2 output can include up to six `keyFacts` as label/value pairs. These carry concise facts such as maximum stay, authorization validity, travel mode, and passport validity without requiring a client to parse prose.
 
-Current reviewed coverage includes common electronic permissions and transit cases for the United States, United Kingdom, Canada, Australia, and New Zealand. Germany, Spain, France, Italy, and the Netherlands also have an initial Schengen entry-document set. Those rules cover eligible EU/EEA/Swiss identity documents and common passport-validity constraints, but do not infer nationality-specific visa-free entry.
+Current reviewed coverage includes common electronic permissions, stay limits, and transit cases for the United States, United Kingdom, Canada, Australia, and New Zealand. Germany, Spain, France, Italy, and the Netherlands include reviewed EU/EEA/Swiss free-movement permission and travel-document rules, plus conservative passport guidance for other nationalities. A document-only rule never counts as a visa decision.
+
+The application accepts only classpath or local-file snapshot resources at runtime. HTTP and HTTPS rule resources are rejected during startup, so deployment and journey checks cannot become dependent on a government site or third-party API. Network access is limited to the explicit import workflow below.
 
 ## Registered travel documents
 
@@ -58,7 +60,7 @@ External access is allowed only as part of this explicit maintenance workflow.
 4. Audit and test the candidate. Replace the example audit date with the actual review date:
 
    ```powershell
-   node scripts/audit-document-rules.mjs --input target\document-rules.candidate.json --as-of 2026-07-31
+   node scripts/audit-document-rules.mjs --input target\document-rules.candidate.json --as-of 2026-08-09
    node --test scripts/document-rules-audit.test.mjs
    ```
 
@@ -67,7 +69,7 @@ External access is allowed only as part of this explicit maintenance workflow.
 
    ```powershell
    node scripts/import-document-rules.mjs --input target\document-rules.candidate.json
-   node scripts/audit-document-rules.mjs --as-of 2026-07-31
+   node scripts/audit-document-rules.mjs --as-of 2026-08-09
    .\mvnw.cmd test
    ```
 
@@ -112,7 +114,7 @@ The importer also accepts an HTTPS URL for a one-time download. Do not use URL i
 
 The legacy passport, residence-permit, and visa fields remain accepted for older clients. New clients should send `travelDocuments`; the backend derives the matching legacy values from the selected primary passport and registered permits or visas.
 
-The response includes `REQUIRED`, `NOT_REQUIRED`, `CONDITIONAL`, and `VERIFY` requirements, their entry or transit locations, exceptions, sources, missing inputs, snapshot version, and check time. The short top-level `documentActions` list includes mandatory, conditional, and verification items; clients must not treat every item as a confirmed requirement.
+The response includes `REQUIRED`, `NOT_REQUIRED`, `CONDITIONAL`, and `VERIFY` requirements; their entry or transit locations; concise `keyFacts`; exceptions; rule-level `lastVerified` and `reviewAfter` dates; matching sources; missing inputs; `datasetVersion`; and check time. Reviewed local rules cite government sources, while conservative fallback guidance can cite authoritative industry or international-organization references. The short top-level `documentActions` list includes mandatory, conditional, and verification items. Positive `NOT_REQUIRED` outcomes remain in the detailed response but are not counted as actions.
 
 ## Safety invariants
 

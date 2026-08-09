@@ -1,8 +1,10 @@
 package projects.traveldbbackend.documents;
 
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import projects.traveldbbackend.documents.DocumentRequirement.Category;
 import projects.traveldbbackend.documents.DocumentRequirement.DocumentSource;
+import projects.traveldbbackend.documents.DocumentRequirement.KeyFact;
 import projects.traveldbbackend.documents.DocumentRequirement.Scope;
 import projects.traveldbbackend.documents.DocumentRequirement.Status;
 import tools.jackson.databind.JsonNode;
@@ -19,11 +21,12 @@ import java.util.Set;
 
 final class DocumentRuleSnapshotLoader {
 
-    private static final int SUPPORTED_SCHEMA_VERSION = 1;
+    private static final int SUPPORTED_SCHEMA_VERSION = 2;
 
     private DocumentRuleSnapshotLoader() {}
 
     static DocumentRuleSnapshot load(ObjectMapper objectMapper, Resource resource) {
+        rejectRemoteRuntimeResource(resource);
         try (var input = resource.getInputStream()) {
             JsonNode root = objectMapper.readTree(input);
             validateSchemaVersion(root);
@@ -35,6 +38,18 @@ final class DocumentRuleSnapshotLoader {
             return new DocumentRuleSnapshot(datasetVersion, sources, rules);
         } catch (IOException | RuntimeException error) {
             throw new IllegalStateException("Could not load local document-rule snapshot from " + resource, error);
+        }
+    }
+
+    private static void rejectRemoteRuntimeResource(Resource resource) {
+        if (!(resource instanceof UrlResource urlResource)) {
+            return;
+        }
+        String protocol = urlResource.getURL().getProtocol();
+        if (!"file".equalsIgnoreCase(protocol)) {
+            throw new IllegalStateException(
+                    "Runtime document rules must come from a bundled classpath or local file resource."
+            );
         }
     }
 
@@ -87,8 +102,22 @@ final class DocumentRuleSnapshotLoader {
                 requiredText(output, "title"),
                 requiredText(output, "summary"),
                 stringList(output.path("conditions")),
-                parseSources(output.path("sources"))
+                parseSources(output.path("sources")),
+                parseKeyFacts(output.path("keyFacts"))
         );
+    }
+
+    private static List<KeyFact> parseKeyFacts(JsonNode node) {
+        if (!node.isArray()) {
+            return List.of();
+        }
+
+        List<KeyFact> keyFacts = new ArrayList<>();
+        node.forEach(fact -> keyFacts.add(new KeyFact(
+                requiredText(fact, "label"),
+                requiredText(fact, "value")
+        )));
+        return List.copyOf(keyFacts);
     }
 
     private static List<DocumentSource> parseSources(JsonNode node) {

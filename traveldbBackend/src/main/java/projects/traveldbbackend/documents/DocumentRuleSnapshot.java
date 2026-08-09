@@ -2,6 +2,7 @@ package projects.traveldbbackend.documents;
 
 import projects.traveldbbackend.documents.DocumentRequirement.Category;
 import projects.traveldbbackend.documents.DocumentRequirement.DocumentSource;
+import projects.traveldbbackend.documents.DocumentRequirement.KeyFact;
 import projects.traveldbbackend.documents.DocumentRequirement.Scope;
 import projects.traveldbbackend.documents.DocumentRequirement.Status;
 
@@ -38,6 +39,7 @@ record DocumentRuleSnapshot(
             String title,
             String summary,
             List<String> conditions,
-            List<DocumentSource> sources
+            List<DocumentSource> sources,
+            List<KeyFact> keyFacts
     ) {}
 }

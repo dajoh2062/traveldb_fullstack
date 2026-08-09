@@ -1,16 +1,20 @@
 package projects.traveldbbackend.documents;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import projects.traveldbbackend.api.dto.TravelDocument;
 import projects.traveldbbackend.api.dto.TravelDocument.Type;
+import projects.traveldbbackend.documents.DocumentRequirement.Category;
+import projects.traveldbbackend.documents.DocumentRequirement.DocumentSource;
 import projects.traveldbbackend.documents.DocumentRequirement.Scope;
 import projects.traveldbbackend.documents.DocumentRequirement.Status;
 import projects.traveldbbackend.documents.DocumentRuleSnapshot.Rule;
 import tools.jackson.databind.ObjectMapper;
 
+import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
     private static final String ENTRY_CONDITIONS = "ENTRY_CONDITIONS";
     private static final String DOCUMENT_ACCEPTANCE_PREFIX = "DOCUMENT_ACCEPTANCE_";
     private static final String EU_TRAVEL_DOCUMENT = "EU_EEA_CH_TRAVEL_DOCUMENT";
+    private static final String EU_FREE_MOVEMENT_PERMISSION = "EU_EEA_CH_FREE_MOVEMENT";
     private static final Set<String> PERMISSION_FALLBACK_CODES = Set.of(
             "ENTRY_PERMISSION",
             "TRANSIT_PERMISSION"
@@ -38,20 +43,32 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
 
     private final ConservativeDocumentProvider conservativeProvider;
     private final DocumentRuleSnapshot snapshot;
+    private final Clock clock;
 
+    @Autowired
     public LocalDocumentRulesProvider(
             ConservativeDocumentProvider conservativeProvider,
             ObjectMapper objectMapper,
             @Value("${traveldb.documents.rules-location:classpath:data/document-rules.json}") Resource snapshotResource
     ) {
+        this(conservativeProvider, objectMapper, snapshotResource, Clock.systemUTC());
+    }
+
+    LocalDocumentRulesProvider(
+            ConservativeDocumentProvider conservativeProvider,
+            ObjectMapper objectMapper,
+            Resource snapshotResource,
+            Clock clock
+    ) {
         this.conservativeProvider = conservativeProvider;
         this.snapshot = DocumentRuleSnapshotLoader.load(objectMapper, snapshotResource);
+        this.clock = clock;
     }
 
     @Override
     public DocumentCheckResult check(DocumentCheckInput input) {
         DocumentCheckResult conservativeResult = conservativeProvider.check(input);
-        LocalDate travelDate = input.departureDate() == null ? LocalDate.now() : input.departureDate();
+        LocalDate travelDate = input.departureDate() == null ? LocalDate.now(clock) : input.departureDate();
         List<DocumentRequirement> requirements = new ArrayList<>();
         Set<String> staleRuleIds = new LinkedHashSet<>();
 
@@ -76,6 +93,10 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 .anyMatch(PERMISSION_FALLBACK_CODES::contains);
         boolean hasRestrictedPrimaryDocument = hasRegisteredDocuments(input)
                 && !hasOrdinaryPassportPrimary(input);
+        List<DocumentSource> matchedSources = requirements.stream()
+                .flatMap(requirement -> requirement.sources().stream())
+                .distinct()
+                .toList();
 
         return new DocumentCheckResult(
                 PROVIDER_NAME,
@@ -83,11 +104,12 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 hasPermissionFallback || hasRestrictedPrimaryDocument
                         ? "LOCAL_RULES_WITH_VERIFY_FALLBACK"
                         : "LOCAL_VERSIONED_RULE_SNAPSHOT",
-                Instant.now(),
+                Instant.now(clock),
                 List.copyOf(requirements),
                 conservativeResult.missingInputs(),
                 warnings,
-                snapshot.sources()
+                matchedSources,
+                snapshot.datasetVersion()
         );
     }
 
@@ -132,6 +154,9 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
             rules.stream()
                     .map(rule -> toRequirement(rule, visit.countryCode(), visit.airportCode(), staleRuleIds))
                     .forEach(requirements::add);
+            if (!hasPermissionDecision(rules)) {
+                conservativeRequirementsForVisit(conservativeResult, visit, false).forEach(requirements::add);
+            }
         }
 
         if (visit.scope() == Scope.ENTRY) {
@@ -168,7 +193,7 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
         snapshot.rules().stream()
                 .filter(rule -> rule.scope() == scope)
                 .filter(rule -> !restrictNationalityRules
-                        || isNationalIdPrimary(input) && EU_TRAVEL_DOCUMENT.equals(rule.code()))
+                        || isNationalIdPrimary(input) && supportsNationalIdRule(rule))
                 .filter(rule -> matches(rule.destinationCountries(), destinationCountryCode))
                 .filter(rule -> matches(rule.nationalities(), documentCountryCode))
                 .filter(rule -> !contains(rule.excludedNationalities(), documentCountryCode))
@@ -191,10 +216,9 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
             String airportCode,
             Set<String> staleRuleIds
     ) {
-        boolean stale = rule.reviewAfter() != null && rule.reviewAfter().isBefore(LocalDate.now());
+        boolean stale = rule.reviewAfter() != null && rule.reviewAfter().isBefore(LocalDate.now(clock));
         Status status = stale && rule.status() != Status.VERIFY ? Status.VERIFY : rule.status();
         List<String> conditions = new ArrayList<>(rule.conditions());
-        conditions.add("Local rule " + rule.id() + " was last verified " + rule.lastVerified() + ".");
         if (stale) {
             staleRuleIds.add(rule.id());
         }
@@ -212,8 +236,24 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 rule.title(),
                 summary,
                 List.copyOf(conditions),
-                rule.sources()
+                rule.sources(),
+                rule.keyFacts(),
+                rule.lastVerified(),
+                rule.reviewAfter()
         );
+    }
+
+    private static boolean hasPermissionDecision(List<Rule> rules) {
+        return rules.stream().map(Rule::category).anyMatch(category ->
+                category == Category.VISA
+                        || category == Category.ELECTRONIC_AUTHORIZATION
+                        || category == Category.TRANSIT_PERMISSION
+        );
+    }
+
+    private static boolean supportsNationalIdRule(Rule rule) {
+        return EU_TRAVEL_DOCUMENT.equals(rule.code())
+                || EU_FREE_MOVEMENT_PERMISSION.equals(rule.code());
     }
 
     private List<String> buildWarnings(DocumentCheckInput input, Set<String> staleRuleIds) {

@@ -177,16 +177,31 @@ main { width: min(1120px, calc(100% - 64px)); margin: 0 auto; }
 .simple-result-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
 .simple-result-item { min-width: 0; display: grid; gap: 9px; padding: 18px; background: var(--surface-soft); border: 1px solid var(--border); border-top: 3px solid var(--warning); border-radius: 10px; }
 .simple-result-item.confirm, .simple-result-item.document.verify { border-top-color: var(--primary); }
-.simple-result-item strong { min-width: 0; font-size: 17px; line-height: 1.35; letter-spacing: -.01em; overflow-wrap: anywhere; }
-.result-status { width: fit-content; display: inline-flex; align-items: center; gap: 6px; color: var(--warning); font-size: 11px; font-weight: 750; letter-spacing: .015em; }
+.simple-result-item.document.not-required { border-top-color: var(--success); }
+.simple-result-item strong { min-width: 0; font-size: 18px; line-height: 1.35; letter-spacing: -.01em; overflow-wrap: anywhere; }
+.result-status { width: fit-content; display: inline-flex; align-items: center; gap: 6px; color: var(--warning); font-size: 12px; font-weight: 750; letter-spacing: .015em; }
 .simple-result-item.confirm .result-status, .simple-result-item.document.verify .result-status { color: var(--primary); }
+.simple-result-item.document.not-required .result-status { color: var(--success); }
 .document-result-copy { min-width: 0; display: grid; gap: 5px; }
 .document-result-copy .result-location { color: var(--text-soft); font-size: 12px; font-weight: 650; line-height: 1.4; }
 .document-result-copy p { margin: 2px 0 0; color: var(--text-soft); font-size: 13px; line-height: 1.5; }
+.document-key-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; margin: 7px 0 1px; }
+.document-key-fact { min-width: 0; padding: 9px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; }
+.document-key-fact dt { color: var(--text-faint); font-size: 11px; font-weight: 700; line-height: 1.3; }
+.document-key-fact dd { margin: 3px 0 0; color: var(--text); font-size: 13px; font-weight: 700; line-height: 1.35; overflow-wrap: anywhere; }
+.document-conditions { display: grid; gap: 5px; margin-top: 5px; }
+.document-result-copy .document-condition { position: relative; margin: 0; padding-left: 12px; font-size: 12px; line-height: 1.45; }
+.document-condition::before { position: absolute; top: .62em; left: 1px; width: 4px; height: 4px; content: ""; background: var(--text-faint); border-radius: 50%; }
+.document-more-conditions { margin-top: 3px; color: var(--text-soft); font-size: 11px; }
+.document-more-conditions summary { width: fit-content; color: var(--primary); cursor: pointer; font-weight: 650; }
+.document-more-conditions[open] summary { margin-bottom: 6px; }
 .document-source-links { display: flex; flex-wrap: wrap; gap: 5px 12px; margin-top: 5px; padding-top: 9px; border-top: 1px solid var(--border); }
 .document-result-copy a { width: fit-content; display: inline-flex; align-items: center; gap: 4px; color: var(--primary); font-size: 11px; font-weight: 650; text-decoration: none; }
 .document-result-copy a:hover { text-decoration: underline; }
+.document-result-copy .document-rule-meta { display: block; margin-top: 2px; color: var(--text-faint); font-size: 10px; line-height: 1.4; }
+.document-dataset { margin: 12px 0 0; color: var(--text-faint); font-size: 10px; }
 .result-note { margin: 18px 0 0; color: var(--text-soft); font-size: 12px; }
+.missing-input-note { padding-left: 10px; border-left: 2px solid var(--primary); line-height: 1.45; }
 .empty-result { margin: 0; padding: 18px; color: var(--text-soft); background: var(--surface-soft); border: 1px dashed var(--border-strong); border-radius: 10px; font-size: 14px; }
 
 footer { width: min(1120px, calc(100% - 64px)); margin: 28px auto 0; padding: 20px 0 34px; color: var(--text-faint); border-top: 1px solid var(--border); font-size: 11px; text-align: center; }
@@ -228,6 +243,7 @@ footer a:hover { color: var(--primary); }
   .move-airport, .remove-airport { width: 26px; height: 26px; }
   .simple-result-section { padding: 16px; }
   .simple-result-item { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .document-key-facts { grid-template-columns: 1fr; }
   .baggage-setup { padding: 16px; }
   .document-setup { padding: 16px; }
   .travel-document-list-header { align-items: stretch; flex-direction: column; gap: 12px; }

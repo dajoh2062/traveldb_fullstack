@@ -84,7 +84,7 @@ Backend checks, run from `traveldbBackend`:
 
 ```powershell
 node --test scripts/document-rules-audit.test.mjs
-node scripts/audit-document-rules.mjs --as-of 2026-07-31
+node scripts/audit-document-rules.mjs --as-of 2026-08-09
 .\mvnw.cmd test
 ```
 
