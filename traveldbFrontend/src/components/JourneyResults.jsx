@@ -64,16 +64,28 @@ export default function JourneyResults({ result, route }) {
   const baggageStops = actionableBaggageStops(result.baggageStops);
   const documentRequirements = actionableDocumentRequirements(result.documentCheck?.requirements);
   const hasMissingDetails = (result.documentCheck?.missingInputs?.length ?? 0) > 0;
+  const attentionCount = baggageStops.length + documentRequirements.length;
 
   return (
     <section className="results" aria-labelledby="results-title" aria-live="polite">
-      <h2 id="results-title">Trip results</h2>
+      <header className="results-heading">
+        <div>
+          <span>Trip results</span>
+          <h2 id="results-title">What you need to do</h2>
+        </div>
+        {attentionCount > 0 && (
+          <strong>{attentionCount} {attentionCount === 1 ? "item" : "items"} to review</strong>
+        )}
+      </header>
 
       <div className="simple-results-grid">
         <section className="simple-result-section" aria-labelledby="baggage-results-title">
           <div className="simple-result-heading">
-            <Icon name="suitcase" size={20} />
-            <h3 id="baggage-results-title">Baggage pickup</h3>
+            <span className="result-heading-icon"><Icon name="suitcase" size={22} /></span>
+            <div>
+              <h3 id="baggage-results-title">Baggage</h3>
+              <small>{baggageStops.length > 0 ? `${baggageStops.length} ${baggageStops.length === 1 ? "action" : "actions"}` : "No action found"}</small>
+            </div>
           </div>
 
           {baggageStops.length > 0 ? (
@@ -86,10 +98,13 @@ export default function JourneyResults({ result, route }) {
                     className={`simple-result-item ${stop.status.toLowerCase()}`}
                     key={`${stop.airportCode}-${index}`}
                   >
+                    <span className="result-status">
+                      <Icon name={status.icon} size={15} /> {status.label}
+                    </span>
                     <div className="document-result-copy">
                       <strong>{stop.title ?? airportLabel(stop.airportCode, route)}</strong>
-                      {stop.title && <small>{airportLabel(stop.airportCode, route)}</small>}
-                      {stop.explanation && <small>{stop.explanation}</small>}
+                      {stop.title && <small className="result-location">{airportLabel(stop.airportCode, route)}</small>}
+                      {stop.explanation && <p>{stop.explanation}</p>}
                       {sources.length > 0 && (
                         <div className="document-source-links">
                           {sources.map(source => (
@@ -101,9 +116,6 @@ export default function JourneyResults({ result, route }) {
                         </div>
                       )}
                     </div>
-                    <span>
-                      <Icon name={status.icon} size={14} /> {status.label}
-                    </span>
                   </li>
                 );
               })}
@@ -115,8 +127,11 @@ export default function JourneyResults({ result, route }) {
 
         <section className="simple-result-section" aria-labelledby="document-results-title">
           <div className="simple-result-heading">
-            <Icon name="document" size={20} />
-            <h3 id="document-results-title">Travel documents</h3>
+            <span className="result-heading-icon"><Icon name="document" size={22} /></span>
+            <div>
+              <h3 id="document-results-title">Travel documents</h3>
+              <small>{documentRequirements.length > 0 ? `${documentRequirements.length} to review` : "Not confirmed"}</small>
+            </div>
           </div>
 
           {documentRequirements.length > 0 ? (
@@ -130,10 +145,13 @@ export default function JourneyResults({ result, route }) {
                     className={`simple-result-item document ${status.className}`}
                     key={documentRequirementKey(document)}
                   >
+                    <span className="result-status">
+                      <Icon name={status.icon} size={15} /> {status.label}
+                    </span>
                     <div className="document-result-copy">
                       <strong>{document.title}</strong>
-                      <small>{documentLocation(document, route)}</small>
-                      {document.summary && <small>{document.summary}</small>}
+                      <small className="result-location">{documentLocation(document, route)}</small>
+                      {document.summary && <p>{document.summary}</p>}
                       {sources.length > 0 && (
                         <div className="document-source-links">
                           {sources.map(source => (
@@ -145,9 +163,6 @@ export default function JourneyResults({ result, route }) {
                         </div>
                       )}
                     </div>
-                    <span>
-                      <Icon name={status.icon} size={14} /> {status.label}
-                    </span>
                   </li>
                 );
               })}
@@ -163,9 +178,7 @@ export default function JourneyResults({ result, route }) {
         </section>
       </div>
 
-      <p className="result-note">
-        Each recommendation links to its supporting authority or carrier guidance. Recheck it before travel.
-      </p>
+      <p className="result-note">Check the linked guidance again before travel.</p>
     </section>
   );
 }

@@ -77,7 +77,7 @@ describe("JourneyResults", () => {
   it("shows required, alternative, and unverified document actions at the correct airports", () => {
     render(<JourneyResults result={result} route={route} />);
 
-    const baggage = screen.getByRole("region", { name: "Baggage pickup" });
+    const baggage = screen.getByRole("region", { name: "Baggage" });
     expect(within(baggage).getAllByRole("listitem")).toHaveLength(2);
     expect(within(baggage).getByText("John F. Kennedy Airport (JFK)")).toBeInTheDocument();
     expect(within(baggage).getByText("Collect at the first U.S. arrival")).toBeInTheDocument();
@@ -114,7 +114,8 @@ describe("JourneyResults", () => {
     expect(screen.queryByText("Additional entry evidence")).not.toBeInTheDocument();
 
     expect(screen.getByText("Use Advanced search for a more precise result.")).toBeInTheDocument();
-    expect(screen.getByText(/Each recommendation links to its supporting authority or carrier guidance/)).toBeInTheDocument();
+    expect(screen.getByText("6 items to review")).toBeInTheDocument();
+    expect(screen.getByText("Check the linked guidance again before travel.")).toBeInTheDocument();
   });
 
   it("never presents missing coverage as no documents required", () => {
