@@ -23,6 +23,8 @@ export const initialBaggageProfile = {
   checkedThrough: "YES",
 };
 
+const BASIC_TRAVEL_PURPOSE = "TOURISM";
+
 const countryCodePattern = /^[A-Za-z]{2}$/;
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
 const documentFieldKeys = new Set([
@@ -317,6 +319,8 @@ export function buildJourneyRequest({ nationality, route, baggage, documents, in
           .map(document => document.issuingCountryCode),
       ),
       travelDocuments,
-    } : null,
+    } : {
+      travelPurpose: BASIC_TRAVEL_PURPOSE,
+    },
   };
 }

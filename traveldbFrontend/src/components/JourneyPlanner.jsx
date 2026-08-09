@@ -74,7 +74,7 @@ export default function JourneyPlanner({
           <span>
             <strong>Advanced search</strong>
             <small id="advanced-search-description">
-              Add traveller details and every document you plan to carry.
+              Basic search assumes tourism. Add dates, traveller details and documents for an exact check.
             </small>
           </span>
         </label>

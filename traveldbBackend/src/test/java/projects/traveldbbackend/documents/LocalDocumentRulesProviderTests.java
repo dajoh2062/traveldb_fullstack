@@ -123,6 +123,89 @@ class LocalDocumentRulesProviderTests {
     }
 
     @Test
+    void rejectsMalformedRequiredDestinationAndNationalitySelectors() {
+        for (String selectors : List.of(
+                "\"destinationCountries\":\"XY\",\"nationalities\":[\"NO\"]",
+                "\"destinationCountries\":[\"XY\"],\"nationalities\":\"NO\""
+        )) {
+            IllegalStateException error = assertThrows(
+                    IllegalStateException.class,
+                    () -> provider(snapshotWithSelectors(selectors))
+            );
+
+            assertTrue(error.getCause().getMessage().contains("selector must be an array"));
+        }
+    }
+
+    @Test
+    void rejectsMalformedOptionalSelectorsInsteadOfTreatingThemAsWildcards() {
+        IllegalStateException error = assertThrows(
+                IllegalStateException.class,
+                () -> provider(snapshotWithSelectors(
+                        "\"destinationCountries\":[\"XY\"],"
+                                + "\"nationalities\":[\"NO\"],"
+                                + "\"travelPurposes\":\"TOURISM\""
+                ))
+        );
+
+        assertTrue(error.getCause().getMessage().contains("selector must be an array: travelPurposes"));
+    }
+
+    @Test
+    void rejectsRequiredSelectorValuesThatCouldBroadenAResult() {
+        for (String selectors : List.of(
+                "\"nationalities\":[\"NO\"]",
+                "\"destinationCountries\":[],\"nationalities\":[\"NO\"]",
+                "\"destinationCountries\":[\"xy\"],\"nationalities\":[\"NO\"]",
+                "\"destinationCountries\":[\"XY\",\"XY\"],\"nationalities\":[\"NO\"]",
+                "\"destinationCountries\":[\"*\",\"XY\"],\"nationalities\":[\"NO\"]"
+        )) {
+            assertThrows(
+                    IllegalStateException.class,
+                    () -> provider(snapshotWithSelectors(selectors))
+            );
+        }
+    }
+
+    @Test
+    void rejectsMalformedApplicabilityAndOutputFields() {
+        String valid = snapshotWithSelectors(
+                "\"destinationCountries\":[\"XY\"],\"nationalities\":[\"NO\"]"
+        );
+
+        for (String snapshot : List.of(
+                valid.replace("\"schemaVersion\": 2", "\"schemaVersion\": \"2\""),
+                valid.replace("\"priority\":1", "\"priority\":\"1\""),
+                valid.replace("\"priority\":1", "\"minimumAge\":\"18\",\"priority\":1"),
+                valid.replace("\"conditions\":[]", "\"conditions\":\"none\""),
+                valid.replace("\"lastVerified\":\"2026-08-09\"", "\"lastVerified\":20260809"),
+                valid.replace("\"title\":\"Invalid selectors\"", "\"title\":123"),
+                valid.replace(
+                        "\"conditions\":[]",
+                        "\"conditions\":[],\"keyFacts\":[{\"label\":\"Visa\",\"value\":\"Required\"},"
+                                + "{\"label\":\"visa\",\"value\":\"Not required\"}]"
+                ),
+                valid.replace(
+                        "\"conditions\":[]",
+                        "\"conditions\":[],\"keyFacts\":["
+                                + "{\"label\":\"1\",\"value\":\"1\"},"
+                                + "{\"label\":\"2\",\"value\":\"2\"},"
+                                + "{\"label\":\"3\",\"value\":\"3\"},"
+                                + "{\"label\":\"4\",\"value\":\"4\"},"
+                                + "{\"label\":\"5\",\"value\":\"5\"},"
+                                + "{\"label\":\"6\",\"value\":\"6\"},"
+                                + "{\"label\":\"7\",\"value\":\"7\"}]"
+                ),
+                valid.replace(
+                        "\"sources\":[{\"label\":\"Authority\",\"url\":\"https://authority.example/rules\",\"sourceType\":\"GOVERNMENT\"}]",
+                        "\"sources\":[]"
+                )
+        )) {
+            assertThrows(IllegalStateException.class, () -> provider(snapshot));
+        }
+    }
+
+    @Test
     void rejectsNonFileUrlRuleResourcesBeforeAttemptingToDownloadThem() {
         assertThrows(IllegalStateException.class, () -> new LocalDocumentRulesProvider(
                 new ConservativeDocumentProvider(),
@@ -191,6 +274,7 @@ class LocalDocumentRulesProviderTests {
                     "id":"journey-rule",
                     "decisionKey":"JOURNEY_DOCUMENT",
                     "scope":"JOURNEY",
+                    "destinationCountries":["*"],
                     "nationalities":["NO"],
                     "priority":10,
                     "lastVerified":"2026-01-01",
@@ -245,6 +329,35 @@ class LocalDocumentRulesProviderTests {
                 new ByteArrayResource(json.getBytes(StandardCharsets.UTF_8)),
                 Clock.fixed(Instant.parse("2026-08-09T12:00:00Z"), ZoneOffset.UTC)
         );
+    }
+
+    private String snapshotWithSelectors(String selectors) {
+        return """
+                {
+                  "schemaVersion": 2,
+                  "datasetVersion": "invalid-selectors",
+                  "generatedAt": "2026-08-09T00:00:00Z",
+                  "sources": [{"label":"Authority","url":"https://authority.example/rules","sourceType":"GOVERNMENT"}],
+                  "rules": [{
+                    "id":"invalid-selectors",
+                    "decisionKey":"XY_ENTRY",
+                    "scope":"ENTRY",
+                    %s,
+                    "priority":1,
+                    "lastVerified":"2026-08-09",
+                    "reviewAfter":"2026-12-01",
+                    "output":{
+                      "code":"INVALID_SELECTORS",
+                      "category":"VISA",
+                      "status":"NOT_REQUIRED",
+                      "title":"Invalid selectors",
+                      "summary":"This rule must never be broadened.",
+                      "conditions":[],
+                      "sources":[{"label":"Authority","url":"https://authority.example/rules","sourceType":"GOVERNMENT"}]
+                    }
+                  }]
+                }
+                """.formatted(selectors);
     }
 
     private DocumentCheckInput input() {

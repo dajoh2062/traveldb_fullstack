@@ -26,9 +26,14 @@ export const OFFICIAL_SOURCE_HOST_SUFFIXES = Object.freeze([
   "cbp.gov",
   "canada.ca",
   "europa.eu",
+  "gov.br",
   "gov.au",
   "gov.uk",
   "govt.nz",
+  "mofa.go.jp",
+  "fi.emb-japan.go.jp",
+  "moj.go.jp",
+  "regjeringen.no",
   "state.gov",
 ]);
 

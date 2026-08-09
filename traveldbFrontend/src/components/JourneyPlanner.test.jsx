@@ -41,6 +41,7 @@ describe("JourneyPlanner advanced search", () => {
 
     const toggle = screen.getByRole("checkbox", { name: "Advanced search" });
     expect(toggle).not.toBeChecked();
+    expect(screen.getByText(/Basic search assumes tourism/i)).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Traveller and travel documents" })).not.toBeInTheDocument();
 
     fireEvent.click(toggle);

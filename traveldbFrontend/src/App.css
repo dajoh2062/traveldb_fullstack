@@ -168,7 +168,7 @@ main { width: min(1120px, calc(100% - 64px)); margin: 0 auto; }
 .results-heading span { display: block; margin-bottom: 6px; color: var(--primary); font-size: 11px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
 .results-heading h2 { margin: 0; font-size: clamp(1.75rem, 3vw, 2.2rem); line-height: 1.15; letter-spacing: -.035em; }
 .results-heading > strong { flex: 0 0 auto; padding: 8px 11px; color: var(--text-soft); background: var(--surface-soft); border: 1px solid var(--border); border-radius: 999px; font-size: 12px; }
-.simple-results-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.simple-results-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
 .simple-result-section { min-width: 0; }
 .simple-result-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
 .result-heading-icon { width: 42px; height: 42px; flex: 0 0 auto; display: grid; place-items: center; color: var(--primary); background: var(--primary-soft); border-radius: 9px; }

@@ -28,6 +28,13 @@ jobs:
           java-version: "21"
           cache: maven
           cache-dependency-path: traveldbBackend/pom.xml
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Audit bundled document rules
+        run: |
+          node scripts/audit-document-rules.mjs --as-of "$(date -u +%F)"
+          node --test scripts/document-rules-audit.test.mjs
       - name: Run backend tests
         run: ./mvnw -B test
 

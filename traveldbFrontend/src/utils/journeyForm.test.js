@@ -233,7 +233,7 @@ describe("validateJourneyForm", () => {
 });
 
 describe("buildJourneyRequest", () => {
-  it("ignores hidden document values for a basic check", () => {
+  it("uses the tourism assumption and ignores hidden document values for a basic check", () => {
     expect(buildJourneyRequest({
       nationality: "NO",
       route,
@@ -244,7 +244,9 @@ describe("buildJourneyRequest", () => {
       nationalityCountryCode: "NO",
       route: ["OSL", "LHR"],
       baggage: initialBaggageProfile,
-      documents: null,
+      documents: {
+        travelPurpose: "TOURISM",
+      },
     });
   });
 

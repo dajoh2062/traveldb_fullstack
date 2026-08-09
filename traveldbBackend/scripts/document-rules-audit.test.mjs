@@ -10,6 +10,60 @@ test("accepts a fresh snapshot with a reviewed government source", () => {
   assert.equal(audit.summary.nextReviewAfter, "2026-10-30");
 });
 
+test("accepts the reviewed Brazilian and Norwegian authority hosts", () => {
+  const value = snapshot();
+  const sources = [
+    {
+      label: "Brazilian Ministry of Foreign Affairs",
+      url: "https://www.gov.br/mre/pt-br/assuntos/portal-consular/qgrv-simples-port-18jul25.pdf",
+      sourceType: "GOVERNMENT",
+    },
+    {
+      label: "Norwegian Ministry of Foreign Affairs",
+      url: "https://www.regjeringen.no/no/tema/utenrikssaker/reiseinformasjon/velg-land/reiseinfo_brasil/id2415169/",
+      sourceType: "GOVERNMENT",
+    },
+    {
+      label: "Brazilian immigration decree",
+      url: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/decreto/d9199.htm",
+      sourceType: "GOVERNMENT",
+    },
+  ];
+  value.sources = sources;
+  value.rules[0].output.sources = sources;
+
+  const audit = auditDocumentRulesSnapshot(value, { asOf: "2026-07-30" });
+
+  assert.deepEqual(audit.errors, []);
+});
+
+test("accepts the reviewed Japanese authority hosts", () => {
+  const value = snapshot();
+  const sources = [
+    {
+      label: "Japan Ministry of Foreign Affairs",
+      url: "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html",
+      sourceType: "GOVERNMENT",
+    },
+    {
+      label: "Embassy of Japan in Finland",
+      url: "https://www.fi.emb-japan.go.jp/itpr_fi/consular.html",
+      sourceType: "GOVERNMENT",
+    },
+    {
+      label: "Immigration Services Agency of Japan",
+      url: "https://www.moj.go.jp/isa/immigration/procedures/kikoku_00001.html",
+      sourceType: "GOVERNMENT",
+    },
+  ];
+  value.sources = sources;
+  value.rules[0].output.sources = sources;
+
+  const audit = auditDocumentRulesSnapshot(value, { asOf: "2026-07-30" });
+
+  assert.deepEqual(audit.errors, []);
+});
+
 test("reports stale rules and unreviewed source hosts deterministically", () => {
   const value = snapshot();
   value.rules[0].reviewAfter = "2026-07-01";

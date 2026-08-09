@@ -18,10 +18,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 final class DocumentRuleSnapshotLoader {
 
     private static final int SUPPORTED_SCHEMA_VERSION = 2;
+    private static final Pattern COUNTRY_CODE = Pattern.compile("[A-Z]{2}");
+    private static final Pattern TOKEN = Pattern.compile("[A-Z0-9_]+");
 
     private DocumentRuleSnapshotLoader() {}
 
@@ -54,12 +57,19 @@ final class DocumentRuleSnapshotLoader {
     }
 
     private static void validateSchemaVersion(JsonNode root) {
-        if (root.path("schemaVersion").asInt() != SUPPORTED_SCHEMA_VERSION) {
+        JsonNode schemaVersion = root.get("schemaVersion");
+        if (schemaVersion == null
+                || !schemaVersion.isIntegralNumber()
+                || !schemaVersion.canConvertToInt()
+                || schemaVersion.asInt() != SUPPORTED_SCHEMA_VERSION) {
             throw new IllegalStateException("Unsupported document-rule schema version.");
         }
     }
 
     private static List<DocumentRuleSnapshot.Rule> parseRules(JsonNode rulesNode) {
+        if (!rulesNode.isArray()) {
+            throw new IllegalStateException("Document-rule snapshot rules must be an array.");
+        }
         List<DocumentRuleSnapshot.Rule> rules = new ArrayList<>();
         Set<String> ids = new LinkedHashSet<>();
         for (JsonNode ruleNode : rulesNode) {
@@ -77,25 +87,30 @@ final class DocumentRuleSnapshotLoader {
 
     private static DocumentRuleSnapshot.Rule parseRule(JsonNode node) {
         JsonNode output = node.path("output");
+        Integer minimumAge = optionalNonNegativeInt(node, "minimumAge");
+        Integer maximumAge = optionalNonNegativeInt(node, "maximumAge");
+        if (minimumAge != null && maximumAge != null && minimumAge > maximumAge) {
+            throw new IllegalStateException("Document-rule minimumAge must not exceed maximumAge.");
+        }
         return new DocumentRuleSnapshot.Rule(
                 requiredText(node, "id"),
                 requiredText(node, "decisionKey"),
                 Scope.valueOf(requiredText(node, "scope")),
-                tokenList(node.path("destinationCountries")),
-                tokenList(node.path("nationalities")),
-                tokenList(node.path("excludedNationalities")),
-                tokenList(node.path("residenceCountries")),
-                tokenList(node.path("passportIssuingCountries")),
-                tokenList(node.path("travelPurposes")),
-                nullableInt(node.path("minimumAge")),
-                nullableInt(node.path("maximumAge")),
-                tokenList(node.path("requiredHeldVisaCountries")),
-                tokenList(node.path("requiredResidencePermitCountries")),
-                node.path("priority").asInt(),
-                nullableDate(node.path("effectiveFrom")),
-                nullableDate(node.path("effectiveTo")),
-                nullableDate(node.path("lastVerified")),
-                nullableDate(node.path("reviewAfter")),
+                requiredCountrySelector(node, "destinationCountries", true),
+                requiredCountrySelector(node, "nationalities", true),
+                optionalCountrySelector(node, "excludedNationalities", false),
+                optionalCountrySelector(node, "residenceCountries", true),
+                optionalCountrySelector(node, "passportIssuingCountries", true),
+                optionalTokenSelector(node, "travelPurposes", true),
+                minimumAge,
+                maximumAge,
+                optionalCountrySelector(node, "requiredHeldVisaCountries", false),
+                optionalCountrySelector(node, "requiredResidencePermitCountries", false),
+                requiredNonNegativeInt(node, "priority"),
+                optionalDate(node, "effectiveFrom"),
+                optionalDate(node, "effectiveTo"),
+                requiredDate(node, "lastVerified"),
+                requiredDate(node, "reviewAfter"),
                 requiredText(output, "code"),
                 Category.valueOf(requiredText(output, "category")),
                 Status.valueOf(requiredText(output, "status")),
@@ -108,21 +123,34 @@ final class DocumentRuleSnapshotLoader {
     }
 
     private static List<KeyFact> parseKeyFacts(JsonNode node) {
-        if (!node.isArray()) {
+        if (node.isMissingNode()) {
             return List.of();
+        }
+        if (!node.isArray()) {
+            throw new IllegalStateException("Document-rule keyFacts must be an array.");
+        }
+        if (node.size() > 6) {
+            throw new IllegalStateException("Document-rule keyFacts must contain at most six items.");
         }
 
         List<KeyFact> keyFacts = new ArrayList<>();
-        node.forEach(fact -> keyFacts.add(new KeyFact(
-                requiredText(fact, "label"),
-                requiredText(fact, "value")
-        )));
+        Set<String> labels = new LinkedHashSet<>();
+        node.forEach(fact -> {
+            String label = requiredText(fact, "label");
+            if (!labels.add(label.toUpperCase(Locale.ROOT))) {
+                throw new IllegalStateException("Document-rule keyFacts labels must be unique.");
+            }
+            keyFacts.add(new KeyFact(label, requiredText(fact, "value")));
+        });
         return List.copyOf(keyFacts);
     }
 
     private static List<DocumentSource> parseSources(JsonNode node) {
         if (!node.isArray()) {
-            return List.of();
+            throw new IllegalStateException("Document-rule sources must be an array.");
+        }
+        if (node.isEmpty()) {
+            throw new IllegalStateException("Document-rule sources must not be empty.");
         }
 
         List<DocumentSource> sources = new ArrayList<>();
@@ -140,36 +168,97 @@ final class DocumentRuleSnapshotLoader {
         return List.copyOf(sources);
     }
 
-    private static List<String> tokenList(JsonNode node) {
-        if (!node.isArray()) {
+    private static List<String> requiredCountrySelector(
+            JsonNode rule,
+            String field,
+            boolean allowWildcard
+    ) {
+        return selectorList(rule, field, true, true, allowWildcard);
+    }
+
+    private static List<String> optionalCountrySelector(
+            JsonNode rule,
+            String field,
+            boolean allowWildcard
+    ) {
+        return selectorList(rule, field, false, true, allowWildcard);
+    }
+
+    private static List<String> optionalTokenSelector(
+            JsonNode rule,
+            String field,
+            boolean allowWildcard
+    ) {
+        return selectorList(rule, field, false, false, allowWildcard);
+    }
+
+    private static List<String> selectorList(
+            JsonNode rule,
+            String field,
+            boolean required,
+            boolean countryCodes,
+            boolean allowWildcard
+    ) {
+        JsonNode node = rule.get(field);
+        if (node == null) {
+            if (required) {
+                throw new IllegalStateException("Missing document-rule selector: " + field);
+            }
             return List.of();
+        }
+        if (!node.isArray()) {
+            throw new IllegalStateException("Document-rule selector must be an array: " + field);
+        }
+        if (required && node.size() == 0) {
+            throw new IllegalStateException("Document-rule selector must not be empty: " + field);
         }
 
         List<String> values = new ArrayList<>();
-        node.forEach(value -> {
-            if (value.isString() && !value.asString().isBlank()) {
-                values.add(normalize(value.asString()));
+        Set<String> seen = new LinkedHashSet<>();
+        for (JsonNode valueNode : node) {
+            if (!valueNode.isString()) {
+                throw new IllegalStateException("Invalid document-rule selector value: " + field);
             }
-        });
+
+            String value = valueNode.asString();
+            boolean valid = (allowWildcard && "*".equals(value))
+                    || (countryCodes && COUNTRY_CODE.matcher(value).matches())
+                    || (!countryCodes && TOKEN.matcher(value).matches());
+            if (!valid) {
+                throw new IllegalStateException("Invalid document-rule selector value for " + field + ": " + value);
+            }
+            if (!seen.add(value)) {
+                throw new IllegalStateException("Duplicate document-rule selector value for " + field + ": " + value);
+            }
+            values.add(value);
+        }
+        if (values.size() > 1 && values.contains("*")) {
+            throw new IllegalStateException("Document-rule selector cannot combine * with specific values: " + field);
+        }
         return List.copyOf(values);
     }
 
     private static List<String> stringList(JsonNode node) {
         if (!node.isArray()) {
-            return List.of();
+            throw new IllegalStateException("Document-rule conditions must be an array.");
         }
 
         List<String> values = new ArrayList<>();
-        node.forEach(value -> {
-            if (value.isString() && !value.asString().isBlank()) {
-                values.add(value.asString().trim());
+        for (JsonNode value : node) {
+            if (!value.isString() || value.asString().isBlank()) {
+                throw new IllegalStateException("Document-rule conditions must contain non-empty strings.");
             }
-        });
+            values.add(value.asString().trim());
+        }
         return List.copyOf(values);
     }
 
     private static String requiredText(JsonNode node, String field) {
-        String value = node.path(field).asString().trim();
+        JsonNode valueNode = node.get(field);
+        if (valueNode == null || !valueNode.isString()) {
+            throw new IllegalStateException("Missing document-rule field: " + field);
+        }
+        String value = valueNode.asString().trim();
         if (value.isBlank()) {
             throw new IllegalStateException("Missing document-rule field: " + field);
         }
@@ -184,17 +273,42 @@ final class DocumentRuleSnapshotLoader {
         return value;
     }
 
-    private static Integer nullableInt(JsonNode node) {
-        return node.isIntegralNumber() ? node.asInt() : null;
+    private static int requiredNonNegativeInt(JsonNode node, String field) {
+        JsonNode value = node.get(field);
+        if (value == null || !value.isIntegralNumber() || !value.canConvertToInt() || value.asInt() < 0) {
+            throw new IllegalStateException("Document-rule field must be a non-negative integer: " + field);
+        }
+        return value.asInt();
     }
 
-    private static LocalDate nullableDate(JsonNode node) {
-        return node.isString() && !node.asString().isBlank()
-                ? LocalDate.parse(node.asString())
-                : null;
+    private static Integer optionalNonNegativeInt(JsonNode node, String field) {
+        JsonNode value = node.get(field);
+        if (value == null) {
+            return null;
+        }
+        if (!value.isIntegralNumber() || !value.canConvertToInt() || value.asInt() < 0) {
+            throw new IllegalStateException("Document-rule field must be a non-negative integer: " + field);
+        }
+        return value.asInt();
     }
 
-    private static String normalize(String value) {
-        return value.trim().toUpperCase(Locale.ROOT);
+    private static LocalDate requiredDate(JsonNode node, String field) {
+        JsonNode value = node.get(field);
+        if (value == null || !value.isString() || value.asString().isBlank()) {
+            throw new IllegalStateException("Missing document-rule date: " + field);
+        }
+        return LocalDate.parse(value.asString());
     }
+
+    private static LocalDate optionalDate(JsonNode node, String field) {
+        JsonNode value = node.get(field);
+        if (value == null) {
+            return null;
+        }
+        if (!value.isString() || value.asString().isBlank()) {
+            throw new IllegalStateException("Invalid document-rule date: " + field);
+        }
+        return LocalDate.parse(value.asString());
+    }
+
 }
