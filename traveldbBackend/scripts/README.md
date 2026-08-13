@@ -1,28 +1,28 @@
 # Backend data scripts
 
-Run these commands from `traveldbBackend`. They use Node's standard library and do not require a separate npm install.
+Run these commands from `traveldbBackend`. They use Node's standard library, so there is no separate package installation.
 
-| Command | Network | Writes files | Purpose |
+| Command | Network access | Writes files | Purpose |
 | --- | --- | --- | --- |
-| `node scripts/audit-document-rules.mjs --as-of YYYY-MM-DD` | No | No | Validate schema, sources, review windows, and freshness. |
+| `node scripts/audit-document-rules.mjs --as-of YYYY-MM-DD` | No | No | Check the snapshot schema, sources, review windows, and freshness. |
 | `node --test scripts/document-rules-audit.test.mjs` | No | No | Run regression tests for the audit library. |
 | `node scripts/import-document-rules.mjs --input <file-or-https-url>` | Only for an HTTPS input | Yes | Validate, sort, and write a document-rule snapshot. |
-| `node scripts/sync-ourairports-data.mjs` | Yes | Yes | Download OurAirports CSV files and regenerate airport/country seeds. |
+| `node scripts/sync-ourairports-data.mjs` | Yes | Yes | Download OurAirports data and rebuild the airport and country seeds. |
 
-Use `--help` with the audit or import command for its full options.
+The audit and import commands support `--help`.
 
 ## Document rules
 
-Do not import unreviewed rules directly into `src/main/resources/data/document-rules.json`. Write to `target/document-rules.candidate.json`, run the audit with the review date, inspect the diff, and only then replace the bundled snapshot. The complete checklist is in [`../DOCUMENT_REQUIREMENTS.md`](../DOCUMENT_REQUIREMENTS.md#refreshing-the-snapshot).
+Import changes to `target/document-rules.candidate.json` first. Audit the candidate, inspect its diff, and only then replace `src/main/resources/data/document-rules.json`. See the [document rule guide](../docs/document-rules.md#refreshing-the-snapshot) for the full review procedure.
 
-The importer creates the output directory when needed. Rules are written in priority order, with rule ID as the stable tie-breaker.
+The importer creates its output directory when necessary and writes rules in priority order, using the rule ID as a stable tie-breaker.
 
 ## Airport and country data
 
 `sync-ourairports-data.mjs` rewrites:
 
-- `src/main/resources/data/countries.sql`;
-- `src/main/resources/data/airports.sql`; and
-- `src/main/resources/data/ourairports-metadata.json`.
+- `src/main/resources/data/countries.sql`
+- `src/main/resources/data/airports.sql`
+- `src/main/resources/data/ourairports-metadata.json`
 
-Duplicate IATA codes are resolved deterministically by scheduled-service status, airport type, ICAO-code availability, and source ID. Review generated counts and diffs, then run `.\mvnw.cmd test`.
+Duplicate IATA codes are resolved by scheduled-service status, airport type, ICAO-code availability, and source ID. Review the generated counts and diff, then run `.\mvnw.cmd test`.

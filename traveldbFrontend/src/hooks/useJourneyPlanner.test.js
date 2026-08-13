@@ -4,7 +4,7 @@ import { checkJourney } from "../api/travelApi";
 import useJourneyPlanner from "./useJourneyPlanner";
 
 vi.mock("../api/travelApi", async importOriginal => ({
-  ...await importOriginal(),
+  ...(await importOriginal()),
   checkJourney: vi.fn(),
 }));
 
@@ -39,20 +39,21 @@ describe("useJourneyPlanner", () => {
       await result.current.submitJourney(submitEvent());
     });
 
-    expect(checkJourney).toHaveBeenCalledWith({
-      nationalityCountryCode: "NO",
-      route: ["OSL", "LHR"],
-      baggage: expect.any(Object),
-      documents: { travelPurpose: "TOURISM" },
-    }, { signal: expect.any(AbortSignal) });
+    expect(checkJourney).toHaveBeenCalledWith(
+      {
+        nationalityCountryCode: "NO",
+        route: ["OSL", "LHR"],
+        baggage: expect.any(Object),
+        documents: { travelPurpose: "TOURISM" },
+      },
+      { signal: expect.any(AbortSignal) },
+    );
   });
 
   it("does not replace a newer result with a stale response", async () => {
     const staleRequest = deferred();
     const currentResult = { pickupRequired: false, request: "current" };
-    checkJourney
-      .mockReturnValueOnce(staleRequest.promise)
-      .mockResolvedValueOnce(currentResult);
+    checkJourney.mockReturnValueOnce(staleRequest.promise).mockResolvedValueOnce(currentResult);
 
     const { result } = renderHook(() => useJourneyPlanner());
     act(() => {

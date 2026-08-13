@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import process from "node:process";
+import { positiveInteger, readOptionValue } from "./cli-options.mjs";
 import { auditDocumentRulesSnapshot } from "./document-rules-audit-lib.mjs";
 
 const DEFAULT_INPUT = "src/main/resources/data/document-rules.json";
@@ -85,22 +86,6 @@ function parseOptions(args) {
   }
 
   return options;
-}
-
-function readOptionValue(args, index, option) {
-  const value = args[index];
-  if (!value || value.startsWith("--")) {
-    throw new Error(`Missing value for ${option}`);
-  }
-  return value;
-}
-
-function positiveInteger(value, option) {
-  const parsed = Number(value);
-  if (!Number.isInteger(parsed) || parsed <= 0) {
-    throw new Error(`${option} must be a positive integer`);
-  }
-  return parsed;
 }
 
 function printUsage() {

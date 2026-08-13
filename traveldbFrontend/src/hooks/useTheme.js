@@ -25,7 +25,7 @@ export default function useTheme() {
   }, [theme]);
 
   function toggleTheme() {
-    setTheme(current => current === "light" ? "dark" : "light");
+    setTheme(current => (current === "light" ? "dark" : "light"));
   }
 
   return { theme, toggleTheme };

@@ -1,0 +1,164 @@
+.planner-block {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  align-items: start;
+  gap: 32px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+.planner-block-heading {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+.planner-step {
+  padding-top: 2px;
+  color: var(--primary);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+}
+.planner-block-heading h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+.planner-block-heading p {
+  margin: 3px 0 0;
+  color: var(--text-faint);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.planner-block-content {
+  min-width: 0;
+}
+.planner-block-content > .nationality-field {
+  max-width: 540px;
+}
+
+.baggage-setup {
+  margin: 0;
+  background: transparent;
+}
+.baggage-question-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.1fr 1.2fr;
+  gap: 16px;
+}
+.baggage-question {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.baggage-question legend {
+  margin-bottom: 8px;
+  padding: 0;
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.baggage-question:disabled {
+  opacity: 0.46;
+}
+.segmented-control {
+  min-height: 44px;
+  display: flex;
+  padding: 3px;
+  background: var(--surface-soft);
+  border-radius: 9px;
+}
+.segmented-control button {
+  min-width: 0;
+  min-height: 38px;
+  flex: 1;
+  padding: 7px 8px;
+  color: var(--text-soft);
+  background: transparent;
+  border: 0;
+  border-radius: 7px;
+  font-size: 11.5px;
+  font-weight: 550;
+  line-height: 1.2;
+}
+.segmented-control button:hover:not(:disabled) {
+  color: var(--text);
+}
+.segmented-control button.is-selected {
+  color: var(--text);
+  background: var(--surface);
+  box-shadow:
+    0 1px 3px rgba(28, 28, 26, 0.12),
+    inset 0 0 0 1px var(--border);
+  font-weight: 600;
+}
+.segmented-control button:disabled {
+  cursor: not-allowed;
+}
+
+.form-actions {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+  padding: 15px 0 16px;
+}
+.primary-button {
+  min-width: 138px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 20px;
+  color: var(--button-text);
+  background: var(--button-bg);
+  border: 1px solid var(--button-bg);
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 650;
+  box-shadow: 0 1px 2px rgba(20, 20, 18, 0.1);
+  transition:
+    transform 130ms ease,
+    opacity 130ms ease,
+    box-shadow 130ms ease;
+}
+.primary-button:hover:not(:disabled) {
+  box-shadow: 0 4px 12px rgba(20, 20, 18, 0.15);
+  transform: translateY(-1px);
+}
+.primary-button:active:not(:disabled) {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(0) scale(0.985);
+}
+.primary-button:disabled {
+  opacity: 0.58;
+}
+.spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid color-mix(in srgb, currentColor 32%, transparent);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.error-message {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+  color: var(--danger);
+  font-size: 12.5px;
+  font-weight: 550;
+  line-height: 1.45;
+}

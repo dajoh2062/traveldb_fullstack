@@ -43,10 +43,11 @@ export function searchCountryIndex(countryIndex, query, limit = 8) {
       score: countrySearchScore(indexedCountry, normalizedQuery),
     }))
     .filter(({ score }) => score < NO_COUNTRY_MATCH)
-    .sort((left, right) => (
-      left.score - right.score
-      || left.indexedCountry.sortName.localeCompare(right.indexedCountry.sortName)
-    ))
+    .sort(
+      (left, right) =>
+        left.score - right.score ||
+        left.indexedCountry.sortName.localeCompare(right.indexedCountry.sortName),
+    )
     .slice(0, limit)
     .map(({ indexedCountry }) => indexedCountry.country);
 }

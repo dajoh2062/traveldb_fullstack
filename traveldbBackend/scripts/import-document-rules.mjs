@@ -1,6 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import process from "node:process";
+import { readOptionValue, utcDate } from "./cli-options.mjs";
+import { auditDocumentRulesSnapshot } from "./document-rules-audit-lib.mjs";
 
 const DEFAULT_OUTPUT = "src/main/resources/data/document-rules.json";
 
@@ -17,7 +19,12 @@ async function main(args) {
 
   const rawSnapshot = await readInput(options.input);
   const snapshot = JSON.parse(rawSnapshot);
-  validateSnapshot(snapshot);
+  const audit = auditDocumentRulesSnapshot(snapshot, {
+    asOf: options.asOf ?? utcDate(),
+  });
+  if (audit.errors.length > 0) {
+    throw new Error(`Snapshot failed validation:\n- ${audit.errors.join("\n- ")}`);
+  }
 
   const sortedSnapshot = {
     ...snapshot,
@@ -36,6 +43,7 @@ function parseOptions(args) {
   const options = {
     input: null,
     output: null,
+    asOf: null,
     help: false,
   };
 
@@ -52,20 +60,15 @@ function parseOptions(args) {
       case "--output":
         options.output = readOptionValue(args, ++index, option);
         break;
+      case "--as-of":
+        options.asOf = readOptionValue(args, ++index, option);
+        break;
       default:
         throw new Error(`Unknown option: ${option}`);
     }
   }
 
   return options;
-}
-
-function readOptionValue(args, index, option) {
-  const value = args[index];
-  if (!value || value.startsWith("--")) {
-    throw new Error(`Missing value for ${option}`);
-  }
-  return value;
 }
 
 async function readInput(input) {
@@ -85,65 +88,10 @@ function compareRules(left, right) {
     || left.id.localeCompare(right.id);
 }
 
-function validateSnapshot(snapshot) {
-  if (snapshot?.schemaVersion !== 2) {
-    throw new Error("schemaVersion must be 2");
-  }
-  if (!snapshot.datasetVersion || !Date.parse(snapshot.generatedAt)) {
-    throw new Error("datasetVersion and a valid generatedAt timestamp are required");
-  }
-  if (!Array.isArray(snapshot.rules) || snapshot.rules.length === 0) {
-    throw new Error("The snapshot must contain at least one rule");
-  }
-
-  const ruleIds = new Set();
-  for (const rule of snapshot.rules) {
-    validateRule(rule, ruleIds);
-  }
-}
-
-function validateRule(rule, ruleIds) {
-  if (!rule || typeof rule !== "object" || Array.isArray(rule)) {
-    throw new Error("Snapshot contains a rule that is not an object");
-  }
-
-  for (const field of ["id", "decisionKey", "scope"]) {
-    if (!rule[field]) {
-      throw new Error(`Rule is missing ${field}`);
-    }
-  }
-
-  if (ruleIds.has(rule.id)) {
-    throw new Error(`Duplicate rule id: ${rule.id}`);
-  }
-  ruleIds.add(rule.id);
-
-  if (!rule.output?.code || !rule.output?.category || !rule.output?.status) {
-    throw new Error(`Rule ${rule.id} has an incomplete output`);
-  }
-  if (!Array.isArray(rule.output.sources) || rule.output.sources.length === 0) {
-    throw new Error(`Rule ${rule.id} must cite at least one source`);
-  }
-  if (rule.output.keyFacts !== undefined && (!Array.isArray(rule.output.keyFacts)
-      || rule.output.keyFacts.length > 6
-      || rule.output.keyFacts.some(fact => !fact?.label?.trim() || !fact?.value?.trim()))) {
-    throw new Error(`Rule ${rule.id} has invalid keyFacts`);
-  }
-
-  for (const source of rule.output.sources) {
-    if (source.sourceType !== "GOVERNMENT") {
-      throw new Error(`Rule ${rule.id} source must be classified as GOVERNMENT`);
-    }
-    if (!source.url?.startsWith("https://")) {
-      throw new Error(`Rule ${rule.id} source must use HTTPS`);
-    }
-  }
-}
-
 function printUsage() {
   console.log(
     "Usage: node scripts/import-document-rules.mjs --input <file-or-https-url> "
-      + "[--output <file>]",
+      + "[--output <file>] [--as-of YYYY-MM-DD]",
   );
 }
 

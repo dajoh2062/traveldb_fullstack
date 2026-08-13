@@ -1,9 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import {
-  checkJourney,
-  fetchCountries,
-  searchAirports,
-} from "./travelApi";
+import { checkJourney, fetchCountries, searchAirports } from "./travelApi";
 
 function jsonResponse(payload, { ok = true, status = 200 } = {}) {
   return {
@@ -36,10 +32,9 @@ describe("travel API", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     await expect(searchAirports("Oslo", { limit: 25, offset: 50 })).resolves.toEqual(result);
-    expect(fetchMock).toHaveBeenCalledWith(
-      "/api/airports/search?q=Oslo&offset=50&limit=25",
-      { signal: undefined },
-    );
+    expect(fetchMock).toHaveBeenCalledWith("/api/airports/search?q=Oslo&offset=50&limit=25", {
+      signal: undefined,
+    });
   });
 
   it("rejects a malformed airport response", async () => {
@@ -52,10 +47,17 @@ describe("travel API", () => {
 
   it("keeps server validation details on journey errors", async () => {
     const fieldErrors = [{ field: "route[1]", message: "Unknown airport" }];
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse(
-      { message: "Invalid journey", errors: fieldErrors },
-      { ok: false, status: 400 },
-    )));
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue(
+          jsonResponse(
+            { message: "Invalid journey", errors: fieldErrors },
+            { ok: false, status: 400 },
+          ),
+        ),
+    );
 
     await expect(checkJourney({ route: ["OSL", "XXX"] })).rejects.toMatchObject({
       name: "JourneyApiError",
@@ -66,11 +68,14 @@ describe("travel API", () => {
   });
 
   it("uses the HTTP status when an error response is not readable", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
-      json: vi.fn().mockRejectedValue(new Error("Invalid JSON")),
-      ok: false,
-      status: 502,
-    }));
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        json: vi.fn().mockRejectedValue(new Error("Invalid JSON")),
+        ok: false,
+        status: 502,
+      }),
+    );
 
     await expect(checkJourney({ route: ["OSL", "LHR"] })).rejects.toMatchObject({
       name: "JourneyApiError",

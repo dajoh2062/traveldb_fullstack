@@ -1,10 +1,9 @@
 import { useEffect, useRef } from "react";
-import "./App.css";
-import AppFooter from "./components/AppFooter";
-import AppHeader from "./components/AppHeader";
-import JourneyPlanner from "./components/JourneyPlanner";
-import JourneyResults from "./components/JourneyResults";
-import PageIntro from "./components/PageIntro";
+import AppFooter from "./components/layout/AppFooter";
+import AppHeader from "./components/layout/AppHeader";
+import PageIntro from "./components/layout/PageIntro";
+import JourneyPlanner from "./components/planner/JourneyPlanner";
+import JourneyResults from "./components/results/JourneyResults";
 import useCountries from "./hooks/useCountries";
 import useJourneyPlanner from "./hooks/useJourneyPlanner";
 import useTheme from "./hooks/useTheme";
@@ -58,10 +57,7 @@ export default function App() {
         />
         {journey.result && (
           <div className="results-anchor" ref={resultsRef} tabIndex="-1">
-            <JourneyResults
-              result={journey.result}
-              route={journey.route}
-            />
+            <JourneyResults result={journey.result} route={journey.route} />
           </div>
         )}
       </main>

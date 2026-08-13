@@ -1,0 +1,180 @@
+.route-block-content > .airport-field {
+  max-width: 100%;
+}
+.route-builder {
+  margin-top: 18px;
+}
+.route-header {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 0 10px;
+  color: var(--text-soft);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+}
+.route-header small {
+  color: var(--text-faint);
+  font-size: 11.5px;
+  font-weight: 500;
+}
+.empty-route {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0;
+  padding: 20px 2px 2px;
+  color: var(--text-soft);
+  font-size: 13px;
+}
+.empty-route::before {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  content: "";
+  border: 1.5px solid var(--primary);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 9%, transparent);
+}
+.route-list {
+  display: grid;
+}
+.route-stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 14px;
+}
+.route-rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 25px;
+}
+.route-stop:not(:last-child) .route-rail::after {
+  position: absolute;
+  top: 43px;
+  bottom: -25px;
+  left: 50%;
+  width: 1px;
+  content: "";
+  background: color-mix(in srgb, var(--primary) 42%, var(--border));
+  transform: translateX(-50%);
+}
+.route-direction-arrow {
+  display: none;
+}
+.stop-marker {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  color: var(--text-soft);
+  background: var(--surface);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 50%;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 8px;
+  font-weight: 700;
+}
+.stop-marker.origin {
+  color: #fff;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.stop-marker.destination {
+  color: var(--primary);
+  background: var(--surface);
+  border-color: var(--primary);
+}
+.route-stop-card {
+  min-width: 0;
+  min-height: 70px;
+  display: grid;
+  grid-template-columns: 92px 64px minmax(0, 1fr) 120px;
+  align-items: center;
+  gap: 15px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+.route-stop:last-child .route-stop-card {
+  border-bottom: 0;
+}
+.route-stop-role span {
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 500;
+}
+.route-code {
+  color: var(--primary);
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+}
+.route-stop-details {
+  min-width: 0;
+}
+.route-stop-details strong,
+.route-stop-details span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.route-stop-details strong {
+  color: var(--text);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.route-stop-details span {
+  margin-top: 3px;
+  color: var(--text-soft);
+  font-size: 12px;
+}
+.route-stop-details .airport-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.route-stop-details .airport-location .country-flag {
+  width: 18px;
+  height: 12px;
+}
+.route-stop-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1px;
+}
+.move-airport,
+.remove-airport {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: var(--text-faint);
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+}
+.move-airport:hover:not(:disabled) {
+  color: var(--primary);
+  background: var(--surface-soft);
+}
+.move-airport:disabled {
+  cursor: not-allowed;
+  opacity: 0.22;
+}
+.remove-airport:hover {
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+.route-builder.has-error .route-header {
+  border-color: var(--danger);
+}

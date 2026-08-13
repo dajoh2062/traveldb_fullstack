@@ -102,11 +102,7 @@ export default function useJourneyPlanner() {
     setError("");
     setResult(null);
 
-    const validationErrors = validateJourneyForm({
-      nationality,
-      route,
-      includeDocumentDetails: false,
-    });
+    const validationErrors = validateJourneyForm({ nationality, route });
     if (Object.keys(validationErrors).length > 0) {
       setFieldErrors(validationErrors);
       setError("Please review the highlighted details before checking this journey.");
@@ -114,12 +110,7 @@ export default function useJourneyPlanner() {
       return;
     }
 
-    const request = buildJourneyRequest({
-      nationality,
-      route,
-      baggage,
-      includeDocumentDetails: false,
-    });
+    const request = buildJourneyRequest({ nationality, route, baggage });
     activeRequestRef.current?.abort();
     const controller = new AbortController();
     activeRequestRef.current = controller;

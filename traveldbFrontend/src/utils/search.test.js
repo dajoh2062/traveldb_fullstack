@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  buildCountrySearchIndex,
-  normalizeSearch,
-  searchCountryIndex,
-} from "./search";
+import { buildCountrySearchIndex, normalizeSearch, searchCountryIndex } from "./search";
 
 const countries = [
   { countryId: "GB", countryNameEn: "United Kingdom", keywords: "Britain England" },

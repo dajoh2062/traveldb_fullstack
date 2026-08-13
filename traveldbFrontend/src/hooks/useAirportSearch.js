@@ -46,23 +46,28 @@ export default function useAirportSearch() {
     if (airportSearchCache.has(cacheKey)) return undefined;
 
     const controller = new AbortController();
-    const timer = window.setTimeout(() => {
-      searchAirports(trimmedQuery, { limit: PAGE_SIZE, signal: controller.signal })
-        .then(searchResult => {
-          cacheSearch(cacheKey, searchResult);
-          if (controller.signal.aborted || normalizeSearch(queryRef.current) !== cacheKey) return;
-          setSuggestions(searchResult.airports);
-          setTotal(searchResult.total);
-        })
-        .catch(() => {
-          if (!controller.signal.aborted) {
-            setSuggestions([]);
-            setTotal(0);
-            setSearchError("Airport search is temporarily unavailable.");
-          }
-        })
-        .finally(() => { if (!controller.signal.aborted) setIsSearching(false); });
-    }, /^[a-z]{3}$/i.test(trimmedQuery) ? 0 : SEARCH_DEBOUNCE_MS);
+    const timer = window.setTimeout(
+      () => {
+        searchAirports(trimmedQuery, { limit: PAGE_SIZE, signal: controller.signal })
+          .then(searchResult => {
+            cacheSearch(cacheKey, searchResult);
+            if (controller.signal.aborted || normalizeSearch(queryRef.current) !== cacheKey) return;
+            setSuggestions(searchResult.airports);
+            setTotal(searchResult.total);
+          })
+          .catch(() => {
+            if (!controller.signal.aborted) {
+              setSuggestions([]);
+              setTotal(0);
+              setSearchError("Airport search is temporarily unavailable.");
+            }
+          })
+          .finally(() => {
+            if (!controller.signal.aborted) setIsSearching(false);
+          });
+      },
+      /^[a-z]{3}$/i.test(trimmedQuery) ? 0 : SEARCH_DEBOUNCE_MS,
+    );
 
     return () => {
       window.clearTimeout(timer);
@@ -106,10 +111,11 @@ export default function useAirportSearch() {
         signal: request.controller.signal,
       });
       if (
-        loadMoreRequestRef.current !== request
-        || request.controller.signal.aborted
-        || normalizeSearch(queryRef.current) !== request.cacheKey
-      ) return;
+        loadMoreRequestRef.current !== request ||
+        request.controller.signal.aborted ||
+        normalizeSearch(queryRef.current) !== request.cacheKey
+      )
+        return;
 
       setSuggestions(currentSuggestions => {
         const knownCodes = new Set(currentSuggestions.map(airport => airport.iataCode));
@@ -123,10 +129,11 @@ export default function useAirportSearch() {
       setTotal(nextPage.total);
     } catch {
       if (
-        loadMoreRequestRef.current !== request
-        || request.controller.signal.aborted
-        || normalizeSearch(queryRef.current) !== request.cacheKey
-      ) return;
+        loadMoreRequestRef.current !== request ||
+        request.controller.signal.aborted ||
+        normalizeSearch(queryRef.current) !== request.cacheKey
+      )
+        return;
 
       // Keep the already loaded results available if a later page fails.
       setSearchError("More airports could not be loaded. Try again.");

@@ -1,34 +1,47 @@
 # TravelDB frontend
 
-React and Vite client for building an itinerary and checking baggage and document requirements.
+React client for checking ordinary-passport and checked-baggage requirements for an itinerary.
 
-## Local development
+## Development
+
+Start the backend first, then run:
 
 ```bash
 npm ci
 npm run dev
 ```
 
-The dev server runs at `http://localhost:5173` and proxies `/api` requests to the backend at `http://localhost:8080`.
+Vite serves the app at `http://localhost:5173` and proxies `/api` to
+`http://localhost:8080`.
 
-Run the complete frontend verification before opening a pull request:
+Before committing frontend changes, run:
 
 ```bash
 npm run check
 ```
 
-You can also run the test suite in watch mode with `npm run test:watch`.
+Use `npm run test:watch` while developing and `npm run format` to apply the project
+formatting rules.
 
-## Source layout
+## Project structure
 
-- `src/api` contains HTTP requests and response error handling.
-- `src/components` contains the rendered interface.
-- `src/hooks` owns reusable state and side effects, including journey form orchestration and remote search state.
-- `src/utils` contains pure validation, request-building, and display helpers.
-- Tests live beside the module or component they cover. Shared test setup is in `src/test`.
+```text
+src/
+  api/          HTTP client functions
+  components/   UI grouped by layout, planner, results, and shared controls
+  hooks/        React state and side effects
+  styles/       Global, layout, planner, result, and responsive styles
+  test/         Shared test setup
+  utils/        Pure form, search, and display helpers
+```
 
-Keep network details out of components and put form rules in `utils/journeyForm.js` so they can be tested without rendering the UI.
+Tests live next to the files they cover.
 
-## Passport checks
+## Search scope
 
-The web form checks tourism journeys for travellers using a regular (ordinary) passport. It does not collect passport details or support diplomatic, service, official, military, alien, refugee, or other specialist travel documents. The request builder fixes the travel purpose to `TOURISM` for this simplified search.
+The form supports tourism journeys made with a regular (ordinary) passport. It does
+not collect passport details or support diplomatic, service, official, military, or
+other specialist travel documents.
+
+The interface from before the August 2026 redesign is retained in Git at commit
+`e769e07` and on the local backup branch `codex/ui-backup-before-refresh-2026-08-13`.

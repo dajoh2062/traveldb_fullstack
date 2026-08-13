@@ -17,7 +17,9 @@ export default function useCountries() {
           setError("Country options could not be loaded.");
         }
       })
-      .finally(() => { if (!controller.signal.aborted) setIsLoading(false); });
+      .finally(() => {
+        if (!controller.signal.aborted) setIsLoading(false);
+      });
     return () => controller.abort();
   }, [requestKey]);
 

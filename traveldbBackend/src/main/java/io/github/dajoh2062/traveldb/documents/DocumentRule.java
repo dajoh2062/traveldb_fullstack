@@ -1,0 +1,39 @@
+package io.github.dajoh2062.traveldb.documents;
+
+import io.github.dajoh2062.traveldb.documents.DocumentRequirement.Category;
+import io.github.dajoh2062.traveldb.documents.DocumentRequirement.DocumentSource;
+import io.github.dajoh2062.traveldb.documents.DocumentRequirement.KeyFact;
+import io.github.dajoh2062.traveldb.documents.DocumentRequirement.Scope;
+import io.github.dajoh2062.traveldb.documents.DocumentRequirement.Status;
+
+import java.time.LocalDate;
+import java.util.List;
+
+record DocumentRule(
+        String id,
+        String decisionKey,
+        Scope scope,
+        List<String> destinationCountries,
+        List<String> nationalities,
+        List<String> excludedNationalities,
+        List<String> residenceCountries,
+        List<String> passportIssuingCountries,
+        List<String> travelPurposes,
+        Integer minimumAge,
+        Integer maximumAge,
+        List<String> requiredHeldVisaCountries,
+        List<String> requiredResidencePermitCountries,
+        int priority,
+        LocalDate effectiveFrom,
+        LocalDate effectiveTo,
+        LocalDate lastVerified,
+        LocalDate reviewAfter,
+        String code,
+        Category category,
+        Status status,
+        String title,
+        String summary,
+        List<String> conditions,
+        List<DocumentSource> sources,
+        List<KeyFact> keyFacts
+) {}
