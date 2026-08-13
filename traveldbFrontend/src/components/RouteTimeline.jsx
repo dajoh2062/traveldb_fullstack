@@ -70,7 +70,8 @@ export default function RouteTimeline({ error, route, onMove, onRemove }) {
   return (
     <div className={className}>
       <div className="route-header">
-        <span>Route</span>
+        <span>Itinerary</span>
+        <small>{route.length} {route.length === 1 ? "stop" : "stops"}</small>
       </div>
 
       {route.length === 0 ? (

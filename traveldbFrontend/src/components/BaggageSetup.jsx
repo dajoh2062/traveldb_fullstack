@@ -1,5 +1,3 @@
-import Icon from "./Icon";
-
 const CHECKED_BAGGAGE_OPTIONS = [
   { value: true, label: "Yes" },
   { value: false, label: "Carry-on only" },
@@ -40,12 +38,15 @@ function SegmentedControl({ label, value, options, onChange, disabled = false })
 
 export default function BaggageSetup({ baggage, onChange }) {
   return (
-    <section className="baggage-setup" aria-labelledby="baggage-setup-title">
-      <div className="baggage-setup-heading">
-        <span className="baggage-setup-icon"><Icon name="suitcase" size={19} /></span>
-        <h3 id="baggage-setup-title">Baggage</h3>
+    <section className="planner-block baggage-setup" aria-labelledby="baggage-setup-title">
+      <div className="planner-block-heading baggage-setup-heading">
+        <span className="planner-step">03</span>
+        <div>
+          <h3 id="baggage-setup-title">Baggage</h3>
+          <p>Checked-bag details</p>
+        </div>
       </div>
-      <div className="baggage-question-grid">
+      <div className="planner-block-content baggage-question-grid">
         <SegmentedControl
           label="Checked baggage?"
           onChange={value => onChange("checkedBaggage", value)}
