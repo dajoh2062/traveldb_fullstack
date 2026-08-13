@@ -144,10 +144,10 @@ describe("JourneyResults", () => {
 
     expect(within(documents).getByText("Local rule set 2026-07-31.1")).toBeInTheDocument();
     expect(screen.getByText(
-      "This search does not use departure date. Confirm those details in the linked official guidance.",
+      "Not included: departure date. Verify this detail in the linked official guidance.",
     )).toBeInTheDocument();
     expect(screen.getByText("6 items to review")).toBeInTheDocument();
-    expect(screen.getByText("Check the linked guidance again before travel.")).toBeInTheDocument();
+    expect(screen.getByText("Recheck official guidance before travel.")).toBeInTheDocument();
   });
 
   it("never presents missing coverage as no documents required", () => {

@@ -30,4 +30,35 @@ describe("NationalitySearch", () => {
 
     expect(onSelect).toHaveBeenCalledWith(countries[1]);
   });
+
+  it("shows country flags in the suggestions and selected nationality", () => {
+    const { rerender } = render(
+      <NationalitySearch
+        countries={countries}
+        error=""
+        isLoading={false}
+        nationality=""
+        query=""
+        onQueryChange={vi.fn()}
+        onSelect={vi.fn()}
+      />,
+    );
+
+    fireEvent.focus(screen.getByRole("combobox", { name: "Traveller nationality" }));
+    expect(document.querySelectorAll(".country-flag")).toHaveLength(3);
+
+    rerender(
+      <NationalitySearch
+        countries={countries}
+        error=""
+        isLoading={false}
+        nationality="NO"
+        query="Norway"
+        onQueryChange={vi.fn()}
+        onSelect={vi.fn()}
+      />,
+    );
+    expect(document.querySelector(".input-shell > .country-flag"))
+      .toHaveAttribute("data-country-code", "no");
+  });
 });

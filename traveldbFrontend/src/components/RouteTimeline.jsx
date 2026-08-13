@@ -1,4 +1,5 @@
 import { airportLocation, routeSummary } from "../utils/journey";
+import CountryFlag from "./CountryFlag";
 import Icon from "./Icon";
 
 function RouteStop({ airport, index, onMove, onRemove, stopCount }) {
@@ -22,7 +23,10 @@ function RouteStop({ airport, index, onMove, onRemove, stopCount }) {
         <strong className="route-code">{airport.iataCode}</strong>
         <div className="route-stop-details">
           <strong>{airport.name}</strong>
-          <span>{airportLocation(airport)}</span>
+          <span className="airport-location">
+            <CountryFlag countryCode={airport.countryCode} />
+            {airportLocation(airport)}
+          </span>
         </div>
         <div className="route-stop-actions">
           <button

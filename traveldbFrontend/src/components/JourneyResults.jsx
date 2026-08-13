@@ -97,7 +97,8 @@ function missingInputMessage(missingInputs = []) {
     style: "long",
     type: "conjunction",
   }).format(inputs);
-  return `This search does not use ${formattedInputs}. Confirm those details in the linked official guidance.`;
+  const detailReference = inputs.length === 1 ? "this detail" : "these details";
+  return `Not included: ${formattedInputs}. Verify ${detailReference} in the linked official guidance.`;
 }
 
 function baggageSources(stop) {
@@ -275,7 +276,7 @@ export default function JourneyResults({ result, route }) {
         </section>
       </div>
 
-      <p className="result-note">Check the linked guidance again before travel.</p>
+      <p className="result-note">Recheck official guidance before travel.</p>
     </section>
   );
 }

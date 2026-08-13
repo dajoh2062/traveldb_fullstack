@@ -10,6 +10,7 @@ vi.mock("../api/travelApi", () => ({
 const oslo = {
   city: "Oslo",
   country: "Norway",
+  countryCode: "NO",
   iataCode: "OSL",
   name: "Oslo Airport",
 };
@@ -17,6 +18,7 @@ const oslo = {
 const london = {
   city: "London",
   country: "United Kingdom",
+  countryCode: "GB",
   iataCode: "LHR",
   name: "London Heathrow Airport",
 };
@@ -24,6 +26,7 @@ const london = {
 const paris = {
   city: "Paris",
   country: "France",
+  countryCode: "FR",
   iataCode: "CDG",
   name: "Charles de Gaulle Airport",
 };
@@ -50,6 +53,20 @@ afterEach(() => {
 });
 
 describe("AirportSearch", () => {
+  it("shows the destination country flag for airport suggestions", async () => {
+    vi.useFakeTimers();
+    searchAirports.mockResolvedValue({ airports: [oslo], total: 1 });
+    render(<AirportSearch onSelect={vi.fn()} />);
+
+    fireEvent.change(screen.getByRole("combobox", { name: "Add an airport" }), {
+      target: { value: "OSL" },
+    });
+    await finishSearchDelay();
+
+    expect(document.querySelector(".country-code-cell .country-flag"))
+      .toHaveAttribute("data-country-code", "no");
+  });
+
   it("keeps arrow-key navigation and selection working", async () => {
     vi.useFakeTimers();
     searchAirports.mockResolvedValue({ airports: [oslo, london], total: 2 });

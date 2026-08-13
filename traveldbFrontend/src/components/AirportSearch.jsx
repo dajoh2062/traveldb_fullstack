@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useAirportSearch from "../hooks/useAirportSearch";
 import { airportLocation } from "../utils/journey";
+import CountryFlag from "./CountryFlag";
 import Icon from "./Icon";
 
 const MAX_SEARCH_LENGTH = 100;
@@ -105,7 +106,10 @@ export default function AirportSearch({ onSelect }) {
                 role="option"
                 type="button"
               >
-                <span className="airport-code">{airport.iataCode}</span>
+                <span className="country-code-cell">
+                  <CountryFlag countryCode={airport.countryCode} />
+                  <span className="airport-code">{airport.iataCode}</span>
+                </span>
                 <span className="airport-meta">
                   <strong>{airport.name}</strong>
                   <small>{airportLocation(airport)}</small>

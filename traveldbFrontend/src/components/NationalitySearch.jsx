@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { buildCountrySearchIndex, searchCountryIndex } from "../utils/search";
+import CountryFlag from "./CountryFlag";
 import Icon from "./Icon";
 
 const MAX_SUGGESTIONS = 8;
@@ -65,7 +66,9 @@ export default function NationalitySearch({
     <div className={`field nationality-field ${error ? "has-error" : ""}`} onBlur={handleBlur}>
       <label className="field-label" htmlFor="nationality-search">Traveller nationality</label>
       <span className="input-shell">
-        <Icon name="globe" size={19} />
+        {nationality
+          ? <CountryFlag countryCode={nationality} />
+          : <Icon name="globe" size={19} />}
         <input
           aria-autocomplete="list"
           aria-controls="nationality-suggestions"
@@ -108,7 +111,10 @@ export default function NationalitySearch({
               role="option"
               type="button"
             >
-              <span className="airport-code">{country.countryId}</span>
+              <span className="country-code-cell">
+                <CountryFlag countryCode={country.countryId} />
+                <span className="airport-code">{country.countryId}</span>
+              </span>
               <span className="airport-meta">
                 <strong>{country.countryNameEn}</strong>
                 <small>Traveller nationality</small>
