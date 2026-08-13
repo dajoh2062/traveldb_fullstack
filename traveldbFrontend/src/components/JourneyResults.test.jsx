@@ -143,7 +143,9 @@ describe("JourneyResults", () => {
     expect(screen.queryByText("Additional entry evidence")).not.toBeInTheDocument();
 
     expect(within(documents).getByText("Local rule set 2026-07-31.1")).toBeInTheDocument();
-    expect(screen.getByText("Add departure date in Advanced search for a more precise result.")).toBeInTheDocument();
+    expect(screen.getByText(
+      "This search does not use departure date. Confirm those details in the linked official guidance.",
+    )).toBeInTheDocument();
     expect(screen.getByText("6 items to review")).toBeInTheDocument();
     expect(screen.getByText("Check the linked guidance again before travel.")).toBeInTheDocument();
   });

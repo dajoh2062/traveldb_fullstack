@@ -37,10 +37,8 @@ export default function App() {
       <main id="top">
         <PageIntro />
         <JourneyPlanner
-          advancedSearch={journey.advancedSearch}
           countries={countries}
           baggage={journey.baggage}
-          documents={journey.documents}
           error={journey.error}
           fieldErrors={journey.fieldErrors}
           countryError={countryError}
@@ -49,9 +47,7 @@ export default function App() {
           nationality={journey.nationality}
           nationalityQuery={journey.nationalityQuery}
           onAddAirport={journey.addAirport}
-          onAdvancedSearchChange={journey.updateAdvancedSearch}
           onBaggageChange={journey.updateBaggage}
-          onDocumentChange={journey.updateDocuments}
           onNationalityQueryChange={journey.updateNationalityQuery}
           onMoveAirport={journey.moveAirport}
           onRemoveAirport={journey.removeAirport}

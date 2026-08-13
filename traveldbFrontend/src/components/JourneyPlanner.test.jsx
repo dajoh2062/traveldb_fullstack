@@ -1,19 +1,14 @@
-import { useState } from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { initialBaggageProfile, initialDocumentProfile } from "../utils/journeyForm";
+import { initialBaggageProfile } from "../utils/journeyForm";
 import JourneyPlanner from "./JourneyPlanner";
 
 function TestPlanner() {
-  const [advancedSearch, setAdvancedSearch] = useState(false);
-
   return (
     <JourneyPlanner
-      advancedSearch={advancedSearch}
       baggage={initialBaggageProfile}
       countries={[]}
       countryError=""
-      documents={{ ...initialDocumentProfile, travelerAge: "42" }}
       error=""
       fieldErrors={{}}
       isCountryLoading={false}
@@ -21,9 +16,7 @@ function TestPlanner() {
       nationality=""
       nationalityQuery=""
       onAddAirport={vi.fn()}
-      onAdvancedSearchChange={setAdvancedSearch}
       onBaggageChange={vi.fn()}
-      onDocumentChange={vi.fn()}
       onMoveAirport={vi.fn()}
       onNationalityQueryChange={vi.fn()}
       onRemoveAirport={vi.fn()}
@@ -35,25 +28,17 @@ function TestPlanner() {
   );
 }
 
-describe("JourneyPlanner advanced search", () => {
-  it("keeps travel document details hidden until the user opts in", () => {
+describe("JourneyPlanner passport search", () => {
+  it("shows the ordinary-passport limitation without an advanced-search option", () => {
     render(<TestPlanner />);
 
-    const toggle = screen.getByRole("checkbox", { name: "Advanced search" });
-    expect(toggle).not.toBeChecked();
-    expect(screen.getByText(/Basic search assumes tourism/i)).toBeInTheDocument();
+    expect(screen.queryByRole("checkbox", { name: "Advanced search" })).not.toBeInTheDocument();
+    expect(screen.getByRole("note")).toHaveTextContent(
+      "This search is for tourism with a regular (ordinary) passport only",
+    );
+    expect(screen.getByRole("note")).toHaveTextContent(
+      "Other passport types and travel documents are not supported",
+    );
     expect(screen.queryByRole("heading", { name: "Traveller and travel documents" })).not.toBeInTheDocument();
-
-    fireEvent.click(toggle);
-
-    expect(toggle).toBeChecked();
-    expect(screen.getByRole("heading", { name: "Traveller and travel documents" })).toBeInTheDocument();
-    expect(screen.getByRole("spinbutton", { name: "Age on departure" })).toHaveValue(42);
-
-    fireEvent.click(toggle);
-    expect(screen.queryByRole("heading", { name: "Traveller and travel documents" })).not.toBeInTheDocument();
-
-    fireEvent.click(toggle);
-    expect(screen.getByRole("spinbutton", { name: "Age on departure" })).toHaveValue(42);
   });
 });

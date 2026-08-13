@@ -3,14 +3,11 @@ import BaggageSetup from "./BaggageSetup";
 import Icon from "./Icon";
 import NationalitySearch from "./NationalitySearch";
 import RouteTimeline from "./RouteTimeline";
-import TravelDocuments from "./TravelDocuments";
 
 export default function JourneyPlanner({
-  advancedSearch,
   baggage,
   countries,
   countryError,
-  documents,
   error,
   fieldErrors = {},
   isCountryLoading,
@@ -18,9 +15,7 @@ export default function JourneyPlanner({
   nationality,
   nationalityQuery,
   onAddAirport,
-  onAdvancedSearchChange,
   onBaggageChange,
-  onDocumentChange,
   onNationalityQueryChange,
   onMoveAirport,
   onRemoveAirport,
@@ -62,30 +57,13 @@ export default function JourneyPlanner({
           onRemove={onRemoveAirport}
           route={route}
         />
-        <label className="advanced-search-toggle">
-          <input
-            aria-controls="advanced-document-fields"
-            aria-describedby="advanced-search-description"
-            aria-label="Advanced search"
-            checked={advancedSearch}
-            onChange={event => onAdvancedSearchChange(event.target.checked)}
-            type="checkbox"
-          />
+        <p className="passport-disclaimer" role="note">
+          <Icon name="document" size={18} />
           <span>
-            <strong>Advanced search</strong>
-            <small id="advanced-search-description">
-              Basic search assumes tourism. Add dates, traveller details and documents for an exact check.
-            </small>
+            This search is for tourism with a regular (ordinary) passport only. Other passport types
+            and travel documents are not supported.
           </span>
-        </label>
-        <div hidden={!advancedSearch} id="advanced-document-fields">
-          <TravelDocuments
-            countries={countries}
-            documents={documents}
-            errors={fieldErrors}
-            onChange={onDocumentChange}
-          />
-        </div>
+        </p>
         <BaggageSetup baggage={baggage} onChange={onBaggageChange} />
         {error && (
           <div className="error-message" id="journey-form-error" role="alert" tabIndex="-1">

@@ -2,13 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { checkJourney, JourneyApiError } from "../api/travelApi";
 import {
   buildJourneyRequest,
-  createInitialDocumentProfile,
   initialBaggageProfile,
   mapApiErrorsToFields,
-  removeDocumentFieldErrors,
   validateJourneyForm,
 } from "../utils/journeyForm";
-import { isPassportLikeDocument } from "../utils/travelDocuments";
 
 const MAX_AIRPORTS_PER_ROUTE = 20;
 const JOURNEY_CHECK_TIMEOUT_MS = 15_000;
@@ -18,9 +15,7 @@ export default function useJourneyPlanner() {
   const [nationality, setNationality] = useState("");
   const [nationalityQuery, setNationalityQuery] = useState("");
   const [route, setRoute] = useState([]);
-  const [documents, setDocuments] = useState(createInitialDocumentProfile);
   const [baggage, setBaggage] = useState(() => ({ ...initialBaggageProfile }));
-  const [advancedSearch, setAdvancedSearch] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
@@ -53,20 +48,8 @@ export default function useJourneyPlanner() {
   function selectNationality(country) {
     setNationality(country.countryId);
     setNationalityQuery(country.countryNameEn);
-    setDocuments(currentDocuments => ({
-      ...currentDocuments,
-      residenceCountryCode: currentDocuments.residenceCountryCode || country.countryId,
-      travelDocuments: currentDocuments.travelDocuments.map(document => (
-        document.primary
-        && isPassportLikeDocument(document.type)
-        && !document.issuingCountryCode
-          ? { ...document, issuingCountryCode: country.countryId }
-          : document
-      )),
-    }));
     clearResultAndError();
     clearFieldError("nationality");
-    clearFieldError("travelDocuments");
   }
 
   function addAirport(airport) {
@@ -109,25 +92,9 @@ export default function useJourneyPlanner() {
     clearResultAndError();
   }
 
-  function updateDocuments(field, value) {
-    setDocuments(currentDocuments => ({ ...currentDocuments, [field]: value }));
-    clearResultAndError();
-    clearFieldError(field);
-    if (field === "departureDate") clearFieldError("travelDocuments");
-  }
-
   function updateBaggage(field, value) {
     setBaggage(currentBaggage => ({ ...currentBaggage, [field]: value }));
     clearResultAndError();
-  }
-
-  function updateAdvancedSearch(enabled) {
-    setAdvancedSearch(enabled);
-    clearResultAndError();
-
-    if (!enabled) {
-      setFieldErrors(removeDocumentFieldErrors);
-    }
   }
 
   async function submitJourney(event) {
@@ -138,8 +105,7 @@ export default function useJourneyPlanner() {
     const validationErrors = validateJourneyForm({
       nationality,
       route,
-      documents,
-      includeDocumentDetails: advancedSearch,
+      includeDocumentDetails: false,
     });
     if (Object.keys(validationErrors).length > 0) {
       setFieldErrors(validationErrors);
@@ -152,8 +118,7 @@ export default function useJourneyPlanner() {
       nationality,
       route,
       baggage,
-      documents,
-      includeDocumentDetails: advancedSearch,
+      includeDocumentDetails: false,
     });
     activeRequestRef.current?.abort();
     const controller = new AbortController();
@@ -169,7 +134,7 @@ export default function useJourneyPlanner() {
     } catch (requestError) {
       if (activeRequestRef.current !== controller) return;
       if (requestError instanceof JourneyApiError && requestError.fieldErrors.length > 0) {
-        setFieldErrors(mapApiErrorsToFields(requestError.fieldErrors, documents));
+        setFieldErrors(mapApiErrorsToFields(requestError.fieldErrors));
       }
       setError(
         requestError.name === "AbortError"
@@ -186,9 +151,7 @@ export default function useJourneyPlanner() {
   }
 
   return {
-    advancedSearch,
     baggage,
-    documents,
     error,
     fieldErrors,
     isLoading,
@@ -201,9 +164,7 @@ export default function useJourneyPlanner() {
     removeAirport,
     selectNationality,
     submitJourney,
-    updateAdvancedSearch,
     updateBaggage,
-    updateDocuments,
     updateNationalityQuery,
   };
 }

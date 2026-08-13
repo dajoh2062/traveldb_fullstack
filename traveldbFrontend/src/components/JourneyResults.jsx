@@ -97,7 +97,7 @@ function missingInputMessage(missingInputs = []) {
     style: "long",
     type: "conjunction",
   }).format(inputs);
-  return `Add ${formattedInputs} in Advanced search for a more precise result.`;
+  return `This search does not use ${formattedInputs}. Confirm those details in the linked official guidance.`;
 }
 
 function baggageSources(stop) {
