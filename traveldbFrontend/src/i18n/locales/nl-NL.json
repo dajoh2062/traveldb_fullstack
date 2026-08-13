@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "TravelDB - Reisvereisten",
+    "description": "Controleer de regels voor bagageoverdracht en de vereiste reisdocumenten voor uw reis."
+  },
+  "language": {
+    "label": "Taal"
+  },
+  "header": {
+    "homeLabel": "Startpagina van TravelDB",
+    "switchToDarkMode": "Overschakelen naar donkere modus",
+    "switchToLightMode": "Overschakelen naar lichte modus"
+  },
+  "common": {
+    "retry": "Opnieuw proberen",
+    "loading": "Laden...",
+    "showMore": "Meer tonen",
+    "source": "Bron",
+    "supportingSource": "Ondersteunende bron"
+  },
+  "intro": {
+    "kicker": "Reisoverzicht",
+    "title": "Controleer uw reis.",
+    "description": "Stel uw route samen om vóór vertrek de vereisten voor een gewoon paspoort en ruimbagage te controleren."
+  },
+  "footer": {
+    "disclaimer": "Deze informatie is uitsluitend bedoeld als algemene leidraad en kan onvolledig of verouderd zijn. Controleer de vereisten vóór vertrek altijd bij de bevoegde autoriteiten. TravelDB is niet verantwoordelijk voor beslissingen, verliezen of gevolgen die voortvloeien uit het gebruik van deze informatie."
+  },
+  "planner": {
+    "eyebrow": "Reisplanner",
+    "title": "Reisgegevens",
+    "passportDisclaimer": "Deze zoekopdracht geldt alleen voor toeristische reizen met een regulier (gewoon) paspoort. Andere soorten paspoorten en reisdocumenten worden niet ondersteund.",
+    "submitting": "Controleren...",
+    "submit": "Reis controleren",
+    "traveller": {
+      "title": "Reiziger",
+      "description": "Nationaliteit in paspoort"
+    },
+    "route": {
+      "title": "Route",
+      "description": "Van vertrek tot aankomst"
+    }
+  },
+  "nationality": {
+    "label": "Nationaliteit van reiziger",
+    "placeholder": "Zoek land of code",
+    "loading": "Landen laden...",
+    "noResults": "Geen landen gevonden",
+    "optionDescription": "Nationaliteit van reiziger"
+  },
+  "airport": {
+    "label": "Luchthaven toevoegen",
+    "placeholder": "Stad, luchthaven, IATA-code of land",
+    "searching": "Luchthavens zoeken...",
+    "noResults": "Geen luchthavens gevonden",
+    "loadingMore": "Laden...",
+    "showMore": "Meer tonen"
+  },
+  "route": {
+    "roles": {
+      "departure": "Vertrek",
+      "destination": "Bestemming",
+      "transit": "Overstap {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "{{code}} eerder in de route plaatsen",
+      "moveLater": "{{code}} later in de route plaatsen",
+      "remove": "{{code}} uit de route verwijderen"
+    },
+    "actionTitles": {
+      "moveEarlier": "Eerder plaatsen",
+      "moveLater": "Later plaatsen",
+      "remove": "Luchthaven verwijderen"
+    },
+    "itinerary": "Reisschema",
+    "stops_one": "{{count}} stop",
+    "stops_other": "{{count}} stops",
+    "empty": "Voeg uw vertrekpunt en bestemming toe.",
+    "currentRoute": "Huidige route: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "Bagage",
+      "description": "Gegevens over ruimbagage",
+      "checkedQuestion": "Ruimbagage?",
+      "bookingQuestion": "Boeking",
+      "tagQuestion": "Bestemming op bagagelabel",
+      "options": {
+        "yes": "Ja",
+        "carryOnOnly": "Alleen handbagage",
+        "oneBooking": "Eén boeking",
+        "separateTickets": "Afzonderlijke tickets",
+        "notSure": "Niet zeker",
+        "finalDestination": "Eindbestemming",
+        "connectionAirport": "Overstapluchthaven",
+        "notSureYet": "Nog niet zeker"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "Selecteer de nationaliteit van de reiziger in de zoekresultaten.",
+    "routeMinimum": "Voeg ten minste een vertrekpunt en een bestemming toe.",
+    "nationalityInvalid": "Selecteer een geldige nationaliteit van de reiziger.",
+    "routeInvalid": "Controleer de luchthavens in deze route.",
+    "duplicateAirport": "{{code}} staat al in deze route.",
+    "routeMaximum": "Een reis kan maximaal {{count}} luchthavens bevatten.",
+    "reviewHighlighted": "Controleer de gemarkeerde gegevens voordat u deze reis controleert."
+  },
+  "errors": {
+    "countryOptions": "De landenlijst kon niet worden geladen.",
+    "airportSearch": "De luchthavenzoekfunctie is tijdelijk niet beschikbaar.",
+    "airportPage": "Meer luchthavens konden niet worden geladen. Probeer het opnieuw.",
+    "journeyTimeout": "De controle duurde te lang. Controleer of de dienst beschikbaar is en probeer het opnieuw.",
+    "journeyFallback": "Deze reis kon niet worden gecontroleerd. Probeer het opnieuw."
+  },
+  "results": {
+    "eyebrow": "Reisresultaten",
+    "title": "Wat u moet doen",
+    "reviewItems_one": "{{count}} punt om te controleren",
+    "reviewItems_other": "{{count}} punten om te controleren",
+    "guidanceLanguageNotice": "Gedetailleerde reisadviezen worden momenteel in het Engels weergegeven.",
+    "finalReminder": "Controleer vóór vertrek opnieuw de officiële richtlijnen.",
+    "baggage": {
+      "title": "Bagage",
+      "actions_one": "{{count}} actie",
+      "actions_other": "{{count}} acties",
+      "noAction": "Geen actie gevonden",
+      "sourceFallback": "Bagageadvies",
+      "empty": "Geen bagageafhaling vastgesteld.",
+      "statuses": {
+        "required": "Ophalen en opnieuw inchecken",
+        "confirm": "Bevestigen bij luchtvaartmaatschappij"
+      }
+    },
+    "documents": {
+      "title": "Reisdocumenten",
+      "notConfirmed": "Niet bevestigd",
+      "reviewCount_one": "{{count}} te controleren",
+      "reviewCount_other": "{{count}} te controleren",
+      "noAction": "Geen actie nodig",
+      "statuses": {
+        "required": "Vóór vertrek vereist",
+        "conditional": "Vereist tenzij vrijgesteld",
+        "verify": "Kon niet worden bevestigd",
+        "notRequired": "Niet vereist"
+      },
+      "importantConditions": "Belangrijke voorwaarden",
+      "additionalConditions_one": "{{count}} aanvullende voorwaarde",
+      "additionalConditions_other": "{{count}} aanvullende voorwaarden",
+      "verifiedDate": "Regel gecontroleerd op {{date}}",
+      "empty": "De vereisten konden niet worden bevestigd. Controleer de officiële immigratierichtlijnen.",
+      "dataset": "Lokale regelset {{version}}",
+      "locations": {
+        "wholeJourney": "Hele reis",
+        "transit": "Overstap op {{location}}",
+        "entry": "Binnenkomst via {{location}}"
+      },
+      "missingInputs_one": "Niet opgenomen: {{details}}. Controleer dit gegeven in de gekoppelde officiële richtlijnen.",
+      "missingInputs_other": "Niet opgenomen: {{details}}. Controleer deze gegevens in de gekoppelde officiële richtlijnen.",
+      "missingInputLabels": {
+        "countryOfResidence": "woonland",
+        "passportIssuingCountry": "land van afgifte van het paspoort",
+        "passportExpiryDate": "vervaldatum van het paspoort",
+        "primaryDocumentExpiryDate": "vervaldatum van het primaire reisdocument",
+        "departureDate": "vertrekdatum",
+        "travelPurpose": "reisdoel"
+      }
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "TravelDB – Ferðakröfur",
+    "description": "Athugaðu reglur um flutning farangurs og nauðsynleg ferðaskilríki fyrir ferðina."
+  },
+  "language": {
+    "label": "Tungumál"
+  },
+  "header": {
+    "homeLabel": "Heimasíða TravelDB",
+    "switchToDarkMode": "Skipta yfir í dökka stillingu",
+    "switchToLightMode": "Skipta yfir í ljósa stillingu"
+  },
+  "common": {
+    "retry": "Reyna aftur",
+    "loading": "Hleður...",
+    "showMore": "Sýna meira",
+    "source": "Heimild",
+    "supportingSource": "Stuðningsheimild"
+  },
+  "intro": {
+    "kicker": "Ferðayfirlit",
+    "title": "Athugaðu ferðina.",
+    "description": "Settu saman ferðaleiðina til að fara yfir kröfur um venjulegt vegabréf og innritaðan farangur áður en þú flýgur."
+  },
+  "footer": {
+    "disclaimer": "Upplýsingarnar eru eingöngu almenn leiðsögn og geta verið ófullkomnar eða úreltar. Staðfestu ávallt kröfur hjá opinberum yfirvöldum áður en þú ferðast. TravelDB ber enga ábyrgð á ákvörðunum, tjóni eða afleiðingum sem kunna að hljótast af notkun þessara upplýsinga."
+  },
+  "planner": {
+    "eyebrow": "Ferðaskipuleggjandi",
+    "title": "Ferðaupplýsingar",
+    "passportDisclaimer": "Þessi leit gildir aðeins um ferðamennsku með venjulegu vegabréfi. Aðrar gerðir vegabréfa og ferðaskilríkja eru ekki studdar.",
+    "submitting": "Athuga...",
+    "submit": "Athuga ferð",
+    "traveller": {
+      "title": "Ferðamaður",
+      "description": "Ríkisfang í vegabréfi"
+    },
+    "route": {
+      "title": "Leið",
+      "description": "Frá brottför til komu"
+    }
+  },
+  "nationality": {
+    "label": "Ríkisfang ferðamanns",
+    "placeholder": "Leita að landi eða kóða",
+    "loading": "Hleður löndum...",
+    "noResults": "Engin lönd fundust",
+    "optionDescription": "Ríkisfang ferðamanns"
+  },
+  "airport": {
+    "label": "Bæta við flugvelli",
+    "placeholder": "Borg, flugvöllur, IATA-kóði eða land",
+    "searching": "Leita að flugvöllum...",
+    "noResults": "Engir flugvellir fundust",
+    "loadingMore": "Hleður...",
+    "showMore": "Sýna meira"
+  },
+  "route": {
+    "roles": {
+      "departure": "Brottför",
+      "destination": "Áfangastaður",
+      "transit": "Millilending {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "Færa {{code}} framar á leiðinni",
+      "moveLater": "Færa {{code}} aftar á leiðinni",
+      "remove": "Fjarlægja {{code}} af leiðinni"
+    },
+    "actionTitles": {
+      "moveEarlier": "Færa framar",
+      "moveLater": "Færa aftar",
+      "remove": "Fjarlægja flugvöll"
+    },
+    "itinerary": "Ferðaáætlun",
+    "stops_one": "{{count}} stopp",
+    "stops_other": "{{count}} stopp",
+    "empty": "Bættu við brottfararstað og áfangastað.",
+    "currentRoute": "Núverandi leið: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "Farangur",
+      "description": "Upplýsingar um innritaðan farangur",
+      "checkedQuestion": "Innritaður farangur?",
+      "bookingQuestion": "Bókun",
+      "tagQuestion": "Áfangastaður á farangursmiða",
+      "options": {
+        "yes": "Já",
+        "carryOnOnly": "Aðeins handfarangur",
+        "oneBooking": "Ein bókun",
+        "separateTickets": "Aðskildir farmiðar",
+        "notSure": "Ekki viss",
+        "finalDestination": "Lokaáfangastaður",
+        "connectionAirport": "Tengiflugvöllur",
+        "notSureYet": "Ekki viss enn"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "Veldu ríkisfang ferðamanns úr leitarniðurstöðunum.",
+    "routeMinimum": "Bættu við að minnsta kosti brottfararstað og áfangastað.",
+    "nationalityInvalid": "Veldu gilt ríkisfang ferðamanns.",
+    "routeInvalid": "Athugaðu flugvellina á þessari leið.",
+    "duplicateAirport": "{{code}} er þegar á þessari leið.",
+    "routeMaximum": "Ferð getur innihaldið allt að {{count}} flugvelli.",
+    "reviewHighlighted": "Farðu yfir auðkenndu upplýsingarnar áður en ferðin er athuguð."
+  },
+  "errors": {
+    "countryOptions": "Ekki tókst að hlaða landalistanum.",
+    "airportSearch": "Flugvallarleit er ekki tiltæk tímabundið.",
+    "airportPage": "Ekki tókst að hlaða fleiri flugvöllum. Reyndu aftur.",
+    "journeyTimeout": "Athugunin tók of langan tíma. Staðfestu að þjónustan sé tiltæk og reyndu aftur.",
+    "journeyFallback": "Ekki tókst að athuga þessa ferð. Reyndu aftur."
+  },
+  "results": {
+    "eyebrow": "Ferðaniðurstöður",
+    "title": "Það sem þú þarft að gera",
+    "reviewItems_one": "{{count}} atriði til yfirferðar",
+    "reviewItems_other": "{{count}} atriði til yfirferðar",
+    "guidanceLanguageNotice": "Ítarleg ferðaleiðsögn er sem stendur sýnd á ensku.",
+    "finalReminder": "Athugaðu opinberar leiðbeiningar aftur fyrir ferðina.",
+    "baggage": {
+      "title": "Farangur",
+      "actions_one": "{{count}} aðgerð",
+      "actions_other": "{{count}} aðgerðir",
+      "noAction": "Engin aðgerð fannst",
+      "sourceFallback": "Farangursleiðbeiningar",
+      "empty": "Engin þörf á að sækja farangur fannst.",
+      "statuses": {
+        "required": "Sækja og innrita aftur",
+        "confirm": "Staðfesta hjá flugfélaginu"
+      }
+    },
+    "documents": {
+      "title": "Ferðaskilríki",
+      "notConfirmed": "Ekki staðfest",
+      "reviewCount_one": "{{count}} til yfirferðar",
+      "reviewCount_other": "{{count}} til yfirferðar",
+      "noAction": "Engin aðgerð nauðsynleg",
+      "statuses": {
+        "required": "Nauðsynlegt fyrir ferð",
+        "conditional": "Nauðsynlegt nema undanþága gildi",
+        "verify": "Ekki tókst að staðfesta",
+        "notRequired": "Ekki nauðsynlegt"
+      },
+      "importantConditions": "Mikilvæg skilyrði",
+      "additionalConditions_one": "{{count}} skilyrði til viðbótar",
+      "additionalConditions_other": "{{count}} skilyrði til viðbótar",
+      "verifiedDate": "Regla staðfest {{date}}",
+      "empty": "Ekki tókst að staðfesta kröfurnar. Athugaðu opinberar leiðbeiningar útlendingayfirvalda.",
+      "dataset": "Staðbundið reglusafn {{version}}",
+      "locations": {
+        "wholeJourney": "Öll ferðin",
+        "transit": "Millilending á {{location}}",
+        "entry": "Koma til landsins á {{location}}"
+      },
+      "missingInputs_one": "Vantar: {{details}}. Staðfestu þessa upplýsingu í tengdu opinberu leiðbeiningunum.",
+      "missingInputs_other": "Vantar: {{details}}. Staðfestu þessar upplýsingar í tengdu opinberu leiðbeiningunum.",
+      "missingInputLabels": {
+        "countryOfResidence": "búsetuland",
+        "passportIssuingCountry": "útgáfuland vegabréfs",
+        "passportExpiryDate": "gildistími vegabréfs",
+        "primaryDocumentExpiryDate": "gildistími aðalferðaskilríkis",
+        "departureDate": "brottfarardagur",
+        "travelPurpose": "tilgangur ferðar"
+      }
+    }
+  }
+}

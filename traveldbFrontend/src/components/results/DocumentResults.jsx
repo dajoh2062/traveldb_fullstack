@@ -1,4 +1,5 @@
 import { Check, CircleHelp, ExternalLink, FileText, TriangleAlert } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   documentConditions,
   documentKeyFacts,
@@ -13,22 +14,22 @@ const DOCUMENT_STATUS = {
   REQUIRED: {
     className: "required",
     Icon: TriangleAlert,
-    label: "Required before travel",
+    labelKey: "results.documents.statuses.required",
   },
   CONDITIONAL: {
     className: "conditional",
     Icon: CircleHelp,
-    label: "Required unless exempt",
+    labelKey: "results.documents.statuses.conditional",
   },
   VERIFY: {
     className: "verify",
     Icon: CircleHelp,
-    label: "Could not confirm",
+    labelKey: "results.documents.statuses.verify",
   },
   NOT_REQUIRED: {
     className: "not-required",
     Icon: Check,
-    label: "Not required",
+    labelKey: "results.documents.statuses.notRequired",
   },
 };
 
@@ -39,6 +40,8 @@ export default function DocumentResults({
   reviewCount,
   route,
 }) {
+  const { t, i18n } = useTranslation();
+
   return (
     <section className="result-section" aria-labelledby="document-results-title">
       <div className="result-section-heading">
@@ -46,13 +49,13 @@ export default function DocumentResults({
           <FileText aria-hidden="true" className="icon" size={22} strokeWidth={1.8} />
         </span>
         <div>
-          <h3 id="document-results-title">Travel documents</h3>
+          <h3 id="document-results-title">{t("results.documents.title")}</h3>
           <small>
             {requirements.length === 0
-              ? "Not confirmed"
+              ? t("results.documents.notConfirmed")
               : reviewCount > 0
-                ? `${reviewCount} to review`
-                : "No action needed"}
+                ? t("results.documents.reviewCount", { count: reviewCount })
+                : t("results.documents.noAction")}
           </small>
         </div>
       </div>
@@ -67,7 +70,7 @@ export default function DocumentResults({
             const conditions = documentConditions(document);
             const visibleConditions = conditions.slice(0, 2);
             const additionalConditions = conditions.slice(2);
-            const lastVerified = formatRuleDate(document.lastVerified);
+            const lastVerified = formatRuleDate(document.lastVerified, i18n.resolvedLanguage);
 
             return (
               <li
@@ -76,14 +79,20 @@ export default function DocumentResults({
               >
                 <span className="result-status">
                   <StatusIcon aria-hidden="true" className="icon" size={15} strokeWidth={1.8} />
-                  {status.label}
+                  {t(status.labelKey)}
                 </span>
                 <div className="result-content">
-                  <strong>{document.title}</strong>
-                  <small className="result-location">{documentLocation(document, route)}</small>
-                  {document.summary && <p>{document.summary}</p>}
+                  <strong dir="auto" lang="en">
+                    {document.title}
+                  </strong>
+                  <small className="result-location">{documentLocation(document, route, t)}</small>
+                  {document.summary && (
+                    <p dir="auto" lang="en">
+                      {document.summary}
+                    </p>
+                  )}
                   {keyFacts.length > 0 && (
-                    <dl className="document-key-facts">
+                    <dl className="document-key-facts" dir="auto" lang="en">
                       {keyFacts.map(fact => (
                         <div className="document-key-fact" key={`${fact.label}:${fact.value}`}>
                           <dt>{fact.label}</dt>
@@ -93,7 +102,12 @@ export default function DocumentResults({
                     </dl>
                   )}
                   {visibleConditions.length > 0 && (
-                    <div className="document-conditions" aria-label="Important conditions">
+                    <div
+                      className="document-conditions"
+                      aria-label={t("results.documents.importantConditions")}
+                      dir="auto"
+                      lang="en"
+                    >
                       {visibleConditions.map(condition => (
                         <p className="document-condition" key={condition}>
                           {condition}
@@ -104,10 +118,11 @@ export default function DocumentResults({
                   {additionalConditions.length > 0 && (
                     <details className="document-more-conditions">
                       <summary>
-                        {additionalConditions.length} more{" "}
-                        {additionalConditions.length === 1 ? "condition" : "conditions"}
+                        {t("results.documents.additionalConditions", {
+                          count: additionalConditions.length,
+                        })}
                       </summary>
-                      <div className="document-conditions">
+                      <div className="document-conditions" dir="auto" lang="en">
                         {additionalConditions.map(condition => (
                           <p className="document-condition" key={condition}>
                             {condition}
@@ -125,7 +140,9 @@ export default function DocumentResults({
                           rel="noopener noreferrer"
                           target="_blank"
                         >
-                          {sourceLabel(source, sources.length)}
+                          <span dir="auto" lang={source.label ? "en" : undefined}>
+                            {sourceLabel(source, sources.length, t)}
+                          </span>
                           <ExternalLink
                             aria-hidden="true"
                             className="icon"
@@ -137,7 +154,9 @@ export default function DocumentResults({
                     </div>
                   )}
                   {lastVerified && (
-                    <small className="document-rule-meta">Rule verified {lastVerified}</small>
+                    <small className="document-rule-meta">
+                      {t("results.documents.verifiedDate", { date: lastVerified })}
+                    </small>
                   )}
                 </div>
               </li>
@@ -145,11 +164,13 @@ export default function DocumentResults({
           })}
         </ul>
       ) : (
-        <p className="empty-result">
-          Requirements could not be confirmed. Check official immigration guidance.
+        <p className="empty-result">{t("results.documents.empty")}</p>
+      )}
+      {datasetVersion && (
+        <p className="document-dataset">
+          {t("results.documents.dataset", { version: datasetVersion })}
         </p>
       )}
-      {datasetVersion && <p className="document-dataset">Local rule set {datasetVersion}</p>}
       {missingDetails && <p className="result-note missing-input-note">{missingDetails}</p>}
     </section>
   );

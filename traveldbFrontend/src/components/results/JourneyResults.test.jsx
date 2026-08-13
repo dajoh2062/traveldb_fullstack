@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import JourneyResults from "./JourneyResults";
+import { formatRuleDate } from "./resultHelpers";
 
 const route = [
   { iataCode: "OSL", name: "Oslo Airport" },
@@ -110,6 +111,11 @@ const result = {
 };
 
 describe("JourneyResults", () => {
+  it("rejects impossible rule dates instead of rolling them into another month", () => {
+    expect(formatRuleDate("2026-02-31", "en-GB")).toBeNull();
+    expect(formatRuleDate("2026-02-28", "en-GB")).toBe("28 Feb 2026");
+  });
+
   it("shows required, alternative, and unverified document actions at the correct airports", () => {
     render(<JourneyResults result={result} route={route} />);
 

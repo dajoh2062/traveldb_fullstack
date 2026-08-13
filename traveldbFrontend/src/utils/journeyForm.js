@@ -19,15 +19,32 @@ function normalizeRoute(route) {
     .map(code => code.trim().toUpperCase());
 }
 
-export function validateJourneyForm({ nationality, route } = {}) {
+const DEFAULT_MESSAGES = {
+  nationality: "Select the traveller's nationality from the search results.",
+  route: "Add at least an origin and a destination.",
+};
+
+function translate(translationFunction, key, defaultValue) {
+  return translationFunction ? translationFunction(key, { defaultValue }) : defaultValue;
+}
+
+export function validateJourneyForm({ nationality, route } = {}, translationFunction) {
   const errors = {};
 
   if (!COUNTRY_CODE_PATTERN.test(nationality?.trim?.() ?? "")) {
-    errors.nationality = "Select the traveller's nationality from the search results.";
+    errors.nationality = translate(
+      translationFunction,
+      "validation.nationalityRequired",
+      DEFAULT_MESSAGES.nationality,
+    );
   }
 
   if (normalizeRoute(route).length < 2) {
-    errors.route = "Add at least an origin and a destination.";
+    errors.route = translate(
+      translationFunction,
+      "validation.routeMinimum",
+      DEFAULT_MESSAGES.route,
+    );
   }
 
   return errors;
@@ -42,14 +59,18 @@ export function buildJourneyRequest({ nationality, route, baggage } = {}) {
   };
 }
 
-export function mapApiErrorsToFields(errors = []) {
+export function mapApiErrorsToFields(errors = [], translationFunction) {
   const fieldErrors = {};
 
   for (const error of errors) {
     if (error.field === "nationalityCountryCode") {
-      fieldErrors.nationality = error.message;
+      fieldErrors.nationality = translate(
+        translationFunction,
+        "validation.nationalityInvalid",
+        error.message,
+      );
     } else if (error.field === "route" || error.field?.startsWith("route[")) {
-      fieldErrors.route = error.message;
+      fieldErrors.route = translate(translationFunction, "validation.routeInvalid", error.message);
     }
   }
 

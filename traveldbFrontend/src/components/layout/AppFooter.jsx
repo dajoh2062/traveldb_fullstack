@@ -1,11 +1,11 @@
+import { useTranslation } from "react-i18next";
+
 export default function AppFooter() {
+  const { t } = useTranslation();
+
   return (
     <footer>
-      <p>
-        Information is provided for general guidance only and may be incomplete or outdated. Always
-        verify requirements with official authorities before travelling. TravelDB accepts no
-        responsibility for decisions, losses, or consequences arising from use of this information.
-      </p>
+      <p>{t("footer.disclaimer")}</p>
     </footer>
   );
 }

@@ -30,12 +30,25 @@ src/
   api/          HTTP client functions
   components/   UI grouped by layout, planner, results, and shared controls
   hooks/        React state and side effects
+  i18n/         Language metadata, detection, and translation resources
   styles/       Global, layout, planner, result, and responsive styles
   test/         Shared test setup
   utils/        Pure form, search, and display helpers
 ```
 
 Tests live next to the files they cover.
+
+## Languages
+
+The interface uses i18next, remembers the selected language, and falls back to British English.
+Country names, dates, lists, validation, and accessibility labels follow the active locale. Arabic
+also switches the document to right-to-left layout.
+
+Translation catalogs are plain JSON files in `src/i18n/locales`.
+
+Passport and baggage rule explanations returned by the API remain in English until the API exposes
+stable translation keys. They are marked as English in the page so browsers and assistive technology
+handle them correctly.
 
 ## Search scope
 

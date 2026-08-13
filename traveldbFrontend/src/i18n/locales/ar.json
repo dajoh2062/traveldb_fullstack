@@ -1,0 +1,194 @@
+{
+  "meta": {
+    "title": "TravelDB - متطلبات الرحلة",
+    "description": "تحقق من قواعد نقل الأمتعة ووثائق السفر المطلوبة لرحلتك."
+  },
+  "language": {
+    "label": "اللغة"
+  },
+  "header": {
+    "homeLabel": "الصفحة الرئيسية لـ TravelDB",
+    "switchToDarkMode": "التبديل إلى الوضع الداكن",
+    "switchToLightMode": "التبديل إلى الوضع الفاتح"
+  },
+  "common": {
+    "retry": "إعادة المحاولة",
+    "loading": "جارٍ التحميل...",
+    "showMore": "عرض المزيد",
+    "source": "المصدر",
+    "supportingSource": "المصدر الداعم"
+  },
+  "intro": {
+    "kicker": "موجز السفر",
+    "title": "تحقق من رحلتك.",
+    "description": "أنشئ مسارك لمراجعة متطلبات جواز السفر العادي والأمتعة المسجلة قبل السفر."
+  },
+  "footer": {
+    "disclaimer": "تُقدَّم المعلومات للإرشاد العام فقط وقد تكون غير مكتملة أو قديمة. تحقق دائمًا من المتطلبات لدى الجهات الرسمية قبل السفر. لا تتحمل TravelDB أي مسؤولية عن القرارات أو الخسائر أو العواقب الناشئة عن استخدام هذه المعلومات."
+  },
+  "planner": {
+    "eyebrow": "مساحة تخطيط الرحلة",
+    "title": "تفاصيل الرحلة",
+    "passportDisclaimer": "هذا البحث مخصص للسياحة باستخدام جواز سفر عادي فقط. لا ندعم أنواع جوازات السفر الأخرى أو وثائق السفر الأخرى.",
+    "submitting": "جارٍ التحقق...",
+    "submit": "تحقق من الرحلة",
+    "traveller": {
+      "title": "المسافر",
+      "description": "جنسية جواز السفر"
+    },
+    "route": {
+      "title": "المسار",
+      "description": "من المغادرة إلى الوصول"
+    }
+  },
+  "nationality": {
+    "label": "جنسية المسافر",
+    "placeholder": "ابحث عن دولة أو رمز",
+    "loading": "جارٍ تحميل الدول...",
+    "noResults": "لم يتم العثور على دول",
+    "optionDescription": "جنسية المسافر"
+  },
+  "airport": {
+    "label": "إضافة مطار",
+    "placeholder": "مدينة أو مطار أو رمز IATA أو دولة",
+    "searching": "جارٍ البحث عن المطارات...",
+    "noResults": "لم يتم العثور على مطارات",
+    "loadingMore": "جارٍ التحميل...",
+    "showMore": "عرض المزيد"
+  },
+  "route": {
+    "roles": {
+      "departure": "المغادرة",
+      "destination": "الوجهة",
+      "transit": "توقف {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "نقل {{code}} إلى موضع سابق في المسار",
+      "moveLater": "نقل {{code}} إلى موضع لاحق في المسار",
+      "remove": "إزالة {{code}} من المسار"
+    },
+    "actionTitles": {
+      "moveEarlier": "نقل إلى موضع سابق",
+      "moveLater": "نقل إلى موضع لاحق",
+      "remove": "إزالة المطار"
+    },
+    "itinerary": "خط سير الرحلة",
+    "stops_zero": "لا توجد محطات",
+    "stops_one": "محطة واحدة",
+    "stops_two": "محطتان",
+    "stops_few": "{{count}} محطات",
+    "stops_many": "{{count}} محطة",
+    "stops_other": "{{count}} محطة",
+    "empty": "أضف مطار المغادرة والوجهة.",
+    "currentRoute": "المسار الحالي: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "الأمتعة",
+      "description": "تفاصيل الأمتعة المسجلة",
+      "checkedQuestion": "هل لديك أمتعة مسجلة؟",
+      "bookingQuestion": "الحجز",
+      "tagQuestion": "وجهة بطاقة الأمتعة",
+      "options": {
+        "yes": "نعم",
+        "carryOnOnly": "أمتعة يدوية فقط",
+        "oneBooking": "حجز واحد",
+        "separateTickets": "تذاكر منفصلة",
+        "notSure": "غير متأكد",
+        "finalDestination": "الوجهة النهائية",
+        "connectionAirport": "مطار التوقف",
+        "notSureYet": "غير متأكد بعد"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "اختر جنسية المسافر من نتائج البحث.",
+    "routeMinimum": "أضف مطار مغادرة ووجهة على الأقل.",
+    "nationalityInvalid": "اختر جنسية صالحة للمسافر.",
+    "routeInvalid": "تحقق من المطارات في هذا المسار.",
+    "duplicateAirport": "المطار {{code}} مُدرج بالفعل في هذا المسار.",
+    "routeMaximum": "يمكن أن تتضمن الرحلة ما يصل إلى {{count}} مطارًا.",
+    "reviewHighlighted": "راجع التفاصيل المميزة قبل التحقق من هذه الرحلة."
+  },
+  "errors": {
+    "countryOptions": "تعذر تحميل خيارات الدول.",
+    "airportSearch": "البحث عن المطارات غير متاح مؤقتًا.",
+    "airportPage": "تعذر تحميل المزيد من المطارات. حاول مرة أخرى.",
+    "journeyTimeout": "استغرق التحقق وقتًا طويلًا. تأكد من توفر الخدمة وحاول مرة أخرى.",
+    "journeyFallback": "تعذر التحقق من هذه الرحلة. حاول مرة أخرى."
+  },
+  "results": {
+    "eyebrow": "نتائج الرحلة",
+    "title": "ما عليك فعله",
+    "reviewItems_zero": "لا توجد عناصر للمراجعة",
+    "reviewItems_one": "عنصر واحد للمراجعة",
+    "reviewItems_two": "عنصران للمراجعة",
+    "reviewItems_few": "{{count}} عناصر للمراجعة",
+    "reviewItems_many": "{{count}} عنصرًا للمراجعة",
+    "reviewItems_other": "{{count}} عنصر للمراجعة",
+    "guidanceLanguageNotice": "تُعرض إرشادات السفر التفصيلية حاليًا باللغة الإنجليزية.",
+    "finalReminder": "راجع الإرشادات الرسمية مرة أخرى قبل السفر.",
+    "baggage": {
+      "title": "الأمتعة",
+      "actions_zero": "لا توجد إجراءات",
+      "actions_one": "إجراء واحد",
+      "actions_two": "إجراءان",
+      "actions_few": "{{count}} إجراءات",
+      "actions_many": "{{count}} إجراءً",
+      "actions_other": "{{count}} إجراء",
+      "noAction": "لم يتم العثور على إجراء مطلوب",
+      "sourceFallback": "إرشادات الأمتعة",
+      "empty": "لم يتم تحديد أي نقطة لاستلام الأمتعة.",
+      "statuses": {
+        "required": "استلم الأمتعة وأعد تسجيلها",
+        "confirm": "تأكد من شركة الطيران"
+      }
+    },
+    "documents": {
+      "title": "وثائق السفر",
+      "notConfirmed": "غير مؤكد",
+      "reviewCount_zero": "لا شيء للمراجعة",
+      "reviewCount_one": "عنصر واحد للمراجعة",
+      "reviewCount_two": "عنصران للمراجعة",
+      "reviewCount_few": "{{count}} عناصر للمراجعة",
+      "reviewCount_many": "{{count}} عنصرًا للمراجعة",
+      "reviewCount_other": "{{count}} عنصر للمراجعة",
+      "noAction": "لا يلزم اتخاذ أي إجراء",
+      "statuses": {
+        "required": "مطلوب قبل السفر",
+        "conditional": "مطلوب ما لم ينطبق إعفاء",
+        "verify": "تعذر التأكيد",
+        "notRequired": "غير مطلوب"
+      },
+      "importantConditions": "شروط مهمة",
+      "additionalConditions_zero": "لا توجد شروط إضافية",
+      "additionalConditions_one": "شرط إضافي واحد",
+      "additionalConditions_two": "شرطان إضافيان",
+      "additionalConditions_few": "{{count}} شروط إضافية",
+      "additionalConditions_many": "{{count}} شرطًا إضافيًا",
+      "additionalConditions_other": "{{count}} شرط إضافي",
+      "verifiedDate": "تم التحقق من القاعدة في {{date}}",
+      "empty": "تعذر تأكيد المتطلبات. راجع إرشادات الهجرة الرسمية.",
+      "dataset": "مجموعة القواعد المحلية {{version}}",
+      "locations": {
+        "wholeJourney": "الرحلة بأكملها",
+        "transit": "توقف في {{location}}",
+        "entry": "دخول في {{location}}"
+      },
+      "missingInputs_zero": "لا توجد تفاصيل ناقصة.",
+      "missingInputs_one": "غير مُدرج: {{details}}. تحقق من هذا التفصيل في الإرشادات الرسمية المرتبطة.",
+      "missingInputs_two": "غير مُدرج: {{details}}. تحقق من هذين التفصيلين في الإرشادات الرسمية المرتبطة.",
+      "missingInputs_few": "غير مُدرج: {{details}}. تحقق من هذه التفاصيل في الإرشادات الرسمية المرتبطة.",
+      "missingInputs_many": "غير مُدرج: {{details}}. تحقق من هذه التفاصيل في الإرشادات الرسمية المرتبطة.",
+      "missingInputs_other": "غير مُدرج: {{details}}. تحقق من التفاصيل في الإرشادات الرسمية المرتبطة.",
+      "missingInputLabels": {
+        "countryOfResidence": "بلد الإقامة",
+        "passportIssuingCountry": "الدولة المصدرة لجواز السفر",
+        "passportExpiryDate": "تاريخ انتهاء جواز السفر",
+        "primaryDocumentExpiryDate": "تاريخ انتهاء وثيقة السفر الأساسية",
+        "departureDate": "تاريخ المغادرة",
+        "travelPurpose": "غرض السفر"
+      }
+    }
+  }
+}

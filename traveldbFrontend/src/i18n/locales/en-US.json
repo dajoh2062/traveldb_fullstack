@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "TravelDB - Trip requirements",
+    "description": "Check baggage transfer rules and required travel documents for your trip."
+  },
+  "language": {
+    "label": "Language"
+  },
+  "header": {
+    "homeLabel": "TravelDB home",
+    "switchToDarkMode": "Switch to dark mode",
+    "switchToLightMode": "Switch to light mode"
+  },
+  "common": {
+    "retry": "Try again",
+    "loading": "Loading...",
+    "showMore": "Show more",
+    "source": "Source",
+    "supportingSource": "Supporting source"
+  },
+  "intro": {
+    "kicker": "Travel brief",
+    "title": "Check your trip.",
+    "description": "Build your route to review regular-passport and checked-baggage requirements before you fly."
+  },
+  "footer": {
+    "disclaimer": "Information is provided for general guidance only and may be incomplete or outdated. Always verify requirements with official authorities before traveling. TravelDB accepts no responsibility for decisions, losses, or consequences arising from use of this information."
+  },
+  "planner": {
+    "eyebrow": "Trip workspace",
+    "title": "Trip details",
+    "passportDisclaimer": "This search is for tourism with a regular (ordinary) passport only. Other passport types and travel documents are not supported.",
+    "submitting": "Checking...",
+    "submit": "Check trip",
+    "traveller": {
+      "title": "Traveler",
+      "description": "Passport nationality"
+    },
+    "route": {
+      "title": "Route",
+      "description": "From departure to arrival"
+    }
+  },
+  "nationality": {
+    "label": "Traveler nationality",
+    "placeholder": "Search country or code",
+    "loading": "Loading countries...",
+    "noResults": "No countries found",
+    "optionDescription": "Traveler nationality"
+  },
+  "airport": {
+    "label": "Add an airport",
+    "placeholder": "City, airport, IATA code, or country",
+    "searching": "Searching airports...",
+    "noResults": "No airports found",
+    "loadingMore": "Loading...",
+    "showMore": "Show more"
+  },
+  "route": {
+    "roles": {
+      "departure": "Departure",
+      "destination": "Destination",
+      "transit": "Connection {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "Move {{code}} earlier in route",
+      "moveLater": "Move {{code}} later in route",
+      "remove": "Remove {{code}} from route"
+    },
+    "actionTitles": {
+      "moveEarlier": "Move earlier",
+      "moveLater": "Move later",
+      "remove": "Remove airport"
+    },
+    "itinerary": "Itinerary",
+    "stops_one": "{{count}} stop",
+    "stops_other": "{{count}} stops",
+    "empty": "Add your departure and destination.",
+    "currentRoute": "Current route: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "Baggage",
+      "description": "Checked-bag details",
+      "checkedQuestion": "Checked baggage?",
+      "bookingQuestion": "Booking",
+      "tagQuestion": "Bag tag destination",
+      "options": {
+        "yes": "Yes",
+        "carryOnOnly": "Carry-on only",
+        "oneBooking": "One booking",
+        "separateTickets": "Separate tickets",
+        "notSure": "Not sure",
+        "finalDestination": "Final destination",
+        "connectionAirport": "Connecting airport",
+        "notSureYet": "Not sure yet"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "Select the traveler's nationality from the search results.",
+    "routeMinimum": "Add at least an origin and a destination.",
+    "nationalityInvalid": "Select a valid traveler nationality.",
+    "routeInvalid": "Check the airports in this route.",
+    "duplicateAirport": "{{code}} is already included in this route.",
+    "routeMaximum": "A trip can contain up to {{count}} airports.",
+    "reviewHighlighted": "Please review the highlighted details before checking this trip."
+  },
+  "errors": {
+    "countryOptions": "Country options could not be loaded.",
+    "airportSearch": "Airport search is temporarily unavailable.",
+    "airportPage": "More airports could not be loaded. Try again.",
+    "journeyTimeout": "The check took too long. Confirm that the service is available and try again.",
+    "journeyFallback": "We could not check this trip. Please try again."
+  },
+  "results": {
+    "eyebrow": "Trip results",
+    "title": "What you need to do",
+    "reviewItems_one": "{{count}} item to review",
+    "reviewItems_other": "{{count}} items to review",
+    "guidanceLanguageNotice": "Detailed travel guidance is currently shown in English.",
+    "finalReminder": "Recheck official guidance before traveling.",
+    "baggage": {
+      "title": "Baggage",
+      "actions_one": "{{count}} action",
+      "actions_other": "{{count}} actions",
+      "noAction": "No action found",
+      "sourceFallback": "Baggage guidance",
+      "empty": "No baggage pickup identified.",
+      "statuses": {
+        "required": "Pick up and recheck",
+        "confirm": "Confirm with airline"
+      }
+    },
+    "documents": {
+      "title": "Travel documents",
+      "notConfirmed": "Not confirmed",
+      "reviewCount_one": "{{count}} to review",
+      "reviewCount_other": "{{count}} to review",
+      "noAction": "No action needed",
+      "statuses": {
+        "required": "Required before travel",
+        "conditional": "Required unless exempt",
+        "verify": "Could not confirm",
+        "notRequired": "Not required"
+      },
+      "importantConditions": "Important conditions",
+      "additionalConditions_one": "{{count}} more condition",
+      "additionalConditions_other": "{{count}} more conditions",
+      "verifiedDate": "Rule verified {{date}}",
+      "empty": "Requirements could not be confirmed. Check official immigration guidance.",
+      "dataset": "Local rule set {{version}}",
+      "locations": {
+        "wholeJourney": "Entire trip",
+        "transit": "Connection at {{location}}",
+        "entry": "Entry at {{location}}"
+      },
+      "missingInputs_one": "Not included: {{details}}. Verify this detail in the linked official guidance.",
+      "missingInputs_other": "Not included: {{details}}. Verify these details in the linked official guidance.",
+      "missingInputLabels": {
+        "countryOfResidence": "country of residence",
+        "passportIssuingCountry": "passport issuing country",
+        "passportExpiryDate": "passport expiration date",
+        "primaryDocumentExpiryDate": "primary travel document expiration date",
+        "departureDate": "departure date",
+        "travelPurpose": "travel purpose"
+      }
+    }
+  }
+}

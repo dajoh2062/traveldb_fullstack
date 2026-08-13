@@ -1,12 +1,24 @@
 import { ArrowDown, ArrowUp, X } from "lucide-react";
-import { airportLocation, routeSummary } from "../../utils/journey";
+import { useTranslation } from "react-i18next";
+import { routeSummary } from "../../utils/journey";
+import { countryDisplayName } from "../../utils/search";
 import CountryFlag from "../ui/CountryFlag";
 
 function RouteStop({ airport, index, onMove, onRemove, stopCount }) {
+  const { i18n, t } = useTranslation();
   const isFirst = index === 0;
   const isLast = index === stopCount - 1;
-  const role = isFirst ? "Departure" : isLast ? "Destination" : `Transit ${index}`;
+  const role = isFirst
+    ? t("route.roles.departure")
+    : isLast
+      ? t("route.roles.destination")
+      : t("route.roles.transit", { index });
   const markerType = isFirst ? "origin" : isLast ? "destination" : "transit";
+  const countryName = countryDisplayName(
+    { countryId: airport.countryCode, countryNameEn: airport.country },
+    i18n.resolvedLanguage,
+  );
+  const location = airport.city ? `${airport.city} · ${countryName}` : countryName;
 
   return (
     <div className="route-stop">
@@ -24,38 +36,38 @@ function RouteStop({ airport, index, onMove, onRemove, stopCount }) {
         </div>
         <strong className="route-code">{airport.iataCode}</strong>
         <div className="route-stop-details">
-          <strong>{airport.name}</strong>
-          <span className="airport-location">
+          <strong dir="auto">{airport.name}</strong>
+          <span className="airport-location" dir="auto">
             <CountryFlag countryCode={airport.countryCode} />
-            {airportLocation(airport)}
+            {location}
           </span>
         </div>
         <div className="route-stop-actions">
           <button
-            aria-label={`Move ${airport.iataCode} earlier in route`}
+            aria-label={t("route.actions.moveEarlier", { code: airport.iataCode })}
             className="move-airport"
             disabled={isFirst}
             onClick={() => onMove(airport.iataCode, -1)}
-            title="Move earlier"
+            title={t("route.actionTitles.moveEarlier")}
             type="button"
           >
             <ArrowUp aria-hidden="true" className="icon" size={15} strokeWidth={1.8} />
           </button>
           <button
-            aria-label={`Move ${airport.iataCode} later in route`}
+            aria-label={t("route.actions.moveLater", { code: airport.iataCode })}
             className="move-airport"
             disabled={isLast}
             onClick={() => onMove(airport.iataCode, 1)}
-            title="Move later"
+            title={t("route.actionTitles.moveLater")}
             type="button"
           >
             <ArrowDown aria-hidden="true" className="icon" size={15} strokeWidth={1.8} />
           </button>
           <button
-            aria-label={`Remove ${airport.iataCode} from route`}
+            aria-label={t("route.actions.remove", { code: airport.iataCode })}
             className="remove-airport"
             onClick={() => onRemove(airport.iataCode)}
-            title="Remove airport"
+            title={t("route.actionTitles.remove")}
             type="button"
           >
             <X aria-hidden="true" className="icon" size={16} strokeWidth={1.8} />
@@ -67,6 +79,7 @@ function RouteStop({ airport, index, onMove, onRemove, stopCount }) {
 }
 
 export default function RouteTimeline({ error, route, onMove, onRemove }) {
+  const { t } = useTranslation();
   const className = ["route-builder", route.length === 0 && "is-empty", error && "has-error"]
     .filter(Boolean)
     .join(" ");
@@ -74,16 +87,17 @@ export default function RouteTimeline({ error, route, onMove, onRemove }) {
   return (
     <div className={className}>
       <div className="route-header">
-        <span>Itinerary</span>
-        <small>
-          {route.length} {route.length === 1 ? "stop" : "stops"}
-        </small>
+        <span>{t("route.itinerary")}</span>
+        <small>{t("route.stops", { count: route.length })}</small>
       </div>
 
       {route.length === 0 ? (
-        <p className="empty-route">Add your departure and destination.</p>
+        <p className="empty-route">{t("route.empty")}</p>
       ) : (
-        <div className="route-list" aria-label={`Current route: ${routeSummary(route)}`}>
+        <div
+          className="route-list"
+          aria-label={t("route.currentRoute", { route: routeSummary(route) })}
+        >
           {route.map((airport, index) => (
             <RouteStop
               airport={airport}

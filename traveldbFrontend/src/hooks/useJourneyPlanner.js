@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { checkJourney, JourneyApiError } from "../api/travelApi";
 import {
   buildJourneyRequest,
@@ -6,14 +7,17 @@ import {
   mapApiErrorsToFields,
   validateJourneyForm,
 } from "../utils/journeyForm";
+import { countryDisplayName } from "../utils/search";
 
 const MAX_AIRPORTS_PER_ROUTE = 20;
 const JOURNEY_CHECK_TIMEOUT_MS = 15_000;
 
 export default function useJourneyPlanner() {
+  const { i18n, t } = useTranslation();
   const activeRequestRef = useRef(null);
   const [nationality, setNationality] = useState("");
   const [nationalityQuery, setNationalityQuery] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [route, setRoute] = useState([]);
   const [baggage, setBaggage] = useState(() => ({ ...initialBaggageProfile }));
   const [result, setResult] = useState(null);
@@ -22,6 +26,12 @@ export default function useJourneyPlanner() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => () => activeRequestRef.current?.abort(), []);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      setNationalityQuery(countryDisplayName(selectedCountry, i18n.resolvedLanguage));
+    }
+  }, [i18n.resolvedLanguage, selectedCountry]);
 
   function clearFieldError(field) {
     setFieldErrors(currentErrors => {
@@ -41,24 +51,26 @@ export default function useJourneyPlanner() {
   function updateNationalityQuery(value) {
     setNationalityQuery(value);
     setNationality("");
+    setSelectedCountry(null);
     setResult(null);
     clearFieldError("nationality");
   }
 
   function selectNationality(country) {
     setNationality(country.countryId);
-    setNationalityQuery(country.countryNameEn);
+    setNationalityQuery(countryDisplayName(country, i18n.resolvedLanguage));
+    setSelectedCountry(country);
     clearResultAndError();
     clearFieldError("nationality");
   }
 
   function addAirport(airport) {
     if (route.some(routeAirport => routeAirport.iataCode === airport.iataCode)) {
-      setError(`${airport.iataCode} is already included in this route.`);
+      setError(t("validation.duplicateAirport", { code: airport.iataCode }));
       return false;
     }
     if (route.length >= MAX_AIRPORTS_PER_ROUTE) {
-      setError(`A journey can contain up to ${MAX_AIRPORTS_PER_ROUTE} airports.`);
+      setError(t("validation.routeMaximum", { count: MAX_AIRPORTS_PER_ROUTE }));
       return false;
     }
 
@@ -102,10 +114,10 @@ export default function useJourneyPlanner() {
     setError("");
     setResult(null);
 
-    const validationErrors = validateJourneyForm({ nationality, route });
+    const validationErrors = validateJourneyForm({ nationality, route }, t);
     if (Object.keys(validationErrors).length > 0) {
       setFieldErrors(validationErrors);
-      setError("Please review the highlighted details before checking this journey.");
+      setError(t("validation.reviewHighlighted"));
       window.requestAnimationFrame(() => document.getElementById("journey-form-error")?.focus());
       return;
     }
@@ -125,12 +137,12 @@ export default function useJourneyPlanner() {
     } catch (requestError) {
       if (activeRequestRef.current !== controller) return;
       if (requestError instanceof JourneyApiError && requestError.fieldErrors.length > 0) {
-        setFieldErrors(mapApiErrorsToFields(requestError.fieldErrors));
+        setFieldErrors(mapApiErrorsToFields(requestError.fieldErrors, t));
       }
       setError(
         requestError.name === "AbortError"
-          ? "The check took too long. Confirm that the service is available and try again."
-          : requestError.message || "We could not check this journey. Please try again.",
+          ? t("errors.journeyTimeout")
+          : t("errors.journeyFallback"),
       );
     } finally {
       window.clearTimeout(timeout);

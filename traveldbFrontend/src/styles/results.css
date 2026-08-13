@@ -50,11 +50,11 @@
   border-bottom: 1px solid var(--border);
 }
 .result-section:first-child {
-  padding-right: 22px;
-  border-right: 1px solid var(--border);
+  padding-inline-end: 22px;
+  border-inline-end: 1px solid var(--border);
 }
 .result-section + .result-section {
-  padding-left: 22px;
+  padding-inline-start: 22px;
 }
 .result-section-heading {
   display: flex;
@@ -182,14 +182,14 @@
 .result-content .document-condition {
   position: relative;
   margin: 0;
-  padding-left: 13px;
+  padding-inline-start: 13px;
   font-size: 12px;
   line-height: 1.4;
 }
 .document-condition::before {
   position: absolute;
   top: 0.65em;
-  left: 1px;
+  inset-inline-start: 1px;
   width: 4px;
   height: 4px;
   content: "";
@@ -250,8 +250,12 @@
   line-height: 1.45;
 }
 .missing-input-note {
-  padding-left: 11px;
-  border-left: 2px solid var(--primary);
+  padding-inline-start: 11px;
+  border-inline-start: 2px solid var(--primary);
+}
+.guidance-language-note {
+  margin-bottom: -4px;
+  color: var(--text-faint);
 }
 .empty-result {
   margin: 0;

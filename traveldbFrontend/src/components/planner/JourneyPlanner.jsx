@@ -1,4 +1,5 @@
 import { TriangleAlert } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import AirportSearch from "./AirportSearch";
 import BaggageSetup from "./BaggageSetup";
 import NationalitySearch from "./NationalitySearch";
@@ -24,19 +25,18 @@ export default function JourneyPlanner({
   onSubmit,
   route,
 }) {
+  const { t } = useTranslation();
+
   return (
     <section className="planner-card" aria-labelledby="planner-title">
       <div className="section-heading">
         <div>
-          <span className="section-label">Journey workspace</span>
-          <h2 id="planner-title">Trip details</h2>
+          <span className="section-label">{t("planner.eyebrow")}</span>
+          <h2 id="planner-title">{t("planner.title")}</h2>
         </div>
         <p className="passport-disclaimer" role="note">
           <span className="scope-dot" aria-hidden="true" />
-          <span>
-            This search is for tourism with a regular (ordinary) passport only. Other passport types
-            and travel documents are not supported.
-          </span>
+          <span>{t("planner.passportDisclaimer")}</span>
         </p>
       </div>
       <form onSubmit={onSubmit} noValidate>
@@ -45,7 +45,7 @@ export default function JourneyPlanner({
             <TriangleAlert aria-hidden="true" className="icon" size={18} strokeWidth={1.8} />
             <span>{countryError}</span>
             <button onClick={onRetryCountries} type="button">
-              Try again
+              {t("common.retry")}
             </button>
           </div>
         )}
@@ -53,8 +53,8 @@ export default function JourneyPlanner({
           <div className="planner-block-heading">
             <span className="planner-step">01</span>
             <div>
-              <h3>Traveller</h3>
-              <p>Passport nationality</p>
+              <h3>{t("planner.traveller.title")}</h3>
+              <p>{t("planner.traveller.description")}</p>
             </div>
           </div>
           <div className="planner-block-content">
@@ -73,8 +73,8 @@ export default function JourneyPlanner({
           <div className="planner-block-heading">
             <span className="planner-step">02</span>
             <div>
-              <h3>Route</h3>
-              <p>From departure to arrival</p>
+              <h3>{t("planner.route.title")}</h3>
+              <p>{t("planner.route.description")}</p>
             </div>
           </div>
           <div className="planner-block-content route-block-content">
@@ -98,10 +98,10 @@ export default function JourneyPlanner({
           <button className="primary-button" disabled={isLoading} type="submit">
             {isLoading ? (
               <>
-                <span className="spinner" /> Checking...
+                <span className="spinner" /> {t("planner.submitting")}
               </>
             ) : (
-              "Check trip"
+              t("planner.submit")
             )}
           </button>
         </div>

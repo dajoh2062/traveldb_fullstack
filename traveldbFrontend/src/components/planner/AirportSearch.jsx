@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { ArrowRight, LoaderCircle, Search } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import useAirportSearch from "../../hooks/useAirportSearch";
-import { airportLocation } from "../../utils/journey";
+import { countryDisplayName } from "../../utils/search";
 import CountryFlag from "../ui/CountryFlag";
 
 const MAX_SEARCH_LENGTH = 100;
 
 export default function AirportSearch({ onSelect }) {
+  const { i18n, t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const {
     clearSearch,
@@ -24,6 +26,14 @@ export default function AirportSearch({ onSelect }) {
 
   const resolvedActiveIndex =
     suggestions.length === 0 ? 0 : Math.min(activeIndex, suggestions.length - 1);
+
+  function localizedAirportLocation(airport) {
+    const countryName = countryDisplayName(
+      { countryId: airport.countryCode, countryNameEn: airport.country },
+      i18n.resolvedLanguage,
+    );
+    return airport.city ? `${airport.city} · ${countryName}` : countryName;
+  }
 
   function selectAirport(airport) {
     if (onSelect(airport) !== false) clearSearch();
@@ -60,7 +70,7 @@ export default function AirportSearch({ onSelect }) {
   return (
     <div className="field airport-field" onBlur={handleBlur}>
       <label className="field-label" htmlFor="airport-search">
-        Add an airport
+        {t("airport.label")}
       </label>
       <span className="input-shell">
         <Search aria-hidden="true" className="icon" size={20} strokeWidth={1.8} />
@@ -81,7 +91,7 @@ export default function AirportSearch({ onSelect }) {
             if (query.trim()) setIsOpen(true);
           }}
           onKeyDown={handleKeyDown}
-          placeholder="City, airport, IATA code, or country"
+          placeholder={t("airport.placeholder")}
           role="combobox"
           value={query}
         />
@@ -105,12 +115,12 @@ export default function AirportSearch({ onSelect }) {
                   size={16}
                   strokeWidth={1.8}
                 />
-                Searching airports…
+                {t("airport.searching")}
               </div>
             )}
             {!isSearching && suggestions.length === 0 && (
               <div className={`dropdown-status ${searchError ? "search-error" : ""}`}>
-                {searchError || "No airports found"}
+                {searchError || t("airport.noResults")}
               </div>
             )}
             {suggestions.map((airport, index) => (
@@ -129,8 +139,8 @@ export default function AirportSearch({ onSelect }) {
                   <span className="airport-code">{airport.iataCode}</span>
                 </span>
                 <span className="airport-meta">
-                  <strong>{airport.name}</strong>
-                  <small>{airportLocation(airport)}</small>
+                  <strong dir="auto">{airport.name}</strong>
+                  <small dir="auto">{localizedAirportLocation(airport)}</small>
                 </span>
                 <ArrowRight aria-hidden="true" className="icon" size={18} strokeWidth={1.8} />
               </button>
@@ -152,10 +162,10 @@ export default function AirportSearch({ onSelect }) {
                       size={14}
                       strokeWidth={1.8}
                     />
-                    Loading...
+                    {t("airport.loadingMore")}
                   </>
                 ) : (
-                  "Show more"
+                  t("airport.showMore")
                 )}
               </button>
             </div>

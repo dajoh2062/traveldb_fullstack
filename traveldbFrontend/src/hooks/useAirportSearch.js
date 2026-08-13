@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { searchAirports } from "../api/travelApi";
 import { normalizeSearch } from "../utils/search";
 
@@ -28,6 +29,7 @@ function cacheSearch(cacheKey, searchResult) {
 }
 
 export default function useAirportSearch() {
+  const { t } = useTranslation();
   const queryRef = useRef("");
   const loadMoreRequestRef = useRef(null);
   const [query, setQuery] = useState("");
@@ -35,7 +37,7 @@ export default function useAirportSearch() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [searchError, setSearchError] = useState("");
+  const [searchErrorKey, setSearchErrorKey] = useState("");
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -59,7 +61,7 @@ export default function useAirportSearch() {
             if (!controller.signal.aborted) {
               setSuggestions([]);
               setTotal(0);
-              setSearchError("Airport search is temporarily unavailable.");
+              setSearchErrorKey("errors.airportSearch");
             }
           })
           .finally(() => {
@@ -87,7 +89,7 @@ export default function useAirportSearch() {
     setTotal(cachedResult?.total ?? 0);
     setIsSearching(Boolean(value.trim()) && !cachedResult);
     setIsLoadingMore(false);
-    setSearchError("");
+    setSearchErrorKey("");
     setIsOpen(true);
   }
 
@@ -136,7 +138,7 @@ export default function useAirportSearch() {
         return;
 
       // Keep the already loaded results available if a later page fails.
-      setSearchError("More airports could not be loaded. Try again.");
+      setSearchErrorKey("errors.airportPage");
     } finally {
       if (loadMoreRequestRef.current === request) {
         loadMoreRequestRef.current = null;
@@ -154,7 +156,7 @@ export default function useAirportSearch() {
     setIsSearching(false);
     setIsLoadingMore(false);
     setTotal(0);
-    setSearchError("");
+    setSearchErrorKey("");
     setIsOpen(false);
   }
 
@@ -166,7 +168,7 @@ export default function useAirportSearch() {
     isSearching,
     loadMore,
     query,
-    searchError,
+    searchError: searchErrorKey ? t(searchErrorKey) : "",
     setIsOpen,
     suggestions,
     updateQuery,

@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "TravelDB – Resekrav",
+    "description": "Kontrollera reglerna för bagageöverföring och vilka resedokument som krävs för din resa."
+  },
+  "language": {
+    "label": "Språk"
+  },
+  "header": {
+    "homeLabel": "TravelDB-startsida",
+    "switchToDarkMode": "Växla till mörkt läge",
+    "switchToLightMode": "Växla till ljust läge"
+  },
+  "common": {
+    "retry": "Försök igen",
+    "loading": "Läser in...",
+    "showMore": "Visa mer",
+    "source": "Källa",
+    "supportingSource": "Stödkälla"
+  },
+  "intro": {
+    "kicker": "Reseöversikt",
+    "title": "Kontrollera din resa.",
+    "description": "Bygg din resrutt för att granska kraven för vanligt pass och incheckat bagage innan du flyger."
+  },
+  "footer": {
+    "disclaimer": "Informationen är endast avsedd som allmän vägledning och kan vara ofullständig eller inaktuell. Kontrollera alltid kraven hos officiella myndigheter innan du reser. TravelDB ansvarar inte för beslut, förluster eller följder som uppstår genom användning av denna information."
+  },
+  "planner": {
+    "eyebrow": "Reseplanerare",
+    "title": "Reseuppgifter",
+    "passportDisclaimer": "Den här sökningen gäller endast turistresor med ett vanligt pass. Andra passtyper och resedokument stöds inte.",
+    "submitting": "Kontrollerar...",
+    "submit": "Kontrollera resan",
+    "traveller": {
+      "title": "Resenär",
+      "description": "Medborgarskap i passet"
+    },
+    "route": {
+      "title": "Rutt",
+      "description": "Från avresa till ankomst"
+    }
+  },
+  "nationality": {
+    "label": "Resenärens medborgarskap",
+    "placeholder": "Sök efter land eller kod",
+    "loading": "Läser in länder...",
+    "noResults": "Inga länder hittades",
+    "optionDescription": "Resenärens medborgarskap"
+  },
+  "airport": {
+    "label": "Lägg till en flygplats",
+    "placeholder": "Stad, flygplats, IATA-kod eller land",
+    "searching": "Söker efter flygplatser...",
+    "noResults": "Inga flygplatser hittades",
+    "loadingMore": "Läser in...",
+    "showMore": "Visa mer"
+  },
+  "route": {
+    "roles": {
+      "departure": "Avresa",
+      "destination": "Resmål",
+      "transit": "Mellanlandning {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "Flytta {{code}} tidigare i rutten",
+      "moveLater": "Flytta {{code}} senare i rutten",
+      "remove": "Ta bort {{code}} från rutten"
+    },
+    "actionTitles": {
+      "moveEarlier": "Flytta tidigare",
+      "moveLater": "Flytta senare",
+      "remove": "Ta bort flygplats"
+    },
+    "itinerary": "Resplan",
+    "stops_one": "{{count}} stopp",
+    "stops_other": "{{count}} stopp",
+    "empty": "Lägg till avreseort och resmål.",
+    "currentRoute": "Aktuell rutt: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "Bagage",
+      "description": "Uppgifter om incheckat bagage",
+      "checkedQuestion": "Incheckat bagage?",
+      "bookingQuestion": "Bokning",
+      "tagQuestion": "Resmål på bagagetaggen",
+      "options": {
+        "yes": "Ja",
+        "carryOnOnly": "Endast handbagage",
+        "oneBooking": "En bokning",
+        "separateTickets": "Separata biljetter",
+        "notSure": "Inte säker",
+        "finalDestination": "Slutdestination",
+        "connectionAirport": "Anslutningsflygplats",
+        "notSureYet": "Inte säker än"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "Välj resenärens medborgarskap från sökresultaten.",
+    "routeMinimum": "Lägg till minst en avreseort och ett resmål.",
+    "nationalityInvalid": "Välj ett giltigt medborgarskap.",
+    "routeInvalid": "Kontrollera flygplatserna i den här rutten.",
+    "duplicateAirport": "{{code}} finns redan i den här rutten.",
+    "routeMaximum": "En resa kan innehålla upp till {{count}} flygplatser.",
+    "reviewHighlighted": "Granska de markerade uppgifterna innan du kontrollerar resan."
+  },
+  "errors": {
+    "countryOptions": "Listan över länder kunde inte läsas in.",
+    "airportSearch": "Flygplatssökningen är tillfälligt otillgänglig.",
+    "airportPage": "Fler flygplatser kunde inte läsas in. Försök igen.",
+    "journeyTimeout": "Kontrollen tog för lång tid. Kontrollera att tjänsten är tillgänglig och försök igen.",
+    "journeyFallback": "Vi kunde inte kontrollera den här resan. Försök igen."
+  },
+  "results": {
+    "eyebrow": "Reseresultat",
+    "title": "Det här behöver du göra",
+    "reviewItems_one": "{{count}} punkt att granska",
+    "reviewItems_other": "{{count}} punkter att granska",
+    "guidanceLanguageNotice": "Detaljerad resevägledning visas för närvarande på engelska.",
+    "finalReminder": "Kontrollera officiell vägledning igen före resan.",
+    "baggage": {
+      "title": "Bagage",
+      "actions_one": "{{count}} åtgärd",
+      "actions_other": "{{count}} åtgärder",
+      "noAction": "Ingen åtgärd hittades",
+      "sourceFallback": "Bagagevägledning",
+      "empty": "Inget behov av att hämta bagage identifierades.",
+      "statuses": {
+        "required": "Hämta och checka in igen",
+        "confirm": "Bekräfta med flygbolaget"
+      }
+    },
+    "documents": {
+      "title": "Resedokument",
+      "notConfirmed": "Inte bekräftat",
+      "reviewCount_one": "{{count}} att granska",
+      "reviewCount_other": "{{count}} att granska",
+      "noAction": "Ingen åtgärd krävs",
+      "statuses": {
+        "required": "Krävs före resan",
+        "conditional": "Krävs om inget undantag gäller",
+        "verify": "Kunde inte bekräftas",
+        "notRequired": "Krävs inte"
+      },
+      "importantConditions": "Viktiga villkor",
+      "additionalConditions_one": "{{count}} villkor till",
+      "additionalConditions_other": "{{count}} villkor till",
+      "verifiedDate": "Regel verifierad {{date}}",
+      "empty": "Kraven kunde inte bekräftas. Kontrollera officiell vägledning från immigrationsmyndigheterna.",
+      "dataset": "Lokalt regelverk {{version}}",
+      "locations": {
+        "wholeJourney": "Hela resan",
+        "transit": "Mellanlandning på {{location}}",
+        "entry": "Inresa på {{location}}"
+      },
+      "missingInputs_one": "Inte angivet: {{details}}. Kontrollera den här uppgiften i den länkade officiella vägledningen.",
+      "missingInputs_other": "Inte angivet: {{details}}. Kontrollera de här uppgifterna i den länkade officiella vägledningen.",
+      "missingInputLabels": {
+        "countryOfResidence": "bosättningsland",
+        "passportIssuingCountry": "passets utfärdandeland",
+        "passportExpiryDate": "passets utgångsdatum",
+        "primaryDocumentExpiryDate": "det primära resedokumentets utgångsdatum",
+        "departureDate": "avresedatum",
+        "travelPurpose": "resans syfte"
+      }
+    }
+  }
+}

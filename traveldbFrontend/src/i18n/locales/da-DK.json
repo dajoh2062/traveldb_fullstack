@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "TravelDB – Rejsekrav",
+    "description": "Tjek reglerne for bagageoverførsel og de nødvendige rejsedokumenter til din rejse."
+  },
+  "language": {
+    "label": "Sprog"
+  },
+  "header": {
+    "homeLabel": "TravelDB-forside",
+    "switchToDarkMode": "Skift til mørk tilstand",
+    "switchToLightMode": "Skift til lys tilstand"
+  },
+  "common": {
+    "retry": "Prøv igen",
+    "loading": "Indlæser...",
+    "showMore": "Vis mere",
+    "source": "Kilde",
+    "supportingSource": "Understøttende kilde"
+  },
+  "intro": {
+    "kicker": "Rejseoversigt",
+    "title": "Tjek din rejse.",
+    "description": "Sammensæt din rute for at gennemgå kravene til almindeligt pas og indtjekket bagage, før du flyver."
+  },
+  "footer": {
+    "disclaimer": "Oplysningerne er kun generel vejledning og kan være ufuldstændige eller forældede. Kontrollér altid kravene hos de officielle myndigheder, før du rejser. TravelDB påtager sig intet ansvar for beslutninger, tab eller konsekvenser, der opstår som følge af brugen af disse oplysninger."
+  },
+  "planner": {
+    "eyebrow": "Rejseplanlægger",
+    "title": "Rejseoplysninger",
+    "passportDisclaimer": "Denne søgning gælder kun turistrejser med et almindeligt pas. Andre pas- og rejsedokumenttyper understøttes ikke.",
+    "submitting": "Tjekker...",
+    "submit": "Tjek rejsen",
+    "traveller": {
+      "title": "Rejsende",
+      "description": "Nationalitet i passet"
+    },
+    "route": {
+      "title": "Rute",
+      "description": "Fra afrejse til ankomst"
+    }
+  },
+  "nationality": {
+    "label": "Den rejsendes nationalitet",
+    "placeholder": "Søg efter land eller kode",
+    "loading": "Indlæser lande...",
+    "noResults": "Ingen lande fundet",
+    "optionDescription": "Den rejsendes nationalitet"
+  },
+  "airport": {
+    "label": "Tilføj en lufthavn",
+    "placeholder": "By, lufthavn, IATA-kode eller land",
+    "searching": "Søger efter lufthavne...",
+    "noResults": "Ingen lufthavne fundet",
+    "loadingMore": "Indlæser...",
+    "showMore": "Vis mere"
+  },
+  "route": {
+    "roles": {
+      "departure": "Afrejse",
+      "destination": "Destination",
+      "transit": "Mellemlanding {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "Flyt {{code}} tidligere i ruten",
+      "moveLater": "Flyt {{code}} senere i ruten",
+      "remove": "Fjern {{code}} fra ruten"
+    },
+    "actionTitles": {
+      "moveEarlier": "Flyt tidligere",
+      "moveLater": "Flyt senere",
+      "remove": "Fjern lufthavn"
+    },
+    "itinerary": "Rejseplan",
+    "stops_one": "{{count}} stop",
+    "stops_other": "{{count}} stop",
+    "empty": "Tilføj dit afrejsested og din destination.",
+    "currentRoute": "Aktuel rute: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "Bagage",
+      "description": "Oplysninger om indtjekket bagage",
+      "checkedQuestion": "Indtjekket bagage?",
+      "bookingQuestion": "Booking",
+      "tagQuestion": "Destination på bagagemærket",
+      "options": {
+        "yes": "Ja",
+        "carryOnOnly": "Kun håndbagage",
+        "oneBooking": "Én booking",
+        "separateTickets": "Separate billetter",
+        "notSure": "Ikke sikker",
+        "finalDestination": "Endelig destination",
+        "connectionAirport": "Forbindelseslufthavn",
+        "notSureYet": "Ikke sikker endnu"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "Vælg den rejsendes nationalitet i søgeresultaterne.",
+    "routeMinimum": "Tilføj mindst et afrejsested og en destination.",
+    "nationalityInvalid": "Vælg en gyldig nationalitet.",
+    "routeInvalid": "Kontrollér lufthavnene på denne rute.",
+    "duplicateAirport": "{{code}} er allerede med på denne rute.",
+    "routeMaximum": "En rejse kan indeholde op til {{count}} lufthavne.",
+    "reviewHighlighted": "Gennemgå de markerede oplysninger, før du tjekker rejsen."
+  },
+  "errors": {
+    "countryOptions": "Listen over lande kunne ikke indlæses.",
+    "airportSearch": "Lufthavnssøgningen er midlertidigt utilgængelig.",
+    "airportPage": "Flere lufthavne kunne ikke indlæses. Prøv igen.",
+    "journeyTimeout": "Tjekket tog for lang tid. Kontrollér, at tjenesten er tilgængelig, og prøv igen.",
+    "journeyFallback": "Vi kunne ikke tjekke denne rejse. Prøv igen."
+  },
+  "results": {
+    "eyebrow": "Rejseresultater",
+    "title": "Det skal du gøre",
+    "reviewItems_one": "{{count}} punkt at gennemgå",
+    "reviewItems_other": "{{count}} punkter at gennemgå",
+    "guidanceLanguageNotice": "Detaljeret rejsevejledning vises i øjeblikket på engelsk.",
+    "finalReminder": "Tjek den officielle vejledning igen før rejsen.",
+    "baggage": {
+      "title": "Bagage",
+      "actions_one": "{{count}} handling",
+      "actions_other": "{{count}} handlinger",
+      "noAction": "Ingen handling fundet",
+      "sourceFallback": "Bagagevejledning",
+      "empty": "Der blev ikke fundet behov for at hente bagage.",
+      "statuses": {
+        "required": "Hent og tjek ind igen",
+        "confirm": "Bekræft med flyselskabet"
+      }
+    },
+    "documents": {
+      "title": "Rejsedokumenter",
+      "notConfirmed": "Ikke bekræftet",
+      "reviewCount_one": "{{count}} at gennemgå",
+      "reviewCount_other": "{{count}} at gennemgå",
+      "noAction": "Ingen handling nødvendig",
+      "statuses": {
+        "required": "Påkrævet før rejsen",
+        "conditional": "Påkrævet, medmindre du er undtaget",
+        "verify": "Kunne ikke bekræftes",
+        "notRequired": "Ikke påkrævet"
+      },
+      "importantConditions": "Vigtige betingelser",
+      "additionalConditions_one": "{{count}} betingelse mere",
+      "additionalConditions_other": "{{count}} betingelser mere",
+      "verifiedDate": "Regel bekræftet {{date}}",
+      "empty": "Kravene kunne ikke bekræftes. Tjek den officielle vejledning fra immigrationsmyndighederne.",
+      "dataset": "Lokalt regelsæt {{version}}",
+      "locations": {
+        "wholeJourney": "Hele rejsen",
+        "transit": "Mellemlanding i {{location}}",
+        "entry": "Indrejse i {{location}}"
+      },
+      "missingInputs_one": "Ikke angivet: {{details}}. Kontrollér denne oplysning i den linkede officielle vejledning.",
+      "missingInputs_other": "Ikke angivet: {{details}}. Kontrollér disse oplysninger i den linkede officielle vejledning.",
+      "missingInputLabels": {
+        "countryOfResidence": "bopælsland",
+        "passportIssuingCountry": "passets udstedelsesland",
+        "passportExpiryDate": "passets udløbsdato",
+        "primaryDocumentExpiryDate": "udløbsdato for det primære rejsedokument",
+        "departureDate": "afrejsedato",
+        "travelPurpose": "rejseformål"
+      }
+    }
+  }
+}

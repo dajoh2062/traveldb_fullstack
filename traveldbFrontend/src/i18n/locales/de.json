@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "TravelDB – Reisebestimmungen",
+    "description": "Prüfen Sie die Regeln für Gepäcktransfers und die erforderlichen Reisedokumente für Ihre Reise."
+  },
+  "language": {
+    "label": "Sprache"
+  },
+  "header": {
+    "homeLabel": "TravelDB-Startseite",
+    "switchToDarkMode": "Zum dunklen Modus wechseln",
+    "switchToLightMode": "Zum hellen Modus wechseln"
+  },
+  "common": {
+    "retry": "Erneut versuchen",
+    "loading": "Wird geladen...",
+    "showMore": "Mehr anzeigen",
+    "source": "Quelle",
+    "supportingSource": "Belegquelle"
+  },
+  "intro": {
+    "kicker": "Reiseübersicht",
+    "title": "Reise prüfen.",
+    "description": "Stellen Sie Ihre Route zusammen, um vor dem Abflug die Bestimmungen für gewöhnliche Reisepässe und aufgegebenes Gepäck zu prüfen."
+  },
+  "footer": {
+    "disclaimer": "Die Informationen dienen lediglich der allgemeinen Orientierung und können unvollständig oder veraltet sein. Prüfen Sie die Bestimmungen vor der Reise stets bei den zuständigen Behörden. TravelDB übernimmt keine Verantwortung für Entscheidungen, Verluste oder Folgen, die sich aus der Nutzung dieser Informationen ergeben."
+  },
+  "planner": {
+    "eyebrow": "Reiseplanung",
+    "title": "Reisedetails",
+    "passportDisclaimer": "Diese Suche gilt nur für touristische Reisen mit einem regulären (gewöhnlichen) Reisepass. Andere Passarten und Reisedokumente werden nicht unterstützt.",
+    "submitting": "Wird geprüft...",
+    "submit": "Reise prüfen",
+    "traveller": {
+      "title": "Reisende Person",
+      "description": "Staatsangehörigkeit im Reisepass"
+    },
+    "route": {
+      "title": "Route",
+      "description": "Vom Abflug bis zur Ankunft"
+    }
+  },
+  "nationality": {
+    "label": "Staatsangehörigkeit der reisenden Person",
+    "placeholder": "Land oder Code suchen",
+    "loading": "Länder werden geladen...",
+    "noResults": "Keine Länder gefunden",
+    "optionDescription": "Staatsangehörigkeit der reisenden Person"
+  },
+  "airport": {
+    "label": "Flughafen hinzufügen",
+    "placeholder": "Stadt, Flughafen, IATA-Code oder Land",
+    "searching": "Flughäfen werden gesucht...",
+    "noResults": "Keine Flughäfen gefunden",
+    "loadingMore": "Wird geladen...",
+    "showMore": "Mehr anzeigen"
+  },
+  "route": {
+    "roles": {
+      "departure": "Abflug",
+      "destination": "Ziel",
+      "transit": "Umstieg {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "{{code}} in der Route nach vorne verschieben",
+      "moveLater": "{{code}} in der Route nach hinten verschieben",
+      "remove": "{{code}} aus der Route entfernen"
+    },
+    "actionTitles": {
+      "moveEarlier": "Nach vorne verschieben",
+      "moveLater": "Nach hinten verschieben",
+      "remove": "Flughafen entfernen"
+    },
+    "itinerary": "Reiseverlauf",
+    "stops_one": "{{count}} Stopp",
+    "stops_other": "{{count}} Stopps",
+    "empty": "Fügen Sie Abflug- und Zielflughafen hinzu.",
+    "currentRoute": "Aktuelle Route: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "Gepäck",
+      "description": "Angaben zum Aufgabegepäck",
+      "checkedQuestion": "Aufgabegepäck?",
+      "bookingQuestion": "Buchung",
+      "tagQuestion": "Ziel auf dem Gepäckanhänger",
+      "options": {
+        "yes": "Ja",
+        "carryOnOnly": "Nur Handgepäck",
+        "oneBooking": "Eine Buchung",
+        "separateTickets": "Separate Tickets",
+        "notSure": "Nicht sicher",
+        "finalDestination": "Endziel",
+        "connectionAirport": "Umsteigeflughafen",
+        "notSureYet": "Noch nicht sicher"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "Wählen Sie die Staatsangehörigkeit aus den Suchergebnissen aus.",
+    "routeMinimum": "Fügen Sie mindestens einen Abflug- und einen Zielflughafen hinzu.",
+    "nationalityInvalid": "Wählen Sie eine gültige Staatsangehörigkeit aus.",
+    "routeInvalid": "Prüfen Sie die Flughäfen in dieser Route.",
+    "duplicateAirport": "{{code}} ist bereits in dieser Route enthalten.",
+    "routeMaximum": "Eine Reise kann bis zu {{count}} Flughäfen enthalten.",
+    "reviewHighlighted": "Prüfen Sie die markierten Angaben, bevor Sie diese Reise überprüfen."
+  },
+  "errors": {
+    "countryOptions": "Die Länderauswahl konnte nicht geladen werden.",
+    "airportSearch": "Die Flughafensuche ist vorübergehend nicht verfügbar.",
+    "airportPage": "Weitere Flughäfen konnten nicht geladen werden. Versuchen Sie es erneut.",
+    "journeyTimeout": "Die Prüfung hat zu lange gedauert. Prüfen Sie, ob der Dienst verfügbar ist, und versuchen Sie es erneut.",
+    "journeyFallback": "Diese Reise konnte nicht geprüft werden. Versuchen Sie es erneut."
+  },
+  "results": {
+    "eyebrow": "Reiseergebnis",
+    "title": "Was Sie erledigen müssen",
+    "reviewItems_one": "{{count}} Punkt zu prüfen",
+    "reviewItems_other": "{{count}} Punkte zu prüfen",
+    "guidanceLanguageNotice": "Ausführliche Reisehinweise werden derzeit auf Englisch angezeigt.",
+    "finalReminder": "Prüfen Sie vor der Reise erneut die offiziellen Hinweise.",
+    "baggage": {
+      "title": "Gepäck",
+      "actions_one": "{{count}} Maßnahme",
+      "actions_other": "{{count}} Maßnahmen",
+      "noAction": "Keine Maßnahme gefunden",
+      "sourceFallback": "Gepäckhinweise",
+      "empty": "Keine Gepäckabholung festgestellt.",
+      "statuses": {
+        "required": "Abholen und erneut aufgeben",
+        "confirm": "Bei der Fluggesellschaft bestätigen"
+      }
+    },
+    "documents": {
+      "title": "Reisedokumente",
+      "notConfirmed": "Nicht bestätigt",
+      "reviewCount_one": "{{count}} zu prüfen",
+      "reviewCount_other": "{{count}} zu prüfen",
+      "noAction": "Keine Maßnahme erforderlich",
+      "statuses": {
+        "required": "Vor der Reise erforderlich",
+        "conditional": "Erforderlich, sofern keine Ausnahme gilt",
+        "verify": "Konnte nicht bestätigt werden",
+        "notRequired": "Nicht erforderlich"
+      },
+      "importantConditions": "Wichtige Bedingungen",
+      "additionalConditions_one": "{{count}} weitere Bedingung",
+      "additionalConditions_other": "{{count}} weitere Bedingungen",
+      "verifiedDate": "Regel geprüft am {{date}}",
+      "empty": "Die Bestimmungen konnten nicht bestätigt werden. Prüfen Sie die offiziellen Einreisehinweise.",
+      "dataset": "Lokaler Regelsatz {{version}}",
+      "locations": {
+        "wholeJourney": "Gesamte Reise",
+        "transit": "Umstieg in {{location}}",
+        "entry": "Einreise in {{location}}"
+      },
+      "missingInputs_one": "Nicht angegeben: {{details}}. Prüfen Sie diese Angabe in den verlinkten offiziellen Hinweisen.",
+      "missingInputs_other": "Nicht angegeben: {{details}}. Prüfen Sie diese Angaben in den verlinkten offiziellen Hinweisen.",
+      "missingInputLabels": {
+        "countryOfResidence": "Wohnsitzland",
+        "passportIssuingCountry": "Ausstellungsland des Reisepasses",
+        "passportExpiryDate": "Ablaufdatum des Reisepasses",
+        "primaryDocumentExpiryDate": "Ablaufdatum des primären Reisedokuments",
+        "departureDate": "Abreisedatum",
+        "travelPurpose": "Reisezweck"
+      }
+    }
+  }
+}

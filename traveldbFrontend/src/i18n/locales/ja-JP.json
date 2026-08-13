@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "title": "TravelDB - 渡航要件",
+    "description": "旅程に必要な手荷物の乗り継ぎ規則と渡航書類を確認できます。"
+  },
+  "language": {
+    "label": "言語"
+  },
+  "header": {
+    "homeLabel": "TravelDB ホーム",
+    "switchToDarkMode": "ダークモードに切り替える",
+    "switchToLightMode": "ライトモードに切り替える"
+  },
+  "common": {
+    "retry": "もう一度試す",
+    "loading": "読み込み中...",
+    "showMore": "さらに表示",
+    "source": "情報源",
+    "supportingSource": "参考情報"
+  },
+  "intro": {
+    "kicker": "旅行概要",
+    "title": "旅程を確認しましょう。",
+    "description": "出発前に、一般旅券と受託手荷物に関する要件を旅程に沿って確認できます。"
+  },
+  "footer": {
+    "disclaimer": "この情報は一般的な案内のみを目的としており、不完全または古い場合があります。渡航前に、必ず公的機関で要件をご確認ください。TravelDB は、この情報の利用に起因する判断、損失、その他の結果について一切の責任を負いません。"
+  },
+  "planner": {
+    "eyebrow": "旅程プランナー",
+    "title": "旅程の詳細",
+    "passportDisclaimer": "この検索は、一般旅券を使用する観光目的の渡航のみを対象としています。その他の旅券や渡航文書には対応していません。",
+    "submitting": "確認中...",
+    "submit": "旅程を確認",
+    "traveller": {
+      "title": "渡航者",
+      "description": "旅券の国籍"
+    },
+    "route": {
+      "title": "経路",
+      "description": "出発地から到着地まで"
+    }
+  },
+  "nationality": {
+    "label": "渡航者の国籍",
+    "placeholder": "国名または国コードを検索",
+    "loading": "国を読み込み中...",
+    "noResults": "国が見つかりません",
+    "optionDescription": "渡航者の国籍"
+  },
+  "airport": {
+    "label": "空港を追加",
+    "placeholder": "都市、空港、IATAコード、または国",
+    "searching": "空港を検索中...",
+    "noResults": "空港が見つかりません",
+    "loadingMore": "読み込み中...",
+    "showMore": "さらに表示"
+  },
+  "route": {
+    "roles": {
+      "departure": "出発地",
+      "destination": "目的地",
+      "transit": "乗り継ぎ {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "{{code}} を経路内で前に移動",
+      "moveLater": "{{code}} を経路内で後ろに移動",
+      "remove": "{{code}} を経路から削除"
+    },
+    "actionTitles": {
+      "moveEarlier": "前に移動",
+      "moveLater": "後ろに移動",
+      "remove": "空港を削除"
+    },
+    "itinerary": "旅程",
+    "stops_other": "{{count}} 区間",
+    "empty": "出発地と目的地を追加してください。",
+    "currentRoute": "現在の経路：{{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "手荷物",
+      "description": "受託手荷物の詳細",
+      "checkedQuestion": "受託手荷物はありますか？",
+      "bookingQuestion": "予約",
+      "tagQuestion": "手荷物タグの目的地",
+      "options": {
+        "yes": "はい",
+        "carryOnOnly": "機内持ち込みのみ",
+        "oneBooking": "同一予約",
+        "separateTickets": "別々の航空券",
+        "notSure": "不明",
+        "finalDestination": "最終目的地",
+        "connectionAirport": "乗り継ぎ空港",
+        "notSureYet": "まだ不明"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "検索結果から渡航者の国籍を選択してください。",
+    "routeMinimum": "出発地と目的地を少なくとも1つずつ追加してください。",
+    "nationalityInvalid": "有効な渡航者の国籍を選択してください。",
+    "routeInvalid": "この経路の空港を確認してください。",
+    "duplicateAirport": "{{code}} はすでに経路に含まれています。",
+    "routeMaximum": "1つの旅程に追加できる空港は最大 {{count}} か所です。",
+    "reviewHighlighted": "強調表示された項目を確認してから、旅程を検索してください。"
+  },
+  "errors": {
+    "countryOptions": "国の選択肢を読み込めませんでした。",
+    "airportSearch": "空港検索は一時的に利用できません。",
+    "airportPage": "追加の空港を読み込めませんでした。もう一度お試しください。",
+    "journeyTimeout": "確認に時間がかかりすぎました。サービスが利用可能か確認し、もう一度お試しください。",
+    "journeyFallback": "この旅程を確認できませんでした。もう一度お試しください。"
+  },
+  "results": {
+    "eyebrow": "旅程の結果",
+    "title": "必要な手続き",
+    "reviewItems_other": "確認が必要な項目：{{count}} 件",
+    "guidanceLanguageNotice": "詳しい渡航案内は現在英語で表示されています。",
+    "finalReminder": "渡航前に公的機関の案内を再確認してください。",
+    "baggage": {
+      "title": "手荷物",
+      "actions_other": "{{count}} 件の対応",
+      "noAction": "必要な対応はありません",
+      "sourceFallback": "手荷物に関する案内",
+      "empty": "手荷物の受け取りが必要な地点は見つかりませんでした。",
+      "statuses": {
+        "required": "受け取って再度預ける",
+        "confirm": "航空会社に確認"
+      }
+    },
+    "documents": {
+      "title": "渡航書類",
+      "notConfirmed": "未確認",
+      "reviewCount_other": "確認項目：{{count}} 件",
+      "noAction": "対応は不要です",
+      "statuses": {
+        "required": "渡航前に必要",
+        "conditional": "免除対象でない場合は必要",
+        "verify": "確認できませんでした",
+        "notRequired": "不要"
+      },
+      "importantConditions": "重要な条件",
+      "additionalConditions_other": "その他の条件 {{count}} 件",
+      "verifiedDate": "規則の確認日：{{date}}",
+      "empty": "要件を確認できませんでした。公的な入国管理情報を確認してください。",
+      "dataset": "ローカル規則セット {{version}}",
+      "locations": {
+        "wholeJourney": "旅程全体",
+        "transit": "{{location}} で乗り継ぎ",
+        "entry": "{{location}} で入国"
+      },
+      "missingInputs_other": "未入力：{{details}}。リンク先の公的案内でこの情報を確認してください。",
+      "missingInputLabels": {
+        "countryOfResidence": "居住国",
+        "passportIssuingCountry": "旅券発行国",
+        "passportExpiryDate": "旅券の有効期限",
+        "primaryDocumentExpiryDate": "主な渡航文書の有効期限",
+        "departureDate": "出発日",
+        "travelPurpose": "渡航目的"
+      }
+    }
+  }
+}

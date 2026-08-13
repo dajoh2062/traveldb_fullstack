@@ -1,13 +1,16 @@
 import { CircleHelp, ExternalLink, Luggage, TriangleAlert } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { airportLabel } from "../../utils/journey";
 import { baggageSources } from "./resultHelpers";
 
 const BAGGAGE_STATUS = {
-  REQUIRED: { label: "Pick up and recheck", Icon: TriangleAlert },
-  CONFIRM: { label: "Confirm with airline", Icon: CircleHelp },
+  REQUIRED: { labelKey: "results.baggage.statuses.required", Icon: TriangleAlert },
+  CONFIRM: { labelKey: "results.baggage.statuses.confirm", Icon: CircleHelp },
 };
 
 export default function BaggageResults({ route, stops }) {
+  const { t } = useTranslation();
+
   return (
     <section className="result-section" aria-labelledby="baggage-results-title">
       <div className="result-section-heading">
@@ -15,11 +18,11 @@ export default function BaggageResults({ route, stops }) {
           <Luggage aria-hidden="true" className="icon" size={22} strokeWidth={1.8} />
         </span>
         <div>
-          <h3 id="baggage-results-title">Baggage</h3>
+          <h3 id="baggage-results-title">{t("results.baggage.title")}</h3>
           <small>
             {stops.length > 0
-              ? `${stops.length} ${stops.length === 1 ? "action" : "actions"}`
-              : "No action found"}
+              ? t("results.baggage.actions", { count: stops.length })
+              : t("results.baggage.noAction")}
           </small>
         </div>
       </div>
@@ -38,16 +41,22 @@ export default function BaggageResults({ route, stops }) {
               >
                 <span className="result-status">
                   <StatusIcon aria-hidden="true" className="icon" size={15} strokeWidth={1.8} />
-                  {status.label}
+                  {t(status.labelKey)}
                 </span>
                 <div className="result-content">
-                  <strong>{stop.title ?? airportLabel(stop.airportCode, route)}</strong>
+                  <strong dir="auto" lang={stop.title ? "en" : undefined}>
+                    {stop.title ?? airportLabel(stop.airportCode, route)}
+                  </strong>
                   {stop.title && (
                     <small className="result-location">
                       {airportLabel(stop.airportCode, route)}
                     </small>
                   )}
-                  {stop.explanation && <p>{stop.explanation}</p>}
+                  {stop.explanation && (
+                    <p dir="auto" lang="en">
+                      {stop.explanation}
+                    </p>
+                  )}
                   {sources.length > 0 && (
                     <div className="document-source-links">
                       {sources.map(source => (
@@ -57,7 +66,9 @@ export default function BaggageResults({ route, stops }) {
                           rel="noopener noreferrer"
                           target="_blank"
                         >
-                          {source.label ?? "Baggage guidance"}
+                          <span dir="auto" lang={source.label ? "en" : undefined}>
+                            {source.label ?? t("results.baggage.sourceFallback")}
+                          </span>
                           <ExternalLink
                             aria-hidden="true"
                             className="icon"
@@ -74,7 +85,7 @@ export default function BaggageResults({ route, stops }) {
           })}
         </ol>
       ) : (
-        <p className="empty-result">No baggage pickup identified.</p>
+        <p className="empty-result">{t("results.baggage.empty")}</p>
       )}
     </section>
   );

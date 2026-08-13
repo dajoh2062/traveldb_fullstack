@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "title": "TravelDB - 行程要求",
+    "description": "查询行程中的行李转运规则和所需旅行证件。"
+  },
+  "language": {
+    "label": "语言"
+  },
+  "header": {
+    "homeLabel": "TravelDB 首页",
+    "switchToDarkMode": "切换到深色模式",
+    "switchToLightMode": "切换到浅色模式"
+  },
+  "common": {
+    "retry": "重试",
+    "loading": "正在加载...",
+    "showMore": "显示更多",
+    "source": "来源",
+    "supportingSource": "参考来源"
+  },
+  "intro": {
+    "kicker": "旅行简报",
+    "title": "查询您的行程。",
+    "description": "添加您的路线，以便在起飞前查询普通护照和托运行李要求。"
+  },
+  "footer": {
+    "disclaimer": "本信息仅供一般参考，可能不完整或已过时。出行前请务必向官方机构核实相关要求。TravelDB 对因使用本信息而作出的决定、遭受的损失或产生的后果概不负责。"
+  },
+  "planner": {
+    "eyebrow": "行程规划",
+    "title": "行程详情",
+    "passportDisclaimer": "本查询仅适用于持普通护照的旅游出行，不支持其他类型的护照和旅行证件。",
+    "submitting": "正在查询...",
+    "submit": "查询行程",
+    "traveller": {
+      "title": "旅客",
+      "description": "护照国籍"
+    },
+    "route": {
+      "title": "路线",
+      "description": "从出发地到目的地"
+    }
+  },
+  "nationality": {
+    "label": "旅客国籍",
+    "placeholder": "搜索国家或代码",
+    "loading": "正在加载国家...",
+    "noResults": "未找到国家",
+    "optionDescription": "旅客国籍"
+  },
+  "airport": {
+    "label": "添加机场",
+    "placeholder": "城市、机场、IATA 代码或国家",
+    "searching": "正在搜索机场...",
+    "noResults": "未找到机场",
+    "loadingMore": "正在加载...",
+    "showMore": "显示更多"
+  },
+  "route": {
+    "roles": {
+      "departure": "出发地",
+      "destination": "目的地",
+      "transit": "中转 {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "将 {{code}} 在路线中前移",
+      "moveLater": "将 {{code}} 在路线中后移",
+      "remove": "从路线中移除 {{code}}"
+    },
+    "actionTitles": {
+      "moveEarlier": "前移",
+      "moveLater": "后移",
+      "remove": "移除机场"
+    },
+    "itinerary": "行程",
+    "stops_other": "{{count}} 站",
+    "empty": "添加您的出发地和目的地。",
+    "currentRoute": "当前路线：{{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "行李",
+      "description": "托运行李详情",
+      "checkedQuestion": "是否有托运行李？",
+      "bookingQuestion": "预订方式",
+      "tagQuestion": "行李标签目的地",
+      "options": {
+        "yes": "是",
+        "carryOnOnly": "仅手提行李",
+        "oneBooking": "同一预订",
+        "separateTickets": "分开出票",
+        "notSure": "不确定",
+        "finalDestination": "最终目的地",
+        "connectionAirport": "中转机场",
+        "notSureYet": "暂不确定"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "请从搜索结果中选择旅客国籍。",
+    "routeMinimum": "请至少添加一个出发地和一个目的地。",
+    "nationalityInvalid": "请选择有效的旅客国籍。",
+    "routeInvalid": "请检查此路线中的机场。",
+    "duplicateAirport": "此路线已包含 {{code}}。",
+    "routeMaximum": "一条行程最多可包含 {{count}} 个机场。",
+    "reviewHighlighted": "请检查标出的信息后再查询此行程。"
+  },
+  "errors": {
+    "countryOptions": "无法加载国家选项。",
+    "airportSearch": "机场搜索暂时不可用。",
+    "airportPage": "无法加载更多机场，请重试。",
+    "journeyTimeout": "查询时间过长。请确认服务可用后重试。",
+    "journeyFallback": "无法查询此行程，请重试。"
+  },
+  "results": {
+    "eyebrow": "行程结果",
+    "title": "您需要做什么",
+    "reviewItems_other": "有 {{count}} 项需要查看",
+    "guidanceLanguageNotice": "详细旅行指南目前以英语显示。",
+    "finalReminder": "出行前请再次查阅官方指南。",
+    "baggage": {
+      "title": "行李",
+      "actions_other": "{{count}} 项操作",
+      "noAction": "未发现需要操作的事项",
+      "sourceFallback": "行李指南",
+      "empty": "未发现需要提取行李的情况。",
+      "statuses": {
+        "required": "提取并重新托运",
+        "confirm": "向航空公司确认"
+      }
+    },
+    "documents": {
+      "title": "旅行证件",
+      "notConfirmed": "尚未确认",
+      "reviewCount_other": "有 {{count}} 项需要查看",
+      "noAction": "无需操作",
+      "statuses": {
+        "required": "出行前必须办理",
+        "conditional": "除非符合豁免条件，否则必须办理",
+        "verify": "无法确认",
+        "notRequired": "无需办理"
+      },
+      "importantConditions": "重要条件",
+      "additionalConditions_other": "另有 {{count}} 项条件",
+      "verifiedDate": "规则核实于 {{date}}",
+      "empty": "无法确认相关要求，请查阅官方移民指南。",
+      "dataset": "本地规则集 {{version}}",
+      "locations": {
+        "wholeJourney": "整个行程",
+        "transit": "在 {{location}} 中转",
+        "entry": "从 {{location}} 入境"
+      },
+      "missingInputs_other": "未提供：{{details}}。请在链接的官方指南中核实这些信息。",
+      "missingInputLabels": {
+        "countryOfResidence": "居住国",
+        "passportIssuingCountry": "护照签发国",
+        "passportExpiryDate": "护照有效期",
+        "primaryDocumentExpiryDate": "主要旅行证件有效期",
+        "departureDate": "出发日期",
+        "travelPurpose": "旅行目的"
+      }
+    }
+  }
+}

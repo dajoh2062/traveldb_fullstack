@@ -5,10 +5,12 @@ import PageIntro from "./components/layout/PageIntro";
 import JourneyPlanner from "./components/planner/JourneyPlanner";
 import JourneyResults from "./components/results/JourneyResults";
 import useCountries from "./hooks/useCountries";
+import useDocumentLocale from "./hooks/useDocumentLocale";
 import useJourneyPlanner from "./hooks/useJourneyPlanner";
 import useTheme from "./hooks/useTheme";
 
 export default function App() {
+  useDocumentLocale();
   const { theme, toggleTheme } = useTheme();
   const {
     countries,

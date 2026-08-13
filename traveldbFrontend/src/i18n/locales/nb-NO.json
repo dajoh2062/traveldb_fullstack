@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "TravelDB – Reisekrav",
+    "description": "Sjekk reglene for bagasjeoverføring og hvilke reisedokumenter du trenger på reisen."
+  },
+  "language": {
+    "label": "Språk"
+  },
+  "header": {
+    "homeLabel": "TravelDB-startside",
+    "switchToDarkMode": "Bytt til mørk modus",
+    "switchToLightMode": "Bytt til lys modus"
+  },
+  "common": {
+    "retry": "Prøv igjen",
+    "loading": "Laster...",
+    "showMore": "Vis mer",
+    "source": "Kilde",
+    "supportingSource": "Støttekilde"
+  },
+  "intro": {
+    "kicker": "Reiseoversikt",
+    "title": "Sjekk reisen din.",
+    "description": "Sett sammen reiseruten for å se kravene til ordinært pass og innsjekket bagasje før du flyr."
+  },
+  "footer": {
+    "disclaimer": "Informasjonen er bare ment som generell veiledning og kan være ufullstendig eller utdatert. Sjekk alltid kravene hos offentlige myndigheter før du reiser. TravelDB påtar seg ikke ansvar for beslutninger, tap eller konsekvenser som følger av bruk av denne informasjonen."
+  },
+  "planner": {
+    "eyebrow": "Reiseplanlegger",
+    "title": "Reisedetaljer",
+    "passportDisclaimer": "Dette søket gjelder bare turistreiser med et ordinært pass. Andre passtyper og reisedokumenter støttes ikke.",
+    "submitting": "Sjekker...",
+    "submit": "Sjekk reisen",
+    "traveller": {
+      "title": "Reisende",
+      "description": "Statsborgerskap i passet"
+    },
+    "route": {
+      "title": "Rute",
+      "description": "Fra avreise til ankomst"
+    }
+  },
+  "nationality": {
+    "label": "Den reisendes statsborgerskap",
+    "placeholder": "Søk etter land eller kode",
+    "loading": "Laster land...",
+    "noResults": "Fant ingen land",
+    "optionDescription": "Den reisendes statsborgerskap"
+  },
+  "airport": {
+    "label": "Legg til en flyplass",
+    "placeholder": "By, flyplass, IATA-kode eller land",
+    "searching": "Søker etter flyplasser...",
+    "noResults": "Fant ingen flyplasser",
+    "loadingMore": "Laster...",
+    "showMore": "Vis mer"
+  },
+  "route": {
+    "roles": {
+      "departure": "Avreise",
+      "destination": "Reisemål",
+      "transit": "Mellomlanding {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "Flytt {{code}} tidligere i ruten",
+      "moveLater": "Flytt {{code}} senere i ruten",
+      "remove": "Fjern {{code}} fra ruten"
+    },
+    "actionTitles": {
+      "moveEarlier": "Flytt tidligere",
+      "moveLater": "Flytt senere",
+      "remove": "Fjern flyplass"
+    },
+    "itinerary": "Reiserute",
+    "stops_one": "{{count}} stopp",
+    "stops_other": "{{count}} stopp",
+    "empty": "Legg til avreisested og reisemål.",
+    "currentRoute": "Gjeldende rute: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "Bagasje",
+      "description": "Opplysninger om innsjekket bagasje",
+      "checkedQuestion": "Innsjekket bagasje?",
+      "bookingQuestion": "Bestilling",
+      "tagQuestion": "Reisemål på bagasjelappen",
+      "options": {
+        "yes": "Ja",
+        "carryOnOnly": "Bare håndbagasje",
+        "oneBooking": "Én bestilling",
+        "separateTickets": "Separate billetter",
+        "notSure": "Ikke sikker",
+        "finalDestination": "Endelig reisemål",
+        "connectionAirport": "Mellomlandingsflyplass",
+        "notSureYet": "Ikke sikker ennå"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "Velg den reisendes statsborgerskap fra søkeresultatene.",
+    "routeMinimum": "Legg til minst et avreisested og et reisemål.",
+    "nationalityInvalid": "Velg et gyldig statsborgerskap.",
+    "routeInvalid": "Kontroller flyplassene i denne ruten.",
+    "duplicateAirport": "{{code}} er allerede med i denne ruten.",
+    "routeMaximum": "En reise kan inneholde opptil {{count}} flyplasser.",
+    "reviewHighlighted": "Se gjennom de markerte opplysningene før du sjekker reisen."
+  },
+  "errors": {
+    "countryOptions": "Kunne ikke laste listen over land.",
+    "airportSearch": "Flyplassøket er midlertidig utilgjengelig.",
+    "airportPage": "Kunne ikke laste flere flyplasser. Prøv igjen.",
+    "journeyTimeout": "Sjekken tok for lang tid. Kontroller at tjenesten er tilgjengelig, og prøv igjen.",
+    "journeyFallback": "Vi kunne ikke sjekke denne reisen. Prøv igjen."
+  },
+  "results": {
+    "eyebrow": "Reiseresultater",
+    "title": "Dette må du gjøre",
+    "reviewItems_one": "{{count}} punkt å se gjennom",
+    "reviewItems_other": "{{count}} punkter å se gjennom",
+    "guidanceLanguageNotice": "Detaljert reiseveiledning vises foreløpig på engelsk.",
+    "finalReminder": "Sjekk offisiell veiledning på nytt før du reiser.",
+    "baggage": {
+      "title": "Bagasje",
+      "actions_one": "{{count}} handling",
+      "actions_other": "{{count}} handlinger",
+      "noAction": "Ingen handling funnet",
+      "sourceFallback": "Bagasjeveiledning",
+      "empty": "Fant ikke behov for å hente bagasje.",
+      "statuses": {
+        "required": "Hent og sjekk inn på nytt",
+        "confirm": "Bekreft med flyselskapet"
+      }
+    },
+    "documents": {
+      "title": "Reisedokumenter",
+      "notConfirmed": "Ikke bekreftet",
+      "reviewCount_one": "{{count}} å se gjennom",
+      "reviewCount_other": "{{count}} å se gjennom",
+      "noAction": "Ingen handling nødvendig",
+      "statuses": {
+        "required": "Påkrevd før reisen",
+        "conditional": "Påkrevd med mindre du er unntatt",
+        "verify": "Kunne ikke bekreftes",
+        "notRequired": "Ikke påkrevd"
+      },
+      "importantConditions": "Viktige vilkår",
+      "additionalConditions_one": "{{count}} vilkår til",
+      "additionalConditions_other": "{{count}} vilkår til",
+      "verifiedDate": "Regel bekreftet {{date}}",
+      "empty": "Kravene kunne ikke bekreftes. Sjekk offisiell veiledning fra utlendingsmyndighetene.",
+      "dataset": "Lokalt regelsett {{version}}",
+      "locations": {
+        "wholeJourney": "Hele reisen",
+        "transit": "Mellomlanding på {{location}}",
+        "entry": "Innreise på {{location}}"
+      },
+      "missingInputs_one": "Ikke oppgitt: {{details}}. Kontroller denne opplysningen i den lenkede offisielle veiledningen.",
+      "missingInputs_other": "Ikke oppgitt: {{details}}. Kontroller disse opplysningene i den lenkede offisielle veiledningen.",
+      "missingInputLabels": {
+        "countryOfResidence": "bostedsland",
+        "passportIssuingCountry": "passets utstedelsesland",
+        "passportExpiryDate": "passets utløpsdato",
+        "primaryDocumentExpiryDate": "utløpsdato for det primære reisedokumentet",
+        "departureDate": "avreisedato",
+        "travelPurpose": "reiseformål"
+      }
+    }
+  }
+}

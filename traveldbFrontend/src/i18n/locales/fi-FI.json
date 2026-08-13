@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "TravelDB – Matkustusvaatimukset",
+    "description": "Tarkista matkan matkatavaroiden siirtosäännöt ja tarvittavat matkustusasiakirjat."
+  },
+  "language": {
+    "label": "Kieli"
+  },
+  "header": {
+    "homeLabel": "TravelDB:n etusivu",
+    "switchToDarkMode": "Vaihda tummaan tilaan",
+    "switchToLightMode": "Vaihda vaaleaan tilaan"
+  },
+  "common": {
+    "retry": "Yritä uudelleen",
+    "loading": "Ladataan...",
+    "showMore": "Näytä lisää",
+    "source": "Lähde",
+    "supportingSource": "Tukilähde"
+  },
+  "intro": {
+    "kicker": "Matkan yhteenveto",
+    "title": "Tarkista matkasi.",
+    "description": "Kokoa reittisi ja tarkista tavallista passia sekä lähtöselvitettävää matkatavaraa koskevat vaatimukset ennen lentoa."
+  },
+  "footer": {
+    "disclaimer": "Tiedot on tarkoitettu vain yleiseksi ohjeeksi, ja ne voivat olla puutteellisia tai vanhentuneita. Tarkista vaatimukset aina viranomaisilta ennen matkaa. TravelDB ei vastaa näiden tietojen käyttöön perustuvista päätöksistä, menetyksistä tai seurauksista."
+  },
+  "planner": {
+    "eyebrow": "Matkasuunnittelija",
+    "title": "Matkan tiedot",
+    "passportDisclaimer": "Tämä haku koskee vain turistimatkoja tavallisella passilla. Muita passityyppejä ja matkustusasiakirjoja ei tueta.",
+    "submitting": "Tarkistetaan...",
+    "submit": "Tarkista matka",
+    "traveller": {
+      "title": "Matkustaja",
+      "description": "Passiin merkitty kansalaisuus"
+    },
+    "route": {
+      "title": "Reitti",
+      "description": "Lähdöstä saapumiseen"
+    }
+  },
+  "nationality": {
+    "label": "Matkustajan kansalaisuus",
+    "placeholder": "Hae maata tai koodia",
+    "loading": "Ladataan maita...",
+    "noResults": "Maita ei löytynyt",
+    "optionDescription": "Matkustajan kansalaisuus"
+  },
+  "airport": {
+    "label": "Lisää lentoasema",
+    "placeholder": "Kaupunki, lentoasema, IATA-koodi tai maa",
+    "searching": "Haetaan lentoasemia...",
+    "noResults": "Lentoasemia ei löytynyt",
+    "loadingMore": "Ladataan...",
+    "showMore": "Näytä lisää"
+  },
+  "route": {
+    "roles": {
+      "departure": "Lähtö",
+      "destination": "Määränpää",
+      "transit": "Välilasku {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "Siirrä {{code}} aiemmaksi reitillä",
+      "moveLater": "Siirrä {{code}} myöhemmäksi reitillä",
+      "remove": "Poista {{code}} reitiltä"
+    },
+    "actionTitles": {
+      "moveEarlier": "Siirrä aiemmaksi",
+      "moveLater": "Siirrä myöhemmäksi",
+      "remove": "Poista lentoasema"
+    },
+    "itinerary": "Matkasuunnitelma",
+    "stops_one": "{{count}} pysähdys",
+    "stops_other": "{{count}} pysähdystä",
+    "empty": "Lisää lähtöpaikka ja määränpää.",
+    "currentRoute": "Nykyinen reitti: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "Matkatavarat",
+      "description": "Lähtöselvitettävän matkatavaran tiedot",
+      "checkedQuestion": "Lähtöselvitettävää matkatavaraa?",
+      "bookingQuestion": "Varaus",
+      "tagQuestion": "Matkatavaralipukkeen määränpää",
+      "options": {
+        "yes": "Kyllä",
+        "carryOnOnly": "Vain käsimatkatavara",
+        "oneBooking": "Yksi varaus",
+        "separateTickets": "Erilliset liput",
+        "notSure": "En ole varma",
+        "finalDestination": "Lopullinen määränpää",
+        "connectionAirport": "Vaihtolentoasema",
+        "notSureYet": "En vielä tiedä"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "Valitse matkustajan kansalaisuus hakutuloksista.",
+    "routeMinimum": "Lisää vähintään lähtöpaikka ja määränpää.",
+    "nationalityInvalid": "Valitse kelvollinen kansalaisuus.",
+    "routeInvalid": "Tarkista tämän reitin lentoasemat.",
+    "duplicateAirport": "{{code}} on jo tällä reitillä.",
+    "routeMaximum": "Matkalla voi olla enintään {{count}} lentoasemaa.",
+    "reviewHighlighted": "Tarkista korostetut tiedot ennen matkan tarkistamista."
+  },
+  "errors": {
+    "countryOptions": "Maalistaa ei voitu ladata.",
+    "airportSearch": "Lentoasemahaku ei ole tilapäisesti käytettävissä.",
+    "airportPage": "Muita lentoasemia ei voitu ladata. Yritä uudelleen.",
+    "journeyTimeout": "Tarkistus kesti liian kauan. Varmista, että palvelu on käytettävissä, ja yritä uudelleen.",
+    "journeyFallback": "Matkaa ei voitu tarkistaa. Yritä uudelleen."
+  },
+  "results": {
+    "eyebrow": "Matkan tulokset",
+    "title": "Mitä sinun pitää tehdä",
+    "reviewItems_one": "{{count}} tarkistettava kohta",
+    "reviewItems_other": "{{count}} tarkistettavaa kohtaa",
+    "guidanceLanguageNotice": "Yksityiskohtaiset matkaohjeet näytetään tällä hetkellä englanniksi.",
+    "finalReminder": "Tarkista viralliset ohjeet uudelleen ennen matkaa.",
+    "baggage": {
+      "title": "Matkatavarat",
+      "actions_one": "{{count}} toimenpide",
+      "actions_other": "{{count}} toimenpidettä",
+      "noAction": "Toimenpiteitä ei löytynyt",
+      "sourceFallback": "Matkatavaraohjeet",
+      "empty": "Matkatavaroiden noutotarvetta ei havaittu.",
+      "statuses": {
+        "required": "Nouda ja lähtöselvitä uudelleen",
+        "confirm": "Vahvista lentoyhtiöltä"
+      }
+    },
+    "documents": {
+      "title": "Matkustusasiakirjat",
+      "notConfirmed": "Ei vahvistettu",
+      "reviewCount_one": "{{count}} tarkistettava",
+      "reviewCount_other": "{{count}} tarkistettavaa",
+      "noAction": "Toimenpiteitä ei tarvita",
+      "statuses": {
+        "required": "Vaaditaan ennen matkaa",
+        "conditional": "Vaaditaan, ellei poikkeusta sovelleta",
+        "verify": "Ei voitu vahvistaa",
+        "notRequired": "Ei vaadita"
+      },
+      "importantConditions": "Tärkeät ehdot",
+      "additionalConditions_one": "{{count}} muu ehto",
+      "additionalConditions_other": "{{count}} muuta ehtoa",
+      "verifiedDate": "Sääntö tarkistettu {{date}}",
+      "empty": "Vaatimuksia ei voitu vahvistaa. Tarkista viralliset maahantulo-ohjeet.",
+      "dataset": "Paikallinen sääntökokoelma {{version}}",
+      "locations": {
+        "wholeJourney": "Koko matka",
+        "transit": "Välilasku paikassa {{location}}",
+        "entry": "Maahantulo paikassa {{location}}"
+      },
+      "missingInputs_one": "Ei annettu: {{details}}. Tarkista tämä tieto linkitetystä virallisesta ohjeesta.",
+      "missingInputs_other": "Ei annettu: {{details}}. Tarkista nämä tiedot linkitetystä virallisesta ohjeesta.",
+      "missingInputLabels": {
+        "countryOfResidence": "asuinmaa",
+        "passportIssuingCountry": "passin myöntäjämaa",
+        "passportExpiryDate": "passin viimeinen voimassaolopäivä",
+        "primaryDocumentExpiryDate": "ensisijaisen matkustusasiakirjan viimeinen voimassaolopäivä",
+        "departureDate": "lähtöpäivä",
+        "travelPurpose": "matkan tarkoitus"
+      }
+    }
+  }
+}

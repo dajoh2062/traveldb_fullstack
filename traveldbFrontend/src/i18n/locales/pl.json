@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "title": "TravelDB — Wymagania dotyczące podróży",
+    "description": "Sprawdź zasady transferu bagażu i dokumenty podróżne wymagane podczas Twojej podróży."
+  },
+  "language": {
+    "label": "Język"
+  },
+  "header": {
+    "homeLabel": "Strona główna TravelDB",
+    "switchToDarkMode": "Przełącz na tryb ciemny",
+    "switchToLightMode": "Przełącz na tryb jasny"
+  },
+  "common": {
+    "retry": "Spróbuj ponownie",
+    "loading": "Wczytywanie...",
+    "showMore": "Pokaż więcej",
+    "source": "Źródło",
+    "supportingSource": "Źródło uzupełniające"
+  },
+  "intro": {
+    "kicker": "Informacje o podróży",
+    "title": "Sprawdź swoją podróż.",
+    "description": "Utwórz trasę, aby przed wylotem sprawdzić wymagania dotyczące zwykłego paszportu i bagażu rejestrowanego."
+  },
+  "footer": {
+    "disclaimer": "Informacje służą wyłącznie jako ogólne wskazówki i mogą być niepełne lub nieaktualne. Przed podróżą zawsze potwierdź wymagania u właściwych organów. TravelDB nie ponosi odpowiedzialności za decyzje, straty ani konsekwencje wynikające z wykorzystania tych informacji."
+  },
+  "planner": {
+    "eyebrow": "Planowanie podróży",
+    "title": "Szczegóły podróży",
+    "passportDisclaimer": "Wyszukiwanie dotyczy wyłącznie podróży turystycznych ze zwykłym paszportem. Inne rodzaje paszportów i dokumentów podróży nie są obsługiwane.",
+    "submitting": "Sprawdzanie...",
+    "submit": "Sprawdź podróż",
+    "traveller": {
+      "title": "Podróżny",
+      "description": "Obywatelstwo w paszporcie"
+    },
+    "route": {
+      "title": "Trasa",
+      "description": "Od miejsca wylotu do miejsca przylotu"
+    }
+  },
+  "nationality": {
+    "label": "Obywatelstwo podróżnego",
+    "placeholder": "Wyszukaj kraj lub kod",
+    "loading": "Wczytywanie krajów...",
+    "noResults": "Nie znaleziono krajów",
+    "optionDescription": "Obywatelstwo podróżnego"
+  },
+  "airport": {
+    "label": "Dodaj lotnisko",
+    "placeholder": "Miasto, lotnisko, kod IATA lub kraj",
+    "searching": "Wyszukiwanie lotnisk...",
+    "noResults": "Nie znaleziono lotnisk",
+    "loadingMore": "Wczytywanie...",
+    "showMore": "Pokaż więcej"
+  },
+  "route": {
+    "roles": {
+      "departure": "Wylot",
+      "destination": "Cel podróży",
+      "transit": "Przesiadka {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "Przenieś {{code}} wcześniej na trasie",
+      "moveLater": "Przenieś {{code}} później na trasie",
+      "remove": "Usuń {{code}} z trasy"
+    },
+    "actionTitles": {
+      "moveEarlier": "Przenieś wcześniej",
+      "moveLater": "Przenieś później",
+      "remove": "Usuń lotnisko"
+    },
+    "itinerary": "Plan podróży",
+    "stops_one": "{{count}} przystanek",
+    "stops_few": "{{count}} przystanki",
+    "stops_many": "{{count}} przystanków",
+    "stops_other": "{{count}} przystanku",
+    "empty": "Dodaj miejsce wylotu i cel podróży.",
+    "currentRoute": "Bieżąca trasa: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "Bagaż",
+      "description": "Szczegóły bagażu rejestrowanego",
+      "checkedQuestion": "Masz bagaż rejestrowany?",
+      "bookingQuestion": "Rezerwacja",
+      "tagQuestion": "Miejsce docelowe na przywieszce bagażowej",
+      "options": {
+        "yes": "Tak",
+        "carryOnOnly": "Tylko bagaż podręczny",
+        "oneBooking": "Jedna rezerwacja",
+        "separateTickets": "Osobne bilety",
+        "notSure": "Nie wiem",
+        "finalDestination": "Ostateczny cel podróży",
+        "connectionAirport": "Lotnisko przesiadkowe",
+        "notSureYet": "Jeszcze nie wiem"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "Wybierz obywatelstwo podróżnego z wyników wyszukiwania.",
+    "routeMinimum": "Dodaj co najmniej miejsce wylotu i cel podróży.",
+    "nationalityInvalid": "Wybierz prawidłowe obywatelstwo podróżnego.",
+    "routeInvalid": "Sprawdź lotniska na tej trasie.",
+    "duplicateAirport": "Lotnisko {{code}} jest już uwzględnione na tej trasie.",
+    "routeMaximum": "Podróż może obejmować maksymalnie {{count}} lotnisk.",
+    "reviewHighlighted": "Przed sprawdzeniem podróży przejrzyj wyróżnione informacje."
+  },
+  "errors": {
+    "countryOptions": "Nie udało się wczytać listy krajów.",
+    "airportSearch": "Wyszukiwanie lotnisk jest tymczasowo niedostępne.",
+    "airportPage": "Nie udało się wczytać kolejnych lotnisk. Spróbuj ponownie.",
+    "journeyTimeout": "Sprawdzanie trwało zbyt długo. Upewnij się, że usługa jest dostępna, i spróbuj ponownie.",
+    "journeyFallback": "Nie udało się sprawdzić tej podróży. Spróbuj ponownie."
+  },
+  "results": {
+    "eyebrow": "Wyniki podróży",
+    "title": "Co musisz zrobić",
+    "reviewItems_one": "{{count}} element do sprawdzenia",
+    "reviewItems_few": "{{count}} elementy do sprawdzenia",
+    "reviewItems_many": "{{count}} elementów do sprawdzenia",
+    "reviewItems_other": "{{count}} elementu do sprawdzenia",
+    "guidanceLanguageNotice": "Szczegółowe wskazówki dotyczące podróży są obecnie dostępne w języku angielskim.",
+    "finalReminder": "Przed podróżą ponownie sprawdź oficjalne wytyczne.",
+    "baggage": {
+      "title": "Bagaż",
+      "actions_one": "{{count}} działanie",
+      "actions_few": "{{count}} działania",
+      "actions_many": "{{count}} działań",
+      "actions_other": "{{count}} działania",
+      "noAction": "Nie znaleziono wymaganych działań",
+      "sourceFallback": "Wskazówki dotyczące bagażu",
+      "empty": "Nie wskazano miejsca odbioru bagażu.",
+      "statuses": {
+        "required": "Odbierz i nadaj ponownie",
+        "confirm": "Potwierdź u przewoźnika"
+      }
+    },
+    "documents": {
+      "title": "Dokumenty podróżne",
+      "notConfirmed": "Niepotwierdzone",
+      "reviewCount_one": "{{count}} do sprawdzenia",
+      "reviewCount_few": "{{count}} do sprawdzenia",
+      "reviewCount_many": "{{count}} do sprawdzenia",
+      "reviewCount_other": "{{count}} do sprawdzenia",
+      "noAction": "Nie musisz nic robić",
+      "statuses": {
+        "required": "Wymagane przed podróżą",
+        "conditional": "Wymagane, jeśli nie przysługuje zwolnienie",
+        "verify": "Nie udało się potwierdzić",
+        "notRequired": "Niewymagane"
+      },
+      "importantConditions": "Ważne warunki",
+      "additionalConditions_one": "Jeszcze {{count}} warunek",
+      "additionalConditions_few": "Jeszcze {{count}} warunki",
+      "additionalConditions_many": "Jeszcze {{count}} warunków",
+      "additionalConditions_other": "Jeszcze {{count}} warunku",
+      "verifiedDate": "Zasada zweryfikowana {{date}}",
+      "empty": "Nie udało się potwierdzić wymagań. Sprawdź oficjalne wytyczne imigracyjne.",
+      "dataset": "Lokalny zestaw zasad {{version}}",
+      "locations": {
+        "wholeJourney": "Cała podróż",
+        "transit": "Przesiadka w {{location}}",
+        "entry": "Wjazd przez {{location}}"
+      },
+      "missingInputs_one": "Nie podano: {{details}}. Zweryfikuj tę informację w oficjalnych wytycznych pod podanym linkiem.",
+      "missingInputs_few": "Nie podano: {{details}}. Zweryfikuj te informacje w oficjalnych wytycznych pod podanym linkiem.",
+      "missingInputs_many": "Nie podano: {{details}}. Zweryfikuj te informacje w oficjalnych wytycznych pod podanym linkiem.",
+      "missingInputs_other": "Nie podano: {{details}}. Zweryfikuj te informacje w oficjalnych wytycznych pod podanym linkiem.",
+      "missingInputLabels": {
+        "countryOfResidence": "kraj zamieszkania",
+        "passportIssuingCountry": "kraj wydania paszportu",
+        "passportExpiryDate": "data ważności paszportu",
+        "primaryDocumentExpiryDate": "data ważności głównego dokumentu podróży",
+        "departureDate": "data wylotu",
+        "travelPurpose": "cel podróży"
+      }
+    }
+  }
+}

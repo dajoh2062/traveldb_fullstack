@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { buildCountrySearchIndex, normalizeSearch, searchCountryIndex } from "./search";
+import {
+  buildCountrySearchIndex,
+  countryDisplayName,
+  normalizeSearch,
+  searchCountryIndex,
+} from "./search";
 
 const countries = [
   { countryId: "GB", countryNameEn: "United Kingdom", keywords: "Britain England" },
@@ -29,5 +34,14 @@ describe("search utilities", () => {
       "NZ",
       "NO",
     ]);
+  });
+
+  it("uses localized region names without losing English search aliases", () => {
+    const norway = countries.find(country => country.countryId === "NO");
+    const index = buildCountrySearchIndex(countries, "es");
+
+    expect(countryDisplayName(norway, "es")).toBe("Noruega");
+    expect(searchCountryIndex(index, "Noruega")[0].countryId).toBe("NO");
+    expect(searchCountryIndex(index, "Norway")[0].countryId).toBe("NO");
   });
 });

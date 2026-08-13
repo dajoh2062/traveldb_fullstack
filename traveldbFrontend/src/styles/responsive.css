@@ -24,11 +24,11 @@
     grid-template-columns: 1fr;
   }
   .result-section:first-child {
-    padding-right: 0;
-    border-right: 0;
+    padding-inline-end: 0;
+    border-inline-end: 0;
   }
   .result-section + .result-section {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 }
 
@@ -40,6 +40,17 @@
   }
   .topbar {
     height: 60px;
+  }
+  .topbar-actions {
+    gap: 2px;
+  }
+  .language-picker {
+    gap: 5px;
+    padding-inline: 6px;
+  }
+  .language-picker select {
+    max-width: 116px;
+    font-size: 12px;
   }
   .page-intro {
     margin: 25px 0 20px;
@@ -138,6 +149,12 @@
 @media (max-width: 430px) {
   .brand-wordmark {
     font-size: 16px;
+  }
+  .language-picker .icon {
+    display: none;
+  }
+  .language-picker select {
+    max-width: 96px;
   }
   .page-intro {
     margin-top: 22px;

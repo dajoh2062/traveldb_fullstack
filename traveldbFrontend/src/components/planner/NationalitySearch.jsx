@@ -1,6 +1,11 @@
 import { useMemo, useState } from "react";
 import { Check, Globe2, LoaderCircle } from "lucide-react";
-import { buildCountrySearchIndex, searchCountryIndex } from "../../utils/search";
+import { useTranslation } from "react-i18next";
+import {
+  buildCountrySearchIndex,
+  countryDisplayName,
+  searchCountryIndex,
+} from "../../utils/search";
 import CountryFlag from "../ui/CountryFlag";
 
 const MAX_SUGGESTIONS = 8;
@@ -14,9 +19,13 @@ export default function NationalitySearch({
   onQueryChange,
   onSelect,
 }) {
+  const { i18n, t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const countrySearchIndex = useMemo(() => buildCountrySearchIndex(countries), [countries]);
+  const countrySearchIndex = useMemo(
+    () => buildCountrySearchIndex(countries, i18n.resolvedLanguage),
+    [countries, i18n.resolvedLanguage],
+  );
   const suggestions = useMemo(
     () => searchCountryIndex(countrySearchIndex, query, MAX_SUGGESTIONS),
     [countrySearchIndex, query],
@@ -61,7 +70,7 @@ export default function NationalitySearch({
   return (
     <div className={`field nationality-field ${error ? "has-error" : ""}`} onBlur={handleBlur}>
       <label className="field-label" htmlFor="nationality-search">
-        Traveller nationality
+        {t("nationality.label")}
       </label>
       <span className="input-shell">
         {nationality ? (
@@ -85,7 +94,7 @@ export default function NationalitySearch({
           onChange={handleQueryChange}
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
-          placeholder="Search country or code"
+          placeholder={t("nationality.placeholder")}
           role="combobox"
           value={query}
         />
@@ -106,11 +115,11 @@ export default function NationalitySearch({
                 size={16}
                 strokeWidth={1.8}
               />
-              Loading countries…
+              {t("nationality.loading")}
             </div>
           )}
           {!isLoading && suggestions.length === 0 && (
-            <div className="dropdown-status">No countries found</div>
+            <div className="dropdown-status">{t("nationality.noResults")}</div>
           )}
           {suggestions.map((country, index) => (
             <button
@@ -128,8 +137,8 @@ export default function NationalitySearch({
                 <span className="airport-code">{country.countryId}</span>
               </span>
               <span className="airport-meta">
-                <strong>{country.countryNameEn}</strong>
-                <small>Traveller nationality</small>
+                <strong>{countryDisplayName(country, i18n.resolvedLanguage)}</strong>
+                <small>{t("nationality.optionDescription")}</small>
               </span>
               {country.countryId === nationality && (
                 <Check aria-hidden="true" className="icon" size={17} strokeWidth={1.8} />

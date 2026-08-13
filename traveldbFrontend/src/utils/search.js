@@ -6,18 +6,37 @@ export function normalizeSearch(value) {
     .toLowerCase();
 }
 
+export function countryDisplayName(country, locale = "en") {
+  if (!country?.countryId) return country?.countryNameEn ?? "";
+
+  try {
+    return (
+      new Intl.DisplayNames([locale], { type: "region" }).of(country.countryId) ??
+      country.countryNameEn
+    );
+  } catch {
+    return country.countryNameEn;
+  }
+}
+
 const NO_COUNTRY_MATCH = 6;
 
-export function buildCountrySearchIndex(countries) {
+export function buildCountrySearchIndex(countries, locale = "en") {
   return countries
-    .map(country => ({
-      code: normalizeSearch(country.countryId),
-      country,
-      keywords: normalizeSearch(country.keywords ?? ""),
-      name: normalizeSearch(country.countryNameEn),
-      sortName: country.countryNameEn,
-    }))
-    .sort((left, right) => left.sortName.localeCompare(right.sortName));
+    .map(country => {
+      const displayName = countryDisplayName(country, locale);
+      return {
+        code: normalizeSearch(country.countryId),
+        country,
+        displayName,
+        keywords: normalizeSearch(
+          [country.countryNameEn, displayName, country.keywords].filter(Boolean).join(" "),
+        ),
+        name: normalizeSearch(displayName),
+        sortName: displayName,
+      };
+    })
+    .sort((left, right) => left.sortName.localeCompare(right.sortName, locale));
 }
 
 function countrySearchScore(country, query) {
@@ -43,11 +62,7 @@ export function searchCountryIndex(countryIndex, query, limit = 8) {
       score: countrySearchScore(indexedCountry, normalizedQuery),
     }))
     .filter(({ score }) => score < NO_COUNTRY_MATCH)
-    .sort(
-      (left, right) =>
-        left.score - right.score ||
-        left.indexedCountry.sortName.localeCompare(right.indexedCountry.sortName),
-    )
+    .sort((left, right) => left.score - right.score)
     .slice(0, limit)
     .map(({ indexedCountry }) => indexedCountry.country);
 }

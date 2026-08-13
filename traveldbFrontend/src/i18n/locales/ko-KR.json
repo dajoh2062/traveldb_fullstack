@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "title": "TravelDB - 여행 요건",
+    "description": "여정에 필요한 수하물 환승 규정과 여행 서류를 확인하세요."
+  },
+  "language": {
+    "label": "언어"
+  },
+  "header": {
+    "homeLabel": "TravelDB 홈",
+    "switchToDarkMode": "다크 모드로 전환",
+    "switchToLightMode": "라이트 모드로 전환"
+  },
+  "common": {
+    "retry": "다시 시도",
+    "loading": "불러오는 중...",
+    "showMore": "더 보기",
+    "source": "출처",
+    "supportingSource": "참고 출처"
+  },
+  "intro": {
+    "kicker": "여행 안내",
+    "title": "여정을 확인하세요.",
+    "description": "출발 전에 일반 여권과 위탁 수하물 요건을 확인할 수 있도록 경로를 구성하세요."
+  },
+  "footer": {
+    "disclaimer": "이 정보는 일반적인 안내 목적으로만 제공되며 불완전하거나 오래되었을 수 있습니다. 여행 전에는 반드시 공식 기관을 통해 요건을 확인하세요. TravelDB는 이 정보의 사용으로 인한 결정, 손실 또는 결과에 대해 책임지지 않습니다."
+  },
+  "planner": {
+    "eyebrow": "여정 계획",
+    "title": "여정 세부 정보",
+    "passportDisclaimer": "이 검색은 일반 여권을 사용하는 관광 목적의 여행만 지원합니다. 다른 유형의 여권과 여행 서류는 지원되지 않습니다.",
+    "submitting": "확인 중...",
+    "submit": "여정 확인",
+    "traveller": {
+      "title": "여행자",
+      "description": "여권 국적"
+    },
+    "route": {
+      "title": "경로",
+      "description": "출발지에서 도착지까지"
+    }
+  },
+  "nationality": {
+    "label": "여행자 국적",
+    "placeholder": "국가 또는 코드 검색",
+    "loading": "국가를 불러오는 중...",
+    "noResults": "국가를 찾을 수 없습니다",
+    "optionDescription": "여행자 국적"
+  },
+  "airport": {
+    "label": "공항 추가",
+    "placeholder": "도시, 공항, IATA 코드 또는 국가",
+    "searching": "공항을 검색하는 중...",
+    "noResults": "공항을 찾을 수 없습니다",
+    "loadingMore": "불러오는 중...",
+    "showMore": "더 보기"
+  },
+  "route": {
+    "roles": {
+      "departure": "출발지",
+      "destination": "목적지",
+      "transit": "환승 {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "경로에서 {{code}} 앞으로 이동",
+      "moveLater": "경로에서 {{code}} 뒤로 이동",
+      "remove": "경로에서 {{code}} 삭제"
+    },
+    "actionTitles": {
+      "moveEarlier": "앞으로 이동",
+      "moveLater": "뒤로 이동",
+      "remove": "공항 삭제"
+    },
+    "itinerary": "여정",
+    "stops_other": "{{count}}개 경유지",
+    "empty": "출발지와 목적지를 추가하세요.",
+    "currentRoute": "현재 경로: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "수하물",
+      "description": "위탁 수하물 세부 정보",
+      "checkedQuestion": "위탁 수하물이 있나요?",
+      "bookingQuestion": "예약",
+      "tagQuestion": "수하물 태그 목적지",
+      "options": {
+        "yes": "예",
+        "carryOnOnly": "기내 수하물만",
+        "oneBooking": "한 번의 예약",
+        "separateTickets": "별도 항공권",
+        "notSure": "잘 모르겠음",
+        "finalDestination": "최종 목적지",
+        "connectionAirport": "환승 공항",
+        "notSureYet": "아직 모름"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "검색 결과에서 여행자의 국적을 선택하세요.",
+    "routeMinimum": "출발지와 목적지를 각각 하나 이상 추가하세요.",
+    "nationalityInvalid": "유효한 여행자 국적을 선택하세요.",
+    "routeInvalid": "이 경로의 공항을 확인하세요.",
+    "duplicateAirport": "{{code}}은(는) 이미 이 경로에 포함되어 있습니다.",
+    "routeMaximum": "한 여정에는 공항을 최대 {{count}}개까지 포함할 수 있습니다.",
+    "reviewHighlighted": "강조 표시된 정보를 검토한 후 이 여정을 확인하세요."
+  },
+  "errors": {
+    "countryOptions": "국가 옵션을 불러올 수 없습니다.",
+    "airportSearch": "공항 검색을 일시적으로 사용할 수 없습니다.",
+    "airportPage": "더 많은 공항을 불러올 수 없습니다. 다시 시도하세요.",
+    "journeyTimeout": "확인 시간이 너무 오래 걸립니다. 서비스를 사용할 수 있는지 확인한 후 다시 시도하세요.",
+    "journeyFallback": "이 여정을 확인할 수 없습니다. 다시 시도하세요."
+  },
+  "results": {
+    "eyebrow": "여정 결과",
+    "title": "해야 할 일",
+    "reviewItems_other": "검토할 항목 {{count}}개",
+    "guidanceLanguageNotice": "상세 여행 안내는 현재 영어로 제공됩니다.",
+    "finalReminder": "여행 전에 공식 안내를 다시 확인하세요.",
+    "baggage": {
+      "title": "수하물",
+      "actions_other": "조치 {{count}}개",
+      "noAction": "필요한 조치 없음",
+      "sourceFallback": "수하물 안내",
+      "empty": "수하물을 찾아야 하는 지점이 확인되지 않았습니다.",
+      "statuses": {
+        "required": "찾은 후 다시 부치기",
+        "confirm": "항공사에 확인"
+      }
+    },
+    "documents": {
+      "title": "여행 서류",
+      "notConfirmed": "확인되지 않음",
+      "reviewCount_other": "검토할 항목 {{count}}개",
+      "noAction": "필요한 조치 없음",
+      "statuses": {
+        "required": "여행 전에 필요",
+        "conditional": "면제되지 않는 경우 필요",
+        "verify": "확인할 수 없음",
+        "notRequired": "필요하지 않음"
+      },
+      "importantConditions": "중요 조건",
+      "additionalConditions_other": "추가 조건 {{count}}개",
+      "verifiedDate": "규정 확인일: {{date}}",
+      "empty": "요건을 확인할 수 없습니다. 공식 출입국 안내를 확인하세요.",
+      "dataset": "로컬 규정 세트 {{version}}",
+      "locations": {
+        "wholeJourney": "전체 여정",
+        "transit": "{{location}}에서 환승",
+        "entry": "{{location}}에서 입국"
+      },
+      "missingInputs_other": "포함되지 않은 정보: {{details}}. 연결된 공식 안내에서 이 정보를 확인하세요.",
+      "missingInputLabels": {
+        "countryOfResidence": "거주 국가",
+        "passportIssuingCountry": "여권 발급 국가",
+        "passportExpiryDate": "여권 만료일",
+        "primaryDocumentExpiryDate": "주 여행 서류 만료일",
+        "departureDate": "출발일",
+        "travelPurpose": "여행 목적"
+      }
+    }
+  }
+}

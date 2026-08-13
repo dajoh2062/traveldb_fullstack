@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "title": "TravelDB - Requisitos da viagem",
+    "description": "Consulte as regras de transferência de bagagem e os documentos de viagem necessários para a sua viagem."
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "header": {
+    "homeLabel": "Página inicial do TravelDB",
+    "switchToDarkMode": "Mudar para o modo escuro",
+    "switchToLightMode": "Mudar para o modo claro"
+  },
+  "common": {
+    "retry": "Tentar novamente",
+    "loading": "A carregar...",
+    "showMore": "Mostrar mais",
+    "source": "Fonte",
+    "supportingSource": "Fonte de apoio"
+  },
+  "intro": {
+    "kicker": "Resumo da viagem",
+    "title": "Verifique a sua viagem.",
+    "description": "Defina o percurso para consultar os requisitos de passaporte comum e bagagem de porão antes de voar."
+  },
+  "footer": {
+    "disclaimer": "As informações são fornecidas apenas para orientação geral e podem estar incompletas ou desatualizadas. Confirme sempre os requisitos junto das autoridades oficiais antes de viajar. O TravelDB não se responsabiliza por decisões, perdas ou consequências resultantes da utilização destas informações."
+  },
+  "planner": {
+    "eyebrow": "Área de planeamento",
+    "title": "Dados da viagem",
+    "passportDisclaimer": "Esta pesquisa destina-se apenas a viagens de turismo com passaporte comum (ordinário). Não são suportados outros tipos de passaporte nem outros documentos de viagem.",
+    "submitting": "A verificar...",
+    "submit": "Verificar viagem",
+    "traveller": {
+      "title": "Viajante",
+      "description": "Nacionalidade do passaporte"
+    },
+    "route": {
+      "title": "Percurso",
+      "description": "Da partida à chegada"
+    }
+  },
+  "nationality": {
+    "label": "Nacionalidade do viajante",
+    "placeholder": "Pesquisar país ou código",
+    "loading": "A carregar países...",
+    "noResults": "Nenhum país encontrado",
+    "optionDescription": "Nacionalidade do viajante"
+  },
+  "airport": {
+    "label": "Adicionar um aeroporto",
+    "placeholder": "Cidade, aeroporto, código IATA ou país",
+    "searching": "A pesquisar aeroportos...",
+    "noResults": "Nenhum aeroporto encontrado",
+    "loadingMore": "A carregar...",
+    "showMore": "Mostrar mais"
+  },
+  "route": {
+    "roles": {
+      "departure": "Partida",
+      "destination": "Destino",
+      "transit": "Escala {{index}}"
+    },
+    "actions": {
+      "moveEarlier": "Mover {{code}} para uma posição anterior no percurso",
+      "moveLater": "Mover {{code}} para uma posição posterior no percurso",
+      "remove": "Remover {{code}} do percurso"
+    },
+    "actionTitles": {
+      "moveEarlier": "Mover para posição anterior",
+      "moveLater": "Mover para posição posterior",
+      "remove": "Remover aeroporto"
+    },
+    "itinerary": "Itinerário",
+    "stops_one": "{{count}} paragem",
+    "stops_many": "{{count}} paragens",
+    "stops_other": "{{count}} paragens",
+    "empty": "Adicione a partida e o destino.",
+    "currentRoute": "Percurso atual: {{route}}"
+  },
+  "baggage": {
+    "form": {
+      "title": "Bagagem",
+      "description": "Dados da bagagem de porão",
+      "checkedQuestion": "Tem bagagem de porão?",
+      "bookingQuestion": "Reserva",
+      "tagQuestion": "Destino da etiqueta da bagagem",
+      "options": {
+        "yes": "Sim",
+        "carryOnOnly": "Apenas bagagem de mão",
+        "oneBooking": "Uma reserva",
+        "separateTickets": "Bilhetes separados",
+        "notSure": "Não tenho a certeza",
+        "finalDestination": "Destino final",
+        "connectionAirport": "Aeroporto de ligação",
+        "notSureYet": "Ainda não tenho a certeza"
+      }
+    }
+  },
+  "validation": {
+    "nationalityRequired": "Selecione a nacionalidade do viajante nos resultados da pesquisa.",
+    "routeMinimum": "Adicione pelo menos uma origem e um destino.",
+    "nationalityInvalid": "Selecione uma nacionalidade de viajante válida.",
+    "routeInvalid": "Verifique os aeroportos deste percurso.",
+    "duplicateAirport": "{{code}} já está incluído neste percurso.",
+    "routeMaximum": "Uma viagem pode incluir até {{count}} aeroportos.",
+    "reviewHighlighted": "Reveja os dados assinalados antes de verificar esta viagem."
+  },
+  "errors": {
+    "countryOptions": "Não foi possível carregar as opções de país.",
+    "airportSearch": "A pesquisa de aeroportos está temporariamente indisponível.",
+    "airportPage": "Não foi possível carregar mais aeroportos. Tente novamente.",
+    "journeyTimeout": "A verificação demorou demasiado. Confirme se o serviço está disponível e tente novamente.",
+    "journeyFallback": "Não foi possível verificar esta viagem. Tente novamente."
+  },
+  "results": {
+    "eyebrow": "Resultados da viagem",
+    "title": "O que precisa de fazer",
+    "reviewItems_one": "{{count}} item a rever",
+    "reviewItems_many": "{{count}} itens a rever",
+    "reviewItems_other": "{{count}} itens a rever",
+    "guidanceLanguageNotice": "As orientações de viagem detalhadas são atualmente apresentadas em inglês.",
+    "finalReminder": "Volte a consultar as orientações oficiais antes de viajar.",
+    "baggage": {
+      "title": "Bagagem",
+      "actions_one": "{{count}} ação",
+      "actions_many": "{{count}} ações",
+      "actions_other": "{{count}} ações",
+      "noAction": "Nenhuma ação identificada",
+      "sourceFallback": "Orientações sobre bagagem",
+      "empty": "Não foi identificada nenhuma recolha de bagagem.",
+      "statuses": {
+        "required": "Recolher e voltar a despachar",
+        "confirm": "Confirmar com a companhia aérea"
+      }
+    },
+    "documents": {
+      "title": "Documentos de viagem",
+      "notConfirmed": "Não confirmado",
+      "reviewCount_one": "{{count}} a rever",
+      "reviewCount_many": "{{count}} a rever",
+      "reviewCount_other": "{{count}} a rever",
+      "noAction": "Nenhuma ação necessária",
+      "statuses": {
+        "required": "Obrigatório antes da viagem",
+        "conditional": "Obrigatório salvo isenção",
+        "verify": "Não foi possível confirmar",
+        "notRequired": "Não obrigatório"
+      },
+      "importantConditions": "Condições importantes",
+      "additionalConditions_one": "Mais {{count}} condição",
+      "additionalConditions_many": "Mais {{count}} condições",
+      "additionalConditions_other": "Mais {{count}} condições",
+      "verifiedDate": "Regra verificada em {{date}}",
+      "empty": "Não foi possível confirmar os requisitos. Consulte as orientações oficiais de imigração.",
+      "dataset": "Conjunto de regras local {{version}}",
+      "locations": {
+        "wholeJourney": "Toda a viagem",
+        "transit": "Escala em {{location}}",
+        "entry": "Entrada por {{location}}"
+      },
+      "missingInputs_one": "Não incluído: {{details}}. Confirme este dado nas orientações oficiais ligadas.",
+      "missingInputs_many": "Não incluídos: {{details}}. Confirme estes dados nas orientações oficiais ligadas.",
+      "missingInputs_other": "Não incluídos: {{details}}. Confirme estes dados nas orientações oficiais ligadas.",
+      "missingInputLabels": {
+        "countryOfResidence": "país de residência",
+        "passportIssuingCountry": "país emissor do passaporte",
+        "passportExpiryDate": "data de validade do passaporte",
+        "primaryDocumentExpiryDate": "data de validade do documento de viagem principal",
+        "departureDate": "data de partida",
+        "travelPurpose": "motivo da viagem"
+      }
+    }
+  }
+}
