@@ -79,12 +79,8 @@ export default function DocumentResults({
                 condition,
                 localized: document.localized.conditions[index],
               }))
-              .filter(({ condition }) =>
-                documentConditions({ conditions: [condition] }).length > 0,
-              )
-              .map(
-                ({ condition, localized }) => localized ?? { text: condition, lang: "en" },
-              );
+              .filter(({ condition }) => documentConditions({ conditions: [condition] }).length > 0)
+              .map(({ condition, localized }) => localized ?? { text: condition, lang: "en" });
             const visibleConditions = conditions.slice(0, 2);
             const additionalConditions = conditions.slice(2);
             const lastVerified = formatRuleDate(document.lastVerified, i18n.resolvedLanguage);

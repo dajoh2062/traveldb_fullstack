@@ -1,9 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import i18n from ".";
-import {
-  localizeBaggageAdvice,
-  localizeDocumentRequirement,
-} from "./localizedGuidance";
+import { localizeBaggageAdvice, localizeDocumentRequirement } from "./localizedGuidance";
 
 const CURRENT_DATASET = "2026-08-09.5";
 

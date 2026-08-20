@@ -5,9 +5,7 @@
       "australia-valid-visa-entry": {
         "title": "Confirm your Australian visa covers this trip",
         "summary": "The supplied profile records an Australian visa, but its type, validity, purpose and permitted entries must be checked.",
-        "conditions": [
-          "The visa must permit the intended purpose, dates and number of entries."
-        ],
+        "conditions": ["The visa must permit the intended purpose, dates and number of entries."],
         "keyFacts": [
           {
             "label": "Profile input",
@@ -22,9 +20,7 @@
       "canada-valid-visa-entry": {
         "title": "Confirm your Canadian visa covers this trip",
         "summary": "The supplied profile records a Canadian visa, but its type, validity and permitted purpose must be checked before relying on it instead of an eTA.",
-        "conditions": [
-          "The visa and passport must remain valid for the journey."
-        ],
+        "conditions": ["The visa and passport must remain valid for the journey."],
         "keyFacts": [
           {
             "label": "Profile input",
@@ -39,9 +35,7 @@
       "canada-valid-visa-transit": {
         "title": "Confirm your Canadian visa covers this transit",
         "summary": "The supplied profile records a Canadian visa, but its type and validity must be checked before relying on it instead of an eTA for transit.",
-        "conditions": [
-          "The visa and passport must remain valid for the transit."
-        ],
+        "conditions": ["The visa and passport must remain valid for the transit."],
         "keyFacts": [
           {
             "label": "Profile input",
@@ -74,9 +68,7 @@
       "new-zealand-valid-visa-entry": {
         "title": "Confirm your New Zealand visa covers this trip",
         "summary": "The supplied profile records a New Zealand visa, but its type, validity and permitted purpose must be checked before relying on it instead of an NZeTA.",
-        "conditions": [
-          "The visa must permit the intended purpose and dates."
-        ],
+        "conditions": ["The visa must permit the intended purpose and dates."],
         "keyFacts": [
           {
             "label": "Existing visa",
@@ -91,9 +83,7 @@
       "uk-valid-visa-entry": {
         "title": "Confirm your UK permission covers this trip",
         "summary": "The supplied profile records UK immigration permission, but its type, validity and permitted purpose must be checked before relying on it instead of an ETA.",
-        "conditions": [
-          "The existing permission must be valid for the planned purpose and dates."
-        ],
+        "conditions": ["The existing permission must be valid for the planned purpose and dates."],
         "keyFacts": [
           {
             "label": "Existing permission",
@@ -727,9 +717,7 @@
       "canada-eta-taiwan-entry": {
         "title": "Canadian eTA with a qualifying Taiwan passport",
         "summary": "Taiwan passport holders qualify for an eTA only with an ordinary passport issued by Taiwan's Ministry of Foreign Affairs that includes the personal identification number.",
-        "conditions": [
-          "A different Taiwan passport requires a visitor visa for travel to Canada."
-        ],
+        "conditions": ["A different Taiwan passport requires a visitor visa for travel to Canada."],
         "keyFacts": [
           {
             "label": "Visa status",

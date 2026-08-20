@@ -31,16 +31,13 @@ function guidanceCatalogIsCurrent(i18n, locale, document, datasetVersion) {
   if (ruleIsPastReviewDate(document.reviewAfter)) return false;
   return (
     typeof datasetVersion === "string" &&
-    datasetVersion ===
-      i18n.getResource(locale, "translation", "guidance.documentDatasetVersion")
+    datasetVersion === i18n.getResource(locale, "translation", "guidance.documentDatasetVersion")
   );
 }
 
 export function localizeDocumentRequirement(document, i18n, datasetVersion) {
   const locale = resolveLocale(i18n.resolvedLanguage ?? i18n.language);
-  const baseKey = document.ruleId
-    ? `guidance.documents.rules.${document.ruleId}`
-    : null;
+  const baseKey = document.ruleId ? `guidance.documents.rules.${document.ruleId}` : null;
   const catalogIsCurrent =
     Boolean(baseKey) && guidanceCatalogIsCurrent(i18n, locale, document, datasetVersion);
   const title = localizedText(i18n, locale, `${baseKey}.title`, document.title, catalogIsCurrent);
@@ -52,13 +49,7 @@ export function localizeDocumentRequirement(document, i18n, datasetVersion) {
     catalogIsCurrent,
   );
   const conditions = (document.conditions ?? []).map((condition, index) =>
-    localizedText(
-      i18n,
-      locale,
-      `${baseKey}.conditions.${index}`,
-      condition,
-      catalogIsCurrent,
-    ),
+    localizedText(i18n, locale, `${baseKey}.conditions.${index}`, condition, catalogIsCurrent),
   );
   const keyFacts = (document.keyFacts ?? []).map((fact, index) => ({
     label: localizedText(
@@ -92,9 +83,7 @@ export function localizeDocumentRequirement(document, i18n, datasetVersion) {
 
 export function localizeBaggageAdvice(advice, i18n) {
   const locale = resolveLocale(i18n.resolvedLanguage ?? i18n.language);
-  const baseKey = advice.adviceCode
-    ? `guidance.baggage.advices.${advice.adviceCode}`
-    : null;
+  const baseKey = advice.adviceCode ? `guidance.baggage.advices.${advice.adviceCode}` : null;
   const title = localizedText(i18n, locale, `${baseKey}.title`, advice.title, Boolean(baseKey));
   const explanation = localizedText(
     i18n,

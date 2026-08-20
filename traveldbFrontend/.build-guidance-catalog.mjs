@@ -133,8 +133,4 @@ const guidance = {
 };
 
 await mkdir("src/i18n/guidance", { recursive: true });
-await writeFile(
-  "src/i18n/guidance/en-GB.json",
-  `${JSON.stringify(guidance, null, 2)}\n`,
-  "utf8",
-);
+await writeFile("src/i18n/guidance/en-GB.json", `${JSON.stringify(guidance, null, 2)}\n`, "utf8");

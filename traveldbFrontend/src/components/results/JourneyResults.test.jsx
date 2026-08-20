@@ -125,9 +125,7 @@ describe("JourneyResults", () => {
 
     expect(
       documentRequirementKey({ ...baseRequirement, ruleId: "jp-entry-norwegian-passport" }),
-    ).not.toBe(
-      documentRequirementKey({ ...baseRequirement, ruleId: "jp-entry-spanish-passport" }),
-    );
+    ).not.toBe(documentRequirementKey({ ...baseRequirement, ruleId: "jp-entry-spanish-passport" }));
   });
 
   it("shows required, alternative, and unverified document actions at the correct airports", () => {

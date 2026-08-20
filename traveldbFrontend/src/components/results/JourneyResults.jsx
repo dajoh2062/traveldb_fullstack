@@ -1,8 +1,5 @@
 import { useTranslation } from "react-i18next";
-import {
-  localizeBaggageAdvice,
-  localizeDocumentRequirement,
-} from "../../i18n/localizedGuidance";
+import { localizeBaggageAdvice, localizeDocumentRequirement } from "../../i18n/localizedGuidance";
 import BaggageResults from "./BaggageResults";
 import DocumentResults from "./DocumentResults";
 import {
