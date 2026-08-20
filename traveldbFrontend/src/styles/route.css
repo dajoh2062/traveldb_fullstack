@@ -12,14 +12,14 @@
   gap: 16px;
   padding: 0 0 10px;
   color: var(--text-soft);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-strong);
   font-size: 12px;
   font-weight: 600;
 }
 .route-header small {
-  color: var(--text-faint);
+  color: var(--text-soft);
   font-size: 11.5px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .empty-route {
   display: flex;
@@ -59,9 +59,9 @@
   top: 43px;
   bottom: -25px;
   left: 50%;
-  width: 1px;
+  width: 2px;
   content: "";
-  background: color-mix(in srgb, var(--primary) 42%, var(--border));
+  background: color-mix(in srgb, var(--primary) 58%, var(--border-strong));
   transform: translateX(-50%);
 }
 .route-direction-arrow {
@@ -74,9 +74,9 @@
   height: 20px;
   display: grid;
   place-items: center;
-  color: var(--text-soft);
+  color: var(--text);
   background: var(--surface);
-  border: 1.5px solid var(--border-strong);
+  border: 2px solid var(--border-strong);
   border-radius: 50%;
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 8px;
@@ -108,13 +108,13 @@
 .route-stop-role span {
   color: var(--text-soft);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .route-code {
   color: var(--primary);
   font-size: 17px;
-  font-weight: 650;
-  letter-spacing: 0.025em;
+  font-weight: 750;
+  letter-spacing: 0;
 }
 .route-stop-details {
   min-width: 0;
@@ -158,14 +158,15 @@
   display: grid;
   place-items: center;
   padding: 0;
-  color: var(--text-faint);
-  background: transparent;
-  border: 0;
+  color: var(--text-soft);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
   border-radius: 8px;
 }
 .move-airport:hover:not(:disabled) {
   color: var(--primary);
-  background: var(--surface-soft);
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
 }
 .move-airport:disabled {
   cursor: not-allowed;
@@ -174,6 +175,7 @@
 .remove-airport:hover {
   color: var(--danger);
   background: var(--danger-soft);
+  border-color: color-mix(in srgb, var(--danger) 54%, var(--border-strong));
 }
 .route-builder.has-error .route-header {
   border-color: var(--danger);

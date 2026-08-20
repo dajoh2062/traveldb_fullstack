@@ -14,27 +14,28 @@
   gap: 24px;
   margin: 0;
   padding: 16px 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-strong);
 }
 .results-heading span {
   display: block;
   margin-bottom: 2px;
   color: var(--primary);
   font-size: 11.5px;
-  font-weight: 600;
+  font-weight: 750;
 }
 .results-heading h2 {
   margin: 0;
   font-size: clamp(1.4rem, 2.5vw, 1.72rem);
   font-weight: 650;
   line-height: 1.15;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
 }
 .results-heading > strong {
   flex: 0 0 auto;
   padding: 5px 9px;
-  color: var(--text-soft);
+  color: var(--text);
   background: var(--surface-soft);
+  border: 1px solid var(--border);
   border-radius: 999px;
   font-size: 11.5px;
   font-weight: 600;
@@ -47,11 +48,11 @@
 .result-section {
   min-width: 0;
   padding: 18px 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-strong);
 }
 .result-section:first-child {
   padding-inline-end: 22px;
-  border-inline-end: 1px solid var(--border);
+  border-inline-end: 1px solid var(--border-strong);
 }
 .result-section + .result-section {
   padding-inline-start: 22px;
@@ -80,14 +81,14 @@
 .result-section-heading small {
   display: block;
   margin-top: 1px;
-  color: var(--text-faint);
+  color: var(--text-soft);
   font-size: 11.5px;
 }
 .result-list {
   display: grid;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-strong);
   list-style: none;
 }
 .result-item {
@@ -130,7 +131,7 @@
   font-size: 14.5px;
   font-weight: 650;
   line-height: 1.35;
-  letter-spacing: -0.005em;
+  letter-spacing: 0;
   overflow-wrap: anywhere;
 }
 .result-content .result-location {
@@ -150,7 +151,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 14px;
   margin: 7px 0 1px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-strong);
 }
 .document-key-fact {
   min-width: 0;
@@ -161,7 +162,7 @@
   border-bottom: 1px solid var(--border);
 }
 .document-key-fact dt {
-  color: var(--text-faint);
+  color: var(--text-soft);
   font-size: 11.5px;
   font-weight: 550;
   line-height: 1.35;
@@ -193,7 +194,7 @@
   width: 4px;
   height: 4px;
   content: "";
-  background: var(--text-faint);
+  background: var(--text-soft);
   border-radius: 50%;
 }
 .document-more-conditions {
@@ -234,13 +235,13 @@
 .result-content .document-rule-meta {
   display: block;
   margin-top: 3px;
-  color: var(--text-faint);
+  color: var(--text-soft);
   font-size: 11.5px;
   line-height: 1.4;
 }
 .document-dataset {
   margin: 9px 0 0;
-  color: var(--text-faint);
+  color: var(--text-soft);
   font-size: 11px;
 }
 .result-note {
@@ -255,7 +256,7 @@
 }
 .guidance-language-note {
   margin-bottom: -4px;
-  color: var(--text-faint);
+  color: var(--text-soft);
 }
 .empty-result {
   margin: 0;

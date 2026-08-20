@@ -8,9 +8,10 @@
   top: 0;
   z-index: 50;
   height: 64px;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(18px) saturate(1.25);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  border-bottom: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(16px) saturate(1.15);
 }
 .topbar-inner {
   width: min(var(--content-width), calc(100% - 48px));
@@ -23,38 +24,38 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   color: var(--text);
   text-decoration: none;
 }
 .brand-mark {
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   display: grid;
   place-items: center;
-  color: var(--primary);
+  color: var(--on-primary);
+  background: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 70%, var(--border-strong));
+  border-radius: 9px;
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--primary) 24%, transparent);
 }
-.brand-mark svg {
-  width: 28px;
-  height: 28px;
-  overflow: visible;
-}
-.brand-mark path {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.brand-mark circle {
-  fill: var(--surface);
-  stroke: currentColor;
-  stroke-width: 1.8;
+.brand-copy {
+  display: grid;
+  gap: 1px;
 }
 .brand-wordmark {
-  font-size: 17px;
+  color: var(--text);
+  font-size: 17.5px;
+  font-weight: 750;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+.brand-subtitle {
+  color: var(--text-soft);
+  font-size: 11px;
   font-weight: 650;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
+  line-height: 1.1;
 }
 .topbar-actions {
   display: flex;
@@ -67,11 +68,13 @@
   align-items: center;
   gap: 7px;
   padding: 0 8px;
-  color: var(--text-soft);
-  background: transparent;
+  color: var(--text);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
   border-radius: 9px;
   transition:
     color 140ms ease,
+    border-color 140ms ease,
     background 140ms ease;
 }
 .language-picker .visually-hidden {
@@ -87,6 +90,7 @@
 .language-picker:focus-within {
   color: var(--text);
   background: var(--surface-hover);
+  border-color: var(--border-strong);
 }
 .language-picker select {
   max-width: 150px;
@@ -113,18 +117,20 @@
   display: grid;
   place-items: center;
   padding: 0;
-  color: var(--text-soft);
-  background: transparent;
-  border: 0;
+  color: var(--text);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
   border-radius: 9px;
   transition:
     color 140ms ease,
     background 140ms ease,
+    border-color 140ms ease,
     transform 140ms ease;
 }
 .theme-toggle:hover {
   color: var(--text);
   background: var(--surface-hover);
+  border-color: var(--border-strong);
 }
 .theme-toggle:active {
   transform: scale(0.96);
@@ -148,14 +154,14 @@ footer {
   color: var(--primary);
   font-size: 13px;
   font-weight: 650;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
 }
 .page-intro h1 {
   margin: 0;
   font-size: clamp(2.55rem, 4.5vw, 3.45rem);
   font-weight: 650;
   line-height: 0.98;
-  letter-spacing: -0.055em;
+  letter-spacing: 0;
 }
 .page-intro-copy {
   max-width: 430px;
@@ -168,7 +174,7 @@ footer {
 .planner-card,
 .results {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-strong);
   border-radius: 16px;
   box-shadow: var(--shadow-lg);
 }
@@ -181,21 +187,21 @@ footer {
   align-items: start;
   gap: 32px;
   padding: 23px 0 20px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-strong);
 }
 .section-label {
   display: block;
   margin-bottom: 5px;
-  color: var(--text-faint);
+  color: var(--text-soft);
   font-size: 12px;
-  font-weight: 550;
+  font-weight: 650;
 }
 .section-heading h2 {
   margin: 0;
   font-size: 21px;
   font-weight: 650;
   line-height: 1.25;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
 }
 .passport-disclaimer {
   display: flex;
@@ -220,8 +226,8 @@ footer {
 footer {
   margin-top: 24px;
   padding: 20px 4px 42px;
-  color: var(--text-faint);
-  border-top: 1px solid var(--border);
+  color: var(--text-soft);
+  border-top: 1px solid var(--border-strong);
   font-size: 12px;
   line-height: 1.55;
   text-align: start;
