@@ -22,6 +22,33 @@ export function visibleDocumentRequirements(requirements = []) {
   });
 }
 
+export function sortDocumentRequirementsByCountry(requirements = [], route = []) {
+  const countryRouteOrder = new Map();
+  for (const [index, airport] of route.entries()) {
+    const countryCode = normalizedCountryCode(airport.countryCode);
+    if (countryCode && !countryRouteOrder.has(countryCode)) {
+      countryRouteOrder.set(countryCode, index);
+    }
+  }
+
+  return requirements
+    .map((requirement, index) => ({
+      requirement,
+      index,
+      countryCode: documentCountryCode(requirement, route),
+    }))
+    .sort((left, right) => {
+      const leftCountryOrder = countryOrder(left.countryCode, countryRouteOrder);
+      const rightCountryOrder = countryOrder(right.countryCode, countryRouteOrder);
+      if (leftCountryOrder !== rightCountryOrder) return leftCountryOrder - rightCountryOrder;
+      if (left.countryCode !== right.countryCode) {
+        return left.countryCode.localeCompare(right.countryCode);
+      }
+      return left.index - right.index;
+    })
+    .map(({ requirement }) => requirement);
+}
+
 export function documentReviewCount(requirements) {
   return requirements.filter(requirement => requirement.status !== "NOT_REQUIRED").length;
 }
@@ -32,6 +59,23 @@ export function documentRequirementKey(requirement) {
     requirement.scope ?? "JOURNEY",
     requirement.airportCode ?? requirement.countryCode ?? "ALL",
   ].join(":");
+}
+
+function documentCountryCode(requirement, route) {
+  const explicitCountryCode = normalizedCountryCode(requirement.countryCode);
+  if (explicitCountryCode) return explicitCountryCode;
+
+  const airport = route.find(routeAirport => routeAirport.iataCode === requirement.airportCode);
+  return normalizedCountryCode(airport?.countryCode);
+}
+
+function normalizedCountryCode(countryCode) {
+  return typeof countryCode === "string" ? countryCode.trim().toUpperCase() : "";
+}
+
+function countryOrder(countryCode, countryRouteOrder) {
+  if (!countryCode) return -1;
+  return countryRouteOrder.get(countryCode) ?? Number.MAX_SAFE_INTEGER;
 }
 
 export function documentLocation(requirement, route, t = key => key) {

@@ -6,13 +6,17 @@ import {
   actionableBaggageStops,
   documentReviewCount,
   missingInputMessage,
+  sortDocumentRequirementsByCountry,
   visibleDocumentRequirements,
 } from "./resultHelpers";
 
 export default function JourneyResults({ result, route }) {
   const { t, i18n } = useTranslation();
   const baggageStops = actionableBaggageStops(result.baggageStops);
-  const documentRequirements = visibleDocumentRequirements(result.documentCheck?.requirements);
+  const documentRequirements = sortDocumentRequirementsByCountry(
+    visibleDocumentRequirements(result.documentCheck?.requirements),
+    route,
+  );
   const localizedBaggageStops = baggageStops.map(stop => localizeBaggageAdvice(stop, i18n));
   const localizedDocumentRequirements = documentRequirements.map(requirement =>
     localizeDocumentRequirement(requirement, i18n, result.documentCheck?.datasetVersion),

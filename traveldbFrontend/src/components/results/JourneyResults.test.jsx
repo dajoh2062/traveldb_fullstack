@@ -1,13 +1,17 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import JourneyResults from "./JourneyResults";
-import { documentRequirementKey, formatRuleDate } from "./resultHelpers";
+import {
+  documentRequirementKey,
+  formatRuleDate,
+  sortDocumentRequirementsByCountry,
+} from "./resultHelpers";
 
 const route = [
-  { iataCode: "OSL", name: "Oslo Airport" },
-  { iataCode: "JFK", name: "John F. Kennedy Airport" },
-  { iataCode: "BNE", name: "Brisbane International Airport" },
-  { iataCode: "MEL", name: "Melbourne Airport" },
+  { countryCode: "NO", iataCode: "OSL", name: "Oslo Airport" },
+  { countryCode: "US", iataCode: "JFK", name: "John F. Kennedy Airport" },
+  { countryCode: "AU", iataCode: "BNE", name: "Brisbane International Airport" },
+  { countryCode: "AU", iataCode: "MEL", name: "Melbourne Airport" },
 ];
 
 const result = {
@@ -126,6 +130,25 @@ describe("JourneyResults", () => {
     expect(
       documentRequirementKey({ ...baseRequirement, ruleId: "jp-entry-norwegian-passport" }),
     ).not.toBe(documentRequirementKey({ ...baseRequirement, ruleId: "jp-entry-spanish-passport" }));
+  });
+
+  it("sorts document requirements by country in itinerary order", () => {
+    const sorted = sortDocumentRequirementsByCountry(
+      [
+        { airportCode: "BNE", code: "AU_ENTRY", title: "Australia entry" },
+        { airportCode: "JFK", code: "US_TRANSIT", title: "United States transit" },
+        { code: "PASSPORT", title: "Whole journey passport" },
+        { airportCode: "MEL", code: "AU_PASSPORT", title: "Australia passport" },
+      ],
+      route,
+    );
+
+    expect(sorted.map(requirement => requirement.title)).toEqual([
+      "Whole journey passport",
+      "United States transit",
+      "Australia entry",
+      "Australia passport",
+    ]);
   });
 
   it("shows required, alternative, and unverified document actions at the correct airports", () => {
