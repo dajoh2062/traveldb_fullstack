@@ -2,34 +2,34 @@
   display: grid;
   grid-template-columns: 200px minmax(0, 1fr);
   align-items: start;
-  gap: 32px;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--border-strong);
+  gap: 28px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
 }
 .planner-block-heading {
   display: grid;
-  grid-template-columns: 30px minmax(0, 1fr);
+  grid-template-columns: 24px minmax(0, 1fr);
   align-items: start;
   gap: 12px;
 }
 .planner-step {
   padding-top: 2px;
-  color: var(--primary);
+  color: var(--text-faint);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  font-size: 12px;
-  font-weight: 750;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0;
 }
 .planner-block-heading h3 {
   margin: 0;
-  font-size: 16px;
-  font-weight: 750;
+  font-size: 15.5px;
+  font-weight: 650;
   line-height: 1.35;
 }
 .planner-block-heading p {
   margin: 3px 0 0;
   color: var(--text-soft);
-  font-size: 13.5px;
+  font-size: 13px;
   line-height: 1.4;
 }
 .planner-block-content {
@@ -65,43 +65,42 @@
   opacity: 0.46;
 }
 .segmented-control {
-  min-height: 44px;
+  min-height: 42px;
   display: flex;
   padding: 3px;
-  background: var(--surface-soft);
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 9px;
+  border-radius: 6px;
 }
 .segmented-control button {
   min-width: 0;
-  min-height: 38px;
+  min-height: 36px;
   flex: 1;
   padding: 7px 8px;
   color: var(--text);
   background: transparent;
   border: 0;
-  border-radius: 7px;
+  border-radius: 4px;
   font-size: 12.5px;
-  font-weight: 650;
+  font-weight: 550;
   line-height: 1.2;
 }
 .segmented-control button:hover:not(:disabled) {
   color: var(--text);
+  background: var(--surface-soft);
 }
 .segmented-control button.is-selected {
   color: var(--on-primary);
   background: var(--primary);
-  box-shadow:
-    0 1px 5px color-mix(in srgb, var(--primary) 30%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--primary) 72%, var(--border-strong));
-  font-weight: 700;
+  box-shadow: none;
+  font-weight: 600;
 }
 .segmented-control button:disabled {
   cursor: not-allowed;
 }
 
 .form-actions {
-  min-height: 78px;
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -109,32 +108,29 @@
   padding: 15px 0 16px;
 }
 .primary-button {
-  min-width: 138px;
-  min-height: 48px;
+  min-width: 124px;
+  min-height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  padding: 12px 20px;
+  padding: 9px 16px;
   color: var(--button-text);
   background: var(--button-bg);
-  border: 1px solid var(--border-strong);
-  border-radius: 10px;
-  font-size: 14.5px;
-  font-weight: 750;
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--button-bg);
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
   transition:
     transform 130ms ease,
     opacity 130ms ease,
     box-shadow 130ms ease;
 }
 .primary-button:hover:not(:disabled) {
-  box-shadow: 0 4px 12px rgba(20, 20, 18, 0.15);
-  transform: translateY(-1px);
+  opacity: 0.88;
 }
 .primary-button:active:not(:disabled) {
-  box-shadow: var(--shadow-sm);
-  transform: translateY(0) scale(0.985);
+  transform: scale(0.985);
 }
 .primary-button:disabled {
   opacity: 0.58;

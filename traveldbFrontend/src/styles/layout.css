@@ -7,14 +7,12 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  height: 64px;
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  border-bottom: 1px solid var(--border-strong);
-  box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(16px) saturate(1.15);
+  height: 56px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
 }
 .topbar-inner {
-  width: min(var(--content-width), calc(100% - 48px));
+  width: min(var(--content-width), calc(100% - 32px));
   height: 100%;
   display: flex;
   align-items: center;
@@ -24,43 +22,39 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   color: var(--text);
   text-decoration: none;
 }
 .brand-mark {
-  width: 35px;
-  height: 35px;
+  width: 24px;
+  height: 24px;
   display: grid;
   place-items: center;
-  color: var(--text-soft);
-  background: var(--surface-soft);
-  border: 1px solid var(--border-strong);
-  border-radius: 9px;
-  box-shadow: var(--shadow-sm);
+  color: var(--text);
 }
 .brand-wordmark {
   color: var(--text);
-  font-size: 24px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 650;
   letter-spacing: 0;
   line-height: 1;
 }
 .topbar-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 .language-picker {
-  height: 38px;
+  height: 34px;
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 0 8px;
+  padding: 0 7px;
   color: var(--text);
-  background: var(--surface-soft);
+  background: transparent;
   border: 1px solid var(--border);
-  border-radius: 9px;
+  border-radius: 5px;
   transition:
     color 140ms ease,
     border-color 140ms ease,
@@ -82,7 +76,7 @@
   border-color: var(--border-strong);
 }
 .language-picker select {
-  max-width: 150px;
+  max-width: 142px;
   padding: 0;
   padding-inline-end: 18px;
   overflow: hidden;
@@ -91,7 +85,7 @@
   border: 0;
   font: inherit;
   font-size: 13px;
-  font-weight: 550;
+  font-weight: 500;
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
@@ -101,15 +95,15 @@
   background: Canvas;
 }
 .theme-toggle {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   display: grid;
   place-items: center;
   padding: 0;
   color: var(--text);
-  background: var(--surface-soft);
+  background: transparent;
   border: 1px solid var(--border);
-  border-radius: 9px;
+  border-radius: 5px;
   transition:
     color 140ms ease,
     background 140ms ease,
@@ -127,68 +121,64 @@
 
 main,
 footer {
-  width: min(var(--content-width), calc(100% - 48px));
+  width: min(var(--content-width), calc(100% - 32px));
   margin-inline: auto;
 }
 .page-intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
-  align-items: end;
-  gap: 64px;
-  margin: 34px 0 22px;
-  padding: 0 4px;
+  display: block;
+  max-width: 760px;
+  margin: 48px 0 26px;
 }
 .page-kicker {
-  margin: 0 0 8px;
-  color: var(--primary);
-  font-size: 14px;
-  font-weight: 750;
+  margin: 0 0 7px;
+  color: var(--text-soft);
+  font-size: 13px;
+  font-weight: 600;
   letter-spacing: 0;
 }
 .page-intro h1 {
   margin: 0;
-  font-size: clamp(2.25rem, 4vw, 3rem);
-  font-weight: 800;
-  line-height: 1.05;
+  font-size: clamp(2rem, 4vw, 2.55rem);
+  font-weight: 700;
+  line-height: 1.12;
   letter-spacing: 0;
 }
 .page-intro-copy {
-  max-width: 430px;
-  margin: 0 0 3px;
+  max-width: 620px;
+  margin: 10px 0 0;
   color: var(--text-soft);
-  font-size: 17px;
-  line-height: 1.55;
+  font-size: 15.5px;
+  line-height: 1.5;
 }
 
 .planner-card,
 .results {
   background: var(--surface);
-  border: 1px solid var(--border-strong);
-  border-radius: 16px;
-  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
 }
 .planner-card {
-  padding: 0 32px;
+  padding: 0 28px;
 }
 .section-heading {
   display: grid;
   grid-template-columns: 200px minmax(0, 1fr);
   align-items: start;
-  gap: 32px;
-  padding: 23px 0 20px;
-  border-bottom: 1px solid var(--border-strong);
+  gap: 28px;
+  padding: 20px 0 18px;
+  border-bottom: 1px solid var(--border);
 }
 .section-label {
   display: block;
   margin-bottom: 5px;
   color: var(--text-soft);
-  font-size: 13px;
-  font-weight: 650;
+  font-size: 12px;
+  font-weight: 550;
 }
 .section-heading h2 {
   margin: 0;
-  font-size: 22px;
-  font-weight: 750;
+  font-size: 19px;
+  font-weight: 650;
   line-height: 1.25;
   letter-spacing: 0;
 }
@@ -199,24 +189,23 @@ footer {
   max-width: 650px;
   margin: 2px 0 0;
   color: var(--text-soft);
-  font-size: 13.5px;
-  line-height: 1.55;
+  font-size: 13px;
+  line-height: 1.5;
 }
 .scope-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   flex: 0 0 auto;
   margin-top: 6px;
   background: var(--primary);
   border-radius: 50%;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 footer {
-  margin-top: 24px;
-  padding: 20px 4px 42px;
+  margin-top: 22px;
+  padding: 18px 0 38px;
   color: var(--text-soft);
-  border-top: 1px solid var(--border-strong);
+  border-top: 1px solid var(--border);
   font-size: 12px;
   line-height: 1.55;
   text-align: start;

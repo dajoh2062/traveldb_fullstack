@@ -2,7 +2,7 @@
   max-width: 100%;
 }
 .route-builder {
-  margin-top: 18px;
+  margin-top: 16px;
 }
 .route-header {
   min-height: 38px;
@@ -12,7 +12,7 @@
   gap: 16px;
   padding: 0 0 10px;
   color: var(--text-soft);
-  border-bottom: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border);
   font-size: 13px;
   font-weight: 700;
 }
@@ -31,13 +31,12 @@
   font-size: 14px;
 }
 .empty-route::before {
-  width: 9px;
-  height: 9px;
+  width: 7px;
+  height: 7px;
   flex: 0 0 auto;
   content: "";
   border: 1.5px solid var(--primary);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 9%, transparent);
 }
 .route-list {
   display: grid;
@@ -59,7 +58,7 @@
   top: 43px;
   bottom: -25px;
   left: 50%;
-  width: 2px;
+  width: 1px;
   content: "";
   background: color-mix(in srgb, var(--primary) 58%, var(--border-strong));
   transform: translateX(-50%);
@@ -70,17 +69,17 @@
 .stop-marker {
   position: relative;
   z-index: 1;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: grid;
   place-items: center;
   color: var(--text);
   background: var(--surface);
-  border: 2px solid var(--border-strong);
+  border: 1px solid var(--border-strong);
   border-radius: 50%;
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 8px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .stop-marker.origin {
   color: var(--on-primary);
@@ -94,12 +93,12 @@
 }
 .route-stop-card {
   min-width: 0;
-  min-height: 70px;
+  min-height: 64px;
   display: grid;
   grid-template-columns: 92px 64px minmax(0, 1fr) 120px;
   align-items: center;
   gap: 15px;
-  padding: 13px 0;
+  padding: 11px 0;
   border-bottom: 1px solid var(--border);
 }
 .route-stop:last-child .route-stop-card {
@@ -112,8 +111,8 @@
 }
 .route-code {
   color: var(--primary);
-  font-size: 17px;
-  font-weight: 750;
+  font-size: 15px;
+  font-weight: 650;
   letter-spacing: 0;
 }
 .route-stop-details {
@@ -128,8 +127,8 @@
 }
 .route-stop-details strong {
   color: var(--text);
-  font-size: 14.5px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 600;
 }
 .route-stop-details span {
   margin-top: 3px;
@@ -153,15 +152,15 @@
 }
 .move-airport,
 .remove-airport {
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   display: grid;
   place-items: center;
   padding: 0;
   color: var(--text-faint);
   background: transparent;
   border: 0;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 .move-airport:hover:not(:disabled) {
   color: var(--primary);
