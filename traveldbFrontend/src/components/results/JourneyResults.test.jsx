@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import JourneyResults from "./JourneyResults";
-import { formatRuleDate } from "./resultHelpers";
+import { documentRequirementKey, formatRuleDate } from "./resultHelpers";
 
 const route = [
   { iataCode: "OSL", name: "Oslo Airport" },
@@ -114,6 +114,20 @@ describe("JourneyResults", () => {
   it("rejects impossible rule dates instead of rolling them into another month", () => {
     expect(formatRuleDate("2026-02-31", "en-GB")).toBeNull();
     expect(formatRuleDate("2026-02-28", "en-GB")).toBe("28 Feb 2026");
+  });
+
+  it("keeps distinct rules separate when they share an output code", () => {
+    const baseRequirement = {
+      airportCode: "NRT",
+      code: "JAPAN_SHORT_STAY_PERMISSION",
+      scope: "ENTRY",
+    };
+
+    expect(
+      documentRequirementKey({ ...baseRequirement, ruleId: "jp-entry-norwegian-passport" }),
+    ).not.toBe(
+      documentRequirementKey({ ...baseRequirement, ruleId: "jp-entry-spanish-passport" }),
+    );
   });
 
   it("shows required, alternative, and unverified document actions at the correct airports", () => {

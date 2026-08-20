@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "check": "npm run format:check && npm run test && npm run lint && npm run build",
+    "check": "npm run format:check && npm run check:guidance && npm run test && npm run lint && npm run build",
+    "check:guidance": "node scripts/check-guidance-catalogs.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",

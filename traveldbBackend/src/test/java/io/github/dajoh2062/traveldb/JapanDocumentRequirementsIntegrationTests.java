@@ -50,6 +50,7 @@ class JapanDocumentRequirementsIntegrationTests extends DocumentRequirementsInte
 
         DocumentRequirement permission = requirement(response, "JAPAN_SHORT_STAY_PERMISSION");
         assertEquals(DocumentRequirement.Status.NOT_REQUIRED, permission.status());
+        assertEquals("japan-ordinary-passport-waiver-90", permission.ruleId());
         assertEquals("NRT", permission.airportCode());
         assertEquals("Up to 90 days", factValue(permission, "Landing period"));
         assertTrue(permission.sources().stream().anyMatch(source -> source.url().contains("mofa.go.jp")));

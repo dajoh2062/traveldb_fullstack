@@ -73,7 +73,8 @@ public class ConservativeDocumentProvider implements DocumentRequirementsProvide
                 "Passport or accepted travel document",
                 "Confirm which travel document is accepted and its minimum remaining validity. National identity cards can replace passports on some regional journeys.",
                 List.of("Check validity on both the arrival date and planned departure date.", "Verify blank-page and document-condition requirements."),
-                List.of(IATA_TRAVEL_CENTRE, TRAVELDOC)
+                List.of(IATA_TRAVEL_CENTRE, TRAVELDOC),
+                "conservative-travel-document"
         ));
 
         List<TravelDocument> travelDocuments = safeTravelDocuments(input);
@@ -101,7 +102,8 @@ public class ConservativeDocumentProvider implements DocumentRequirementsProvide
                     transit
                             ? List.of("Airside and landside connections can have different rules.", "Airport or terminal changes usually require entry permission.")
                             : List.of("Residence permits and valid visas from other countries can create exemptions.", "Visa-free entry can still require an ETA or arrival registration."),
-                    List.of(IATA_TRAVEL_CENTRE, TRAVELDOC)
+                    List.of(IATA_TRAVEL_CENTRE, TRAVELDOC),
+                    transit ? "conservative-transit-permission" : "conservative-entry-permission"
             ));
         }
 
@@ -117,7 +119,8 @@ public class ConservativeDocumentProvider implements DocumentRequirementsProvide
                         "Additional entry evidence",
                         "Border authorities may request onward travel, accommodation details, sufficient funds, insurance, health documents or declarations.",
                         List.of("Rules can differ for minors and non-tourist travel.", "Check whether an online arrival or customs form must be completed before departure."),
-                        List.of(IATA_TRAVEL_CENTRE, TRAVELDOC)
+                        List.of(IATA_TRAVEL_CENTRE, TRAVELDOC),
+                        "conservative-entry-conditions"
                 )));
 
         return new DocumentCheckResult(
@@ -182,7 +185,8 @@ public class ConservativeDocumentProvider implements DocumentRequirementsProvide
                 "TravelDB recorded this " + label
                         + " but has not determined that it is accepted. Verify it for every entry and transit point on the route.",
                 List.copyOf(conditions),
-                documentSources(type)
+                documentSources(type),
+                "conservative-document-acceptance"
         );
     }
 

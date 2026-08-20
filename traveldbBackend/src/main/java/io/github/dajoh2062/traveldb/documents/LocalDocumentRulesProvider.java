@@ -228,7 +228,8 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 rule.sources(),
                 rule.keyFacts(),
                 rule.lastVerified(),
-                rule.reviewAfter()
+                rule.reviewAfter(),
+                rule.id()
         );
     }
 

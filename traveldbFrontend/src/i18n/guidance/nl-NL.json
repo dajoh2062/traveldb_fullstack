@@ -1,0 +1,1412 @@
+{
+  "documentDatasetVersion": "2026-08-09.5",
+  "documents": {
+    "rules": {
+      "australia-valid-visa-entry": {
+      "title": "Controleer of uw Australische visum voor deze reis geldt",
+      "summary": "In het opgegeven profiel staat een Australisch visum, maar het type, de geldigheid, het reisdoel en het toegestane aantal binnenkomsten moeten worden gecontroleerd.",
+        "conditions": [
+        "Het visum moet geldig zijn voor het beoogde reisdoel, de reisdata en het aantal binnenkomsten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Profielgegevens",
+          "value": "Australisch visum geregistreerd"
+          },
+          {
+          "label": "Controleren",
+          "value": "Visumsubklasse, geldigheid, reisdoel en toegestane binnenkomsten"
+          }
+        ]
+      },
+      "canada-valid-visa-entry": {
+      "title": "Controleer of uw Canadese visum voor deze reis geldt",
+      "summary": "In het opgegeven profiel staat een Canadees visum, maar het type, de geldigheid en het toegestane reisdoel moeten worden gecontroleerd voordat u erop vertrouwt in plaats van op een eTA.",
+        "conditions": [
+        "Het visum en paspoort moeten gedurende de hele reis geldig blijven."
+        ],
+        "keyFacts": [
+          {
+          "label": "Profielgegevens",
+          "value": "Canadees visum geregistreerd"
+          },
+          {
+          "label": "Controleren",
+          "value": "Visumtype, geldigheid en toegestaan reisdoel"
+          }
+        ]
+      },
+      "canada-valid-visa-transit": {
+      "title": "Controleer of uw Canadese visum voor deze doorreis geldt",
+      "summary": "In het opgegeven profiel staat een Canadees visum, maar het type en de geldigheid moeten worden gecontroleerd voordat u er voor de doorreis op vertrouwt in plaats van op een eTA.",
+        "conditions": [
+        "Het visum en paspoort moeten gedurende de hele doorreis geldig blijven."
+        ],
+        "keyFacts": [
+          {
+          "label": "Profielgegevens",
+          "value": "Canadees visum geregistreerd"
+          },
+          {
+          "label": "Controleren",
+          "value": "Visumtype en geldigheid gelden voor deze doorreis"
+          }
+        ]
+      },
+      "japan-valid-visa-entry": {
+      "title": "Controleer of uw Japanse visum voor deze reis geldt",
+      "summary": "In het opgegeven profiel staat een Japans visum, maar de geldigheid, het toegestane reisdoel en het aantal binnenkomsten moeten vóór de reis worden gecontroleerd.",
+        "conditions": [
+        "Het visum moet geldig en geschikt zijn voor het geplande reisdoel, de reisdata en het aantal binnenkomsten.",
+        "Een visum is één van de inreisvereisten; de Japanse immigratiedienst beslist over de uiteindelijke toelating."
+        ],
+        "keyFacts": [
+          {
+          "label": "Profielgegevens",
+          "value": "Japans visum geregistreerd"
+          },
+          {
+          "label": "Controleren",
+          "value": "Geldigheid, reisdoel en toegestane binnenkomsten"
+          }
+        ]
+      },
+      "new-zealand-valid-visa-entry": {
+      "title": "Controleer of uw Nieuw-Zeelandse visum voor deze reis geldt",
+      "summary": "In het opgegeven profiel staat een Nieuw-Zeelands visum, maar het type, de geldigheid en het toegestane reisdoel moeten worden gecontroleerd voordat u erop vertrouwt in plaats van op een NZeTA.",
+        "conditions": [
+        "Het visum moet geldig zijn voor het beoogde reisdoel en de reisdata."
+        ],
+        "keyFacts": [
+          {
+          "label": "Bestaand visum",
+          "value": "Controleer type, geldigheid, reisdoel en toegestane verblijfsduur"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Normaal gesproken ten minste 3 maanden na het geplande vertrek"
+          }
+        ]
+      },
+      "uk-valid-visa-entry": {
+      "title": "Controleer of uw Britse immigratietoestemming voor deze reis geldt",
+      "summary": "In het opgegeven profiel staat een Britse immigratietoestemming, maar het type, de geldigheid en het toegestane reisdoel moeten worden gecontroleerd voordat u erop vertrouwt in plaats van op een ETA.",
+        "conditions": [
+        "De bestaande toestemming moet geldig zijn voor het geplande reisdoel en de reisdata."
+        ],
+        "keyFacts": [
+          {
+          "label": "Bestaande toestemming",
+          "value": "Controleer type, geldigheid, reisdoel en toegestane verblijfsduur"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Geldig gedurende het hele verblijf"
+          }
+        ]
+      },
+      "us-valid-visa-entry": {
+      "title": "Controleer of uw Amerikaanse visum voor deze reis geldt",
+      "summary": "In het opgegeven profiel staat een Amerikaans visum, maar de visumklasse, geldigheid, het reisdoel en het toegestane aantal binnenkomsten moeten worden gecontroleerd voordat u erop vertrouwt in plaats van op ESTA.",
+        "conditions": [
+        "Het visum moet geldig en geschikt zijn voor het geplande reisdoel.",
+        "Een visum of ESTA geeft toestemming om naar de grens te reizen, maar garandeert geen toelating."
+        ],
+        "keyFacts": [
+          {
+          "label": "Profielgegevens",
+          "value": "Amerikaans visum geregistreerd"
+          },
+          {
+          "label": "Controleren",
+          "value": "Visumklasse, geldigheid, reisdoel en toegestane binnenkomsten"
+          }
+        ]
+      },
+      "us-valid-visa-transit": {
+      "title": "Controleer of uw Amerikaanse visum voor deze doorreis geldt",
+      "summary": "In het opgegeven profiel staat een Amerikaans visum, maar de visumklasse en geldigheid moeten worden gecontroleerd voordat u er voor de doorreis op vertrouwt in plaats van op ESTA.",
+        "conditions": [
+        "Het visum moet geldig zijn voor de doorreis en de reiziger moet daarnaast aan alle toelatingsvoorwaarden voldoen."
+        ],
+        "keyFacts": [
+          {
+          "label": "Profielgegevens",
+          "value": "Amerikaans visum geregistreerd"
+          },
+          {
+          "label": "Controleren",
+          "value": "Visumklasse en geldigheid gelden voor deze doorreis"
+          }
+        ]
+      },
+      "japan-citizen-return": {
+      "title": "Geen visum nodig voor een Japanse staatsburger die naar Japan terugkeert",
+      "summary": "Japanse staatsburgers keren terug via een afzonderlijke procedure voor terugkeerbevestiging en hebben geen visum nodig om Japan binnen te komen.",
+        "conditions": [
+        "Voor de terugkeerbevestiging wordt normaal gesproken een paspoort gebruikt.",
+        "Wanneer om onvermijdelijke redenen geen paspoort kan worden getoond, moet de Japanse nationaliteit worden aangetoond via de afzonderlijke procedure die door de Immigration Services Agency is beschreven."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visum",
+          "value": "Niet vereist"
+          },
+          {
+          "label": "Werkwijze",
+          "value": "Japanse terugkeerbevestiging"
+          }
+        ]
+      },
+      "japan-barbados-lesotho-mrp-waiver-90": {
+      "title": "Alleen visumvrij met een machineleesbaar paspoort",
+      "summary": "Dit gewone paspoort is alleen voor maximaal 90 dagen vrijgesteld van de visumplicht wanneer het een machineleesbaar paspoort is dat aan de ICAO-normen voldoet.",
+        "conditions": [
+        "Zonder een geschikt machineleesbaar paspoort adviseert het Japanse ministerie van Buitenlandse Zaken vóór de reis een visum aan te vragen; anders kan de reiziger grondig worden onderzocht en de toegang worden geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform machineleesbaar paspoort vereist"
+          },
+          {
+          "label": "Vrijstelling van kracht sinds",
+          "value": "1 april 2010"
+          }
+        ]
+      },
+      "japan-brazil-epassport-waiver-90": {
+      "title": "Alleen visumvrij met een Braziliaans e-paspoort",
+      "summary": "Een gewoon Braziliaans paspoort is alleen voor maximaal 90 dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is.",
+        "conditions": [
+        "Vraag zonder een geschikt e-paspoort vóór de reis een visum aan; het Japanse ministerie van Buitenlandse Zaken waarschuwt dat de toegang anders wordt geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort vereist"
+          },
+          {
+          "label": "Vrijstelling van kracht sinds",
+          "value": "30 september 2023"
+          }
+        ]
+      },
+      "japan-hong-kong-document-waiver-90": {
+      "title": "Controleer het reisdocument voor Hongkong",
+      "summary": "Visumvrije toegang voor maximaal 90 dagen is beperkt tot een paspoort van de Speciale Bestuurlijke Regio Hongkong of een British National (Overseas)-paspoort waarvan de houder verblijfsrecht in Hongkong heeft.",
+        "conditions": [
+        "U moet een paspoort van de Speciale Bestuurlijke Regio Hongkong hebben, of een BNO-paspoort in combinatie met verblijfsrecht in Hongkong.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Geaccepteerd document",
+          "value": "Paspoort van de Speciale Bestuurlijke Regio Hongkong"
+          },
+          {
+          "label": "BNO-voorwaarde",
+          "value": "Verblijfsrecht in Hongkong vereist"
+          }
+        ]
+      },
+      "japan-indonesia-registered-epassport-waiver": {
+      "title": "Alleen visumvrij met een geregistreerd Indonesisch e-paspoort",
+      "summary": "Een gewoon Indonesisch paspoort is alleen voor maximaal 15 dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is dat vóór vertrek bij een Japanse diplomatieke vertegenwoordiging in Indonesië is geregistreerd.",
+        "conditions": [
+        "Voltooi de registratie voor visumvrijstelling vóór vertrek.",
+        "De registratie verloopt na drie jaar of wanneer het paspoort verloopt, afhankelijk van wat het eerst gebeurt.",
+        "Voor een nieuw paspoort of een naamswijziging is een nieuwe registratie vereist.",
+        "Vraag zonder het geschikte geregistreerde e-paspoort vóór de reis een visum aan."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "15 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort"
+          },
+          {
+          "label": "Registratie",
+          "value": "Vóór vertrek vereist"
+          },
+          {
+          "label": "Geldigheid registratie",
+          "value": "3 jaar of tot het paspoort verloopt, afhankelijk van wat het eerst gebeurt"
+          }
+        ]
+      },
+      "japan-macao-sar-passport-waiver-90": {
+      "title": "Alleen visumvrij met een paspoort van de Speciale Bestuurlijke Regio Macau",
+      "summary": "Visumvrije toegang voor maximaal 90 dagen is beperkt tot houders van een paspoort dat is uitgegeven door de Speciale Bestuurlijke Regio Macau.",
+        "conditions": [
+        "Controleer of het document een paspoort van de Speciale Bestuurlijke Regio Macau is.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Geaccepteerd document",
+          "value": "Paspoort van de Speciale Bestuurlijke Regio Macau"
+          }
+        ]
+      },
+      "japan-malaysia-epassport-waiver-90": {
+      "title": "Alleen visumvrij met een Maleisisch e-paspoort",
+      "summary": "Een gewoon Maleisisch paspoort is alleen voor maximaal 90 dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is.",
+        "conditions": [
+        "Zonder een geschikt e-paspoort adviseert het Japanse ministerie van Buitenlandse Zaken vóór de reis een visum aan te vragen; anders kan de reiziger grondig worden onderzocht en de toegang worden geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort vereist"
+          },
+          {
+          "label": "Vrijstelling van kracht sinds",
+          "value": "1 juli 2013"
+          }
+        ]
+      },
+    "japan-montenegro-epassport-waiver-90": {
+      "title": "Alleen visumvrij met een Montenegrijns e-paspoort",
+      "summary": "Een gewoon Montenegrijns paspoort is alleen voor maximaal 90 dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is.",
+        "conditions": [
+        "Vraag zonder een geschikt e-paspoort vóór de reis een visum aan; het Japanse ministerie van Buitenlandse Zaken waarschuwt dat de toegang anders wordt geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort vereist"
+          },
+          {
+          "label": "Vrijstelling van kracht sinds",
+          "value": "1 september 2025"
+          }
+        ]
+      },
+    "japan-panama-epassport-waiver-90": {
+      "title": "Alleen visumvrij met een Panamees e-paspoort",
+      "summary": "Een gewoon Panamees paspoort is alleen voor maximaal 90 dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is.",
+        "conditions": [
+        "Vraag zonder een geschikt e-paspoort vóór de reis een visum aan; het Japanse ministerie van Buitenlandse Zaken waarschuwt dat de toegang anders wordt geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort vereist"
+          },
+          {
+          "label": "Vrijstelling van kracht sinds",
+          "value": "1 april 2024"
+          }
+        ]
+      },
+    "japan-paraguay-epassport-waiver-90": {
+      "title": "Alleen visumvrij met een Paraguayaans e-paspoort",
+      "summary": "Een gewoon Paraguayaans paspoort is alleen voor maximaal 90 dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is.",
+        "conditions": [
+        "Vraag zonder een geschikt e-paspoort vóór de reis een visum aan; het Japanse ministerie van Buitenlandse Zaken waarschuwt dat de toegang anders wordt geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort vereist"
+          },
+          {
+          "label": "Vrijstelling van kracht sinds",
+          "value": "1 juni 2025"
+          }
+        ]
+      },
+    "japan-peru-epassport-waiver-90": {
+      "title": "Alleen visumvrij met een Peruaans e-paspoort",
+      "summary": "Een gewoon Peruaans paspoort is alleen voor maximaal 90 dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is.",
+        "conditions": [
+        "Vraag zonder een geschikt e-paspoort vóór de reis een visum aan; het Japanse ministerie van Buitenlandse Zaken waarschuwt dat de toegang anders wordt geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort vereist"
+          },
+          {
+          "label": "Vrijstelling van kracht sinds",
+          "value": "1 juli 2025"
+          }
+        ]
+      },
+      "japan-qatar-registered-epassport-waiver": {
+      "title": "Alleen visumvrij met een geregistreerd Qatarees e-paspoort",
+      "summary": "Een gewoon Qatarees paspoort is alleen voor maximaal 30 opeenvolgende dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is dat vóór vertrek bij een Japanse buitenlandse vertegenwoordiging is geregistreerd.",
+        "conditions": [
+        "Voltooi de paspoortregistratie vóór vertrek bij een Japanse ambassade, consulaat-generaal of consulaire post.",
+        "De registratie verloopt na drie jaar of wanneer het paspoort verloopt, afhankelijk van wat het eerst gebeurt.",
+        "Voor een nieuw paspoort of een naamswijziging is een nieuwe registratie vereist.",
+        "Zonder voltooide registratie wordt de toegang geweigerd."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "30 opeenvolgende dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort"
+          },
+          {
+          "label": "Registratie",
+          "value": "Vóór vertrek vereist"
+          },
+          {
+          "label": "Geldigheid registratie",
+          "value": "3 jaar of tot het paspoort verloopt, afhankelijk van wat het eerst gebeurt"
+          }
+        ]
+      },
+      "japan-serbia-epassport-waiver-90": {
+      "title": "Alleen visumvrij met een Servisch e-paspoort",
+      "summary": "Een gewoon Servisch paspoort is alleen voor maximaal 90 dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is.",
+        "conditions": [
+        "Vraag zonder een geschikt e-paspoort vóór de reis een visum aan; het Japanse ministerie van Buitenlandse Zaken waarschuwt dat de toegang anders wordt geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort vereist"
+          },
+          {
+          "label": "Vrijstelling van kracht sinds",
+          "value": "1 mei 2011"
+          }
+        ]
+      },
+      "japan-taiwan-personal-id-passport-waiver-90": {
+      "title": "Alleen visumvrij als het Taiwanese paspoort een persoonlijk identificatienummer bevat",
+      "summary": "De vrijstelling voor Taiwanese paspoorten geldt alleen wanneer het paspoort een persoonlijk identificatienummer bevat; de bij aankomst verleende verblijfsduur is maximaal 90 dagen.",
+        "conditions": [
+        "Controleer of de persoonsgegevenspagina van het paspoort een persoonlijk identificatienummer bevat.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoortvoorwaarde",
+          "value": "Persoonlijk identificatienummer vereist"
+          }
+        ]
+      },
+      "japan-thailand-epassport-waiver-15": {
+      "title": "Alleen visumvrij met een Thais e-paspoort",
+      "summary": "Een gewoon Thais paspoort is alleen voor maximaal 15 dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is.",
+        "conditions": [
+        "Op het paspoort moet het ICAO-symbool voor e-paspoorten staan en het paspoort moet de vereiste IC-chip bevatten.",
+        "Vraag zonder een geschikt e-paspoort vóór de reis een visum aan; het Japanse ministerie van Buitenlandse Zaken waarschuwt dat de toegang anders wordt geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "15 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort vereist"
+          }
+        ]
+      },
+      "japan-turkiye-mrp-waiver-90": {
+      "title": "Alleen visumvrij met een machineleesbaar Turks paspoort",
+      "summary": "Een gewoon Turks paspoort is alleen voor maximaal 90 dagen vrijgesteld van de visumplicht wanneer het machineleesbaar is en aan de ICAO-normen voldoet.",
+        "conditions": [
+        "Zonder een geschikt machineleesbaar paspoort adviseert het Japanse ministerie van Buitenlandse Zaken vóór de reis een visum aan te vragen; anders kan de reiziger grondig worden onderzocht en de toegang worden geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform machineleesbaar paspoort vereist"
+          },
+          {
+          "label": "Vrijstelling van kracht sinds",
+          "value": "1 april 2011"
+          }
+        ]
+      },
+      "japan-uae-epassport-waiver-90": {
+      "title": "Alleen visumvrij met een e-paspoort van de VAE",
+      "summary": "Een gewoon paspoort van de VAE is alleen voor maximaal 90 dagen vrijgesteld van de visumplicht wanneer het een ICAO-conform e-paspoort is.",
+        "conditions": [
+        "De vrijstelling voor ICAO-conforme e-paspoorten begon op 1 november 2022; de huidige termijn van 90 dagen geldt sinds 1 juli 2025.",
+        "Vraag zonder een geschikt e-paspoort vóór de reis een visum aan; het Japanse ministerie van Buitenlandse Zaken waarschuwt dat de toegang anders wordt geweigerd.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen"
+          },
+          {
+          "label": "Paspoort",
+          "value": "ICAO-conform e-paspoort vereist"
+          },
+          {
+          "label": "Termijn van 90 dagen van kracht sinds",
+          "value": "1 juli 2025"
+          }
+        ]
+      },
+      "japan-united-kingdom-passport-waiver": {
+      "title": "Controleer welk Brits paspoort u heeft",
+      "summary": "Een gewoon standaardpaspoort voor Britse staatsburgers is aanvankelijk voor maximaal 90 dagen vrijgesteld van de visumplicht. Een British National (Overseas)-paspoort komt alleen in aanmerking wanneer de houder verblijfsrecht in Hongkong heeft.",
+        "conditions": [
+        "Vraag bij een Brits standaardpaspoort in Japan vóór het verstrijken van de eerste termijn een verlenging aan als u gebruik wilt maken van de bilaterale regeling.",
+        "Controleer bij een British National (Overseas)-paspoort het verblijfsrecht in Hongkong voordat u op de vrijstelling vertrouwt.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Brits standaardpaspoort",
+          "value": "Aanvankelijk maximaal 90 dagen zonder visum"
+          },
+          {
+          "label": "BNO-paspoort",
+          "value": "Verblijfsrecht in Hongkong vereist"
+          },
+          {
+          "label": "Bilaterale maximumduur",
+          "value": "Na een goedgekeurde verlenging maximaal 6 maanden"
+          }
+        ]
+      },
+      "japan-uruguay-recognized-passport-waiver-90": {
+      "title": "Alleen visumvrij met de erkende Uruguayaanse paspoortversie",
+      "summary": "De visumvrijstelling voor maximaal 90 dagen geldt alleen voor de oude versie van het Uruguayaanse paspoort. Japan erkent de nieuwe versie zonder geboorteplaats niet als geldig reisdocument.",
+        "conditions": [
+        "Controleer de indeling van het paspoort en niet alleen de afgiftedatum: paspoorten van de oude versie blijven geschikt, ook als ze na 16 april 2025 zijn afgegeven.",
+        "Een paspoort van de nieuwe versie dat na 16 april 2025 zonder geboorteplaats is afgegeven, is niet geschikt voor reizen naar Japan.",
+        "Het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "90 dagen met de erkende versie"
+          },
+          {
+          "label": "Oude paspoortversie",
+          "value": "Vrijgesteld van de visumplicht"
+          },
+          {
+          "label": "Nieuwe versie zonder geboorteplaats",
+          "value": "Niet erkend voor reizen"
+          }
+        ]
+      },
+      "japan-brunei-passport-waiver-30": {
+      "title": "Geen visum nodig voor een kort verblijf in Japan",
+      "summary": "Een geldig gewoon paspoort van Brunei is voor een kort verblijf van maximaal 30 dagen vrijgesteld van de visumplicht.",
+        "conditions": [
+        "Het bezoek mag geen betaalde activiteiten omvatten.",
+        "De Japanse immigratiedienst beslist over de uiteindelijke toelating."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visum",
+          "value": "Niet vereist"
+          },
+          {
+          "label": "Verblijfsduur bij aankomst",
+          "value": "Maximaal 30 dagen"
+          },
+          {
+          "label": "Huidige verblijfsduur van kracht sinds",
+          "value": "10 december 2024"
+          }
+        ]
+      },
+      "japan-ordinary-passport-waiver-90": {
+      "title": "Geen visum nodig voor een kort verblijf in Japan",
+      "summary": "Dit gewone paspoort is voor een kort bezoek vrijgesteld van de visumplicht. De bij aankomst verleende verblijfsduur is maximaal 90 dagen.",
+        "conditions": [
+        "Het bezoek mag geen betaalde activiteiten omvatten.",
+        "De Japanse immigratiedienst beslist over de uiteindelijke toelating en de toegestane verblijfsduur."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visum",
+          "value": "Niet vereist"
+          },
+          {
+          "label": "Verblijfsduur bij aankomst",
+          "value": "Maximaal 90 dagen"
+          }
+        ]
+      },
+      "japan-ordinary-passport-waiver-six-month-extension": {
+      "title": "Aanvankelijk geen visum nodig voor maximaal 90 dagen",
+      "summary": "Dit gewone paspoort is vrijgesteld van de visumplicht. De toelating wordt aanvankelijk voor maximaal 90 dagen verleend; voor een langer verblijf op grond van de bilaterale regeling moet in Japan een verlenging worden aangevraagd.",
+        "conditions": [
+        "Vraag vóór het verstrijken van de eerste termijn een verlenging aan bij de Japanse immigratiedienst als het geplande verblijf langer dan 90 dagen duurt.",
+        "Een verlenging wordt niet automatisch verleend en het bezoek mag geen betaalde activiteiten omvatten."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visum",
+          "value": "Niet vereist"
+          },
+          {
+          "label": "Eerste verblijfsduur bij aankomst",
+          "value": "Maximaal 90 dagen"
+          },
+          {
+          "label": "Bilaterale maximumduur",
+          "value": "Na een goedgekeurde verlenging maximaal 6 maanden"
+          }
+        ]
+      },
+      "japan-entry-valid-passport": {
+      "title": "Geldig paspoort vereist voor toegang tot Japan",
+      "summary": "Uw paspoort moet geldig zijn wanneer u Japan binnenkomt. De Japanse ambassade in Finland adviseert het gedurende het hele verblijf geldig te houden.",
+        "conditions": [
+        "Neem het geldige paspoort waarmee u deze reis maakt mee wanneer u toelating aanvraagt.",
+        "Geldigheid gedurende het hele verblijf wordt aanbevolen, maar deze bronnen stellen geen extra geldigheidstermijn van drie of zes maanden na de reis verplicht."
+        ],
+        "keyFacts": [
+          {
+          "label": "Vereist bij binnenkomst",
+          "value": "Geldig paspoort"
+          },
+          {
+          "label": "Aanbevolen",
+          "value": "Geldig gedurende het hele verblijf"
+          },
+          {
+          "label": "Extra geldigheid na de reis",
+          "value": "Deze bronnen vermelden geen extra termijn"
+          }
+        ]
+      },
+      "brazil-norway-business-entry-verification": {
+      "title": "Controleer de toestemming voor zakenreizen",
+      "summary": "De officiële informatie is niet consistent genoeg voor een definitieve lokale beslissing voor Noorse zakenreizigers naar Brazilië.",
+        "conditions": [
+        "Controleer de vereiste toestemming vóór de reis bij de Braziliaanse ambassade.",
+        "Vertrouw voor betaald werk of een dienstverband niet op de toeristische visumvrijstelling."
+        ],
+        "keyFacts": [
+          {
+          "label": "Regel voor toerisme",
+          "value": "Maximaal 90 dagen visumvrij"
+          },
+          {
+          "label": "Zakenreis",
+          "value": "Vóór de reis controleren"
+          }
+        ]
+      },
+      "schengen-free-movement-entry": {
+      "title": "Geen visum vereist op grond van vrij verkeer",
+      "summary": "Burgers van de EU, de EEA en Zwitserland kunnen dit Schengenland op grond van de regels voor vrij verkeer binnenkomen met een geldig reisdocument.",
+        "conditions": [
+        "Sommige landen kunnen voor een kort verblijf een aanwezigheidsmelding vereisen.",
+        "Voor een verblijf langer dan 3 maanden kunnen inschrijving als inwoner en aanvullende voorwaarden gelden."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visum",
+          "value": "Niet vereist"
+          },
+          {
+          "label": "Zonder inschrijving als inwoner",
+          "value": "Maximaal 3 maanden"
+          },
+          {
+          "label": "Langere verblijven",
+          "value": "Er kunnen registratie- en verblijfsvoorwaarden gelden"
+          }
+        ]
+      },
+      "canada-eta-romania-entry": {
+      "title": "Canadese eTA met een geschikt Roemeens paspoort",
+      "summary": "Roemeense staatsburgers hebben een elektronisch paspoort nodig om voor een vliegreis naar Canada een eTA te gebruiken; houders van niet-elektronische paspoorten hebben een bezoekersvisum nodig.",
+        "conditions": [
+        "Het paspoort moet elektronisch zijn; een tijdelijk of ander niet-elektronisch Roemeens paspoort komt niet in aanmerking voor een eTA."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visumstatus",
+          "value": "Geen bezoekersvisum voor geschikte vliegreizen met een eTA"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Normaal gesproken maximaal 6 maanden per bezoek"
+          },
+          {
+          "label": "Geldigheid eTA",
+          "value": "Maximaal 5 jaar of totdat het paspoort verloopt"
+          },
+          {
+          "label": "Reiswijze",
+          "value": "De eTA geldt voor vliegreizen en doorreis per vliegtuig"
+          }
+        ]
+      },
+      "canada-eta-romania-transit": {
+      "title": "Canadese eTA met een geschikt Roemeens paspoort",
+      "summary": "Roemeense staatsburgers hebben een elektronisch paspoort nodig om bij een vlucht via Canada een eTA te gebruiken; houders van niet-elektronische paspoorten hebben een transit- of bezoekersvisum nodig.",
+        "conditions": [
+        "Het paspoort moet elektronisch zijn; een tijdelijk of ander niet-elektronisch Roemeens paspoort komt niet in aanmerking voor een eTA."
+        ],
+        "keyFacts": [
+          {
+          "label": "Vóór de reis",
+          "value": "Goedgekeurde eTA of een geschikt Canadees visum"
+          },
+          {
+          "label": "Reiswijze",
+          "value": "De eTA geldt voor doorreis per vliegtuig"
+          }
+        ]
+      },
+      "canada-eta-taiwan-entry": {
+      "title": "Canadese eTA met een geschikt Taiwanees paspoort",
+      "summary": "Houders van een Taiwanees paspoort komen alleen in aanmerking voor een eTA met een gewoon paspoort dat is afgegeven door het Taiwanese ministerie van Buitenlandse Zaken en het persoonlijke identificatienummer bevat.",
+        "conditions": [
+        "Met een ander Taiwanees paspoort is voor reizen naar Canada een bezoekersvisum vereist."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visumstatus",
+          "value": "Geen bezoekersvisum voor geschikte vliegreizen met een eTA"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Normaal gesproken maximaal 6 maanden per bezoek"
+          },
+          {
+          "label": "Geldigheid eTA",
+          "value": "Maximaal 5 jaar of totdat het paspoort verloopt"
+          },
+          {
+          "label": "Reiswijze",
+          "value": "De eTA geldt voor vliegreizen en doorreis per vliegtuig"
+          }
+        ]
+      },
+      "canada-eta-taiwan-transit": {
+      "title": "Canadese eTA met een geschikt Taiwanees paspoort",
+      "summary": "Houders van een Taiwanees paspoort komen bij een vlucht via Canada alleen in aanmerking voor een eTA met een gewoon paspoort dat is afgegeven door het Taiwanese ministerie van Buitenlandse Zaken en het persoonlijke identificatienummer bevat.",
+        "conditions": [
+        "Met een ander Taiwanees paspoort is voor reizen via Canada een transit- of bezoekersvisum vereist."
+        ],
+        "keyFacts": [
+          {
+          "label": "Vóór de reis",
+          "value": "Goedgekeurde eTA of een geschikt Canadees visum"
+          },
+          {
+          "label": "Reiswijze",
+          "value": "De eTA geldt voor doorreis per vliegtuig"
+          }
+        ]
+      },
+      "new-zealand-nzeta-uk-entry": {
+      "title": "Elektronische reisvergunning voor Nieuw-Zeeland (NZeTA)",
+      "summary": "Houders van een Brits paspoort hebben normaal gesproken vóór de reis een NZeTA nodig en ontvangen bij aankomst een bezoekersvisum als toegang wordt verleend.",
+        "conditions": [
+        "Voor sommige nationaliteiten gelden paspoortspecifieke beperkingen.",
+        "Reizigers moeten voldoen aan de eisen voor gezondheid, gedrag, een oprecht bezoekdoel, doorreis en financiële middelen.",
+        "Australische staatsburgers die met een Australisch paspoort reizen, zijn vrijgesteld."
+        ],
+        "keyFacts": [
+          {
+          "label": "Vóór de reis",
+          "value": "NZeTA vereist; bij goedgekeurde toegang wordt aan de grens een bezoekersvisum verleend"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Maximaal 6 maanden per bezoek"
+          },
+          {
+          "label": "Limiet binnen 12 maanden",
+          "value": "In totaal maximaal 6 maanden binnen elke periode van 12 maanden"
+          },
+          {
+          "label": "Geldigheid NZeTA",
+          "value": "2 jaar voor de meeste reizigers"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Normaal gesproken ten minste 3 maanden na het geplande vertrek"
+          }
+        ]
+      },
+      "schengen-annex-i-visa-required-entry": {
+      "title": "Schengenvisum voor kort verblijf vereist, tenzij een vrijstelling geldt",
+      "summary": "In bijlage I vermelde staatsburgers met een gewoon paspoort hebben vóór binnenkomst voor toerisme normaal gesproken een geldig Schengenvisum voor kort verblijf nodig.",
+        "conditions": [
+        "Een geldig Schengenvisum, visum voor lang verblijf, verblijfsvergunning, recht als familielid van een EU-burger of een andere officiële vrijstelling kan aan deze eis voldoen of deze wijzigen.",
+        "Het afgegeven visum kan minder dagen of landen toestaan dan het algemene maximum.",
+        "Voor werk, studie en verblijven langer dan 90 dagen gelden afzonderlijke nationale regels."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visum",
+          "value": "Vóór de reis vereist, tenzij een vrijstelling geldt"
+          },
+          {
+          "label": "Maximale duur kort verblijf",
+          "value": "Maximaal 90 dagen binnen elke periode van 180 dagen; het visum kan minder toestaan"
+          },
+          {
+          "label": "Paspoort afgegeven",
+          "value": "Bij binnenkomst in de voorafgaande 10 jaar"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Ten minste 3 maanden na het geplande vertrek uit het Schengengebied"
+          }
+        ]
+      },
+      "schengen-annex-ii-biometric-passport-entry": {
+      "title": "Het biometrische paspoort bepaalt de visumvrijstelling",
+      "summary": "Een geschikt biometrisch gewoon paspoort staat visumvrij toerisme in het Schengengebied toe voor maximaal 90 dagen binnen elke periode van 180 dagen; met een ongeschikt paspoort is een visum vereist.",
+        "conditions": [
+        "Controleer of het paspoort biometrisch is en voldoet aan de landspecifieke formulering in bijlage II voordat u op de vrijstelling vertrouwt.",
+        "De app registreert het land van afgifte, maar niet of een paspoort biometrisch is.",
+        "ETIAS is niet operationeel gedurende de geldigheidsperiode van deze regel; voor vertrek na 30 september 2026 wordt een nieuwe controle uitgevoerd."
+        ],
+        "keyFacts": [
+          {
+          "label": "Met geschikt paspoort",
+          "value": "Geen visum voor toerisme"
+          },
+          {
+          "label": "Zonder geschikt paspoort",
+          "value": "Schengenvisum voor kort verblijf vereist"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "In het hele Schengengebied maximaal 90 dagen binnen elke periode van 180 dagen"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Ten minste 3 maanden na het geplande vertrek uit het Schengengebied"
+          },
+          {
+          "label": "Elektronische vergunning",
+          "value": "Tot en met 30 september 2026 niet vereist"
+          }
+        ]
+      },
+      "schengen-annex-ii-specific-passport-entry": {
+      "title": "Controleer de paspoortspecifieke visumvrijstelling",
+      "summary": "Visumvrij toerisme in het Schengengebied hangt af van het exacte paspoort: afhankelijk van de situatie een paspoort van de Speciale Bestuurlijke Regio Hongkong, de Speciale Bestuurlijke Regio Macau of een Taiwanees paspoort met een identiteitskaartnummer.",
+        "conditions": [
+        "Voor een ander paspoort dat voor hetzelfde gebied is afgegeven, kan een visum voor kort verblijf vereist zijn.",
+        "De app registreert het paspoortsubtype of het kenmerk van het Taiwanese identiteitskaartnummer niet.",
+        "ETIAS is niet operationeel gedurende de geldigheidsperiode van deze regel; voor vertrek na 30 september 2026 wordt een nieuwe controle uitgevoerd."
+        ],
+        "keyFacts": [
+          {
+          "label": "Met geschikt paspoort",
+          "value": "Geen visum voor toerisme"
+          },
+          {
+          "label": "Zonder geschikt paspoort",
+          "value": "Schengenvisum voor kort verblijf vereist"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "In het hele Schengengebied maximaal 90 dagen binnen elke periode van 180 dagen"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Ten minste 3 maanden na het geplande vertrek uit het Schengengebied"
+          },
+          {
+          "label": "Elektronische vergunning",
+          "value": "Tot en met 30 september 2026 niet vereist"
+          }
+        ]
+      },
+      "schengen-annex-ii-visa-exempt-entry": {
+      "title": "Toerisme: geen visum voor kort verblijf vereist",
+      "summary": "De vermelde houders van een gewoon paspoort kunnen het Schengengebied zonder visum voor kort verblijf bezoeken voor maximaal 90 dagen binnen elke voortschrijdende periode van 180 dagen.",
+        "conditions": [
+        "De termijn van 90 dagen geldt voor het hele Schengengebied en begint niet in elk land opnieuw.",
+        "Voor werk, studie en verblijven langer dan 90 dagen gelden afzonderlijke nationale regels.",
+        "ETIAS is niet operationeel gedurende de geldigheidsperiode van deze regel; voor vertrek na 30 september 2026 wordt een nieuwe controle uitgevoerd."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visum",
+          "value": "Niet vereist voor toerisme"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "In het hele Schengengebied maximaal 90 dagen binnen elke periode van 180 dagen"
+          },
+          {
+          "label": "Paspoort afgegeven",
+          "value": "Bij binnenkomst in de voorafgaande 10 jaar"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Ten minste 3 maanden na het geplande vertrek uit het Schengengebied"
+          },
+          {
+          "label": "Elektronische vergunning",
+          "value": "Tot en met 30 september 2026 niet vereist"
+          }
+        ]
+      },
+      "australia-eta-entry": {
+      "title": "Australische ETA of een ander geschikt visum",
+      "summary": "Geschikte paspoorthouders moeten vóór de reis een geldig Australisch visum hebben; mogelijk is ETA 601 beschikbaar.",
+        "conditions": [
+        "Een strafblad, reisdoel, voorgenomen verblijfsduur en paspoorttype kunnen een ander visum vereisen.",
+        "De ETA is digitaal gekoppeld aan het paspoort dat bij de aanvraag is gebruikt."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visumstatus",
+          "value": "Vóór de reis is een visum vereist"
+          },
+          {
+          "label": "Beschikbare optie",
+          "value": "ETA 601 is mogelijk beschikbaar"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Maximaal 3 maanden per binnenkomst"
+          },
+          {
+          "label": "Geldigheid ETA",
+          "value": "12 maanden of totdat het paspoort verloopt"
+          }
+        ]
+      },
+      "australia-eta-evisitor-entry": {
+      "title": "Australisch visum — eVisitor of ETA mogelijk beschikbaar",
+      "summary": "Geschikte paspoorthouders moeten vóór de reis een geldig Australisch visum hebben; mogelijk zijn eVisitor 651 of ETA 601 beschikbaar.",
+        "conditions": [
+        "Een strafblad, reisdoel, voorgenomen verblijfsduur en paspoorttype kunnen een ander visum vereisen.",
+        "Het visum is digitaal gekoppeld aan het paspoort dat bij de aanvraag is gebruikt."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visumstatus",
+          "value": "Vóór de reis is een visum vereist"
+          },
+          {
+          "label": "Beschikbare opties",
+          "value": "eVisitor 651 of ETA 601 zijn mogelijk beschikbaar"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Maximaal 3 maanden per binnenkomst"
+          },
+          {
+          "label": "Geldigheid visum",
+          "value": "Meerdere binnenkomsten tijdens een geldigheidsperiode van 12 maanden"
+          }
+        ]
+      },
+      "australia-evisitor-entry": {
+      "title": "Australische eVisitor of een ander geschikt visum",
+      "summary": "Geschikte Europese paspoorthouders moeten vóór de reis een geldig Australisch visum hebben; mogelijk is eVisitor 651 beschikbaar.",
+        "conditions": [
+        "Een strafblad, reisdoel, voorgenomen verblijfsduur en paspoorttype kunnen een ander visum vereisen.",
+        "Het visum is digitaal gekoppeld aan het paspoort dat bij de aanvraag is gebruikt."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visumstatus",
+          "value": "Vóór de reis is een visum vereist"
+          },
+          {
+          "label": "Beschikbare optie",
+          "value": "eVisitor 651 is mogelijk beschikbaar"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Maximaal 3 maanden per binnenkomst"
+          },
+          {
+          "label": "Geldigheid eVisitor",
+          "value": "Meerdere binnenkomsten gedurende 12 maanden"
+          }
+        ]
+      },
+      "australia-transit-without-visa": {
+      "title": "Voorwaarden voor visumvrije doorreis door Australië kunnen gelden",
+      "summary": "Geschikte paspoorthouders kunnen alleen zonder Australisch visum doorreizen als aan alle transitvoorwaarden wordt voldaan.",
+        "conditions": [
+        "De reiziger moet per vliegtuig aankomen en een bevestigd ticket hebben om binnen 8 uur per vliegtuig naar een derde land door te reizen.",
+        "De reiziger moet de documenten voor de bestemming hebben en mag de immigratiecontrole niet passeren, de transitzone niet verlaten en geen bagage ophalen."
+        ],
+        "keyFacts": [
+          {
+          "label": "Transitvisum",
+          "value": "Alleen niet vereist wanneer aan alle TWOV-voorwaarden wordt voldaan"
+          },
+          {
+          "label": "Maximale transitduur",
+          "value": "Maximaal 8 uur"
+          },
+          {
+          "label": "Grensprocedure",
+          "value": "Blijf airside en haal geen bagage op"
+          }
+        ]
+      },
+      "brazil-norway-visa-exempt-entry": {
+      "title": "Toerisme: maximaal 90 dagen zonder visum of ETA",
+      "summary": "Noorse houders van een gewoon paspoort kunnen Brazilië voor toerisme bezoeken zonder visum of elektronische reisvergunning.",
+        "conditions": [
+        "Het migratiejaar van 12 maanden begint bij de eerste binnenkomst en loopt door. Alleen dagen die in Brazilië zijn doorgebracht tellen mee; vertrek herstelt reeds gebruikte dagen niet.",
+        "Vraag vóór het verstrijken van het eerste verblijf een verlenging aan bij de Polícia Federal; goedkeuring is niet gegarandeerd.",
+        "Voor betaald werk, verblijf en andere doelen dan bezoek is de juiste toestemming vereist."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visum of ETA",
+          "value": "Niet vereist voor toerisme"
+          },
+          {
+          "label": "Eerste verblijf",
+          "value": "Maximaal 90 dagen vanaf de eerste binnenkomst"
+          },
+          {
+          "label": "Maximum bij goedgekeurde verlenging",
+          "value": "In totaal maximaal 180 dagen in het migratiejaar"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Gedurende het hele verblijf; geen extra 6 maanden vereist"
+          }
+        ]
+      },
+      "canada-eta-entry": {
+      "title": "Canadese eTA of geldig Canadees visum",
+      "summary": "Buitenlandse staatsburgers die zijn vrijgesteld van de visumplicht hebben normaal gesproken een eTA nodig om naar Canada te vliegen, tenzij zij een geldig Canadees visum hebben of onder een andere vrijstelling vallen.",
+        "conditions": [
+        "Canadese staatsburgers en permanente inwoners gebruiken andere documenten.",
+        "Amerikaanse staatsburgers en geschikte rechtmatige permanente inwoners van de VS zijn vrijgesteld van de eTA-plicht."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visumstatus",
+          "value": "Geen bezoekersvisum voor geschikte vliegreizen met een eTA"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Normaal gesproken maximaal 6 maanden per bezoek"
+          },
+          {
+          "label": "Geldigheid eTA",
+          "value": "Maximaal 5 jaar of totdat het paspoort verloopt"
+          },
+          {
+          "label": "Reiswijze",
+          "value": "De eTA geldt voor vliegreizen en doorreis per vliegtuig"
+          }
+        ]
+      },
+      "canada-eta-transit": {
+      "title": "Canadese eTA of transit-/bezoekersvisum",
+      "summary": "Vliegtuigpassagiers die via Canada reizen, hebben doorgaans het Canadese inreisdocument nodig dat bij hun paspoort hoort, ook bij een korte overstap.",
+        "conditions": [
+        "Sommige visumvrije transitprogramma's met specifieke regels voor nationaliteit, luchthaven en reisroute hebben strenge voorwaarden."
+        ],
+        "keyFacts": [
+          {
+          "label": "Vóór de reis",
+          "value": "Goedgekeurde eTA of een geschikt Canadees visum"
+          },
+          {
+          "label": "Reiswijze",
+          "value": "De eTA geldt voor doorreis per vliegtuig"
+          }
+        ]
+      },
+      "japan-ordinary-passport-non-waiver-check": {
+      "title": "Normaal gesproken is een visum voor Japan vereist",
+      "summary": "Dit gewone paspoort valt niet onder een lokaal vastgelegde vrijstelling voor kort verblijf. Vóór de reis is normaal gesproken een visum vereist, maar een bestaande immigratietoestemming of een andere document- of statusspecifieke vrijstelling kan het resultaat wijzigen.",
+        "conditions": [
+        "Vraag vóór vertrek het juiste visum aan als er geen afzonderlijke vrijstelling of geldige Japanse immigratietoestemming geldt.",
+        "Een Japans visum kan niet bij aankomst worden verkregen.",
+        "Controleer diplomatieke, officiële en andere bijzondere reisdocumenten volgens de afzonderlijke regels daarvoor."
+        ],
+        "keyFacts": [
+          {
+          "label": "Normale vereiste",
+          "value": "Visum vóór de reis"
+          },
+          {
+          "label": "Bijzondere gevallen",
+          "value": "Bestaande toestemming of documentspecifieke vrijstelling kan gelden"
+          },
+          {
+          "label": "Visum bij aankomst",
+          "value": "Niet beschikbaar"
+          }
+        ]
+      },
+      "new-zealand-nzeta-entry": {
+      "title": "Elektronische reisvergunning voor Nieuw-Zeeland (NZeTA)",
+      "summary": "Reizigers die zijn vrijgesteld van de visumplicht hebben normaal gesproken vóór de reis een NZeTA nodig en ontvangen bij aankomst een bezoekersvisum als toegang wordt verleend.",
+        "conditions": [
+        "Voor sommige nationaliteiten gelden paspoortspecifieke beperkingen.",
+        "Reizigers moeten voldoen aan de eisen voor gezondheid, gedrag, een oprecht bezoekdoel, doorreis en financiële middelen.",
+        "Australische staatsburgers die met een Australisch paspoort reizen, zijn vrijgesteld."
+        ],
+        "keyFacts": [
+          {
+          "label": "Vóór de reis",
+          "value": "NZeTA vereist; bij goedgekeurde toegang wordt aan de grens een bezoekersvisum verleend"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Maximaal 3 maanden per bezoek"
+          },
+          {
+          "label": "Limiet binnen 12 maanden",
+          "value": "In totaal maximaal 6 maanden binnen elke periode van 12 maanden"
+          },
+          {
+          "label": "Geldigheid NZeTA",
+          "value": "2 jaar voor de meeste reizigers"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Normaal gesproken ten minste 3 maanden na het geplande vertrek"
+          }
+        ]
+      },
+      "new-zealand-nzeta-transit": {
+      "title": "NZeTA of Nieuw-Zeelands transitvisum",
+      "summary": "Geschikte transitpassagiers hebben een NZeTA nodig; andere passagiers hebben mogelijk een transitvisum nodig.",
+        "conditions": [
+        "Visumvrije doorreis is beperkt tot Auckland International Airport en duurt normaal gesproken niet langer dan 24 uur.",
+        "De exacte regel hangt af van het paspoort, de bestemming en of de reiziger de transitzone verlaat."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale transitduur",
+          "value": "Maximaal 24 uur"
+          },
+          {
+          "label": "Luchthaven",
+          "value": "Alleen Auckland International Airport"
+          },
+          {
+          "label": "Grensprocedure",
+          "value": "Blijf in de internationale transitzone"
+          }
+        ]
+      },
+      "new-zealand-transit-waiver-nzeta": {
+      "title": "NZeTA voor doorreis via Auckland",
+      "summary": "Houders van een paspoort met vrijstelling van het transitvisum hebben een NZeTA nodig voordat zij via Auckland International Airport reizen.",
+        "conditions": [
+        "De doorreis moet in de internationale transitzone van de luchthaven van Auckland plaatsvinden en mag normaal gesproken niet langer dan 24 uur duren.",
+        "Voor een andere Nieuw-Zeelandse luchthaven of het verlaten van de transitzone is een inreistoestemming voor bezoekers vereist."
+        ],
+        "keyFacts": [
+          {
+          "label": "Maximale transitduur",
+          "value": "Maximaal 24 uur"
+          },
+          {
+          "label": "Luchthaven",
+          "value": "Alleen Auckland International Airport"
+          },
+          {
+          "label": "Grensprocedure",
+          "value": "Blijf in de internationale transitzone"
+          }
+        ]
+      },
+      "schengen-free-movement-document": {
+      "title": "Geldig paspoort of nationale identiteitskaart",
+      "summary": "EU-burgers en burgers van IJsland, Liechtenstein, Noorwegen en Zwitserland kunnen dit Schengenland binnenkomen met een geldig paspoort of een geschikte nationale identiteitskaart.",
+        "conditions": [
+        "Het reisdocument moet op de reisdag geldig zijn.",
+        "Kinderen en minderjarigen moeten een eigen paspoort of geschikte identiteitskaart hebben.",
+        "Bij tijdelijke grenscontroles en lokale identiteitscontroles kan om het document worden gevraagd."
+        ],
+        "keyFacts": [
+          {
+          "label": "Geaccepteerd document",
+          "value": "Geldig paspoort of nationale identiteitskaart met reisrecht"
+          },
+          {
+          "label": "Geldigheid document",
+          "value": "Moet op de reisdag geldig zijn"
+          }
+        ]
+      },
+      "schengen-third-country-entry-documents": {
+      "title": "Paspoortvereisten voor het Schengengebied",
+      "summary": "Houders van een gewoon paspoort die geen burger van de EU, de EEA of Zwitserland zijn, hebben ook een geschikt paspoort nodig wanneer de afzonderlijke visumregel aangeeft dat geen visum vereist is.",
+        "conditions": [
+        "Het paspoort moet bij binnenkomst in de voorafgaande 10 jaar zijn afgegeven en normaal gesproken ten minste 3 maanden na het geplande vertrek uit het Schengengebied geldig blijven.",
+        "Kinderen en minderjarigen hebben een eigen paspoort nodig en elk visum dat voor hun nationaliteit vereist is.",
+        "Grensautoriteiten kunnen bewijs vragen van accommodatie, financiële middelen en door- of terugreis."
+        ],
+        "keyFacts": [
+          {
+          "label": "Paspoort afgegeven",
+          "value": "Bij binnenkomst in de voorafgaande 10 jaar"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Ten minste 3 maanden na het geplande vertrek uit het Schengengebied"
+          }
+        ]
+      },
+      "uk-eta-entry": {
+      "title": "Britse ETA of bestaande Britse immigratietoestemming",
+      "summary": "Reizigers met een paspoort dat voor een ETA in aanmerking komt, hebben normaal gesproken vóór een bezoek aan het Verenigd Koninkrijk een ETA nodig, tenzij zij al een visum hebben of onder een andere vermelde vrijstelling vallen.",
+        "conditions": [
+        "Ierse staatsburgers en mensen met een geldige Britse immigratietoestemming behoren tot degenen die geen ETA nodig hebben.",
+        "Een ETA garandeert geen toegang en is gekoppeld aan het paspoort dat voor de aanvraag is gebruikt."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visumstatus",
+          "value": "Geen bezoekersvisum bij een goedgekeurde ETA of andere vrijstelling"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Maximaal 6 maanden per bezoek"
+          },
+          {
+          "label": "Geldigheid ETA",
+          "value": "2 jaar of totdat het paspoort verloopt"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Geldig gedurende het hele verblijf"
+          }
+        ]
+      },
+      "uk-eta-taiwan-entry": {
+      "title": "Britse ETA of bestaande Britse immigratietoestemming",
+      "summary": "Reizigers met een geschikt Taiwanees paspoort hebben normaal gesproken vóór een bezoek aan het Verenigd Koninkrijk een ETA nodig, tenzij zij al een visum hebben of onder een andere vermelde vrijstelling vallen.",
+        "conditions": [
+        "Het Taiwanese paspoort moet het door de bevoegde autoriteit afgegeven identificatienummer bevatten.",
+        "Een ETA garandeert geen toegang en is gekoppeld aan het paspoort dat voor de aanvraag is gebruikt."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visumstatus",
+          "value": "Geen bezoekersvisum bij een goedgekeurde ETA of andere vrijstelling"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Maximaal 6 maanden per bezoek"
+          },
+          {
+          "label": "Geldigheid ETA",
+          "value": "2 jaar of totdat het paspoort verloopt"
+          },
+          {
+          "label": "Geldigheid paspoort",
+          "value": "Geldig gedurende het hele verblijf"
+          }
+        ]
+      },
+      "us-vwp-entry": {
+      "title": "Goedgekeurde ESTA of geldig Amerikaans visum",
+      "summary": "Geschikte reizigers onder het Visa Waiver Program hebben normaal gesproken vóór een vliegreis naar de Verenigde Staten een goedgekeurde ESTA nodig, tenzij zij met een geldig visum reizen.",
+        "conditions": [
+        "Reizen onder het Visa Waiver Program zijn normaal gesproken beperkt tot toeristische of zakelijke verblijven van maximaal 90 dagen.",
+        "Reisgeschiedenis, dubbele nationaliteit, paspoorttype en geschiktheid van de vervoerder kunnen een reiziger ongeschikt maken voor het Visa Waiver Program.",
+        "Voor reizen onder het Visa Waiver Program is een e-paspoort vereist."
+        ],
+        "keyFacts": [
+          {
+          "label": "Visumstatus",
+          "value": "Visumvrij onder het Visa Waiver Program met een goedgekeurde ESTA"
+          },
+          {
+          "label": "Maximale verblijfsduur",
+          "value": "Maximaal 90 dagen per toelating"
+          },
+          {
+          "label": "Geldigheid ESTA",
+          "value": "Gewoonlijk 2 jaar of totdat het paspoort verloopt"
+          }
+        ]
+      },
+      "us-vwp-transit": {
+      "title": "Goedgekeurde ESTA of geldig Amerikaans visum",
+      "summary": "De Verenigde Staten vereisen doorgaans dat transitpassagiers een ESTA onder het Visa Waiver Program of een geschikt Amerikaans visum hebben.",
+        "conditions": [
+        "De Verenigde Staten bieden geen algemene vrijstelling voor steriele internationale doorreis.",
+        "De geschiktheidsbeperkingen van het Visa Waiver Program gelden ook voor doorreis."
+        ],
+        "keyFacts": [
+          {
+          "label": "Vóór de reis",
+          "value": "Goedgekeurde ESTA of een geschikt Amerikaans visum"
+          },
+          {
+          "label": "Grensprocedure",
+          "value": "Geen algemene steriele internationale doorreis"
+          }
+        ]
+      },
+      "conservative-travel-document": {
+      "title": "Paspoort of geaccepteerd reisdocument",
+      "summary": "Controleer welk reisdocument wordt geaccepteerd en welke minimale resterende geldigheid vereist is. Op sommige regionale reizen kunnen nationale identiteitskaarten het paspoort vervangen.",
+        "conditions": [
+        "Controleer de geldigheid zowel op de aankomstdatum als op de geplande vertrekdatum.",
+        "Controleer de vereisten voor lege pagina's en de staat van het document."
+        ],
+        "keyFacts": []
+      },
+      "conservative-transit-permission": {
+      "title": "Transitvergunning",
+      "summary": "Transitregels hangen af van de nationaliteit, de duur van de overstap, de transferroute op de luchthaven en of de grenscontrole wordt gepasseerd.",
+        "conditions": [
+        "Voor airside- en landsideverbindingen kunnen verschillende regels gelden.",
+        "Voor een wissel van luchthaven of terminal is doorgaans een inreistoestemming vereist."
+        ],
+        "keyFacts": []
+      },
+      "conservative-entry-permission": {
+      "title": "Visum, e-visum of elektronische vergunning",
+      "summary": "De inreistoestemming hangt af van de nationaliteit, woonplaats, het reisdoel, de verblijfsduur en reeds aanwezige documenten.",
+        "conditions": [
+        "Verblijfsvergunningen en geldige visa van andere landen kunnen vrijstellingen opleveren.",
+        "Ook bij visumvrije toegang kunnen een ETA of registratie bij aankomst vereist zijn."
+        ],
+        "keyFacts": []
+      }
+    }
+  },
+  "baggage": {
+    "advices": {
+      "DELHI_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Ophalen en opnieuw inchecken in Delhi",
+        "explanation": "Passagiers die in Delhi van een internationale op een binnenlandse vlucht overstappen, moeten hun ingecheckte bagage ophalen, door de douane gaan en de transferbalie gebruiken, ook als de bagage is doorgelabeld."
+      },
+      "AUSTRALIA_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Ophalen voor de Australische grensafhandeling",
+        "explanation": "Internationale aankomsten met aansluiting op een Australische binnenlandse vlucht moeten ingecheckte bagage ophalen, door immigratie en douane gaan en de bagage opnieuw inchecken — ook bij één ticket."
+      },
+      "NEW_ZEALAND_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Ophalen voor douane en bioveiligheid",
+        "explanation": "Bij aankomst in Nieuw-Zeeland moet ingecheckte bagage vóór een aansluitende binnenlandse vlucht worden opgehaald en gecontroleerd."
+      },
+      "JAPAN_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Ophalen op de eerste luchthaven in Japan",
+        "explanation": "Bij een internationale aankomst met aansluiting op een Japanse binnenlandse vlucht moet u de ingecheckte bagage voor de douane ophalen en opnieuw inchecken."
+      },
+      "CANADA_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "De Canadese transferprocedure verschilt",
+        "explanation": "Canadese hubs gebruiken bagagetransferprogramma's die per luchthaven, herkomst en luchtvaartmaatschappij verschillen. Sommige passagiers gaan door de douane zonder bagage op te halen; anderen moeten deze wel ophalen."
+      },
+      "GENERIC_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Controleer de afhandeling bij de eerste plaats van binnenkomst",
+        "explanation": "U komt internationaal aan en reist verder met een binnenlandse vlucht. Veel landen vereisen dat bagage bij de eerste plaats van binnenkomst wordt aangeboden, maar de procedure verschilt per land en luchthaven."
+      },
+      "NOT_CHECKED_THROUGH": {
+        "title": "Bagage is niet doorgelabeld",
+        "explanation": "Het bagagelabel geldt niet voor de verdere reis. Haal de bagage daarom op en check deze opnieuw in voor de volgende vlucht."
+      },
+      "CHECKED_THROUGH_NO_KNOWN_RECLAIM": {
+        "title": "Geen bekende verplichting om bagage op te halen",
+        "explanation": "Uw bagage is doorgelabeld en deze verbinding valt niet onder een ondersteunde regel die ophalen voor de douane verplicht stelt."
+      },
+      "SEPARATE_TICKETS": {
+        "title": "Afzonderlijke tickets vereisen doorgaans een eigen transfer",
+        "explanation": "Afzonderlijke boekingen gelden als afzonderlijke reizen. Bagage wordt daarom bij de overstap normaal gesproken opgehaald en opnieuw ingecheckt."
+      },
+      "CHECK_BAGGAGE_TAG": {
+        "title": "Controleer het bagagelabel",
+        "explanation": "Geen ondersteunde grensregel maakt ophalen hier zeker, maar de transfer hangt ervan af of de luchtvaartmaatschappij de bagage voorbij deze luchthaven labelt."
+      },
+      "US_PRECLEARANCE_NOT_CHECKED_THROUGH": {
+        "title": "Ophalen omdat de bagage niet is doorgelabeld",
+        "explanation": "De Amerikaanse grensafhandeling is vóór vertrek voltooid, maar het bagagelabel geldt niet voor de aansluitende vlucht."
+      },
+      "US_PRECLEARANCE_CHECKED_THROUGH": {
+        "title": "Vooraf afgehandeld vóór de vlucht naar de VS",
+        "explanation": "Deze vlucht vertrekt vanaf een luchthaven met CBP-preclearance. Geschikte passagiers komen daardoor aan als binnenlandse reizigers en doorgelabelde bagage wordt normaal gesproken verder vervoerd."
+      },
+      "US_PRECLEARANCE_CONFIRM_TAG": {
+        "title": "Door preclearance vervalt de gebruikelijke bagageafhaling in de VS",
+        "explanation": "De CBP-afhandeling vindt vóór vertrek vanaf deze luchthaven plaats. Controleer of het bagagelabel ook voor de aansluitende vlucht geldt."
+      },
+      "US_SYD_LAX_SCREENING_PILOT": {
+        "title": "Ophalen tenzij uw vlucht aan de CBP-controlepilot deelneemt",
+        "explanation": "Bij aankomst in de VS wordt ingecheckte bagage normaal gesproken voor CBP opgehaald. Een routespecifieke pilot voor controle op afstand kan geschikte bagage op de American Airlines-vlucht Sydney–Los Angeles doorsturen."
+      },
+      "US_FIRST_ARRIVAL": {
+        "title": "Ophalen bij de eerste aankomst in de VS",
+        "explanation": "Reizigers die vanuit het buitenland de Verenigde Staten binnenkomen, halen ingecheckte bagage normaal gesproken voor CBP op en checken deze vóór een aansluitende vlucht opnieuw in."
+      }
+    }
+  }
+}

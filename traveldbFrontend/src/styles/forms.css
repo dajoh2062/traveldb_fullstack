@@ -32,8 +32,8 @@
   border-color: color-mix(in srgb, var(--text) 28%, transparent);
 }
 .input-shell:focus-within {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 13%, transparent);
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px var(--focus-ring-soft);
 }
 .input-shell input {
   width: 100%;
@@ -95,7 +95,7 @@
   border-color: var(--danger);
 }
 .has-error .input-shell:focus-within {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 12%, transparent);
+  box-shadow: 0 0 0 3px var(--danger-ring-soft);
 }
 .field-error,
 .route-error {

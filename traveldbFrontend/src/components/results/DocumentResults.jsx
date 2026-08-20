@@ -66,8 +66,25 @@ export default function DocumentResults({
             const status = DOCUMENT_STATUS[document.status];
             const StatusIcon = status.Icon;
             const sources = documentSources(document);
-            const keyFacts = documentKeyFacts(document);
-            const conditions = documentConditions(document);
+            const keyFacts = (document.keyFacts ?? [])
+              .map((fact, index) => ({ fact, localized: document.localized.keyFacts[index] }))
+              .filter(({ fact }) => documentKeyFacts({ keyFacts: [fact] }).length > 0)
+              .slice(0, 6)
+              .map(({ fact, localized }) => ({
+                label: localized?.label ?? { text: fact.label, lang: "en" },
+                value: localized?.value ?? { text: fact.value, lang: "en" },
+              }));
+            const conditions = (document.conditions ?? [])
+              .map((condition, index) => ({
+                condition,
+                localized: document.localized.conditions[index],
+              }))
+              .filter(({ condition }) =>
+                documentConditions({ conditions: [condition] }).length > 0,
+              )
+              .map(
+                ({ condition, localized }) => localized ?? { text: condition, lang: "en" },
+              );
             const visibleConditions = conditions.slice(0, 2);
             const additionalConditions = conditions.slice(2);
             const lastVerified = formatRuleDate(document.lastVerified, i18n.resolvedLanguage);
@@ -82,21 +99,24 @@ export default function DocumentResults({
                   {t(status.labelKey)}
                 </span>
                 <div className="result-content">
-                  <strong dir="auto" lang="en">
-                    {document.title}
+                  <strong dir="auto" lang={document.localized.title.lang}>
+                    {document.localized.title.text}
                   </strong>
                   <small className="result-location">{documentLocation(document, route, t)}</small>
                   {document.summary && (
-                    <p dir="auto" lang="en">
-                      {document.summary}
+                    <p dir="auto" lang={document.localized.summary.lang}>
+                      {document.localized.summary.text}
                     </p>
                   )}
                   {keyFacts.length > 0 && (
-                    <dl className="document-key-facts" dir="auto" lang="en">
+                    <dl className="document-key-facts" dir="auto">
                       {keyFacts.map(fact => (
-                        <div className="document-key-fact" key={`${fact.label}:${fact.value}`}>
-                          <dt>{fact.label}</dt>
-                          <dd>{fact.value}</dd>
+                        <div
+                          className="document-key-fact"
+                          key={`${fact.label.text}:${fact.value.text}`}
+                        >
+                          <dt lang={fact.label.lang}>{fact.label.text}</dt>
+                          <dd lang={fact.value.lang}>{fact.value.text}</dd>
                         </div>
                       ))}
                     </dl>
@@ -106,11 +126,14 @@ export default function DocumentResults({
                       className="document-conditions"
                       aria-label={t("results.documents.importantConditions")}
                       dir="auto"
-                      lang="en"
                     >
                       {visibleConditions.map(condition => (
-                        <p className="document-condition" key={condition}>
-                          {condition}
+                        <p
+                          className="document-condition"
+                          key={condition.text}
+                          lang={condition.lang}
+                        >
+                          {condition.text}
                         </p>
                       ))}
                     </div>
@@ -122,10 +145,14 @@ export default function DocumentResults({
                           count: additionalConditions.length,
                         })}
                       </summary>
-                      <div className="document-conditions" dir="auto" lang="en">
+                      <div className="document-conditions" dir="auto">
                         {additionalConditions.map(condition => (
-                          <p className="document-condition" key={condition}>
-                            {condition}
+                          <p
+                            className="document-condition"
+                            key={condition.text}
+                            lang={condition.lang}
+                          >
+                            {condition.text}
                           </p>
                         ))}
                       </div>

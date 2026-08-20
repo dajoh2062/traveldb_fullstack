@@ -83,7 +83,7 @@
   font-weight: 700;
 }
 .stop-marker.origin {
-  color: #fff;
+  color: var(--on-primary);
   background: var(--primary);
   border-color: var(--primary);
 }

@@ -81,6 +81,7 @@ class LocalDocumentRulesProviderTests {
 
         assertEquals(1, matched.size());
         assertEquals("HIGH", matched.getFirst().code());
+        assertEquals("high-priority", matched.getFirst().ruleId());
         assertEquals(DocumentRequirement.Status.VERIFY, matched.getFirst().status());
         assertTrue(matched.getFirst().conditions().contains("Preserve sentence casing."));
         assertEquals(List.of(new DocumentRequirement.KeyFact("Maximum stay", "Up to 30 days")),

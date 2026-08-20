@@ -44,11 +44,12 @@ The interface uses i18next, remembers the selected language, and falls back to B
 Country names, dates, lists, validation, and accessibility labels follow the active locale. Arabic
 also switches the document to right-to-left layout.
 
-Translation catalogs are plain JSON files in `src/i18n/locales`.
+Interface catalogs are plain JSON files in `src/i18n/locales`. Passport and baggage guidance lives
+in `src/i18n/guidance` and is selected through stable rule and advice identifiers returned by the API.
 
-Passport and baggage rule explanations returned by the API remain in English until the API exposes
-stable translation keys. They are marked as English in the page so browsers and assistive technology
-handle them correctly.
+The API keeps its original English wording for compatibility. The client uses that wording as a
+clearly marked fallback when it receives a newer dataset or an identifier that its catalogs do not
+yet cover. Official source names are left unchanged.
 
 ## Search scope
 

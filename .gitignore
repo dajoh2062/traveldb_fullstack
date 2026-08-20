@@ -19,6 +19,8 @@ Thumbs.db
 
 # Java and Maven
 traveldbBackend/target/
+.cv1/
+.codex-backend-verification-*/
 .apt_generated/
 build/
 nbbuild/

@@ -1,6 +1,7 @@
 package io.github.dajoh2062.traveldb.baggage;
 
 import org.springframework.stereotype.Service;
+import io.github.dajoh2062.traveldb.baggage.BaggageAdvice.AdviceCode;
 import io.github.dajoh2062.traveldb.model.Airport;
 
 import java.util.List;
@@ -85,6 +86,7 @@ public class BaggageService {
             if ("IN".equals(current.countryCode()) && "DEL".equals(current.iataCode())) {
                 return required(
                         current,
+                        AdviceCode.DELHI_INTERNATIONAL_TO_DOMESTIC,
                         "Collect and recheck at Delhi",
                         "International-to-domestic passengers at Delhi must collect checked baggage, clear Customs and use the transfer desk, even when the bag is tagged through.",
                         List.of("New hub-and-spoke processing is being introduced on selected Air India routes; eligible flights may use different procedures."),
@@ -95,6 +97,7 @@ public class BaggageService {
             return switch (current.countryCode()) {
                 case "AU" -> required(
                         current,
+                        AdviceCode.AUSTRALIA_INTERNATIONAL_TO_DOMESTIC,
                         "Collect for Australian border clearance",
                         "International arrivals connecting to an Australian domestic flight must collect checked baggage, clear immigration and customs, then recheck it — including on one ticket.",
                         List.of("Special domestic sectors operated as part of an international service can use different processing; follow the operating airline's instructions."),
@@ -102,6 +105,7 @@ public class BaggageService {
                 );
                 case "NZ" -> required(
                         current,
+                        AdviceCode.NEW_ZEALAND_INTERNATIONAL_TO_DOMESTIC,
                         "Collect for Customs and biosecurity",
                         "On arrival in New Zealand, checked baggage must be collected and cleared before an onward domestic flight.",
                         List.of("International-to-international transfer baggage normally remains in the secure transfer system when it is checked through."),
@@ -109,6 +113,7 @@ public class BaggageService {
                 );
                 case "JP" -> required(
                         current,
+                        AdviceCode.JAPAN_INTERNATIONAL_TO_DOMESTIC,
                         "Collect at the first airport in Japan",
                         "For an international arrival connecting to a Japan domestic flight, collect checked baggage for Customs and check it in again.",
                         List.of("Domestic-to-international journeys can usually be through-checked; airport changes such as Haneda–Narita still require handling the bag yourself."),
@@ -116,6 +121,7 @@ public class BaggageService {
                 );
                 case "CA" -> confirm(
                         current,
+                        AdviceCode.CANADA_INTERNATIONAL_TO_DOMESTIC,
                         "Canadian transfer process varies",
                         "Canadian hubs use airport-, origin- and airline-specific baggage transfer programs. Some passengers clear Customs without collecting bags; others must reclaim them.",
                         List.of("At Toronto, the no-reclaim process only applies to listed origins and eligible connecting itineraries.", "Follow the airline's transfer instructions and the baggage tag."),
@@ -123,6 +129,7 @@ public class BaggageService {
                 );
                 default -> confirm(
                         current,
+                        AdviceCode.GENERIC_INTERNATIONAL_TO_DOMESTIC,
                         "Confirm first-port-of-entry handling",
                         "You are arriving internationally and continuing on a domestic flight. Many countries require baggage to be presented at the first point of entry, but the process is country- and airport-specific.",
                         List.of("Through-checking does not always remove a Customs reclaim requirement.", "Check the official airport transfer guide and ask the airline at check-in."),
@@ -134,6 +141,7 @@ public class BaggageService {
         if (request.throughCheckStatus() == BaggageCheckRequest.ThroughCheckStatus.NO) {
             return required(
                     current,
+                    AdviceCode.NOT_CHECKED_THROUGH,
                     "Bag is not checked through",
                     "The baggage tag does not cover the onward journey, so collect the bag and check it in again for the next flight.",
                     List.of("If airline staff retag the bag to a later airport, follow the updated baggage tag."),
@@ -144,6 +152,7 @@ public class BaggageService {
         if (request.throughCheckStatus() == BaggageCheckRequest.ThroughCheckStatus.YES) {
             return notRequired(
                     current,
+                    AdviceCode.CHECKED_THROUGH_NO_KNOWN_RECLAIM,
                     "No known reclaim requirement",
                     "Your bag is checked through and this connection does not match a supported mandatory Customs reclaim rule.",
                     List.of("Collect it if the airline, airport signs or border officers instruct you to do so."),
@@ -154,6 +163,7 @@ public class BaggageService {
         if (request.ticketArrangement() == BaggageCheckRequest.TicketArrangement.SEPARATE_TICKETS) {
             return required(
                     current,
+                    AdviceCode.SEPARATE_TICKETS,
                     "Separate tickets normally require self-transfer",
                     "Separate bookings are separate journeys, so baggage is normally collected and checked in again at the connection.",
                     List.of("An airline may agree to through-check bags across separate tickets; confirm this at the first check-in desk."),
@@ -163,6 +173,7 @@ public class BaggageService {
 
         return confirm(
                 current,
+                AdviceCode.CHECK_BAGGAGE_TAG,
                 "Check the baggage tag",
                 "No supported border rule makes pickup certain here, but transfer depends on whether the airline tags the bag beyond this airport.",
                 List.of("One booking often allows through-checking, but airline partnerships and airport procedures still matter."),
@@ -175,6 +186,7 @@ public class BaggageService {
             if (request.throughCheckStatus() == BaggageCheckRequest.ThroughCheckStatus.NO) {
                 return required(
                         current,
+                        AdviceCode.US_PRECLEARANCE_NOT_CHECKED_THROUGH,
                         "Collect because the bag is not checked through",
                         "U.S. border processing was completed before departure, but the baggage tag does not cover the onward flight.",
                         List.of("If the airline retags the bag through, U.S. preclearance normally lets it transfer without reclaim on arrival."),
@@ -184,6 +196,7 @@ public class BaggageService {
             if (request.throughCheckStatus() == BaggageCheckRequest.ThroughCheckStatus.YES) {
                 return notRequired(
                         current,
+                        AdviceCode.US_PRECLEARANCE_CHECKED_THROUGH,
                         "Precleared before the U.S. flight",
                         "This flight departs from a CBP preclearance airport, so eligible passengers arrive like domestic travellers and a through-checked bag normally transfers onward.",
                         List.of("Follow any airline or CBP instruction to collect a bag selected for inspection."),
@@ -192,6 +205,7 @@ public class BaggageService {
             }
             return confirm(
                     current,
+                    AdviceCode.US_PRECLEARANCE_CONFIRM_TAG,
                     "Preclearance removes the usual U.S. reclaim step",
                     "CBP processing happens before departure from this airport. Confirm that the baggage tag covers the onward flight.",
                     List.of("A bag not tagged through still has to be collected and checked in again."),
@@ -202,6 +216,7 @@ public class BaggageService {
         if ("SYD".equals(previous.iataCode()) && "LAX".equals(current.iataCode())) {
             return required(
                     current,
+                    AdviceCode.US_SYD_LAX_SCREENING_PILOT,
                     "Collect unless your flight uses the CBP screening pilot",
                     "U.S. arrivals normally reclaim checked baggage for CBP. A route-specific remote-screening pilot may transfer eligible bags on the American Airlines Sydney–Los Angeles service.",
                     List.of(
@@ -216,6 +231,7 @@ public class BaggageService {
 
         return required(
                 current,
+                AdviceCode.US_FIRST_ARRIVAL,
                 "Collect at the first U.S. arrival",
                 "Travellers entering the United States from overseas normally collect checked baggage for CBP and recheck it before any onward flight.",
                 List.of("CBP preclearance flights bypass this arrival process when baggage is checked through."),
@@ -230,36 +246,43 @@ public class BaggageService {
 
     private BaggageAdvice required(
             Airport airport,
+            AdviceCode adviceCode,
             String title,
             String explanation,
             List<String> exceptions,
             BaggageAdvice.Source... sources
     ) {
-        return advice(airport, BaggageAdvice.Status.REQUIRED, title, explanation, exceptions, sources);
+        return advice(airport, adviceCode, BaggageAdvice.Status.REQUIRED,
+                title, explanation, exceptions, sources);
     }
 
     private BaggageAdvice confirm(
             Airport airport,
+            AdviceCode adviceCode,
             String title,
             String explanation,
             List<String> exceptions,
             BaggageAdvice.Source... sources
     ) {
-        return advice(airport, BaggageAdvice.Status.CONFIRM, title, explanation, exceptions, sources);
+        return advice(airport, adviceCode, BaggageAdvice.Status.CONFIRM,
+                title, explanation, exceptions, sources);
     }
 
     private BaggageAdvice notRequired(
             Airport airport,
+            AdviceCode adviceCode,
             String title,
             String explanation,
             List<String> exceptions,
             BaggageAdvice.Source... sources
     ) {
-        return advice(airport, BaggageAdvice.Status.NOT_REQUIRED, title, explanation, exceptions, sources);
+        return advice(airport, adviceCode, BaggageAdvice.Status.NOT_REQUIRED,
+                title, explanation, exceptions, sources);
     }
 
     private BaggageAdvice advice(
             Airport airport,
+            AdviceCode adviceCode,
             BaggageAdvice.Status status,
             String title,
             String explanation,
@@ -272,7 +295,8 @@ public class BaggageService {
                 title,
                 explanation,
                 exceptions,
-                List.of(sources)
+                List.of(sources),
+                adviceCode
         );
     }
 }

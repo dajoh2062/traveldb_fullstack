@@ -1,0 +1,1412 @@
+{
+  "documentDatasetVersion": "2026-08-09.5",
+  "documents": {
+    "rules": {
+      "australia-valid-visa-entry": {
+        "title": "Confirm your Australian visa covers this trip",
+        "summary": "The supplied profile records an Australian visa, but its type, validity, purpose and permitted entries must be checked.",
+        "conditions": [
+          "The visa must permit the intended purpose, dates and number of entries."
+        ],
+        "keyFacts": [
+          {
+            "label": "Profile input",
+            "value": "Australian visa recorded"
+          },
+          {
+            "label": "Verify",
+            "value": "Visa subclass, validity, purpose and permitted entries"
+          }
+        ]
+      },
+      "canada-valid-visa-entry": {
+        "title": "Confirm your Canadian visa covers this trip",
+        "summary": "The supplied profile records a Canadian visa, but its type, validity and permitted purpose must be checked before relying on it instead of an eTA.",
+        "conditions": [
+          "The visa and passport must remain valid for the journey."
+        ],
+        "keyFacts": [
+          {
+            "label": "Profile input",
+            "value": "Canadian visa recorded"
+          },
+          {
+            "label": "Verify",
+            "value": "Visa type, validity and permitted purpose"
+          }
+        ]
+      },
+      "canada-valid-visa-transit": {
+        "title": "Confirm your Canadian visa covers this transit",
+        "summary": "The supplied profile records a Canadian visa, but its type and validity must be checked before relying on it instead of an eTA for transit.",
+        "conditions": [
+          "The visa and passport must remain valid for the transit."
+        ],
+        "keyFacts": [
+          {
+            "label": "Profile input",
+            "value": "Canadian visa recorded"
+          },
+          {
+            "label": "Verify",
+            "value": "Visa type and validity cover this transit"
+          }
+        ]
+      },
+      "japan-valid-visa-entry": {
+        "title": "Confirm your Japan visa covers this trip",
+        "summary": "The supplied profile records a Japan visa, but its validity, permitted purpose and number of entries must be checked before travel.",
+        "conditions": [
+          "The visa must be valid and appropriate for the planned purpose, dates and number of entries.",
+          "A visa is one entry requirement; final landing permission is decided by Japanese immigration."
+        ],
+        "keyFacts": [
+          {
+            "label": "Profile input",
+            "value": "Japan visa recorded"
+          },
+          {
+            "label": "Verify",
+            "value": "Validity, purpose and permitted entries"
+          }
+        ]
+      },
+      "new-zealand-valid-visa-entry": {
+        "title": "Confirm your New Zealand visa covers this trip",
+        "summary": "The supplied profile records a New Zealand visa, but its type, validity and permitted purpose must be checked before relying on it instead of an NZeTA.",
+        "conditions": [
+          "The visa must permit the intended purpose and dates."
+        ],
+        "keyFacts": [
+          {
+            "label": "Existing visa",
+            "value": "Check type, validity, purpose and permitted stay"
+          },
+          {
+            "label": "Passport validity",
+            "value": "Normally at least 3 months after planned departure"
+          }
+        ]
+      },
+      "uk-valid-visa-entry": {
+        "title": "Confirm your UK permission covers this trip",
+        "summary": "The supplied profile records UK immigration permission, but its type, validity and permitted purpose must be checked before relying on it instead of an ETA.",
+        "conditions": [
+          "The existing permission must be valid for the planned purpose and dates."
+        ],
+        "keyFacts": [
+          {
+            "label": "Existing permission",
+            "value": "Check type, validity, purpose and permitted stay"
+          },
+          {
+            "label": "Passport validity",
+            "value": "Valid for the whole stay"
+          }
+        ]
+      },
+      "us-valid-visa-entry": {
+        "title": "Confirm your U.S. visa covers this trip",
+        "summary": "The supplied profile records a U.S. visa, but its class, validity, purpose and permitted entries must be checked before relying on it instead of ESTA.",
+        "conditions": [
+          "The visa must be valid and appropriate for the planned travel purpose.",
+          "A visa or ESTA authorises travel to the border but does not guarantee admission."
+        ],
+        "keyFacts": [
+          {
+            "label": "Profile input",
+            "value": "U.S. visa recorded"
+          },
+          {
+            "label": "Verify",
+            "value": "Visa class, validity, purpose and permitted entries"
+          }
+        ]
+      },
+      "us-valid-visa-transit": {
+        "title": "Confirm your U.S. visa covers this transit",
+        "summary": "The supplied profile records a U.S. visa, but its class and validity must be checked before relying on it instead of ESTA for transit.",
+        "conditions": [
+          "The visa must be valid for the transit and the traveller must remain otherwise admissible."
+        ],
+        "keyFacts": [
+          {
+            "label": "Profile input",
+            "value": "U.S. visa recorded"
+          },
+          {
+            "label": "Verify",
+            "value": "Visa class and validity cover this transit"
+          }
+        ]
+      },
+      "japan-citizen-return": {
+        "title": "No visa required for a Japanese citizen returning to Japan",
+        "summary": "Japanese citizens return under a separate return-confirmation procedure and do not need a visa to enter Japan.",
+        "conditions": [
+          "A passport is normally used for return confirmation.",
+          "When a passport cannot be presented for unavoidable reasons, Japanese nationality must be established through the separate procedure described by the Immigration Services Agency."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Not required"
+          },
+          {
+            "label": "Procedure",
+            "value": "Japanese return confirmation"
+          }
+        ]
+      },
+      "japan-barbados-lesotho-mrp-waiver-90": {
+        "title": "Visa-free only with a machine-readable passport",
+        "summary": "This ordinary passport is visa-exempt for up to 90 days only when it is a machine-readable passport compliant with ICAO standards.",
+        "conditions": [
+          "Without a qualifying machine-readable passport, MOFA advises obtaining a visa before travel; otherwise the traveler may be strictly examined and refused entry.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant MRP required"
+          },
+          {
+            "label": "Waiver effective",
+            "value": "1 April 2010"
+          }
+        ]
+      },
+      "japan-brazil-epassport-waiver-90": {
+        "title": "Visa-free only with a Brazilian ePassport",
+        "summary": "A Brazilian ordinary passport is visa-exempt for up to 90 days only when it is an ICAO-compliant ePassport.",
+        "conditions": [
+          "Without a qualifying ePassport, obtain a visa before travel; MOFA warns that entry will otherwise be refused.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport required"
+          },
+          {
+            "label": "Waiver effective",
+            "value": "30 September 2023"
+          }
+        ]
+      },
+      "japan-hong-kong-document-waiver-90": {
+        "title": "Confirm the Hong Kong travel document",
+        "summary": "Visa-free entry for up to 90 days is limited to a Hong Kong SAR passport or a British National (Overseas) passport whose holder has right of residence in Hong Kong.",
+        "conditions": [
+          "Hold a Hong Kong SAR passport, or hold a BNO passport together with right of residence in Hong Kong.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Accepted document",
+            "value": "Hong Kong SAR passport"
+          },
+          {
+            "label": "BNO condition",
+            "value": "Hong Kong right of residence required"
+          }
+        ]
+      },
+      "japan-indonesia-registered-epassport-waiver": {
+        "title": "Visa-free only with a registered Indonesian ePassport",
+        "summary": "An Indonesian ordinary passport is visa-exempt for up to 15 days only when it is an ICAO-compliant ePassport registered before departure at a Japanese diplomatic mission in Indonesia.",
+        "conditions": [
+          "Complete the visa-waiver registration before departure.",
+          "Registration expires after three years or when the passport expires, whichever comes first.",
+          "A new passport or a name change requires a new registration.",
+          "Without the qualifying registered ePassport, obtain a visa before travel."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "15 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport"
+          },
+          {
+            "label": "Registration",
+            "value": "Required before departure"
+          },
+          {
+            "label": "Registration validity",
+            "value": "3 years or passport expiry, whichever comes first"
+          }
+        ]
+      },
+      "japan-macao-sar-passport-waiver-90": {
+        "title": "Visa-free only with a Macao SAR passport",
+        "summary": "Visa-free entry for up to 90 days is limited to holders of a passport issued by the Macao Special Administrative Region.",
+        "conditions": [
+          "Confirm that the document is a Macao SAR passport.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Accepted document",
+            "value": "Macao SAR passport"
+          }
+        ]
+      },
+      "japan-malaysia-epassport-waiver-90": {
+        "title": "Visa-free only with a Malaysian ePassport",
+        "summary": "A Malaysian ordinary passport is visa-exempt for up to 90 days only when it is an ICAO-compliant ePassport.",
+        "conditions": [
+          "Without a qualifying ePassport, MOFA advises obtaining a visa before travel; otherwise the traveler may be strictly examined and refused entry.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport required"
+          },
+          {
+            "label": "Waiver effective",
+            "value": "1 July 2013"
+          }
+        ]
+      },
+      "japan-montenegro-epassport-waiver-90": {
+        "title": "Visa-free only with a Montenegrin ePassport",
+        "summary": "A Montenegrin ordinary passport is visa-exempt for up to 90 days only when it is an ICAO-compliant ePassport.",
+        "conditions": [
+          "Without a qualifying ePassport, obtain a visa before travel; MOFA warns that entry will otherwise be refused.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport required"
+          },
+          {
+            "label": "Waiver effective",
+            "value": "1 September 2025"
+          }
+        ]
+      },
+      "japan-panama-epassport-waiver-90": {
+        "title": "Visa-free only with a Panamanian ePassport",
+        "summary": "A Panamanian ordinary passport is visa-exempt for up to 90 days only when it is an ICAO-compliant ePassport.",
+        "conditions": [
+          "Without a qualifying ePassport, obtain a visa before travel; MOFA warns that entry will otherwise be refused.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport required"
+          },
+          {
+            "label": "Waiver effective",
+            "value": "1 April 2024"
+          }
+        ]
+      },
+      "japan-paraguay-epassport-waiver-90": {
+        "title": "Visa-free only with a Paraguayan ePassport",
+        "summary": "A Paraguayan ordinary passport is visa-exempt for up to 90 days only when it is an ICAO-compliant ePassport.",
+        "conditions": [
+          "Without a qualifying ePassport, obtain a visa before travel; MOFA warns that entry will otherwise be refused.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport required"
+          },
+          {
+            "label": "Waiver effective",
+            "value": "1 June 2025"
+          }
+        ]
+      },
+      "japan-peru-epassport-waiver-90": {
+        "title": "Visa-free only with a Peruvian ePassport",
+        "summary": "A Peruvian ordinary passport is visa-exempt for up to 90 days only when it is an ICAO-compliant ePassport.",
+        "conditions": [
+          "Without a qualifying ePassport, obtain a visa before travel; MOFA warns that entry will otherwise be refused.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport required"
+          },
+          {
+            "label": "Waiver effective",
+            "value": "1 July 2025"
+          }
+        ]
+      },
+      "japan-qatar-registered-epassport-waiver": {
+        "title": "Visa-free only with a registered Qatari ePassport",
+        "summary": "A Qatari ordinary passport is visa-exempt for up to 30 consecutive days only when it is an ICAO-compliant ePassport registered before departure at a Japanese overseas establishment.",
+        "conditions": [
+          "Complete the passport registration before departure at a Japanese embassy, consulate-general or consular office.",
+          "Registration expires after three years or when the passport expires, whichever comes first.",
+          "A new passport or a name change requires a new registration.",
+          "Without completed registration, landing will be denied."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "30 consecutive days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport"
+          },
+          {
+            "label": "Registration",
+            "value": "Required before departure"
+          },
+          {
+            "label": "Registration validity",
+            "value": "3 years or passport expiry, whichever comes first"
+          }
+        ]
+      },
+      "japan-serbia-epassport-waiver-90": {
+        "title": "Visa-free only with a Serbian ePassport",
+        "summary": "A Serbian ordinary passport is visa-exempt for up to 90 days only when it is an ICAO-compliant ePassport.",
+        "conditions": [
+          "Without a qualifying ePassport, obtain a visa before travel; MOFA warns that entry will otherwise be refused.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport required"
+          },
+          {
+            "label": "Waiver effective",
+            "value": "1 May 2011"
+          }
+        ]
+      },
+      "japan-taiwan-personal-id-passport-waiver-90": {
+        "title": "Visa-free only when the Taiwan passport has a personal ID number",
+        "summary": "The Taiwan passport exemption applies only when the passport contains a personal ID number; the landing period is up to 90 days.",
+        "conditions": [
+          "Confirm that the passport's identity page includes a personal ID number.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport condition",
+            "value": "Personal ID number required"
+          }
+        ]
+      },
+      "japan-thailand-epassport-waiver-15": {
+        "title": "Visa-free only with a Thai ePassport",
+        "summary": "A Thai ordinary passport is visa-exempt for up to 15 days only when it is an ICAO-compliant ePassport.",
+        "conditions": [
+          "The passport must display the ICAO ePassport symbol and contain the required IC chip.",
+          "Without a qualifying ePassport, obtain a visa before travel; MOFA warns that entry will otherwise be refused.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "15 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport required"
+          }
+        ]
+      },
+      "japan-turkiye-mrp-waiver-90": {
+        "title": "Visa-free only with a machine-readable Turkish passport",
+        "summary": "A Turkish ordinary passport is visa-exempt for up to 90 days only when it is a machine-readable passport compliant with ICAO standards.",
+        "conditions": [
+          "Without a qualifying machine-readable passport, MOFA advises obtaining a visa before travel; otherwise the traveler may be strictly examined and refused entry.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant MRP required"
+          },
+          {
+            "label": "Waiver effective",
+            "value": "1 April 2011"
+          }
+        ]
+      },
+      "japan-uae-epassport-waiver-90": {
+        "title": "Visa-free only with a UAE ePassport",
+        "summary": "A UAE ordinary passport is visa-exempt for up to 90 days only when it is an ICAO-compliant ePassport.",
+        "conditions": [
+          "The ICAO-compliant ePassport waiver began on 1 November 2022; the current 90-day allowance applies from 1 July 2025.",
+          "Without a qualifying ePassport, obtain a visa before travel; MOFA warns that entry will otherwise be refused.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days"
+          },
+          {
+            "label": "Passport",
+            "value": "ICAO-compliant ePassport required"
+          },
+          {
+            "label": "90-day allowance effective",
+            "value": "1 July 2025"
+          }
+        ]
+      },
+      "japan-united-kingdom-passport-waiver": {
+        "title": "Confirm which British passport you hold",
+        "summary": "A standard British citizen ordinary passport is visa-exempt for up to 90 days initially. A British National (Overseas) passport qualifies only when its holder has right of residence in Hong Kong.",
+        "conditions": [
+          "For a standard British citizen passport, apply in Japan before the initial period expires if seeking an extension under the bilateral arrangement.",
+          "For a British National (Overseas) passport, confirm right of residence in Hong Kong before relying on the exemption.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Standard British passport",
+            "value": "Up to 90 days initially without a visa"
+          },
+          {
+            "label": "BNO passport",
+            "value": "Hong Kong right of residence required"
+          },
+          {
+            "label": "Bilateral maximum",
+            "value": "Up to 6 months after an approved extension"
+          }
+        ]
+      },
+      "japan-uruguay-recognized-passport-waiver-90": {
+        "title": "Visa-free only with the recognized Uruguayan passport version",
+        "summary": "The visa exemption for up to 90 days applies only to the old Uruguayan passport version. Japan does not recognize the new version that omits place of birth as a valid travel document.",
+        "conditions": [
+          "Confirm the passport layout, not only its issue date: old-version passports remain eligible even when issued after 16 April 2025.",
+          "A new-version passport issued after 16 April 2025 without place of birth is not eligible for travel to Japan.",
+          "The visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum stay",
+            "value": "90 days with the recognized version"
+          },
+          {
+            "label": "Old passport version",
+            "value": "Visa-exempt"
+          },
+          {
+            "label": "New version without place of birth",
+            "value": "Not recognized for travel"
+          }
+        ]
+      },
+      "japan-brunei-passport-waiver-30": {
+        "title": "No short-stay visa required for Japan",
+        "summary": "A valid ordinary Brunei passport is visa-exempt for a short stay of up to 30 days.",
+        "conditions": [
+          "The visit must not include remunerative activities.",
+          "Final landing permission is decided by Japanese immigration."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Not required"
+          },
+          {
+            "label": "Landing period",
+            "value": "Up to 30 days"
+          },
+          {
+            "label": "Current duration effective",
+            "value": "10 December 2024"
+          }
+        ]
+      },
+      "japan-ordinary-passport-waiver-90": {
+        "title": "No short-stay visa required for Japan",
+        "summary": "This ordinary passport is visa-exempt for a short visit. The period granted on landing is up to 90 days.",
+        "conditions": [
+          "The visit must not include remunerative activities.",
+          "Final landing permission and the permitted period of stay are decided by Japanese immigration."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Not required"
+          },
+          {
+            "label": "Landing period",
+            "value": "Up to 90 days"
+          }
+        ]
+      },
+      "japan-ordinary-passport-waiver-six-month-extension": {
+        "title": "No visa required for up to 90 days initially",
+        "summary": "This ordinary passport is visa-exempt. Landing permission is initially granted for up to 90 days; an extension must be requested in Japan to stay longer under the bilateral arrangement.",
+        "conditions": [
+          "Apply to the Japanese immigration authority before the initial period expires if the planned stay will exceed 90 days.",
+          "An extension is not automatic, and the visit must not include remunerative activities."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Not required"
+          },
+          {
+            "label": "Initial landing period",
+            "value": "Up to 90 days"
+          },
+          {
+            "label": "Bilateral maximum",
+            "value": "Up to 6 months after an approved extension"
+          }
+        ]
+      },
+      "japan-entry-valid-passport": {
+        "title": "Valid passport required for entry to Japan",
+        "summary": "Your passport must be valid when you enter Japan. Japan's embassy in Finland recommends keeping it valid for the whole stay.",
+        "conditions": [
+          "Carry the valid passport used for this journey when applying for landing permission.",
+          "Validity for the whole stay is recommended, but these sources do not impose a three- or six-month post-trip validity margin."
+        ],
+        "keyFacts": [
+          {
+            "label": "Required at entry",
+            "value": "Valid passport"
+          },
+          {
+            "label": "Recommended",
+            "value": "Valid through the stay"
+          },
+          {
+            "label": "Post-trip margin",
+            "value": "No additional margin stated by these sources"
+          }
+        ]
+      },
+      "brazil-norway-business-entry-verification": {
+        "title": "Confirm permission for business travel",
+        "summary": "Official guidance is not consistent enough for a definitive local decision for Norwegian business travellers to Brazil.",
+        "conditions": [
+          "Confirm the required permission with the Brazilian Embassy before travel.",
+          "Do not rely on the tourist visa waiver for paid work or employment."
+        ],
+        "keyFacts": [
+          {
+            "label": "Tourism rule",
+            "value": "Visa-free for up to 90 days"
+          },
+          {
+            "label": "Business travel",
+            "value": "Confirm before travel"
+          }
+        ]
+      },
+      "schengen-free-movement-entry": {
+        "title": "No visa required under free movement",
+        "summary": "EU, EEA and Swiss citizens can enter this Schengen country under free-movement rules with a valid travel document.",
+        "conditions": [
+          "Some countries can require short-stay presence reporting.",
+          "Stays longer than 3 months can require residence registration and additional conditions."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Not required"
+          },
+          {
+            "label": "Without residence registration",
+            "value": "Up to 3 months"
+          },
+          {
+            "label": "Longer stays",
+            "value": "Registration and residence conditions may apply"
+          }
+        ]
+      },
+      "canada-eta-romania-entry": {
+        "title": "Canadian eTA with a qualifying Romanian passport",
+        "summary": "Romanian citizens need an electronic passport to use an eTA for air travel to Canada; holders of non-electronic passports need a visitor visa.",
+        "conditions": [
+          "The passport must be electronic; a temporary or other non-electronic Romanian passport does not qualify for an eTA."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa status",
+            "value": "No visitor visa for eligible air travel with an eTA"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Normally up to 6 months per visit"
+          },
+          {
+            "label": "eTA validity",
+            "value": "Up to 5 years or until the passport expires"
+          },
+          {
+            "label": "Travel mode",
+            "value": "eTA applies to air travel and air transit"
+          }
+        ]
+      },
+      "canada-eta-romania-transit": {
+        "title": "Canadian eTA with a qualifying Romanian passport",
+        "summary": "Romanian citizens need an electronic passport to use an eTA when flying through Canada; holders of non-electronic passports need a transit or visitor visa.",
+        "conditions": [
+          "The passport must be electronic; a temporary or other non-electronic Romanian passport does not qualify for an eTA."
+        ],
+        "keyFacts": [
+          {
+            "label": "Before travel",
+            "value": "Approved eTA or an appropriate Canadian visa"
+          },
+          {
+            "label": "Travel mode",
+            "value": "eTA applies to air transit"
+          }
+        ]
+      },
+      "canada-eta-taiwan-entry": {
+        "title": "Canadian eTA with a qualifying Taiwan passport",
+        "summary": "Taiwan passport holders qualify for an eTA only with an ordinary passport issued by Taiwan's Ministry of Foreign Affairs that includes the personal identification number.",
+        "conditions": [
+          "A different Taiwan passport requires a visitor visa for travel to Canada."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa status",
+            "value": "No visitor visa for eligible air travel with an eTA"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Normally up to 6 months per visit"
+          },
+          {
+            "label": "eTA validity",
+            "value": "Up to 5 years or until the passport expires"
+          },
+          {
+            "label": "Travel mode",
+            "value": "eTA applies to air travel and air transit"
+          }
+        ]
+      },
+      "canada-eta-taiwan-transit": {
+        "title": "Canadian eTA with a qualifying Taiwan passport",
+        "summary": "Taiwan passport holders qualify for an eTA when flying through Canada only with an ordinary passport issued by Taiwan's Ministry of Foreign Affairs that includes the personal identification number.",
+        "conditions": [
+          "A different Taiwan passport requires a transit or visitor visa for travel through Canada."
+        ],
+        "keyFacts": [
+          {
+            "label": "Before travel",
+            "value": "Approved eTA or an appropriate Canadian visa"
+          },
+          {
+            "label": "Travel mode",
+            "value": "eTA applies to air transit"
+          }
+        ]
+      },
+      "new-zealand-nzeta-uk-entry": {
+        "title": "New Zealand Electronic Travel Authority (NZeTA)",
+        "summary": "UK passport holders normally need an NZeTA before travel and receive a visitor visa on arrival if entry is granted.",
+        "conditions": [
+          "Passport-specific restrictions apply to some nationalities.",
+          "Travellers must meet health, character, genuine-visitor, onward-travel and funds requirements.",
+          "Australian citizens travelling on Australian passports are exempt."
+        ],
+        "keyFacts": [
+          {
+            "label": "Before travel",
+            "value": "NZeTA required; visitor visa is granted at the border if entry is approved"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 6 months per visit"
+          },
+          {
+            "label": "12-month limit",
+            "value": "Up to 6 months total in any 12-month period"
+          },
+          {
+            "label": "NZeTA validity",
+            "value": "2 years for most travellers"
+          },
+          {
+            "label": "Passport validity",
+            "value": "Normally at least 3 months after planned departure"
+          }
+        ]
+      },
+      "schengen-annex-i-visa-required-entry": {
+        "title": "Short-stay Schengen visa required unless exempt",
+        "summary": "Ordinary-passport nationals listed in Annex I normally need a valid short-stay Schengen visa before entering for tourism.",
+        "conditions": [
+          "A valid Schengen visa, long-stay visa, residence permit, EU-family-member right or another official exemption can satisfy or change this requirement.",
+          "The issued visa can allow fewer days or fewer countries than the general maximum.",
+          "Work, study and stays over 90 days follow separate national rules."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Required before travel unless an exemption applies"
+          },
+          {
+            "label": "Maximum short stay",
+            "value": "Up to 90 days in any 180-day period; the visa may allow less"
+          },
+          {
+            "label": "Passport issued",
+            "value": "Within the previous 10 years on entry"
+          },
+          {
+            "label": "Passport validity",
+            "value": "At least 3 months after planned departure from Schengen"
+          }
+        ]
+      },
+      "schengen-annex-ii-biometric-passport-entry": {
+        "title": "Biometric passport decides the visa exemption",
+        "summary": "A qualifying biometric ordinary passport permits visa-free Schengen tourism for up to 90 days in any 180-day period; a non-qualifying passport requires a visa.",
+        "conditions": [
+          "Confirm that the passport is biometric and meets the country-specific Annex II wording before relying on the exemption.",
+          "The app records the issuing country but not whether a passport is biometric.",
+          "ETIAS is not operating for this rule's effective period; departures after 30 September 2026 fall back for a fresh check."
+        ],
+        "keyFacts": [
+          {
+            "label": "With qualifying passport",
+            "value": "No visa for tourism"
+          },
+          {
+            "label": "Without qualifying passport",
+            "value": "Short-stay Schengen visa required"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 90 days in any 180-day period across Schengen"
+          },
+          {
+            "label": "Passport validity",
+            "value": "At least 3 months after planned departure from Schengen"
+          },
+          {
+            "label": "Electronic authorisation",
+            "value": "Not required through 30 September 2026"
+          }
+        ]
+      },
+      "schengen-annex-ii-specific-passport-entry": {
+        "title": "Confirm the passport-specific visa exemption",
+        "summary": "Visa-free Schengen tourism depends on the exact passport: Hong Kong SAR, Macao SAR, or a Taiwan passport containing an identity-card number, as applicable.",
+        "conditions": [
+          "A different passport issued for the same territory can require a short-stay visa.",
+          "The app does not record the passport subtype or Taiwan identity-card-number qualifier.",
+          "ETIAS is not operating for this rule's effective period; departures after 30 September 2026 fall back for a fresh check."
+        ],
+        "keyFacts": [
+          {
+            "label": "With qualifying passport",
+            "value": "No visa for tourism"
+          },
+          {
+            "label": "Without qualifying passport",
+            "value": "Short-stay Schengen visa required"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 90 days in any 180-day period across Schengen"
+          },
+          {
+            "label": "Passport validity",
+            "value": "At least 3 months after planned departure from Schengen"
+          },
+          {
+            "label": "Electronic authorisation",
+            "value": "Not required through 30 September 2026"
+          }
+        ]
+      },
+      "schengen-annex-ii-visa-exempt-entry": {
+        "title": "Tourism: no short-stay visa required",
+        "summary": "Listed ordinary-passport holders can visit the Schengen area without a short-stay visa for up to 90 days in any rolling 180-day period.",
+        "conditions": [
+          "The 90-day allowance is shared across the whole Schengen area, not renewed in each country.",
+          "Work, study and stays over 90 days follow separate national rules.",
+          "ETIAS is not operating for this rule's effective period; departures after 30 September 2026 fall back for a fresh check."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Not required for tourism"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 90 days in any 180-day period across Schengen"
+          },
+          {
+            "label": "Passport issued",
+            "value": "Within the previous 10 years on entry"
+          },
+          {
+            "label": "Passport validity",
+            "value": "At least 3 months after planned departure from Schengen"
+          },
+          {
+            "label": "Electronic authorisation",
+            "value": "Not required through 30 September 2026"
+          }
+        ]
+      },
+      "australia-eta-entry": {
+        "title": "Australian ETA or another suitable visa",
+        "summary": "Eligible passport holders must hold a valid Australian visa before travel; ETA 601 may be available.",
+        "conditions": [
+          "Criminal history, purpose, intended stay and passport type can require a different visa.",
+          "The ETA is digitally linked to the passport used in the application."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa status",
+            "value": "A visa is required before travel"
+          },
+          {
+            "label": "Available option",
+            "value": "ETA 601 may be available"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 3 months per entry"
+          },
+          {
+            "label": "ETA validity",
+            "value": "12 months or until the passport expires"
+          }
+        ]
+      },
+      "australia-eta-evisitor-entry": {
+        "title": "Australian visa — eVisitor or ETA may be available",
+        "summary": "Eligible passport holders must hold a valid Australian visa before travel; eVisitor 651 or ETA 601 may be available.",
+        "conditions": [
+          "Criminal history, purpose, intended stay and passport type can require a different visa.",
+          "The visa is digitally linked to the passport used in the application."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa status",
+            "value": "A visa is required before travel"
+          },
+          {
+            "label": "Available options",
+            "value": "eVisitor 651 or ETA 601 may be available"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 3 months per entry"
+          },
+          {
+            "label": "Visa validity",
+            "value": "Multiple entries during a 12-month validity period"
+          }
+        ]
+      },
+      "australia-evisitor-entry": {
+        "title": "Australian eVisitor or another suitable visa",
+        "summary": "Eligible European passport holders must hold a valid Australian visa before travel; eVisitor 651 may be available.",
+        "conditions": [
+          "Criminal history, purpose, intended stay and passport type can require a different visa.",
+          "The visa is digitally linked to the passport used in the application."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa status",
+            "value": "A visa is required before travel"
+          },
+          {
+            "label": "Available option",
+            "value": "eVisitor 651 may be available"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 3 months per entry"
+          },
+          {
+            "label": "eVisitor validity",
+            "value": "Multiple entries for 12 months"
+          }
+        ]
+      },
+      "australia-transit-without-visa": {
+        "title": "Australian transit-without-visa conditions may apply",
+        "summary": "Eligible passport holders can transit without an Australian visa only when every transit condition is met.",
+        "conditions": [
+          "The traveller must arrive by aircraft and hold a confirmed onward ticket to depart by aircraft for a third country within 8 hours.",
+          "The traveller must hold documents for the destination and must not clear immigration, leave the transit lounge or collect baggage."
+        ],
+        "keyFacts": [
+          {
+            "label": "Transit visa",
+            "value": "Not required only when every TWOV condition is met"
+          },
+          {
+            "label": "Maximum transit",
+            "value": "Up to 8 hours"
+          },
+          {
+            "label": "Border process",
+            "value": "Remain airside and do not collect baggage"
+          }
+        ]
+      },
+      "brazil-norway-visa-exempt-entry": {
+        "title": "Tourism: no visa or ETA for up to 90 days",
+        "summary": "Norwegian ordinary-passport holders can visit Brazil for tourism without a visa or electronic travel authorisation.",
+        "conditions": [
+          "The 12-month migratory year starts on first entry and continues running. Only days spent in Brazil count; leaving does not restore days already used.",
+          "Request any extension from Polícia Federal before the initial stay expires; approval is not guaranteed.",
+          "Paid work, residence and other non-visitor purposes require the appropriate permission."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa or ETA",
+            "value": "Not required for tourism"
+          },
+          {
+            "label": "Initial stay",
+            "value": "Up to 90 days from first entry"
+          },
+          {
+            "label": "Maximum if extension is approved",
+            "value": "Up to 180 days total in the migratory year"
+          },
+          {
+            "label": "Passport validity",
+            "value": "Through the entire stay; no extra 6 months required"
+          }
+        ]
+      },
+      "canada-eta-entry": {
+        "title": "Canadian eTA or valid Canadian visa",
+        "summary": "Visa-exempt foreign nationals normally need an eTA to fly to Canada unless they hold a valid Canadian visa or another exemption.",
+        "conditions": [
+          "Canadian citizens and permanent residents use different documents.",
+          "US citizens and qualifying US lawful permanent residents are exempt from the eTA requirement."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa status",
+            "value": "No visitor visa for eligible air travel with an eTA"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Normally up to 6 months per visit"
+          },
+          {
+            "label": "eTA validity",
+            "value": "Up to 5 years or until the passport expires"
+          },
+          {
+            "label": "Travel mode",
+            "value": "eTA applies to air travel and air transit"
+          }
+        ]
+      },
+      "canada-eta-transit": {
+        "title": "Canadian eTA or transit/visitor visa",
+        "summary": "Air passengers transiting Canada generally need the Canadian entry document applicable to their passport, even for a short connection.",
+        "conditions": [
+          "Some nationality-, airport- and itinerary-specific transit-without-visa programmes have strict conditions."
+        ],
+        "keyFacts": [
+          {
+            "label": "Before travel",
+            "value": "Approved eTA or an appropriate Canadian visa"
+          },
+          {
+            "label": "Travel mode",
+            "value": "eTA applies to air transit"
+          }
+        ]
+      },
+      "japan-ordinary-passport-non-waiver-check": {
+        "title": "A Japan visa is normally required",
+        "summary": "This ordinary passport is not covered by a locally encoded short-stay waiver. A visa is normally required before travel, but an existing immigration permission or another document- or status-specific exemption can change the result.",
+        "conditions": [
+          "If no separate exemption or valid Japan immigration permission applies, obtain the appropriate visa before departure.",
+          "A Japanese visa cannot be obtained on arrival.",
+          "Confirm diplomatic, official and other special travel documents under their separate rules."
+        ],
+        "keyFacts": [
+          {
+            "label": "Normal requirement",
+            "value": "Visa before travel"
+          },
+          {
+            "label": "Special cases",
+            "value": "Existing permission or document-specific exemption may apply"
+          },
+          {
+            "label": "Visa on arrival",
+            "value": "Not available"
+          }
+        ]
+      },
+      "new-zealand-nzeta-entry": {
+        "title": "New Zealand Electronic Travel Authority (NZeTA)",
+        "summary": "Visa-waiver travellers normally need an NZeTA before travel and receive a visitor visa on arrival if entry is granted.",
+        "conditions": [
+          "Passport-specific restrictions apply to some nationalities.",
+          "Travellers must meet health, character, genuine-visitor, onward-travel and funds requirements.",
+          "Australian citizens travelling on Australian passports are exempt."
+        ],
+        "keyFacts": [
+          {
+            "label": "Before travel",
+            "value": "NZeTA required; visitor visa is granted at the border if entry is approved"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 3 months per visit"
+          },
+          {
+            "label": "12-month limit",
+            "value": "Up to 6 months total in any 12-month period"
+          },
+          {
+            "label": "NZeTA validity",
+            "value": "2 years for most travellers"
+          },
+          {
+            "label": "Passport validity",
+            "value": "Normally at least 3 months after planned departure"
+          }
+        ]
+      },
+      "new-zealand-nzeta-transit": {
+        "title": "NZeTA or New Zealand transit visa",
+        "summary": "Eligible transit passengers need an NZeTA; other passengers may need a transit visa.",
+        "conditions": [
+          "Visa-free transit is limited to Auckland International Airport and normally no more than 24 hours.",
+          "The exact rule depends on passport, destination and whether the traveller leaves the transit area."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum transit",
+            "value": "Up to 24 hours"
+          },
+          {
+            "label": "Airport",
+            "value": "Auckland International Airport only"
+          },
+          {
+            "label": "Border process",
+            "value": "Remain in the international transit area"
+          }
+        ]
+      },
+      "new-zealand-transit-waiver-nzeta": {
+        "title": "NZeTA for Auckland transit",
+        "summary": "Transit-visa-waiver passport holders need an NZeTA before passing through Auckland International Airport.",
+        "conditions": [
+          "Transit must remain in Auckland Airport's international transit area and normally cannot exceed 24 hours.",
+          "A different New Zealand airport or leaving the transit area requires visitor entry permission."
+        ],
+        "keyFacts": [
+          {
+            "label": "Maximum transit",
+            "value": "Up to 24 hours"
+          },
+          {
+            "label": "Airport",
+            "value": "Auckland International Airport only"
+          },
+          {
+            "label": "Border process",
+            "value": "Remain in the international transit area"
+          }
+        ]
+      },
+      "schengen-free-movement-document": {
+        "title": "Valid passport or national identity card",
+        "summary": "EU citizens and citizens of Iceland, Liechtenstein, Norway and Switzerland can enter this Schengen country with a valid passport or eligible national identity card.",
+        "conditions": [
+          "The travel document must be valid on the day of travel.",
+          "Children and minors must have their own passport or eligible identity card.",
+          "Temporary border controls and local identity checks can require the document to be presented."
+        ],
+        "keyFacts": [
+          {
+            "label": "Accepted document",
+            "value": "Valid passport or national identity card with travel rights"
+          },
+          {
+            "label": "Document validity",
+            "value": "Must be valid on the travel day"
+          }
+        ]
+      },
+      "schengen-third-country-entry-documents": {
+        "title": "Schengen passport requirements",
+        "summary": "Non-EU/EEA/Swiss ordinary-passport holders need a qualifying passport even when the separate visa rule says a visa is not required.",
+        "conditions": [
+          "The passport must have been issued within the previous 10 years on entry and normally remain valid for at least 3 months after planned departure from Schengen.",
+          "Children and minors need their own passport and any visa required for their nationality.",
+          "Border authorities can request proof of accommodation, funds and onward or return travel."
+        ],
+        "keyFacts": [
+          {
+            "label": "Passport issued",
+            "value": "Within the previous 10 years on entry"
+          },
+          {
+            "label": "Passport validity",
+            "value": "At least 3 months after planned departure from Schengen"
+          }
+        ]
+      },
+      "uk-eta-entry": {
+        "title": "UK ETA or existing UK immigration permission",
+        "summary": "Travellers with an ETA-eligible passport normally need an ETA before visiting the UK unless they already hold a visa or another listed exemption.",
+        "conditions": [
+          "Irish citizens and people with valid UK immigration permission are among those who do not need an ETA.",
+          "An ETA does not guarantee entry and is linked to the passport used to apply."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa status",
+            "value": "No visitor visa with an approved ETA or another exemption"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 6 months per visit"
+          },
+          {
+            "label": "ETA validity",
+            "value": "2 years or until the passport expires"
+          },
+          {
+            "label": "Passport validity",
+            "value": "Valid for the whole stay"
+          }
+        ]
+      },
+      "uk-eta-taiwan-entry": {
+        "title": "UK ETA or existing UK immigration permission",
+        "summary": "Travellers using a qualifying Taiwan passport normally need an ETA before visiting the UK unless they already hold a visa or another listed exemption.",
+        "conditions": [
+          "The Taiwan passport must include the identification number issued by the competent authority.",
+          "An ETA does not guarantee entry and is linked to the passport used to apply."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa status",
+            "value": "No visitor visa with an approved ETA or another exemption"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 6 months per visit"
+          },
+          {
+            "label": "ETA validity",
+            "value": "2 years or until the passport expires"
+          },
+          {
+            "label": "Passport validity",
+            "value": "Valid for the whole stay"
+          }
+        ]
+      },
+      "us-vwp-entry": {
+        "title": "Approved ESTA or valid U.S. visa",
+        "summary": "Eligible Visa Waiver Program travellers normally need an approved ESTA before air travel to the United States unless travelling on a valid visa.",
+        "conditions": [
+          "Visa Waiver Program travel is normally limited to tourism or business stays of 90 days or less.",
+          "Travel history, dual nationality, passport type and carrier eligibility can make a traveller ineligible for the Visa Waiver Program.",
+          "An e-passport is required for Visa Waiver Program travel."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa status",
+            "value": "Visa-free under the Visa Waiver Program with an approved ESTA"
+          },
+          {
+            "label": "Maximum stay",
+            "value": "Up to 90 days per admission"
+          },
+          {
+            "label": "ESTA validity",
+            "value": "Usually 2 years or until the passport expires"
+          }
+        ]
+      },
+      "us-vwp-transit": {
+        "title": "Approved ESTA or valid U.S. visa",
+        "summary": "The United States generally requires transit passengers to hold ESTA under the Visa Waiver Program or an appropriate US visa.",
+        "conditions": [
+          "The United States does not provide a general sterile international transit exemption.",
+          "Visa Waiver Program eligibility restrictions still apply to transit."
+        ],
+        "keyFacts": [
+          {
+            "label": "Before travel",
+            "value": "Approved ESTA or an appropriate U.S. visa"
+          },
+          {
+            "label": "Border process",
+            "value": "No general sterile international transit"
+          }
+        ]
+      },
+      "conservative-travel-document": {
+        "title": "Passport or accepted travel document",
+        "summary": "Confirm which travel document is accepted and its minimum remaining validity. National identity cards can replace passports on some regional journeys.",
+        "conditions": [
+          "Check validity on both the arrival date and planned departure date.",
+          "Verify blank-page and document-condition requirements."
+        ],
+        "keyFacts": []
+      },
+      "conservative-transit-permission": {
+        "title": "Transit permission",
+        "summary": "Transit rules depend on nationality, connection length, airport transfer route and whether border control is crossed.",
+        "conditions": [
+          "Airside and landside connections can have different rules.",
+          "Airport or terminal changes usually require entry permission."
+        ],
+        "keyFacts": []
+      },
+      "conservative-entry-permission": {
+        "title": "Visa, eVisa or electronic authorisation",
+        "summary": "Entry permission depends on nationality, residence, purpose, stay length and documents already held.",
+        "conditions": [
+          "Residence permits and valid visas from other countries can create exemptions.",
+          "Visa-free entry can still require an ETA or arrival registration."
+        ],
+        "keyFacts": []
+      }
+    }
+  },
+  "baggage": {
+    "advices": {
+      "DELHI_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Collect and recheck at Delhi",
+        "explanation": "International-to-domestic passengers at Delhi must collect checked baggage, clear Customs and use the transfer desk, even when the bag is tagged through."
+      },
+      "AUSTRALIA_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Collect for Australian border clearance",
+        "explanation": "International arrivals connecting to an Australian domestic flight must collect checked baggage, clear immigration and customs, then recheck it — including on one ticket."
+      },
+      "NEW_ZEALAND_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Collect for Customs and biosecurity",
+        "explanation": "On arrival in New Zealand, checked baggage must be collected and cleared before an onward domestic flight."
+      },
+      "JAPAN_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Collect at the first airport in Japan",
+        "explanation": "For an international arrival connecting to a Japan domestic flight, collect checked baggage for Customs and check it in again."
+      },
+      "CANADA_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Canadian transfer process varies",
+        "explanation": "Canadian hubs use airport-, origin- and airline-specific baggage transfer programs. Some passengers clear Customs without collecting bags; others must reclaim them."
+      },
+      "GENERIC_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Confirm first-port-of-entry handling",
+        "explanation": "You are arriving internationally and continuing on a domestic flight. Many countries require baggage to be presented at the first point of entry, but the process is country- and airport-specific."
+      },
+      "NOT_CHECKED_THROUGH": {
+        "title": "Bag is not checked through",
+        "explanation": "The baggage tag does not cover the onward journey, so collect the bag and check it in again for the next flight."
+      },
+      "CHECKED_THROUGH_NO_KNOWN_RECLAIM": {
+        "title": "No known reclaim requirement",
+        "explanation": "Your bag is checked through and this connection does not match a supported mandatory Customs reclaim rule."
+      },
+      "SEPARATE_TICKETS": {
+        "title": "Separate tickets normally require self-transfer",
+        "explanation": "Separate bookings are separate journeys, so baggage is normally collected and checked in again at the connection."
+      },
+      "CHECK_BAGGAGE_TAG": {
+        "title": "Check the baggage tag",
+        "explanation": "No supported border rule makes pickup certain here, but transfer depends on whether the airline tags the bag beyond this airport."
+      },
+      "US_PRECLEARANCE_NOT_CHECKED_THROUGH": {
+        "title": "Collect because the bag is not checked through",
+        "explanation": "U.S. border processing was completed before departure, but the baggage tag does not cover the onward flight."
+      },
+      "US_PRECLEARANCE_CHECKED_THROUGH": {
+        "title": "Precleared before the U.S. flight",
+        "explanation": "This flight departs from a CBP preclearance airport, so eligible passengers arrive like domestic travellers and a through-checked bag normally transfers onward."
+      },
+      "US_PRECLEARANCE_CONFIRM_TAG": {
+        "title": "Preclearance removes the usual U.S. reclaim step",
+        "explanation": "CBP processing happens before departure from this airport. Confirm that the baggage tag covers the onward flight."
+      },
+      "US_SYD_LAX_SCREENING_PILOT": {
+        "title": "Collect unless your flight uses the CBP screening pilot",
+        "explanation": "U.S. arrivals normally reclaim checked baggage for CBP. A route-specific remote-screening pilot may transfer eligible bags on the American Airlines Sydney–Los Angeles service."
+      },
+      "US_FIRST_ARRIVAL": {
+        "title": "Collect at the first U.S. arrival",
+        "explanation": "Travellers entering the United States from overseas normally collect checked baggage for CBP and recheck it before any onward flight."
+      }
+    }
+  }
+}

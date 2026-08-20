@@ -28,7 +28,7 @@ export function documentReviewCount(requirements) {
 
 export function documentRequirementKey(requirement) {
   return [
-    requirement.code ?? requirement.title,
+    requirement.ruleId ?? requirement.code ?? requirement.title,
     requirement.scope ?? "JOURNEY",
     requirement.airportCode ?? requirement.countryCode ?? "ALL",
   ].join(":");

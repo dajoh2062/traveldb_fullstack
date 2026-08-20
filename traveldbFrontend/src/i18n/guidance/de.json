@@ -1,0 +1,1408 @@
+{
+  "documentDatasetVersion": "2026-08-09.5",
+  "documents": {
+    "rules": {
+      "australia-valid-visa-entry": {
+        "title": "Prüfen Sie, ob Ihr australisches Visum für diese Reise gilt",
+        "summary": "Im angegebenen Profil ist ein australisches Visum hinterlegt. Visumtyp, Gültigkeit, Reisezweck und zulässige Einreisen müssen jedoch geprüft werden.",
+        "conditions": [
+          "Das Visum muss für den vorgesehenen Reisezweck, den Reisezeitraum und die Anzahl der Einreisen gelten."
+        ],
+        "keyFacts": [
+          {
+            "label": "Profilangabe",
+            "value": "Australisches Visum hinterlegt"
+          },
+          {
+            "label": "Zu prüfen",
+            "value": "Visum-Unterklasse, Gültigkeit, Reisezweck und zulässige Einreisen"
+          }
+        ]
+      },
+      "canada-valid-visa-entry": {
+        "title": "Prüfen Sie, ob Ihr kanadisches Visum für diese Reise gilt",
+        "summary": "Im angegebenen Profil ist ein kanadisches Visum hinterlegt. Visumtyp, Gültigkeit und zulässiger Reisezweck müssen jedoch geprüft werden, bevor Sie sich anstelle einer eTA darauf verlassen.",
+        "conditions": ["Visum und Reisepass müssen während der gesamten Reise gültig bleiben."],
+        "keyFacts": [
+          {
+            "label": "Profilangabe",
+            "value": "Kanadisches Visum hinterlegt"
+          },
+          {
+            "label": "Zu prüfen",
+            "value": "Visumtyp, Gültigkeit und zulässiger Reisezweck"
+          }
+        ]
+      },
+      "canada-valid-visa-transit": {
+        "title": "Prüfen Sie, ob Ihr kanadisches Visum für diesen Transit gilt",
+        "summary": "Im angegebenen Profil ist ein kanadisches Visum hinterlegt. Visumtyp und Gültigkeit müssen jedoch geprüft werden, bevor Sie sich beim Transit anstelle einer eTA darauf verlassen.",
+        "conditions": ["Visum und Reisepass müssen während des gesamten Transits gültig bleiben."],
+        "keyFacts": [
+          {
+            "label": "Profilangabe",
+            "value": "Kanadisches Visum hinterlegt"
+          },
+          {
+            "label": "Zu prüfen",
+            "value": "Visumtyp und Gültigkeit gelten für diesen Transit"
+          }
+        ]
+      },
+      "japan-valid-visa-entry": {
+        "title": "Prüfen Sie, ob Ihr japanisches Visum für diese Reise gilt",
+        "summary": "Im angegebenen Profil ist ein japanisches Visum hinterlegt. Vor der Reise müssen jedoch Gültigkeit, zulässiger Reisezweck und Anzahl der Einreisen geprüft werden.",
+        "conditions": [
+          "Das Visum muss gültig und für den geplanten Reisezweck, den Reisezeitraum und die Anzahl der Einreisen geeignet sein.",
+          "Ein Visum ist nur eine Einreisevoraussetzung; über die endgültige Einreisegenehmigung entscheidet die japanische Einwanderungsbehörde."
+        ],
+        "keyFacts": [
+          {
+            "label": "Profilangabe",
+            "value": "Japanisches Visum hinterlegt"
+          },
+          {
+            "label": "Zu prüfen",
+            "value": "Gültigkeit, Reisezweck und zulässige Einreisen"
+          }
+        ]
+      },
+      "new-zealand-valid-visa-entry": {
+        "title": "Prüfen Sie, ob Ihr neuseeländisches Visum für diese Reise gilt",
+        "summary": "Im angegebenen Profil ist ein neuseeländisches Visum hinterlegt. Visumtyp, Gültigkeit und zulässiger Reisezweck müssen jedoch geprüft werden, bevor Sie sich anstelle einer NZeTA darauf verlassen.",
+        "conditions": [
+          "Das Visum muss für den vorgesehenen Reisezweck und den Reisezeitraum gelten."
+        ],
+        "keyFacts": [
+          {
+            "label": "Vorhandenes Visum",
+            "value": "Typ, Gültigkeit, Reisezweck und zulässige Aufenthaltsdauer prüfen"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "In der Regel mindestens 3 Monate über die geplante Ausreise hinaus"
+          }
+        ]
+      },
+      "uk-valid-visa-entry": {
+        "title": "Prüfen Sie, ob Ihre britische Einreisegenehmigung für diese Reise gilt",
+        "summary": "Im angegebenen Profil ist eine britische Einreisegenehmigung hinterlegt. Art, Gültigkeit und zulässiger Reisezweck müssen jedoch geprüft werden, bevor Sie sich anstelle einer ETA darauf verlassen.",
+        "conditions": [
+          "Die vorhandene Genehmigung muss für den geplanten Reisezweck und den Reisezeitraum gültig sein."
+        ],
+        "keyFacts": [
+          {
+            "label": "Vorhandene Genehmigung",
+            "value": "Art, Gültigkeit, Reisezweck und zulässige Aufenthaltsdauer prüfen"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "Für den gesamten Aufenthalt gültig"
+          }
+        ]
+      },
+      "us-valid-visa-entry": {
+        "title": "Prüfen Sie, ob Ihr US-Visum für diese Reise gilt",
+        "summary": "Im angegebenen Profil ist ein US-Visum hinterlegt. Visumklasse, Gültigkeit, Reisezweck und zulässige Einreisen müssen jedoch geprüft werden, bevor Sie sich anstelle von ESTA darauf verlassen.",
+        "conditions": [
+          "Das Visum muss gültig und für den geplanten Reisezweck geeignet sein.",
+          "Ein Visum oder ESTA berechtigt zur Reise bis zur Grenze, garantiert aber keine Einreise."
+        ],
+        "keyFacts": [
+          {
+            "label": "Profilangabe",
+            "value": "US-Visum hinterlegt"
+          },
+          {
+            "label": "Zu prüfen",
+            "value": "Visumklasse, Gültigkeit, Reisezweck und zulässige Einreisen"
+          }
+        ]
+      },
+      "us-valid-visa-transit": {
+        "title": "Prüfen Sie, ob Ihr US-Visum für diesen Transit gilt",
+        "summary": "Im angegebenen Profil ist ein US-Visum hinterlegt. Visumklasse und Gültigkeit müssen jedoch geprüft werden, bevor Sie sich beim Transit anstelle von ESTA darauf verlassen.",
+        "conditions": [
+          "Das Visum muss für den Transit gültig sein; außerdem muss die reisende Person alle sonstigen Einreisevoraussetzungen erfüllen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Profilangabe",
+            "value": "US-Visum hinterlegt"
+          },
+          {
+            "label": "Zu prüfen",
+            "value": "Visumklasse und Gültigkeit gelten für diesen Transit"
+          }
+        ]
+      },
+      "japan-citizen-return": {
+        "title": "Für japanische Staatsangehörige bei der Rückkehr nach Japan ist kein Visum erforderlich",
+        "summary": "Japanische Staatsangehörige kehren im Rahmen eines gesonderten Rückkehrbestätigungsverfahrens zurück und benötigen für die Einreise nach Japan kein Visum.",
+        "conditions": [
+          "Für die Rückkehrbestätigung wird normalerweise ein Reisepass verwendet.",
+          "Kann aus unvermeidbaren Gründen kein Reisepass vorgelegt werden, muss die japanische Staatsangehörigkeit in dem von der Einwanderungsbehörde beschriebenen gesonderten Verfahren nachgewiesen werden."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visum",
+            "value": "Nicht erforderlich"
+          },
+          {
+            "label": "Verfahren",
+            "value": "Japanische Rückkehrbestätigung"
+          }
+        ]
+      },
+      "japan-barbados-lesotho-mrp-waiver-90": {
+        "title": "Visumfrei nur mit maschinenlesbarem Reisepass",
+        "summary": "Dieser gewöhnliche Reisepass ist nur dann für Aufenthalte von bis zu 90 Tagen von der Visumpflicht befreit, wenn er maschinenlesbar ist und den ICAO-Standards entspricht.",
+        "conditions": [
+          "Ohne einen geeigneten maschinenlesbaren Reisepass empfiehlt das japanische Außenministerium, vor der Reise ein Visum zu beantragen; andernfalls kann die reisende Person eingehend geprüft und die Einreise verweigert werden.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer maschinenlesbarer Reisepass erforderlich"
+          },
+          {
+            "label": "Befreiung gültig seit",
+            "value": "1. April 2010"
+          }
+        ]
+      },
+      "japan-brazil-epassport-waiver-90": {
+        "title": "Visumfrei nur mit einem brasilianischen ePass",
+        "summary": "Ein brasilianischer gewöhnlicher Reisepass ist nur dann für Aufenthalte von bis zu 90 Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt.",
+        "conditions": [
+          "Beantragen Sie ohne einen geeigneten ePass vor der Reise ein Visum; das japanische Außenministerium warnt, dass die Einreise andernfalls verweigert wird.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass erforderlich"
+          },
+          {
+            "label": "Befreiung gültig seit",
+            "value": "30. September 2023"
+          }
+        ]
+      },
+      "japan-hong-kong-document-waiver-90": {
+        "title": "Prüfen Sie das Reisedokument für Hongkong",
+        "summary": "Die visumfreie Einreise für bis zu 90 Tage ist auf Inhaber eines Reisepasses der Sonderverwaltungsregion Hongkong oder eines British National (Overseas)-Passes mit Aufenthaltsrecht in Hongkong beschränkt.",
+        "conditions": [
+          "Sie müssen einen Reisepass der Sonderverwaltungsregion Hongkong oder einen BNO-Pass zusammen mit einem Aufenthaltsrecht in Hongkong besitzen.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Akzeptiertes Dokument",
+            "value": "Reisepass der Sonderverwaltungsregion Hongkong"
+          },
+          {
+            "label": "BNO-Bedingung",
+            "value": "Aufenthaltsrecht in Hongkong erforderlich"
+          }
+        ]
+      },
+      "japan-indonesia-registered-epassport-waiver": {
+        "title": "Visumfrei nur mit einem registrierten indonesischen ePass",
+        "summary": "Ein indonesischer gewöhnlicher Reisepass ist nur dann für Aufenthalte von bis zu 15 Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt, der vor der Abreise bei einer japanischen Auslandsvertretung in Indonesien registriert wurde.",
+        "conditions": [
+          "Schließen Sie die Registrierung für die Visumbefreiung vor der Abreise ab.",
+          "Die Registrierung erlischt nach drei Jahren oder mit Ablauf des Reisepasses, je nachdem, was zuerst eintritt.",
+          "Bei einem neuen Reisepass oder einer Namensänderung ist eine neue Registrierung erforderlich.",
+          "Beantragen Sie ohne den entsprechend registrierten ePass vor der Reise ein Visum."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "15 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass"
+          },
+          {
+            "label": "Registrierung",
+            "value": "Vor der Abreise erforderlich"
+          },
+          {
+            "label": "Gültigkeit der Registrierung",
+            "value": "3 Jahre oder bis zum Ablauf des Reisepasses, je nachdem, was zuerst eintritt"
+          }
+        ]
+      },
+      "japan-macao-sar-passport-waiver-90": {
+        "title": "Visumfrei nur mit einem Reisepass der Sonderverwaltungsregion Macau",
+        "summary": "Die visumfreie Einreise für bis zu 90 Tage ist auf Inhaber eines von der Sonderverwaltungsregion Macau ausgestellten Reisepasses beschränkt.",
+        "conditions": [
+          "Vergewissern Sie sich, dass es sich um einen Reisepass der Sonderverwaltungsregion Macau handelt.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Akzeptiertes Dokument",
+            "value": "Reisepass der Sonderverwaltungsregion Macau"
+          }
+        ]
+      },
+      "japan-malaysia-epassport-waiver-90": {
+        "title": "Visumfrei nur mit einem malaysischen ePass",
+        "summary": "Ein malaysischer gewöhnlicher Reisepass ist nur dann für Aufenthalte von bis zu 90 Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt.",
+        "conditions": [
+          "Ohne einen geeigneten ePass empfiehlt das japanische Außenministerium, vor der Reise ein Visum zu beantragen; andernfalls kann die reisende Person eingehend geprüft und die Einreise verweigert werden.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass erforderlich"
+          },
+          {
+            "label": "Befreiung gültig seit",
+            "value": "1. Juli 2013"
+          }
+        ]
+      },
+      "japan-montenegro-epassport-waiver-90": {
+        "title": "Visumfrei nur mit einem montenegrinischen ePass",
+        "summary": "Ein montenegrinischer gewöhnlicher Reisepass ist nur dann für Aufenthalte von bis zu 90 Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt.",
+        "conditions": [
+          "Beantragen Sie ohne einen geeigneten ePass vor der Reise ein Visum; das japanische Außenministerium warnt, dass die Einreise andernfalls verweigert wird.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass erforderlich"
+          },
+          {
+            "label": "Befreiung gültig seit",
+            "value": "1. September 2025"
+          }
+        ]
+      },
+      "japan-panama-epassport-waiver-90": {
+        "title": "Visumfrei nur mit einem panamaischen ePass",
+        "summary": "Ein panamaischer gewöhnlicher Reisepass ist nur dann für Aufenthalte von bis zu 90 Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt.",
+        "conditions": [
+          "Beantragen Sie ohne einen geeigneten ePass vor der Reise ein Visum; das japanische Außenministerium warnt, dass die Einreise andernfalls verweigert wird.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass erforderlich"
+          },
+          {
+            "label": "Befreiung gültig seit",
+            "value": "1. April 2024"
+          }
+        ]
+      },
+      "japan-paraguay-epassport-waiver-90": {
+        "title": "Visumfrei nur mit einem paraguayischen ePass",
+        "summary": "Ein paraguayischer gewöhnlicher Reisepass ist nur dann für Aufenthalte von bis zu 90 Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt.",
+        "conditions": [
+          "Beantragen Sie ohne einen geeigneten ePass vor der Reise ein Visum; das japanische Außenministerium warnt, dass die Einreise andernfalls verweigert wird.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass erforderlich"
+          },
+          {
+            "label": "Befreiung gültig seit",
+            "value": "1. Juni 2025"
+          }
+        ]
+      },
+      "japan-peru-epassport-waiver-90": {
+        "title": "Visumfrei nur mit einem peruanischen ePass",
+        "summary": "Ein peruanischer gewöhnlicher Reisepass ist nur dann für Aufenthalte von bis zu 90 Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt.",
+        "conditions": [
+          "Beantragen Sie ohne einen geeigneten ePass vor der Reise ein Visum; das japanische Außenministerium warnt, dass die Einreise andernfalls verweigert wird.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass erforderlich"
+          },
+          {
+            "label": "Befreiung gültig seit",
+            "value": "1. Juli 2025"
+          }
+        ]
+      },
+      "japan-qatar-registered-epassport-waiver": {
+        "title": "Visumfrei nur mit einem registrierten katarischen ePass",
+        "summary": "Ein katarischer gewöhnlicher Reisepass ist nur dann für einen Aufenthalt von bis zu 30 aufeinanderfolgenden Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt, der vor der Abreise bei einer japanischen Auslandsvertretung registriert wurde.",
+        "conditions": [
+          "Schließen Sie die Reisepassregistrierung vor der Abreise bei einer japanischen Botschaft, einem Generalkonsulat oder einer konsularischen Vertretung ab.",
+          "Die Registrierung erlischt nach drei Jahren oder mit Ablauf des Reisepasses, je nachdem, was zuerst eintritt.",
+          "Bei einem neuen Reisepass oder einer Namensänderung ist eine neue Registrierung erforderlich.",
+          "Ohne abgeschlossene Registrierung wird die Einreise verweigert."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "30 aufeinanderfolgende Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass"
+          },
+          {
+            "label": "Registrierung",
+            "value": "Vor der Abreise erforderlich"
+          },
+          {
+            "label": "Gültigkeit der Registrierung",
+            "value": "3 Jahre oder bis zum Ablauf des Reisepasses, je nachdem, was zuerst eintritt"
+          }
+        ]
+      },
+      "japan-serbia-epassport-waiver-90": {
+        "title": "Visumfrei nur mit einem serbischen ePass",
+        "summary": "Ein serbischer gewöhnlicher Reisepass ist nur dann für Aufenthalte von bis zu 90 Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt.",
+        "conditions": [
+          "Beantragen Sie ohne einen geeigneten ePass vor der Reise ein Visum; das japanische Außenministerium warnt, dass die Einreise andernfalls verweigert wird.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass erforderlich"
+          },
+          {
+            "label": "Befreiung gültig seit",
+            "value": "1. Mai 2011"
+          }
+        ]
+      },
+      "japan-taiwan-personal-id-passport-waiver-90": {
+        "title": "Visumfrei nur, wenn der taiwanische Reisepass eine persönliche Identifikationsnummer enthält",
+        "summary": "Die Befreiung für taiwanische Reisepässe gilt nur, wenn der Reisepass eine persönliche Identifikationsnummer enthält; die bei Einreise gewährte Aufenthaltsdauer beträgt bis zu 90 Tage.",
+        "conditions": [
+          "Vergewissern Sie sich, dass die Datenseite des Reisepasses eine persönliche Identifikationsnummer enthält.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepassbedingung",
+            "value": "Persönliche Identifikationsnummer erforderlich"
+          }
+        ]
+      },
+      "japan-thailand-epassport-waiver-15": {
+        "title": "Visumfrei nur mit einem thailändischen ePass",
+        "summary": "Ein thailändischer gewöhnlicher Reisepass ist nur dann für Aufenthalte von bis zu 15 Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt.",
+        "conditions": [
+          "Der Reisepass muss das ICAO-ePass-Symbol tragen und den erforderlichen IC-Chip enthalten.",
+          "Beantragen Sie ohne einen geeigneten ePass vor der Reise ein Visum; das japanische Außenministerium warnt, dass die Einreise andernfalls verweigert wird.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "15 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass erforderlich"
+          }
+        ]
+      },
+      "japan-turkiye-mrp-waiver-90": {
+        "title": "Visumfrei nur mit einem maschinenlesbaren türkischen Reisepass",
+        "summary": "Ein türkischer gewöhnlicher Reisepass ist nur dann für Aufenthalte von bis zu 90 Tagen von der Visumpflicht befreit, wenn er maschinenlesbar ist und den ICAO-Standards entspricht.",
+        "conditions": [
+          "Ohne einen geeigneten maschinenlesbaren Reisepass empfiehlt das japanische Außenministerium, vor der Reise ein Visum zu beantragen; andernfalls kann die reisende Person eingehend geprüft und die Einreise verweigert werden.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer maschinenlesbarer Reisepass erforderlich"
+          },
+          {
+            "label": "Befreiung gültig seit",
+            "value": "1. April 2011"
+          }
+        ]
+      },
+      "japan-uae-epassport-waiver-90": {
+        "title": "Visumfrei nur mit einem ePass der VAE",
+        "summary": "Ein gewöhnlicher Reisepass der VAE ist nur dann für Aufenthalte von bis zu 90 Tagen von der Visumpflicht befreit, wenn es sich um einen ICAO-konformen ePass handelt.",
+        "conditions": [
+          "Die Befreiung für ICAO-konforme ePässe begann am 1. November 2022; die derzeitige Aufenthaltsdauer von 90 Tagen gilt seit dem 1. Juli 2025.",
+          "Beantragen Sie ohne einen geeigneten ePass vor der Reise ein Visum; das japanische Außenministerium warnt, dass die Einreise andernfalls verweigert wird.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage"
+          },
+          {
+            "label": "Reisepass",
+            "value": "ICAO-konformer ePass erforderlich"
+          },
+          {
+            "label": "90-Tage-Regelung gültig seit",
+            "value": "1. Juli 2025"
+          }
+        ]
+      },
+      "japan-united-kingdom-passport-waiver": {
+        "title": "Prüfen Sie, welchen britischen Reisepass Sie besitzen",
+        "summary": "Ein gewöhnlicher Standardreisepass für britische Staatsangehörige ist zunächst für bis zu 90 Tage von der Visumpflicht befreit. Ein British National (Overseas)-Pass ist nur dann berechtigt, wenn sein Inhaber ein Aufenthaltsrecht in Hongkong besitzt.",
+        "conditions": [
+          "Beantragen Sie bei einem britischen Standardreisepass noch vor Ablauf des ersten Zeitraums in Japan eine Verlängerung, wenn Sie die bilaterale Regelung nutzen möchten.",
+          "Prüfen Sie bei einem British National (Overseas)-Pass das Aufenthaltsrecht in Hongkong, bevor Sie sich auf die Befreiung verlassen.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Britischer Standardreisepass",
+            "value": "Zunächst bis zu 90 Tage ohne Visum"
+          },
+          {
+            "label": "BNO-Pass",
+            "value": "Aufenthaltsrecht in Hongkong erforderlich"
+          },
+          {
+            "label": "Bilaterale Höchstdauer",
+            "value": "Nach genehmigter Verlängerung bis zu 6 Monate"
+          }
+        ]
+      },
+      "japan-uruguay-recognized-passport-waiver-90": {
+        "title": "Visumfrei nur mit der anerkannten uruguayischen Reisepassversion",
+        "summary": "Die Visumbefreiung für bis zu 90 Tage gilt nur für die alte Version des uruguayischen Reisepasses. Japan erkennt die neue Version ohne Geburtsort nicht als gültiges Reisedokument an.",
+        "conditions": [
+          "Prüfen Sie die Gestaltung des Reisepasses und nicht nur das Ausstellungsdatum: Pässe der alten Version bleiben auch bei Ausstellung nach dem 16. April 2025 berechtigt.",
+          "Ein nach dem 16. April 2025 ausgestellter Reisepass der neuen Version ohne Geburtsort berechtigt nicht zur Reise nach Japan.",
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstaufenthalt",
+            "value": "90 Tage mit der anerkannten Version"
+          },
+          {
+            "label": "Alte Reisepassversion",
+            "value": "Von der Visumpflicht befreit"
+          },
+          {
+            "label": "Neue Version ohne Geburtsort",
+            "value": "Nicht als Reisedokument anerkannt"
+          }
+        ]
+      },
+      "japan-brunei-passport-waiver-30": {
+        "title": "Für einen Kurzaufenthalt in Japan ist kein Visum erforderlich",
+        "summary": "Ein gültiger gewöhnlicher Reisepass von Brunei ist für einen Kurzaufenthalt von bis zu 30 Tagen von der Visumpflicht befreit.",
+        "conditions": [
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen.",
+          "Über die endgültige Einreisegenehmigung entscheidet die japanische Einwanderungsbehörde."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visum",
+            "value": "Nicht erforderlich"
+          },
+          {
+            "label": "Aufenthaltsdauer bei Einreise",
+            "value": "Bis zu 30 Tage"
+          },
+          {
+            "label": "Aktuelle Aufenthaltsdauer gültig seit",
+            "value": "10. Dezember 2024"
+          }
+        ]
+      },
+      "japan-ordinary-passport-waiver-90": {
+        "title": "Für einen Kurzaufenthalt in Japan ist kein Visum erforderlich",
+        "summary": "Dieser gewöhnliche Reisepass ist für einen Kurzaufenthalt von der Visumpflicht befreit. Die bei Einreise gewährte Aufenthaltsdauer beträgt bis zu 90 Tage.",
+        "conditions": [
+          "Der Aufenthalt darf keine vergüteten Tätigkeiten umfassen.",
+          "Über die endgültige Einreisegenehmigung und die zulässige Aufenthaltsdauer entscheidet die japanische Einwanderungsbehörde."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visum",
+            "value": "Nicht erforderlich"
+          },
+          {
+            "label": "Aufenthaltsdauer bei Einreise",
+            "value": "Bis zu 90 Tage"
+          }
+        ]
+      },
+      "japan-ordinary-passport-waiver-six-month-extension": {
+        "title": "Zunächst ist für bis zu 90 Tage kein Visum erforderlich",
+        "summary": "Dieser gewöhnliche Reisepass ist von der Visumpflicht befreit. Die Einreisegenehmigung wird zunächst für bis zu 90 Tage erteilt; für einen längeren Aufenthalt im Rahmen der bilateralen Regelung muss in Japan eine Verlängerung beantragt werden.",
+        "conditions": [
+          "Beantragen Sie vor Ablauf des ersten Zeitraums eine Verlängerung bei der japanischen Einwanderungsbehörde, wenn der geplante Aufenthalt 90 Tage überschreitet.",
+          "Eine Verlängerung erfolgt nicht automatisch, und der Aufenthalt darf keine vergüteten Tätigkeiten umfassen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visum",
+            "value": "Nicht erforderlich"
+          },
+          {
+            "label": "Erste Aufenthaltsdauer bei Einreise",
+            "value": "Bis zu 90 Tage"
+          },
+          {
+            "label": "Bilaterale Höchstdauer",
+            "value": "Nach genehmigter Verlängerung bis zu 6 Monate"
+          }
+        ]
+      },
+      "japan-entry-valid-passport": {
+        "title": "Für die Einreise nach Japan ist ein gültiger Reisepass erforderlich",
+        "summary": "Ihr Reisepass muss bei der Einreise nach Japan gültig sein. Die japanische Botschaft in Finnland empfiehlt, dass er während des gesamten Aufenthalts gültig bleibt.",
+        "conditions": [
+          "Führen Sie bei der Beantragung der Einreisegenehmigung den für diese Reise verwendeten gültigen Reisepass mit.",
+          "Die Gültigkeit während des gesamten Aufenthalts wird empfohlen; diese Quellen schreiben jedoch keine zusätzliche Gültigkeit von drei oder sechs Monaten nach Reiseende vor."
+        ],
+        "keyFacts": [
+          {
+            "label": "Bei Einreise erforderlich",
+            "value": "Gültiger Reisepass"
+          },
+          {
+            "label": "Empfohlen",
+            "value": "Während des gesamten Aufenthalts gültig"
+          },
+          {
+            "label": "Zusätzliche Gültigkeit nach Reiseende",
+            "value": "Diese Quellen nennen keinen zusätzlichen Zeitraum"
+          }
+        ]
+      },
+      "brazil-norway-business-entry-verification": {
+        "title": "Genehmigung für Geschäftsreisen prüfen",
+        "summary": "Die offiziellen Hinweise sind nicht einheitlich genug, um vor Ort eine eindeutige Entscheidung für norwegische Geschäftsreisende nach Brasilien zu treffen.",
+        "conditions": [
+          "Klären Sie die erforderliche Genehmigung vor der Reise mit der brasilianischen Botschaft.",
+          "Verlassen Sie sich bei bezahlter Arbeit oder Beschäftigung nicht auf die touristische Visumbefreiung."
+        ],
+        "keyFacts": [
+          {
+            "label": "Regelung für Tourismus",
+            "value": "Bis zu 90 Tage visumfrei"
+          },
+          {
+            "label": "Geschäftsreise",
+            "value": "Vor der Reise klären"
+          }
+        ]
+      },
+      "schengen-free-movement-entry": {
+        "title": "Im Rahmen der Freizügigkeit ist kein Visum erforderlich",
+        "summary": "Staatsangehörige der EU, des EEA und der Schweiz können im Rahmen der Freizügigkeitsregeln mit einem gültigen Reisedokument in dieses Schengen-Land einreisen.",
+        "conditions": [
+          "Einige Länder können bei Kurzaufenthalten eine Anwesenheitsmeldung verlangen.",
+          "Bei Aufenthalten von mehr als 3 Monaten können eine Wohnsitzanmeldung und weitere Voraussetzungen erforderlich sein."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visum",
+            "value": "Nicht erforderlich"
+          },
+          {
+            "label": "Ohne Wohnsitzanmeldung",
+            "value": "Bis zu 3 Monate"
+          },
+          {
+            "label": "Längere Aufenthalte",
+            "value": "Möglicherweise gelten Melde- und Aufenthaltsvoraussetzungen"
+          }
+        ]
+      },
+      "canada-eta-romania-entry": {
+        "title": "Kanadische eTA mit einem berechtigten rumänischen Reisepass",
+        "summary": "Rumänische Staatsangehörige benötigen einen elektronischen Reisepass, um für eine Flugreise nach Kanada eine eTA nutzen zu können; Inhaber nicht elektronischer Reisepässe benötigen ein Besuchervisum.",
+        "conditions": [
+          "Der Reisepass muss elektronisch sein; ein vorläufiger oder anderer nicht elektronischer rumänischer Reisepass berechtigt nicht zu einer eTA."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visumstatus",
+            "value": "Kein Besuchervisum für berechtigte Flugreisen mit eTA"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Normalerweise bis zu 6 Monate pro Besuch"
+          },
+          {
+            "label": "Gültigkeit der eTA",
+            "value": "Bis zu 5 Jahre oder bis zum Ablauf des Reisepasses"
+          },
+          {
+            "label": "Reiseart",
+            "value": "Die eTA gilt für Flugreisen und Transit auf dem Luftweg"
+          }
+        ]
+      },
+      "canada-eta-romania-transit": {
+        "title": "Kanadische eTA mit einem berechtigten rumänischen Reisepass",
+        "summary": "Rumänische Staatsangehörige benötigen einen elektronischen Reisepass, um bei einem Flug über Kanada eine eTA nutzen zu können; Inhaber nicht elektronischer Reisepässe benötigen ein Transit- oder Besuchervisum.",
+        "conditions": [
+          "Der Reisepass muss elektronisch sein; ein vorläufiger oder anderer nicht elektronischer rumänischer Reisepass berechtigt nicht zu einer eTA."
+        ],
+        "keyFacts": [
+          {
+            "label": "Vor der Reise",
+            "value": "Genehmigte eTA oder geeignetes kanadisches Visum"
+          },
+          {
+            "label": "Reiseart",
+            "value": "Die eTA gilt für Transit auf dem Luftweg"
+          }
+        ]
+      },
+      "canada-eta-taiwan-entry": {
+        "title": "Kanadische eTA mit einem berechtigten taiwanischen Reisepass",
+        "summary": "Inhaber taiwanischer Reisepässe sind nur mit einem gewöhnlichen, vom taiwanischen Außenministerium ausgestellten Reisepass, der die persönliche Identifikationsnummer enthält, zu einer eTA berechtigt.",
+        "conditions": [
+          "Mit einem anderen taiwanischen Reisepass ist für Reisen nach Kanada ein Besuchervisum erforderlich."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visumstatus",
+            "value": "Kein Besuchervisum für berechtigte Flugreisen mit eTA"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Normalerweise bis zu 6 Monate pro Besuch"
+          },
+          {
+            "label": "Gültigkeit der eTA",
+            "value": "Bis zu 5 Jahre oder bis zum Ablauf des Reisepasses"
+          },
+          {
+            "label": "Reiseart",
+            "value": "Die eTA gilt für Flugreisen und Transit auf dem Luftweg"
+          }
+        ]
+      },
+      "canada-eta-taiwan-transit": {
+        "title": "Kanadische eTA mit einem berechtigten taiwanischen Reisepass",
+        "summary": "Inhaber taiwanischer Reisepässe sind bei einem Flug über Kanada nur mit einem gewöhnlichen, vom taiwanischen Außenministerium ausgestellten Reisepass, der die persönliche Identifikationsnummer enthält, zu einer eTA berechtigt.",
+        "conditions": [
+          "Mit einem anderen taiwanischen Reisepass ist für Reisen über Kanada ein Transit- oder Besuchervisum erforderlich."
+        ],
+        "keyFacts": [
+          {
+            "label": "Vor der Reise",
+            "value": "Genehmigte eTA oder geeignetes kanadisches Visum"
+          },
+          {
+            "label": "Reiseart",
+            "value": "Die eTA gilt für Transit auf dem Luftweg"
+          }
+        ]
+      },
+      "new-zealand-nzeta-uk-entry": {
+        "title": "Elektronische Reisegenehmigung für Neuseeland (NZeTA)",
+        "summary": "Inhaber britischer Reisepässe benötigen normalerweise vor der Reise eine NZeTA und erhalten bei der Ankunft ein Besuchervisum, wenn die Einreise genehmigt wird.",
+        "conditions": [
+          "Für einige Staatsangehörigkeiten gelten reisepassspezifische Einschränkungen.",
+          "Reisende müssen die Anforderungen an Gesundheit, Leumund, tatsächliche Besuchsabsicht, Weiterreise und finanzielle Mittel erfüllen.",
+          "Australische Staatsangehörige, die mit australischen Reisepässen reisen, sind befreit."
+        ],
+        "keyFacts": [
+          {
+            "label": "Vor der Reise",
+            "value": "NZeTA erforderlich; bei genehmigter Einreise wird an der Grenze ein Besuchervisum erteilt"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Bis zu 6 Monate pro Besuch"
+          },
+          {
+            "label": "Grenze innerhalb von 12 Monaten",
+            "value": "Insgesamt bis zu 6 Monate in einem beliebigen Zeitraum von 12 Monaten"
+          },
+          {
+            "label": "Gültigkeit der NZeTA",
+            "value": "Für die meisten Reisenden 2 Jahre"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "In der Regel mindestens 3 Monate über die geplante Ausreise hinaus"
+          }
+        ]
+      },
+      "schengen-annex-i-visa-required-entry": {
+        "title": "Schengen-Visum für Kurzaufenthalte erforderlich, sofern keine Befreiung gilt",
+        "summary": "In Anhang I aufgeführte Staatsangehörige mit gewöhnlichem Reisepass benötigen vor der Einreise zu touristischen Zwecken normalerweise ein gültiges Schengen-Visum für Kurzaufenthalte.",
+        "conditions": [
+          "Ein gültiges Schengen-Visum, ein Visum für den längerfristigen Aufenthalt, ein Aufenthaltstitel, ein Recht als Familienangehöriger eines EU-Bürgers oder eine andere offizielle Befreiung kann diese Anforderung erfüllen oder ändern.",
+          "Das ausgestellte Visum kann weniger Tage oder Länder zulassen als die allgemeine Höchstdauer.",
+          "Für Arbeit, Studium und Aufenthalte über 90 Tage gelten gesonderte nationale Bestimmungen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visum",
+            "value": "Vor der Reise erforderlich, sofern keine Befreiung gilt"
+          },
+          {
+            "label": "Höchstaufenthalt bei Kurzreisen",
+            "value": "Bis zu 90 Tage in einem beliebigen Zeitraum von 180 Tagen; das Visum kann weniger zulassen"
+          },
+          {
+            "label": "Ausstellung des Reisepasses",
+            "value": "Bei Einreise innerhalb der vorangegangenen 10 Jahre"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "Mindestens 3 Monate über die geplante Ausreise aus dem Schengen-Raum hinaus"
+          }
+        ]
+      },
+      "schengen-annex-ii-biometric-passport-entry": {
+        "title": "Der biometrische Reisepass entscheidet über die Visumbefreiung",
+        "summary": "Ein berechtigter biometrischer gewöhnlicher Reisepass ermöglicht visumfreie touristische Aufenthalte im Schengen-Raum von bis zu 90 Tagen in einem beliebigen Zeitraum von 180 Tagen; mit einem nicht berechtigten Reisepass ist ein Visum erforderlich.",
+        "conditions": [
+          "Vergewissern Sie sich, dass der Reisepass biometrisch ist und die länderspezifische Formulierung in Anhang II erfüllt, bevor Sie sich auf die Befreiung verlassen.",
+          "Die App erfasst das Ausstellungsland, jedoch nicht, ob ein Reisepass biometrisch ist.",
+          "ETIAS ist während des Gültigkeitszeitraums dieser Regel nicht in Betrieb; Abreisen nach dem 30. September 2026 werden zur erneuten Prüfung zurückgestellt."
+        ],
+        "keyFacts": [
+          {
+            "label": "Mit berechtigtem Reisepass",
+            "value": "Kein Visum für Tourismus"
+          },
+          {
+            "label": "Ohne berechtigten Reisepass",
+            "value": "Schengen-Visum für Kurzaufenthalte erforderlich"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Im gesamten Schengen-Raum bis zu 90 Tage in einem beliebigen Zeitraum von 180 Tagen"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "Mindestens 3 Monate über die geplante Ausreise aus dem Schengen-Raum hinaus"
+          },
+          {
+            "label": "Elektronische Genehmigung",
+            "value": "Bis einschließlich 30. September 2026 nicht erforderlich"
+          }
+        ]
+      },
+      "schengen-annex-ii-specific-passport-entry": {
+        "title": "Prüfen Sie die reisepassspezifische Visumbefreiung",
+        "summary": "Visumfreie touristische Aufenthalte im Schengen-Raum hängen vom genauen Reisepass ab: je nach Fall ein Reisepass der Sonderverwaltungsregion Hongkong, der Sonderverwaltungsregion Macau oder ein taiwanischer Reisepass mit Personalausweisnummer.",
+        "conditions": [
+          "Ein anderer, für dasselbe Gebiet ausgestellter Reisepass kann ein Visum für Kurzaufenthalte erfordern.",
+          "Die App erfasst weder den Untertyp des Reisepasses noch das Merkmal der taiwanischen Personalausweisnummer.",
+          "ETIAS ist während des Gültigkeitszeitraums dieser Regel nicht in Betrieb; Abreisen nach dem 30. September 2026 werden zur erneuten Prüfung zurückgestellt."
+        ],
+        "keyFacts": [
+          {
+            "label": "Mit berechtigtem Reisepass",
+            "value": "Kein Visum für Tourismus"
+          },
+          {
+            "label": "Ohne berechtigten Reisepass",
+            "value": "Schengen-Visum für Kurzaufenthalte erforderlich"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Im gesamten Schengen-Raum bis zu 90 Tage in einem beliebigen Zeitraum von 180 Tagen"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "Mindestens 3 Monate über die geplante Ausreise aus dem Schengen-Raum hinaus"
+          },
+          {
+            "label": "Elektronische Genehmigung",
+            "value": "Bis einschließlich 30. September 2026 nicht erforderlich"
+          }
+        ]
+      },
+      "schengen-annex-ii-visa-exempt-entry": {
+        "title": "Tourismus: Kein Visum für Kurzaufenthalte erforderlich",
+        "summary": "Die aufgeführten Inhaber gewöhnlicher Reisepässe können den Schengen-Raum ohne Visum für Kurzaufenthalte für bis zu 90 Tage in einem gleitenden Zeitraum von 180 Tagen besuchen.",
+        "conditions": [
+          "Die 90-Tage-Regelung gilt gemeinsam für den gesamten Schengen-Raum und beginnt nicht in jedem Land neu.",
+          "Für Arbeit, Studium und Aufenthalte über 90 Tage gelten gesonderte nationale Bestimmungen.",
+          "ETIAS ist während des Gültigkeitszeitraums dieser Regel nicht in Betrieb; Abreisen nach dem 30. September 2026 werden zur erneuten Prüfung zurückgestellt."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visum",
+            "value": "Für Tourismus nicht erforderlich"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Im gesamten Schengen-Raum bis zu 90 Tage in einem beliebigen Zeitraum von 180 Tagen"
+          },
+          {
+            "label": "Ausstellung des Reisepasses",
+            "value": "Bei Einreise innerhalb der vorangegangenen 10 Jahre"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "Mindestens 3 Monate über die geplante Ausreise aus dem Schengen-Raum hinaus"
+          },
+          {
+            "label": "Elektronische Genehmigung",
+            "value": "Bis einschließlich 30. September 2026 nicht erforderlich"
+          }
+        ]
+      },
+      "australia-eta-entry": {
+        "title": "Australische ETA oder ein anderes geeignetes Visum",
+        "summary": "Berechtigte Reisepassinhaber müssen vor der Reise ein gültiges australisches Visum besitzen; möglicherweise ist die ETA 601 verfügbar.",
+        "conditions": [
+          "Vorstrafen, Reisezweck, geplanter Aufenthalt und Reisepassart können ein anderes Visum erforderlich machen.",
+          "Die ETA ist digital mit dem im Antrag verwendeten Reisepass verknüpft."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visumstatus",
+            "value": "Vor der Reise ist ein Visum erforderlich"
+          },
+          {
+            "label": "Verfügbare Option",
+            "value": "Möglicherweise ist die ETA 601 verfügbar"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Bis zu 3 Monate pro Einreise"
+          },
+          {
+            "label": "Gültigkeit der ETA",
+            "value": "12 Monate oder bis zum Ablauf des Reisepasses"
+          }
+        ]
+      },
+      "australia-eta-evisitor-entry": {
+        "title": "Australisches Visum – eVisitor oder ETA möglicherweise verfügbar",
+        "summary": "Berechtigte Reisepassinhaber müssen vor der Reise ein gültiges australisches Visum besitzen; möglicherweise sind eVisitor 651 oder ETA 601 verfügbar.",
+        "conditions": [
+          "Vorstrafen, Reisezweck, geplanter Aufenthalt und Reisepassart können ein anderes Visum erforderlich machen.",
+          "Das Visum ist digital mit dem im Antrag verwendeten Reisepass verknüpft."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visumstatus",
+            "value": "Vor der Reise ist ein Visum erforderlich"
+          },
+          {
+            "label": "Verfügbare Optionen",
+            "value": "Möglicherweise sind eVisitor 651 oder ETA 601 verfügbar"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Bis zu 3 Monate pro Einreise"
+          },
+          {
+            "label": "Gültigkeit des Visums",
+            "value": "Mehrfache Einreisen während einer Gültigkeitsdauer von 12 Monaten"
+          }
+        ]
+      },
+      "australia-evisitor-entry": {
+        "title": "Australischer eVisitor oder ein anderes geeignetes Visum",
+        "summary": "Berechtigte europäische Reisepassinhaber müssen vor der Reise ein gültiges australisches Visum besitzen; möglicherweise ist eVisitor 651 verfügbar.",
+        "conditions": [
+          "Vorstrafen, Reisezweck, geplanter Aufenthalt und Reisepassart können ein anderes Visum erforderlich machen.",
+          "Das Visum ist digital mit dem im Antrag verwendeten Reisepass verknüpft."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visumstatus",
+            "value": "Vor der Reise ist ein Visum erforderlich"
+          },
+          {
+            "label": "Verfügbare Option",
+            "value": "Möglicherweise ist eVisitor 651 verfügbar"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Bis zu 3 Monate pro Einreise"
+          },
+          {
+            "label": "Gültigkeit von eVisitor",
+            "value": "Mehrfache Einreisen für 12 Monate"
+          }
+        ]
+      },
+      "australia-transit-without-visa": {
+        "title": "Bedingungen für den visumfreien Transit durch Australien können gelten",
+        "summary": "Berechtigte Reisepassinhaber können Australien nur dann ohne Visum durchqueren, wenn alle Transitbedingungen erfüllt sind.",
+        "conditions": [
+          "Die reisende Person muss mit dem Flugzeug ankommen und ein bestätigtes Weiterflugticket besitzen, um innerhalb von 8 Stunden mit dem Flugzeug in ein Drittland weiterzureisen.",
+          "Die reisende Person muss die Dokumente für das Zielland besitzen und darf weder die Grenzkontrolle passieren noch den Transitbereich verlassen oder Gepäck abholen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Transitvisum",
+            "value": "Nur dann nicht erforderlich, wenn alle TWOV-Bedingungen erfüllt sind"
+          },
+          {
+            "label": "Höchstdauer des Transits",
+            "value": "Bis zu 8 Stunden"
+          },
+          {
+            "label": "Ablauf an der Grenze",
+            "value": "Im luftseitigen Transitbereich bleiben und kein Gepäck abholen"
+          }
+        ]
+      },
+      "brazil-norway-visa-exempt-entry": {
+        "title": "Tourismus: Bis zu 90 Tage ohne Visum oder ETA",
+        "summary": "Norwegische Inhaber gewöhnlicher Reisepässe können Brasilien zu touristischen Zwecken ohne Visum oder elektronische Reisegenehmigung besuchen.",
+        "conditions": [
+          "Das zwölfmonatige Migrationsjahr beginnt mit der ersten Einreise und läuft fort. Es zählen nur die in Brasilien verbrachten Tage; eine Ausreise stellt bereits verbrauchte Tage nicht wieder her.",
+          "Beantragen Sie eine Verlängerung vor Ablauf des ursprünglichen Aufenthalts bei der Polícia Federal; eine Genehmigung ist nicht garantiert.",
+          "Für bezahlte Arbeit, Wohnsitznahme und andere Zwecke außerhalb eines Besuchs ist die entsprechende Genehmigung erforderlich."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visum oder ETA",
+            "value": "Für Tourismus nicht erforderlich"
+          },
+          {
+            "label": "Erster Aufenthalt",
+            "value": "Bis zu 90 Tage ab der ersten Einreise"
+          },
+          {
+            "label": "Höchstdauer bei genehmigter Verlängerung",
+            "value": "Insgesamt bis zu 180 Tage im Migrationsjahr"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "Während des gesamten Aufenthalts; keine zusätzlichen 6 Monate erforderlich"
+          }
+        ]
+      },
+      "canada-eta-entry": {
+        "title": "Kanadische eTA oder gültiges kanadisches Visum",
+        "summary": "Von der Visumpflicht befreite ausländische Staatsangehörige benötigen für einen Flug nach Kanada normalerweise eine eTA, sofern sie nicht ein gültiges kanadisches Visum besitzen oder unter eine andere Befreiung fallen.",
+        "conditions": [
+          "Kanadische Staatsangehörige und Personen mit Daueraufenthaltsrecht verwenden andere Dokumente.",
+          "US-Staatsangehörige und berechtigte Personen mit rechtmäßigem Daueraufenthaltsrecht in den USA sind von der eTA-Pflicht befreit."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visumstatus",
+            "value": "Kein Besuchervisum für berechtigte Flugreisen mit eTA"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Normalerweise bis zu 6 Monate pro Besuch"
+          },
+          {
+            "label": "Gültigkeit der eTA",
+            "value": "Bis zu 5 Jahre oder bis zum Ablauf des Reisepasses"
+          },
+          {
+            "label": "Reiseart",
+            "value": "Die eTA gilt für Flugreisen und Transit auf dem Luftweg"
+          }
+        ]
+      },
+      "canada-eta-transit": {
+        "title": "Kanadische eTA oder Transit-/Besuchervisum",
+        "summary": "Fluggäste im Transit durch Kanada benötigen in der Regel das für ihren Reisepass geltende kanadische Einreisedokument, auch bei einem kurzen Anschluss.",
+        "conditions": [
+          "Einige visumfreie Transitprogramme mit staatsangehörigkeits-, flughafen- und routenspezifischen Regelungen haben strenge Bedingungen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Vor der Reise",
+            "value": "Genehmigte eTA oder geeignetes kanadisches Visum"
+          },
+          {
+            "label": "Reiseart",
+            "value": "Die eTA gilt für Transit auf dem Luftweg"
+          }
+        ]
+      },
+      "japan-ordinary-passport-non-waiver-check": {
+        "title": "Normalerweise ist ein Visum für Japan erforderlich",
+        "summary": "Dieser gewöhnliche Reisepass fällt nicht unter eine lokal hinterlegte Befreiung für Kurzaufenthalte. Vor der Reise ist normalerweise ein Visum erforderlich; eine vorhandene Einwanderungsgenehmigung oder eine andere dokument- beziehungsweise statusspezifische Befreiung kann das Ergebnis jedoch ändern.",
+        "conditions": [
+          "Beantragen Sie vor der Abreise das geeignete Visum, wenn keine gesonderte Befreiung oder gültige japanische Einwanderungsgenehmigung gilt.",
+          "Ein japanisches Visum kann nicht bei der Ankunft beantragt werden.",
+          "Prüfen Sie diplomatische, dienstliche und andere besondere Reisedokumente nach den jeweils gesonderten Bestimmungen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Reguläre Anforderung",
+            "value": "Visum vor der Reise"
+          },
+          {
+            "label": "Sonderfälle",
+            "value": "Vorhandene Genehmigung oder dokumentenspezifische Befreiung kann gelten"
+          },
+          {
+            "label": "Visum bei Ankunft",
+            "value": "Nicht verfügbar"
+          }
+        ]
+      },
+      "new-zealand-nzeta-entry": {
+        "title": "Elektronische Reisegenehmigung für Neuseeland (NZeTA)",
+        "summary": "Von der Visumpflicht befreite Reisende benötigen normalerweise vor der Reise eine NZeTA und erhalten bei der Ankunft ein Besuchervisum, wenn die Einreise genehmigt wird.",
+        "conditions": [
+          "Für einige Staatsangehörigkeiten gelten reisepassspezifische Einschränkungen.",
+          "Reisende müssen die Anforderungen an Gesundheit, Leumund, tatsächliche Besuchsabsicht, Weiterreise und finanzielle Mittel erfüllen.",
+          "Australische Staatsangehörige, die mit australischen Reisepässen reisen, sind befreit."
+        ],
+        "keyFacts": [
+          {
+            "label": "Vor der Reise",
+            "value": "NZeTA erforderlich; bei genehmigter Einreise wird an der Grenze ein Besuchervisum erteilt"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Bis zu 3 Monate pro Besuch"
+          },
+          {
+            "label": "Grenze innerhalb von 12 Monaten",
+            "value": "Insgesamt bis zu 6 Monate in einem beliebigen Zeitraum von 12 Monaten"
+          },
+          {
+            "label": "Gültigkeit der NZeTA",
+            "value": "Für die meisten Reisenden 2 Jahre"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "In der Regel mindestens 3 Monate über die geplante Ausreise hinaus"
+          }
+        ]
+      },
+      "new-zealand-nzeta-transit": {
+        "title": "NZeTA oder neuseeländisches Transitvisum",
+        "summary": "Berechtigte Transitpassagiere benötigen eine NZeTA; andere Passagiere benötigen möglicherweise ein Transitvisum.",
+        "conditions": [
+          "Der visumfreie Transit ist auf den Auckland International Airport und normalerweise auf höchstens 24 Stunden beschränkt.",
+          "Die genaue Regel hängt vom Reisepass, vom Zielland und davon ab, ob die reisende Person den Transitbereich verlässt."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstdauer des Transits",
+            "value": "Bis zu 24 Stunden"
+          },
+          {
+            "label": "Flughafen",
+            "value": "Nur Auckland International Airport"
+          },
+          {
+            "label": "Ablauf an der Grenze",
+            "value": "Im internationalen Transitbereich bleiben"
+          }
+        ]
+      },
+      "new-zealand-transit-waiver-nzeta": {
+        "title": "NZeTA für den Transit über Auckland",
+        "summary": "Inhaber von Reisepässen mit Transitvisumbefreiung benötigen vor der Durchreise über den Auckland International Airport eine NZeTA.",
+        "conditions": [
+          "Der Transit muss im internationalen Transitbereich des Flughafens Auckland stattfinden und darf normalerweise 24 Stunden nicht überschreiten.",
+          "Bei Nutzung eines anderen neuseeländischen Flughafens oder beim Verlassen des Transitbereichs ist eine Einreisegenehmigung für Besucher erforderlich."
+        ],
+        "keyFacts": [
+          {
+            "label": "Höchstdauer des Transits",
+            "value": "Bis zu 24 Stunden"
+          },
+          {
+            "label": "Flughafen",
+            "value": "Nur Auckland International Airport"
+          },
+          {
+            "label": "Ablauf an der Grenze",
+            "value": "Im internationalen Transitbereich bleiben"
+          }
+        ]
+      },
+      "schengen-free-movement-document": {
+        "title": "Gültiger Reisepass oder Personalausweis",
+        "summary": "Staatsangehörige der EU sowie Islands, Liechtensteins, Norwegens und der Schweiz können mit einem gültigen Reisepass oder berechtigten Personalausweis in dieses Schengen-Land einreisen.",
+        "conditions": [
+          "Das Reisedokument muss am Reisetag gültig sein.",
+          "Kinder und Minderjährige müssen einen eigenen Reisepass oder berechtigten Personalausweis besitzen.",
+          "Bei vorübergehenden Grenzkontrollen und örtlichen Identitätskontrollen kann die Vorlage des Dokuments verlangt werden."
+        ],
+        "keyFacts": [
+          {
+            "label": "Akzeptiertes Dokument",
+            "value": "Gültiger Reisepass oder Personalausweis mit Reiseberechtigung"
+          },
+          {
+            "label": "Gültigkeit des Dokuments",
+            "value": "Muss am Reisetag gültig sein"
+          }
+        ]
+      },
+      "schengen-third-country-entry-documents": {
+        "title": "Reisepassanforderungen für den Schengen-Raum",
+        "summary": "Inhaber gewöhnlicher Reisepässe, die keine Staatsangehörigen der EU, des EEA oder der Schweiz sind, benötigen auch dann einen berechtigten Reisepass, wenn die gesonderte Visumregel besagt, dass kein Visum erforderlich ist.",
+        "conditions": [
+          "Der Reisepass muss bei Einreise innerhalb der vorangegangenen 10 Jahre ausgestellt worden sein und normalerweise mindestens 3 Monate über die geplante Ausreise aus dem Schengen-Raum hinaus gültig bleiben.",
+          "Kinder und Minderjährige benötigen einen eigenen Reisepass sowie jedes für ihre Staatsangehörigkeit erforderliche Visum.",
+          "Grenzbehörden können Nachweise über Unterkunft, finanzielle Mittel sowie Weiter- oder Rückreise verlangen."
+        ],
+        "keyFacts": [
+          {
+            "label": "Ausstellung des Reisepasses",
+            "value": "Bei Einreise innerhalb der vorangegangenen 10 Jahre"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "Mindestens 3 Monate über die geplante Ausreise aus dem Schengen-Raum hinaus"
+          }
+        ]
+      },
+      "uk-eta-entry": {
+        "title": "Britische ETA oder vorhandene britische Einreisegenehmigung",
+        "summary": "Reisende mit einem ETA-berechtigten Reisepass benötigen normalerweise vor einem Besuch im Vereinigten Königreich eine ETA, sofern sie nicht bereits ein Visum besitzen oder unter eine andere aufgeführte Befreiung fallen.",
+        "conditions": [
+          "Irische Staatsangehörige und Personen mit einer gültigen britischen Einreisegenehmigung gehören zu denjenigen, die keine ETA benötigen.",
+          "Eine ETA garantiert keine Einreise und ist mit dem für den Antrag verwendeten Reisepass verknüpft."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visumstatus",
+            "value": "Kein Besuchervisum bei genehmigter ETA oder einer anderen Befreiung"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Bis zu 6 Monate pro Besuch"
+          },
+          {
+            "label": "Gültigkeit der ETA",
+            "value": "2 Jahre oder bis zum Ablauf des Reisepasses"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "Für den gesamten Aufenthalt gültig"
+          }
+        ]
+      },
+      "uk-eta-taiwan-entry": {
+        "title": "Britische ETA oder vorhandene britische Einreisegenehmigung",
+        "summary": "Reisende mit einem berechtigten taiwanischen Reisepass benötigen normalerweise vor einem Besuch im Vereinigten Königreich eine ETA, sofern sie nicht bereits ein Visum besitzen oder unter eine andere aufgeführte Befreiung fallen.",
+        "conditions": [
+          "Der taiwanische Reisepass muss die von der zuständigen Behörde ausgestellte Identifikationsnummer enthalten.",
+          "Eine ETA garantiert keine Einreise und ist mit dem für den Antrag verwendeten Reisepass verknüpft."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visumstatus",
+            "value": "Kein Besuchervisum bei genehmigter ETA oder einer anderen Befreiung"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Bis zu 6 Monate pro Besuch"
+          },
+          {
+            "label": "Gültigkeit der ETA",
+            "value": "2 Jahre oder bis zum Ablauf des Reisepasses"
+          },
+          {
+            "label": "Gültigkeit des Reisepasses",
+            "value": "Für den gesamten Aufenthalt gültig"
+          }
+        ]
+      },
+      "us-vwp-entry": {
+        "title": "Genehmigtes ESTA oder gültiges US-Visum",
+        "summary": "Berechtigte Reisende im Rahmen des Visa Waiver Program benötigen normalerweise vor einer Flugreise in die Vereinigten Staaten ein genehmigtes ESTA, sofern sie nicht mit einem gültigen Visum reisen.",
+        "conditions": [
+          "Reisen im Rahmen des Visa Waiver Program sind normalerweise auf touristische oder geschäftliche Aufenthalte von höchstens 90 Tagen beschränkt.",
+          "Reiseverlauf, doppelte Staatsangehörigkeit, Reisepassart und Berechtigung des Beförderungsunternehmens können dazu führen, dass eine reisende Person nicht für das Visa Waiver Program infrage kommt.",
+          "Für Reisen im Rahmen des Visa Waiver Program ist ein ePass erforderlich."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visumstatus",
+            "value": "Mit genehmigtem ESTA im Rahmen des Visa Waiver Program visumfrei"
+          },
+          {
+            "label": "Höchstaufenthalt",
+            "value": "Bis zu 90 Tage pro Einreise"
+          },
+          {
+            "label": "Gültigkeit von ESTA",
+            "value": "In der Regel 2 Jahre oder bis zum Ablauf des Reisepasses"
+          }
+        ]
+      },
+      "us-vwp-transit": {
+        "title": "Genehmigtes ESTA oder gültiges US-Visum",
+        "summary": "Die Vereinigten Staaten verlangen von Transitpassagieren in der Regel ein ESTA im Rahmen des Visa Waiver Program oder ein geeignetes US-Visum.",
+        "conditions": [
+          "Die Vereinigten Staaten sehen keine allgemeine Befreiung für sterilen internationalen Transit vor.",
+          "Die Einschränkungen für die Teilnahme am Visa Waiver Program gelten auch beim Transit."
+        ],
+        "keyFacts": [
+          {
+            "label": "Vor der Reise",
+            "value": "Genehmigtes ESTA oder geeignetes US-Visum"
+          },
+          {
+            "label": "Ablauf an der Grenze",
+            "value": "Kein allgemeiner steriler internationaler Transit"
+          }
+        ]
+      },
+      "conservative-travel-document": {
+        "title": "Reisepass oder akzeptiertes Reisedokument",
+        "summary": "Prüfen Sie, welches Reisedokument akzeptiert wird und welche Mindestrestgültigkeit es haben muss. Bei einigen regionalen Reisen können Personalausweise den Reisepass ersetzen.",
+        "conditions": [
+          "Prüfen Sie die Gültigkeit sowohl am Ankunftsdatum als auch am geplanten Ausreisedatum.",
+          "Prüfen Sie die Anforderungen an freie Seiten und den Zustand des Dokuments."
+        ],
+        "keyFacts": []
+      },
+      "conservative-transit-permission": {
+        "title": "Transitgenehmigung",
+        "summary": "Die Transitbestimmungen hängen von der Staatsangehörigkeit, der Dauer der Verbindung, dem Transferweg am Flughafen und davon ab, ob die Grenzkontrolle passiert wird.",
+        "conditions": [
+          "Für luftseitige und landseitige Verbindungen können unterschiedliche Regeln gelten.",
+          "Bei einem Wechsel des Flughafens oder Terminals ist normalerweise eine Einreisegenehmigung erforderlich."
+        ],
+        "keyFacts": []
+      },
+      "conservative-entry-permission": {
+        "title": "Visum, eVisum oder elektronische Genehmigung",
+        "summary": "Die Einreisegenehmigung hängt von der Staatsangehörigkeit, dem Wohnsitz, dem Reisezweck, der Aufenthaltsdauer und den bereits vorhandenen Dokumenten ab.",
+        "conditions": [
+          "Aufenthaltstitel und gültige Visa anderer Länder können zu Befreiungen führen.",
+          "Auch bei visumfreier Einreise können eine ETA oder eine Registrierung bei Ankunft erforderlich sein."
+        ],
+        "keyFacts": []
+      }
+    }
+  },
+  "baggage": {
+    "advices": {
+      "DELHI_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "In Delhi abholen und erneut aufgeben",
+        "explanation": "Passagiere, die in Delhi von einem internationalen auf einen Inlandsflug umsteigen, müssen ihr aufgegebenes Gepäck abholen, den Zoll passieren und den Transferschalter nutzen, auch wenn das Gepäck bis zum Ziel durchgecheckt ist."
+      },
+      "AUSTRALIA_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Für die australische Grenzabfertigung abholen",
+        "explanation": "International ankommende Passagiere mit Anschluss an einen australischen Inlandsflug müssen ihr aufgegebenes Gepäck abholen, Einwanderungs- und Zollkontrolle passieren und es anschließend erneut aufgeben – auch bei einem einzigen Ticket."
+      },
+      "NEW_ZEALAND_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Für Zoll- und Biosicherheitskontrolle abholen",
+        "explanation": "Bei der Ankunft in Neuseeland muss aufgegebenes Gepäck vor einem anschließenden Inlandsflug abgeholt und kontrolliert werden."
+      },
+      "JAPAN_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Am ersten Flughafen in Japan abholen",
+        "explanation": "Bei einer internationalen Ankunft mit Anschluss an einen japanischen Inlandsflug muss das aufgegebene Gepäck für den Zoll abgeholt und erneut eingecheckt werden."
+      },
+      "CANADA_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Der kanadische Transferablauf ist unterschiedlich",
+        "explanation": "Kanadische Drehkreuze nutzen flughafen-, herkunfts- und fluggesellschaftsspezifische Gepäcktransferprogramme. Manche Passagiere passieren den Zoll, ohne ihr Gepäck abzuholen; andere müssen es abholen."
+      },
+      "GENERIC_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "Abfertigung am ersten Einreiseort prüfen",
+        "explanation": "Sie kommen aus dem Ausland an und reisen mit einem Inlandsflug weiter. Viele Länder verlangen, dass Gepäck am ersten Einreiseort vorgelegt wird; der Ablauf ist jedoch vom Land und Flughafen abhängig."
+      },
+      "NOT_CHECKED_THROUGH": {
+        "title": "Gepäck ist nicht bis zum Ziel durchgecheckt",
+        "explanation": "Der Gepäckanhänger gilt nicht für die Weiterreise. Holen Sie das Gepäck daher ab und geben Sie es für den nächsten Flug erneut auf."
+      },
+      "CHECKED_THROUGH_NO_KNOWN_RECLAIM": {
+        "title": "Keine bekannte Pflicht zur Gepäckabholung",
+        "explanation": "Ihr Gepäck ist bis zum Ziel durchgecheckt, und diese Verbindung fällt unter keine unterstützte Regel, die eine Abholung für den Zoll zwingend vorschreibt."
+      },
+      "SEPARATE_TICKETS": {
+        "title": "Separate Tickets erfordern normalerweise einen eigenständigen Transfer",
+        "explanation": "Separate Buchungen gelten als getrennte Reisen. Daher wird das Gepäck beim Umstieg normalerweise abgeholt und erneut aufgegeben."
+      },
+      "CHECK_BAGGAGE_TAG": {
+        "title": "Gepäckanhänger prüfen",
+        "explanation": "Keine unterstützte Grenzregel schreibt hier eindeutig eine Abholung vor. Der Transfer hängt jedoch davon ab, ob die Fluggesellschaft das Gepäck über diesen Flughafen hinaus kennzeichnet."
+      },
+      "US_PRECLEARANCE_NOT_CHECKED_THROUGH": {
+        "title": "Abholen, da das Gepäck nicht durchgecheckt ist",
+        "explanation": "Die US-Grenzabfertigung wurde vor dem Abflug abgeschlossen, aber der Gepäckanhänger gilt nicht für den Weiterflug."
+      },
+      "US_PRECLEARANCE_CHECKED_THROUGH": {
+        "title": "Vor dem Flug in die USA vorab abgefertigt",
+        "explanation": "Dieser Flug startet an einem Flughafen mit CBP-Vorabfertigung. Berechtigte Passagiere kommen daher wie Inlandsreisende an, und durchgechecktes Gepäck wird normalerweise weitergeleitet."
+      },
+      "US_PRECLEARANCE_CONFIRM_TAG": {
+        "title": "Durch die Vorabfertigung entfällt die übliche Gepäckabholung in den USA",
+        "explanation": "Die CBP-Abfertigung erfolgt vor dem Abflug von diesem Flughafen. Prüfen Sie, ob der Gepäckanhänger auch für den Weiterflug gilt."
+      },
+      "US_SYD_LAX_SCREENING_PILOT": {
+        "title": "Abholen, sofern Ihr Flug nicht am CBP-Kontrollpilotprojekt teilnimmt",
+        "explanation": "Bei Ankunft in den USA wird aufgegebenes Gepäck normalerweise für die CBP-Kontrolle abgeholt. Ein routenspezifisches Pilotprojekt zur Fernkontrolle kann berechtigtes Gepäck auf der American-Airlines-Verbindung Sydney–Los Angeles weiterleiten."
+      },
+      "US_FIRST_ARRIVAL": {
+        "title": "Bei der ersten Ankunft in den USA abholen",
+        "explanation": "Reisende, die aus dem Ausland in die Vereinigten Staaten einreisen, holen aufgegebenes Gepäck normalerweise für die CBP-Abfertigung ab und geben es vor jedem Weiterflug erneut auf."
+      }
+    }
+  }
+}

@@ -29,10 +29,12 @@ class GeneralDocumentRequirementsIntegrationTests extends DocumentRequirementsIn
         assertTrue(response.documentCheck().requirements().stream()
                 .anyMatch(requirement -> requirement.scope() == DocumentRequirement.Scope.TRANSIT
                         && requirement.countryCode().equals("AE")
-                        && requirement.status() == DocumentRequirement.Status.VERIFY));
+                        && requirement.status() == DocumentRequirement.Status.VERIFY
+                        && "conservative-transit-permission".equals(requirement.ruleId())));
         assertTrue(response.documentCheck().requirements().stream()
                 .anyMatch(requirement -> requirement.scope() == DocumentRequirement.Scope.ENTRY
-                        && requirement.countryCode().equals("TH")));
+                        && requirement.countryCode().equals("TH")
+                        && "conservative-entry-permission".equals(requirement.ruleId())));
         assertTrue(response.documentCheck().verificationSources().stream()
                 .anyMatch(source -> source.url().contains("iatatravelcentre.com")));
         assertFalse(response.documentCheck().verificationSources().stream()

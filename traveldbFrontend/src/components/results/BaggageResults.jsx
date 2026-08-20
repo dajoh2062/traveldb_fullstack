@@ -44,8 +44,8 @@ export default function BaggageResults({ route, stops }) {
                   {t(status.labelKey)}
                 </span>
                 <div className="result-content">
-                  <strong dir="auto" lang={stop.title ? "en" : undefined}>
-                    {stop.title ?? airportLabel(stop.airportCode, route)}
+                  <strong dir="auto" lang={stop.title ? stop.localized.title.lang : undefined}>
+                    {stop.title ? stop.localized.title.text : airportLabel(stop.airportCode, route)}
                   </strong>
                   {stop.title && (
                     <small className="result-location">
@@ -53,8 +53,8 @@ export default function BaggageResults({ route, stops }) {
                     </small>
                   )}
                   {stop.explanation && (
-                    <p dir="auto" lang="en">
-                      {stop.explanation}
+                    <p dir="auto" lang={stop.localized.explanation.lang}>
+                      {stop.localized.explanation.text}
                     </p>
                   )}
                   {sources.length > 0 && (

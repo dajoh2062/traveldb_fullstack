@@ -1,0 +1,1404 @@
+{
+  "documentDatasetVersion": "2026-08-09.5",
+  "documents": {
+    "rules": {
+      "australia-valid-visa-entry": {
+        "title": "V?rifiez que votre visa australien couvre ce voyage",
+        "summary": "Le profil fourni indique un visa australien, mais son type, sa validit?, son motif et le nombre d?entr?es autoris?es doivent ?tre v?rifi?s.",
+        "conditions": ["Le visa doit autoriser le motif, les dates et le nombre d?entr?es pr?vus."],
+        "keyFacts": [
+          {
+            "label": "Donn?e du profil",
+            "value": "Visa australien renseign?"
+          },
+          {
+            "label": "? v?rifier",
+            "value": "Cat?gorie du visa, validit?, motif et entr?es autoris?es"
+          }
+        ]
+      },
+      "canada-valid-visa-entry": {
+        "title": "V?rifiez que votre visa canadien couvre ce voyage",
+        "summary": "Le profil fourni indique un visa canadien, mais son type, sa validit? et le motif autoris? doivent ?tre v?rifi?s avant de l?utiliser ? la place d?une eTA.",
+        "conditions": ["Le visa et le passeport doivent rester valides pendant tout le voyage."],
+        "keyFacts": [
+          {
+            "label": "Donn?e du profil",
+            "value": "Visa canadien renseign?"
+          },
+          {
+            "label": "? v?rifier",
+            "value": "Type de visa, validit? et motif autoris?"
+          }
+        ]
+      },
+      "canada-valid-visa-transit": {
+        "title": "V?rifiez que votre visa canadien couvre ce transit",
+        "summary": "Le profil fourni indique un visa canadien, mais son type et sa validit? doivent ?tre v?rifi?s avant de l?utiliser ? la place d?une eTA pour le transit.",
+        "conditions": ["Le visa et le passeport doivent rester valides pendant tout le transit."],
+        "keyFacts": [
+          {
+            "label": "Donn?e du profil",
+            "value": "Visa canadien renseign?"
+          },
+          {
+            "label": "? v?rifier",
+            "value": "Le type et la validit? du visa couvrent ce transit"
+          }
+        ]
+      },
+      "japan-valid-visa-entry": {
+        "title": "V?rifiez que votre visa japonais couvre ce voyage",
+        "summary": "Le profil fourni indique un visa japonais, mais sa validit?, le motif autoris? et le nombre d?entr?es doivent ?tre v?rifi?s avant le voyage.",
+        "conditions": [
+          "Le visa doit ?tre valide et adapt? au motif, aux dates et au nombre d?entr?es pr?vus.",
+          "Le visa constitue l?une des conditions d?entr?e ; l?autorisation finale d?entrer est d?cid?e par les services d?immigration japonais."
+        ],
+        "keyFacts": [
+          {
+            "label": "Donn?e du profil",
+            "value": "Visa japonais renseign?"
+          },
+          {
+            "label": "? v?rifier",
+            "value": "Validit?, motif et entr?es autoris?es"
+          }
+        ]
+      },
+      "new-zealand-valid-visa-entry": {
+        "title": "V?rifiez que votre visa n?o-z?landais couvre ce voyage",
+        "summary": "Le profil fourni indique un visa n?o-z?landais, mais son type, sa validit? et le motif autoris? doivent ?tre v?rifi?s avant de l?utiliser ? la place d?une NZeTA.",
+        "conditions": ["Le visa doit autoriser le motif et les dates pr?vus."],
+        "keyFacts": [
+          {
+            "label": "Visa existant",
+            "value": "V?rifiez le type, la validit?, le motif et la dur?e de s?jour autoris?e"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "En principe, au moins 3 mois apr?s le d?part pr?vu"
+          }
+        ]
+      },
+      "uk-valid-visa-entry": {
+        "title": "V?rifiez que votre autorisation britannique couvre ce voyage",
+        "summary": "Le profil fourni indique une autorisation d?immigration britannique, mais son type, sa validit? et le motif autoris? doivent ?tre v?rifi?s avant de l?utiliser ? la place d?une ETA.",
+        "conditions": [
+          "L?autorisation existante doit ?tre valide pour le motif et les dates pr?vus."
+        ],
+        "keyFacts": [
+          {
+            "label": "Autorisation existante",
+            "value": "V?rifiez le type, la validit?, le motif et la dur?e de s?jour autoris?e"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "Valide pendant toute la dur?e du s?jour"
+          }
+        ]
+      },
+      "us-valid-visa-entry": {
+        "title": "V?rifiez que votre visa am?ricain couvre ce voyage",
+        "summary": "Le profil fourni indique un visa am?ricain, mais sa cat?gorie, sa validit?, son motif et le nombre d?entr?es autoris?es doivent ?tre v?rifi?s avant de l?utiliser ? la place de l?ESTA.",
+        "conditions": [
+          "Le visa doit ?tre valide et adapt? au motif de voyage pr?vu.",
+          "Un visa ou une ESTA autorise le voyage jusqu?? la fronti?re, mais ne garantit pas l?admission."
+        ],
+        "keyFacts": [
+          {
+            "label": "Donn?e du profil",
+            "value": "Visa am?ricain renseign?"
+          },
+          {
+            "label": "? v?rifier",
+            "value": "Cat?gorie du visa, validit?, motif et entr?es autoris?es"
+          }
+        ]
+      },
+      "us-valid-visa-transit": {
+        "title": "V?rifiez que votre visa am?ricain couvre ce transit",
+        "summary": "Le profil fourni indique un visa am?ricain, mais sa cat?gorie et sa validit? doivent ?tre v?rifi?es avant de l?utiliser ? la place de l?ESTA pour le transit.",
+        "conditions": [
+          "Le visa doit ?tre valide pour le transit et le voyageur doit par ailleurs rester admissible."
+        ],
+        "keyFacts": [
+          {
+            "label": "Donn?e du profil",
+            "value": "Visa am?ricain renseign?"
+          },
+          {
+            "label": "? v?rifier",
+            "value": "La cat?gorie et la validit? du visa couvrent ce transit"
+          }
+        ]
+      },
+      "japan-citizen-return": {
+        "title": "Aucun visa requis pour un citoyen japonais retournant au Japon",
+        "summary": "Les citoyens japonais suivent une proc?dure distincte de confirmation du retour et n?ont pas besoin de visa pour entrer au Japon.",
+        "conditions": [
+          "Un passeport est normalement utilis? pour confirmer le retour.",
+          "Lorsqu?un passeport ne peut ?tre pr?sent? pour des raisons in?vitables, la nationalit? japonaise doit ?tre ?tablie au moyen de la proc?dure distincte d?crite par l?Agence des services d?immigration."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Non requis"
+          },
+          {
+            "label": "Proc?dure",
+            "value": "Confirmation du retour au Japon"
+          }
+        ]
+      },
+      "japan-barbados-lesotho-mrp-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport lisible ? la machine",
+        "summary": "Ce passeport ordinaire est exempt? de visa jusqu?? 90 jours uniquement s?il est lisible ? la machine et conforme aux normes de l?OACI.",
+        "conditions": [
+          "Sans passeport lisible ? la machine admissible, le MOFA recommande d?obtenir un visa avant le voyage ; sinon, le voyageur peut faire l?objet d?un contr?le approfondi et se voir refuser l?entr?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport lisible ? la machine conforme aux normes de l?OACI requis"
+          },
+          {
+            "label": "Entr?e en vigueur de l?exemption",
+            "value": "1er avril 2010"
+          }
+        ]
+      },
+      "japan-brazil-epassport-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique br?silien",
+        "summary": "Un passeport ordinaire br?silien est exempt? de visa jusqu?? 90 jours uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI.",
+        "conditions": [
+          "Sans passeport ?lectronique conforme, obtenez un visa avant le voyage ; le MOFA avertit que l?entr?e sera sinon refus?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI requis"
+          },
+          {
+            "label": "Entr?e en vigueur de l?exemption",
+            "value": "30 septembre 2023"
+          }
+        ]
+      },
+      "japan-hong-kong-document-waiver-90": {
+        "title": "V?rifiez le document de voyage de Hong Kong",
+        "summary": "L?entr?e sans visa jusqu?? 90 jours est r?serv?e aux titulaires d?un passeport de la RAS de Hong Kong ou d?un passeport British National (Overseas) disposant d?un droit de r?sidence ? Hong Kong.",
+        "conditions": [
+          "D?tenir un passeport de la RAS de Hong Kong, ou un passeport BNO assorti d?un droit de r?sidence ? Hong Kong.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Document accept?",
+            "value": "Passeport de la RAS de Hong Kong"
+          },
+          {
+            "label": "Condition applicable au BNO",
+            "value": "Droit de r?sidence ? Hong Kong requis"
+          }
+        ]
+      },
+      "japan-indonesia-registered-epassport-waiver": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique indon?sien enregistr?",
+        "summary": "Un passeport ordinaire indon?sien est exempt? de visa jusqu?? 15 jours uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI, enregistr? avant le d?part aupr?s d?une mission diplomatique japonaise en Indon?sie.",
+        "conditions": [
+          "Effectuez l?enregistrement pour l?exemption de visa avant le d?part.",
+          "L?enregistrement expire apr?s trois ans ou ? l?expiration du passeport, selon la premi?re ?ch?ance.",
+          "Un nouveau passeport ou un changement de nom n?cessite un nouvel enregistrement.",
+          "Sans passeport ?lectronique enregistr? admissible, obtenez un visa avant le voyage."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "15 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI"
+          },
+          {
+            "label": "Enregistrement",
+            "value": "Requis avant le d?part"
+          },
+          {
+            "label": "Validit? de l?enregistrement",
+            "value": "3 ans ou jusqu?? l?expiration du passeport, selon la premi?re ?ch?ance"
+          }
+        ]
+      },
+      "japan-macao-sar-passport-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport de la RAS de Macao",
+        "summary": "L?entr?e sans visa jusqu?? 90 jours est r?serv?e aux titulaires d?un passeport d?livr? par la r?gion administrative sp?ciale de Macao.",
+        "conditions": [
+          "V?rifiez que le document est un passeport de la RAS de Macao.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Document accept?",
+            "value": "Passeport de la RAS de Macao"
+          }
+        ]
+      },
+      "japan-malaysia-epassport-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique malaisien",
+        "summary": "Un passeport ordinaire malaisien est exempt? de visa jusqu?? 90 jours uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI.",
+        "conditions": [
+          "Sans passeport ?lectronique admissible, le MOFA recommande d?obtenir un visa avant le voyage ; sinon, le voyageur peut faire l?objet d?un contr?le approfondi et se voir refuser l?entr?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI requis"
+          },
+          {
+            "label": "Entr?e en vigueur de l?exemption",
+            "value": "1er juillet 2013"
+          }
+        ]
+      },
+      "japan-montenegro-epassport-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique mont?n?grin",
+        "summary": "Un passeport ordinaire mont?n?grin est exempt? de visa jusqu?? 90 jours uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI.",
+        "conditions": [
+          "Sans passeport ?lectronique conforme, obtenez un visa avant le voyage ; le MOFA avertit que l?entr?e sera sinon refus?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI requis"
+          },
+          {
+            "label": "Entr?e en vigueur de l?exemption",
+            "value": "1er septembre 2025"
+          }
+        ]
+      },
+      "japan-panama-epassport-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique panam?en",
+        "summary": "Un passeport ordinaire panam?en est exempt? de visa jusqu?? 90 jours uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI.",
+        "conditions": [
+          "Sans passeport ?lectronique conforme, obtenez un visa avant le voyage ; le MOFA avertit que l?entr?e sera sinon refus?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI requis"
+          },
+          {
+            "label": "Entr?e en vigueur de l?exemption",
+            "value": "1er avril 2024"
+          }
+        ]
+      },
+      "japan-paraguay-epassport-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique paraguayen",
+        "summary": "Un passeport ordinaire paraguayen est exempt? de visa jusqu?? 90 jours uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI.",
+        "conditions": [
+          "Sans passeport ?lectronique conforme, obtenez un visa avant le voyage ; le MOFA avertit que l?entr?e sera sinon refus?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI requis"
+          },
+          {
+            "label": "Entr?e en vigueur de l?exemption",
+            "value": "1er juin 2025"
+          }
+        ]
+      },
+      "japan-peru-epassport-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique p?ruvien",
+        "summary": "Un passeport ordinaire p?ruvien est exempt? de visa jusqu?? 90 jours uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI.",
+        "conditions": [
+          "Sans passeport ?lectronique conforme, obtenez un visa avant le voyage ; le MOFA avertit que l?entr?e sera sinon refus?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI requis"
+          },
+          {
+            "label": "Entr?e en vigueur de l?exemption",
+            "value": "1er juillet 2025"
+          }
+        ]
+      },
+      "japan-qatar-registered-epassport-waiver": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique qatari enregistr?",
+        "summary": "Un passeport ordinaire qatari est exempt? de visa jusqu?? 30 jours cons?cutifs uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI, enregistr? avant le d?part aupr?s d?une repr?sentation japonaise ? l??tranger.",
+        "conditions": [
+          "Effectuez l?enregistrement du passeport avant le d?part aupr?s d?une ambassade, d?un consulat g?n?ral ou d?un bureau consulaire japonais.",
+          "L?enregistrement expire apr?s trois ans ou ? l?expiration du passeport, selon la premi?re ?ch?ance.",
+          "Un nouveau passeport ou un changement de nom n?cessite un nouvel enregistrement.",
+          "Sans enregistrement effectu?, l?entr?e sera refus?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "30 jours cons?cutifs"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI"
+          },
+          {
+            "label": "Enregistrement",
+            "value": "Requis avant le d?part"
+          },
+          {
+            "label": "Validit? de l?enregistrement",
+            "value": "3 ans ou jusqu?? l?expiration du passeport, selon la premi?re ?ch?ance"
+          }
+        ]
+      },
+      "japan-serbia-epassport-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique serbe",
+        "summary": "Un passeport ordinaire serbe est exempt? de visa jusqu?? 90 jours uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI.",
+        "conditions": [
+          "Sans passeport ?lectronique conforme, obtenez un visa avant le voyage ; le MOFA avertit que l?entr?e sera sinon refus?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI requis"
+          },
+          {
+            "label": "Entr?e en vigueur de l?exemption",
+            "value": "1er mai 2011"
+          }
+        ]
+      },
+      "japan-taiwan-personal-id-passport-waiver-90": {
+        "title": "Exemption de visa uniquement si le passeport ta?wanais comporte un num?ro d?identification personnel",
+        "summary": "L?exemption applicable au passeport ta?wanais ne vaut que si celui-ci comporte un num?ro d?identification personnel ; la dur?e de s?jour accord?e ? l?entr?e peut atteindre 90 jours.",
+        "conditions": [
+          "V?rifiez que la page d?identit? du passeport comporte un num?ro d?identification personnel.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Condition du passeport",
+            "value": "Num?ro d?identification personnel requis"
+          }
+        ]
+      },
+      "japan-thailand-epassport-waiver-15": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique tha?landais",
+        "summary": "Un passeport ordinaire tha?landais est exempt? de visa jusqu?? 15 jours uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI.",
+        "conditions": [
+          "Le passeport doit porter le symbole de passeport ?lectronique de l?OACI et contenir la puce ?lectronique requise.",
+          "Sans passeport ?lectronique conforme, obtenez un visa avant le voyage ; le MOFA avertit que l?entr?e sera sinon refus?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "15 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI requis"
+          }
+        ]
+      },
+      "japan-turkiye-mrp-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport turc lisible ? la machine",
+        "summary": "Un passeport ordinaire turc est exempt? de visa jusqu?? 90 jours uniquement s?il est lisible ? la machine et conforme aux normes de l?OACI.",
+        "conditions": [
+          "Sans passeport lisible ? la machine admissible, le MOFA recommande d?obtenir un visa avant le voyage ; sinon, le voyageur peut faire l?objet d?un contr?le approfondi et se voir refuser l?entr?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport lisible ? la machine conforme aux normes de l?OACI requis"
+          },
+          {
+            "label": "Entr?e en vigueur de l?exemption",
+            "value": "1er avril 2011"
+          }
+        ]
+      },
+      "japan-uae-epassport-waiver-90": {
+        "title": "Exemption de visa uniquement avec un passeport ?lectronique des ?mirats arabes unis",
+        "summary": "Un passeport ordinaire des ?mirats arabes unis est exempt? de visa jusqu?? 90 jours uniquement s?il s?agit d?un passeport ?lectronique conforme aux normes de l?OACI.",
+        "conditions": [
+          "L?exemption accord?e aux passeports ?lectroniques conformes aux normes de l?OACI a commenc? le 1er novembre 2022 ; la dur?e actuelle de 90 jours s?applique depuis le 1er juillet 2025.",
+          "Sans passeport ?lectronique conforme, obtenez un visa avant le voyage ; le MOFA avertit que l?entr?e sera sinon refus?e.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours"
+          },
+          {
+            "label": "Passeport",
+            "value": "Passeport ?lectronique conforme aux normes de l?OACI requis"
+          },
+          {
+            "label": "Entr?e en vigueur de l?autorisation de 90 jours",
+            "value": "1er juillet 2025"
+          }
+        ]
+      },
+      "japan-united-kingdom-passport-waiver": {
+        "title": "V?rifiez le type de passeport britannique d?tenu",
+        "summary": "Un passeport ordinaire standard de citoyen britannique est initialement exempt? de visa jusqu?? 90 jours. Un passeport British National (Overseas) n?est admissible que si son titulaire poss?de un droit de r?sidence ? Hong Kong.",
+        "conditions": [
+          "Avec un passeport standard de citoyen britannique, demandez la prolongation au Japon avant l?expiration de la p?riode initiale si vous souhaitez b?n?ficier de l?accord bilat?ral.",
+          "Avec un passeport British National (Overseas), v?rifiez le droit de r?sidence ? Hong Kong avant de vous fier ? l?exemption.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Passeport britannique standard",
+            "value": "Jusqu?? 90 jours initialement sans visa"
+          },
+          {
+            "label": "Passeport BNO",
+            "value": "Droit de r?sidence ? Hong Kong requis"
+          },
+          {
+            "label": "Dur?e maximale pr?vue par l?accord bilat?ral",
+            "value": "Jusqu?? 6 mois apr?s approbation d?une prolongation"
+          }
+        ]
+      },
+      "japan-uruguay-recognized-passport-waiver-90": {
+        "title": "Exemption de visa uniquement avec la version reconnue du passeport uruguayen",
+        "summary": "L?exemption de visa jusqu?? 90 jours s?applique uniquement ? l?ancienne version du passeport uruguayen. Le Japon ne reconna?t pas comme document de voyage valide la nouvelle version qui omet le lieu de naissance.",
+        "conditions": [
+          "V?rifiez le mod?le du passeport, et pas seulement sa date de d?livrance : les passeports de l?ancienne version restent admissibles m?me s?ils ont ?t? d?livr?s apr?s le 16 avril 2025.",
+          "Un passeport de nouvelle version d?livr? apr?s le 16 avril 2025 sans lieu de naissance n?est pas accept? pour voyager au Japon.",
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "90 jours avec la version reconnue"
+          },
+          {
+            "label": "Ancienne version du passeport",
+            "value": "Exempt? de visa"
+          },
+          {
+            "label": "Nouvelle version sans lieu de naissance",
+            "value": "Non reconnue pour le voyage"
+          }
+        ]
+      },
+      "japan-brunei-passport-waiver-30": {
+        "title": "Aucun visa de court s?jour requis pour le Japon",
+        "summary": "Un passeport ordinaire valide du Brun?i est exempt? de visa pour un court s?jour allant jusqu?? 30 jours.",
+        "conditions": [
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e.",
+          "L?autorisation finale d?entrer est d?cid?e par les services d?immigration japonais."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Non requis"
+          },
+          {
+            "label": "Dur?e de s?jour accord?e ? l?entr?e",
+            "value": "Jusqu?? 30 jours"
+          },
+          {
+            "label": "Entr?e en vigueur de la dur?e actuelle",
+            "value": "10 d?cembre 2024"
+          }
+        ]
+      },
+      "japan-ordinary-passport-waiver-90": {
+        "title": "Aucun visa de court s?jour requis pour le Japon",
+        "summary": "Ce passeport ordinaire est exempt? de visa pour une courte visite. La dur?e accord?e ? l?entr?e peut atteindre 90 jours.",
+        "conditions": [
+          "Le s?jour ne doit comporter aucune activit? r?mun?r?e.",
+          "L?autorisation finale d?entrer et la dur?e de s?jour accord?e sont d?cid?es par les services d?immigration japonais."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Non requis"
+          },
+          {
+            "label": "Dur?e de s?jour accord?e ? l?entr?e",
+            "value": "Jusqu?? 90 jours"
+          }
+        ]
+      },
+      "japan-ordinary-passport-waiver-six-month-extension": {
+        "title": "Aucun visa requis pour une dur?e initiale allant jusqu?? 90 jours",
+        "summary": "Ce passeport ordinaire est exempt? de visa. L?autorisation d?entr?e est initialement accord?e pour une dur?e maximale de 90 jours ; une prolongation doit ?tre demand?e au Japon pour rester plus longtemps au titre de l?accord bilat?ral.",
+        "conditions": [
+          "D?posez une demande aupr?s des services d?immigration japonais avant l?expiration de la p?riode initiale si le s?jour pr?vu d?passe 90 jours.",
+          "Une prolongation n?est pas automatique et le s?jour ne doit comporter aucune activit? r?mun?r?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Non requis"
+          },
+          {
+            "label": "Dur?e initiale accord?e ? l?entr?e",
+            "value": "Jusqu?? 90 jours"
+          },
+          {
+            "label": "Dur?e maximale pr?vue par l?accord bilat?ral",
+            "value": "Jusqu?? 6 mois apr?s approbation d?une prolongation"
+          }
+        ]
+      },
+      "japan-entry-valid-passport": {
+        "title": "Passeport valide requis pour entrer au Japon",
+        "summary": "Votre passeport doit ?tre valide ? votre entr?e au Japon. L?ambassade du Japon en Finlande recommande de le maintenir valide pendant toute la dur?e du s?jour.",
+        "conditions": [
+          "Pr?sentez le passeport valide utilis? pour ce voyage lors de la demande d?autorisation d?entr?e.",
+          "La validit? pendant toute la dur?e du s?jour est recommand?e, mais ces sources n?imposent pas de marge de validit? de trois ou six mois apr?s le voyage."
+        ],
+        "keyFacts": [
+          {
+            "label": "Requis ? l?entr?e",
+            "value": "Passeport valide"
+          },
+          {
+            "label": "Recommand?",
+            "value": "Valide pendant toute la dur?e du s?jour"
+          },
+          {
+            "label": "Marge de validit? apr?s le voyage",
+            "value": "Aucune marge suppl?mentaire indiqu?e par ces sources"
+          }
+        ]
+      },
+      "brazil-norway-business-entry-verification": {
+        "title": "V?rifiez l?autorisation requise pour un voyage d?affaires",
+        "summary": "Les recommandations officielles ne sont pas assez coh?rentes pour ?tablir localement une conclusion d?finitive pour les voyageurs d?affaires norv?giens se rendant au Br?sil.",
+        "conditions": [
+          "V?rifiez l?autorisation requise aupr?s de l?ambassade du Br?sil avant le voyage.",
+          "Ne vous fiez pas ? l?exemption de visa touristique pour exercer une activit? r?mun?r?e ou occuper un emploi."
+        ],
+        "keyFacts": [
+          {
+            "label": "R?gle pour le tourisme",
+            "value": "Sans visa jusqu?? 90 jours"
+          },
+          {
+            "label": "Voyage d?affaires",
+            "value": "? confirmer avant le voyage"
+          }
+        ]
+      },
+      "schengen-free-movement-entry": {
+        "title": "Aucun visa requis au titre de la libre circulation",
+        "summary": "Les citoyens de l?UE, de l?EEE et de la Suisse peuvent entrer dans ce pays de l?espace Schengen au titre de la libre circulation avec un document de voyage valide.",
+        "conditions": [
+          "Certains pays peuvent exiger une d?claration de pr?sence pour les courts s?jours.",
+          "Les s?jours de plus de 3 mois peuvent n?cessiter un enregistrement de r?sidence et ?tre soumis ? des conditions suppl?mentaires."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Non requis"
+          },
+          {
+            "label": "Sans enregistrement de r?sidence",
+            "value": "Jusqu?? 3 mois"
+          },
+          {
+            "label": "S?jours plus longs",
+            "value": "Des conditions d?enregistrement et de r?sidence peuvent s?appliquer"
+          }
+        ]
+      },
+      "canada-eta-romania-entry": {
+        "title": "eTA canadienne avec un passeport roumain admissible",
+        "summary": "Les citoyens roumains ont besoin d?un passeport ?lectronique pour utiliser une eTA lors d?un voyage a?rien au Canada ; les titulaires d?un passeport non ?lectronique ont besoin d?un visa de visiteur.",
+        "conditions": [
+          "Le passeport doit ?tre ?lectronique ; un passeport roumain temporaire ou non ?lectronique ne permet pas d?obtenir une eTA."
+        ],
+        "keyFacts": [
+          {
+            "label": "Statut du visa",
+            "value": "Aucun visa de visiteur pour un voyage a?rien admissible avec une eTA"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "En principe, jusqu?? 6 mois par visite"
+          },
+          {
+            "label": "Validit? de l?eTA",
+            "value": "Jusqu?? 5 ans ou jusqu?? l?expiration du passeport"
+          },
+          {
+            "label": "Mode de transport",
+            "value": "L?eTA s?applique aux voyages et transits a?riens"
+          }
+        ]
+      },
+      "canada-eta-romania-transit": {
+        "title": "eTA canadienne avec un passeport roumain admissible",
+        "summary": "Les citoyens roumains ont besoin d?un passeport ?lectronique pour utiliser une eTA lors d?un transit a?rien au Canada ; les titulaires d?un passeport non ?lectronique ont besoin d?un visa de transit ou de visiteur.",
+        "conditions": [
+          "Le passeport doit ?tre ?lectronique ; un passeport roumain temporaire ou non ?lectronique ne permet pas d?obtenir une eTA."
+        ],
+        "keyFacts": [
+          {
+            "label": "Avant le voyage",
+            "value": "eTA approuv?e ou visa canadien appropri?"
+          },
+          {
+            "label": "Mode de transport",
+            "value": "L?eTA s?applique au transit a?rien"
+          }
+        ]
+      },
+      "canada-eta-taiwan-entry": {
+        "title": "eTA canadienne avec un passeport ta?wanais admissible",
+        "summary": "Les titulaires d?un passeport ta?wanais ne sont admissibles ? l?eTA qu?avec un passeport ordinaire d?livr? par le minist?re des Affaires ?trang?res de Ta?wan et comportant le num?ro d?identification personnel.",
+        "conditions": [
+          "Un autre type de passeport ta?wanais n?cessite un visa de visiteur pour se rendre au Canada."
+        ],
+        "keyFacts": [
+          {
+            "label": "Statut du visa",
+            "value": "Aucun visa de visiteur pour un voyage a?rien admissible avec une eTA"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "En principe, jusqu?? 6 mois par visite"
+          },
+          {
+            "label": "Validit? de l?eTA",
+            "value": "Jusqu?? 5 ans ou jusqu?? l?expiration du passeport"
+          },
+          {
+            "label": "Mode de transport",
+            "value": "L?eTA s?applique aux voyages et transits a?riens"
+          }
+        ]
+      },
+      "canada-eta-taiwan-transit": {
+        "title": "eTA canadienne avec un passeport ta?wanais admissible",
+        "summary": "Les titulaires d?un passeport ta?wanais ne sont admissibles ? l?eTA lors d?un transit a?rien au Canada qu?avec un passeport ordinaire d?livr? par le minist?re des Affaires ?trang?res de Ta?wan et comportant le num?ro d?identification personnel.",
+        "conditions": [
+          "Un autre type de passeport ta?wanais n?cessite un visa de transit ou de visiteur pour passer par le Canada."
+        ],
+        "keyFacts": [
+          {
+            "label": "Avant le voyage",
+            "value": "eTA approuv?e ou visa canadien appropri?"
+          },
+          {
+            "label": "Mode de transport",
+            "value": "L?eTA s?applique au transit a?rien"
+          }
+        ]
+      },
+      "new-zealand-nzeta-uk-entry": {
+        "title": "Autorisation de voyage ?lectronique pour la Nouvelle-Z?lande (NZeTA)",
+        "summary": "Les titulaires d?un passeport britannique ont normalement besoin d?une NZeTA avant le voyage et re?oivent un visa de visiteur ? l?arriv?e si l?entr?e est autoris?e.",
+        "conditions": [
+          "Des restrictions li?es au passeport s?appliquent ? certaines nationalit?s.",
+          "Les voyageurs doivent satisfaire aux exigences relatives ? la sant?, ? la moralit?, au statut de visiteur de bonne foi, ? la poursuite du voyage et aux ressources financi?res.",
+          "Les citoyens australiens voyageant avec un passeport australien sont exempt?s."
+        ],
+        "keyFacts": [
+          {
+            "label": "Avant le voyage",
+            "value": "NZeTA requise ; un visa de visiteur est accord? ? la fronti?re si l?entr?e est autoris?e"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 6 mois par visite"
+          },
+          {
+            "label": "Limite sur 12 mois",
+            "value": "Jusqu?? 6 mois au total sur toute p?riode de 12 mois"
+          },
+          {
+            "label": "Validit? de la NZeTA",
+            "value": "2 ans pour la plupart des voyageurs"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "En principe, au moins 3 mois apr?s le d?part pr?vu"
+          }
+        ]
+      },
+      "schengen-annex-i-visa-required-entry": {
+        "title": "Visa Schengen de court s?jour requis, sauf exemption",
+        "summary": "Les ressortissants titulaires d?un passeport ordinaire figurant ? l?annexe I ont normalement besoin d?un visa Schengen de court s?jour valide avant d?entrer ? des fins touristiques.",
+        "conditions": [
+          "Un visa Schengen valide, un visa de long s?jour, un titre de s?jour, un droit en qualit? de membre de la famille d?un citoyen de l?UE ou une autre exemption officielle peut satisfaire ou modifier cette exigence.",
+          "Le visa d?livr? peut autoriser moins de jours ou moins de pays que le plafond g?n?ral.",
+          "Le travail, les ?tudes et les s?jours de plus de 90 jours rel?vent de r?gles nationales distinctes."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Requis avant le voyage, sauf exemption"
+          },
+          {
+            "label": "Dur?e maximale du court s?jour",
+            "value": "Jusqu?? 90 jours sur toute p?riode de 180 jours ; le visa peut autoriser une dur?e inf?rieure"
+          },
+          {
+            "label": "D?livrance du passeport",
+            "value": "D?livr? au cours des 10 ann?es pr?c?dant l?entr?e"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "Au moins 3 mois apr?s le d?part pr?vu de l?espace Schengen"
+          }
+        ]
+      },
+      "schengen-annex-ii-biometric-passport-entry": {
+        "title": "L?exemption de visa d?pend du caract?re biom?trique du passeport",
+        "summary": "Un passeport ordinaire biom?trique admissible permet un s?jour touristique sans visa dans l?espace Schengen jusqu?? 90 jours sur toute p?riode de 180 jours ; un passeport non admissible n?cessite un visa.",
+        "conditions": [
+          "Avant de vous fier ? l?exemption, v?rifiez que le passeport est biom?trique et r?pond aux crit?res propres au pays ?nonc?s ? l?annexe II.",
+          "L?application enregistre le pays de d?livrance, mais pas le caract?re biom?trique du passeport.",
+          "L?ETIAS n?est pas en service pendant la p?riode d?application de cette r?gle ; les d?parts apr?s le 30 septembre 2026 feront l?objet d?une nouvelle v?rification."
+        ],
+        "keyFacts": [
+          {
+            "label": "Avec un passeport admissible",
+            "value": "Aucun visa pour le tourisme"
+          },
+          {
+            "label": "Sans passeport admissible",
+            "value": "Visa Schengen de court s?jour requis"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 90 jours sur toute p?riode de 180 jours dans l?espace Schengen"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "Au moins 3 mois apr?s le d?part pr?vu de l?espace Schengen"
+          },
+          {
+            "label": "Autorisation ?lectronique",
+            "value": "Non requis jusqu?au 30 septembre 2026"
+          }
+        ]
+      },
+      "schengen-annex-ii-specific-passport-entry": {
+        "title": "V?rifiez l?exemption de visa propre au passeport",
+        "summary": "Le tourisme sans visa dans l?espace Schengen d?pend du passeport exact : passeport de la RAS de Hong Kong, de la RAS de Macao ou passeport ta?wanais comportant un num?ro de carte d?identit?, selon le cas.",
+        "conditions": [
+          "Un autre type de passeport d?livr? pour le m?me territoire peut n?cessiter un visa de court s?jour.",
+          "L?application n?enregistre ni le sous-type du passeport ni la pr?sence du num?ro de carte d?identit? exig? pour Ta?wan.",
+          "L?ETIAS n?est pas en service pendant la p?riode d?application de cette r?gle ; les d?parts apr?s le 30 septembre 2026 feront l?objet d?une nouvelle v?rification."
+        ],
+        "keyFacts": [
+          {
+            "label": "Avec un passeport admissible",
+            "value": "Aucun visa pour le tourisme"
+          },
+          {
+            "label": "Sans passeport admissible",
+            "value": "Visa Schengen de court s?jour requis"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 90 jours sur toute p?riode de 180 jours dans l?espace Schengen"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "Au moins 3 mois apr?s le d?part pr?vu de l?espace Schengen"
+          },
+          {
+            "label": "Autorisation ?lectronique",
+            "value": "Non requis jusqu?au 30 septembre 2026"
+          }
+        ]
+      },
+      "schengen-annex-ii-visa-exempt-entry": {
+        "title": "Tourisme : aucun visa de court s?jour requis",
+        "summary": "Les titulaires des passeports ordinaires r?pertori?s peuvent visiter l?espace Schengen sans visa de court s?jour jusqu?? 90 jours sur toute p?riode glissante de 180 jours.",
+        "conditions": [
+          "Le quota de 90 jours est commun ? l?ensemble de l?espace Schengen et ne se renouvelle pas dans chaque pays.",
+          "Le travail, les ?tudes et les s?jours de plus de 90 jours rel?vent de r?gles nationales distinctes.",
+          "L?ETIAS n?est pas en service pendant la p?riode d?application de cette r?gle ; les d?parts apr?s le 30 septembre 2026 feront l?objet d?une nouvelle v?rification."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa",
+            "value": "Non requis pour le tourisme"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 90 jours sur toute p?riode de 180 jours dans l?espace Schengen"
+          },
+          {
+            "label": "D?livrance du passeport",
+            "value": "D?livr? au cours des 10 ann?es pr?c?dant l?entr?e"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "Au moins 3 mois apr?s le d?part pr?vu de l?espace Schengen"
+          },
+          {
+            "label": "Autorisation ?lectronique",
+            "value": "Non requis jusqu?au 30 septembre 2026"
+          }
+        ]
+      },
+      "australia-eta-entry": {
+        "title": "ETA australienne ou autre visa appropri?",
+        "summary": "Les titulaires d?un passeport admissible doivent d?tenir un visa australien valide avant le voyage ; l?ETA 601 peut ?tre disponible.",
+        "conditions": [
+          "Les ant?c?dents judiciaires, le motif, la dur?e pr?vue du s?jour et le type de passeport peuvent imposer un autre visa.",
+          "L?ETA est li?e num?riquement au passeport utilis? lors de la demande."
+        ],
+        "keyFacts": [
+          {
+            "label": "Statut du visa",
+            "value": "Un visa est requis avant le voyage"
+          },
+          {
+            "label": "Option disponible",
+            "value": "L?ETA 601 peut ?tre disponible"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 3 mois par entr?e"
+          },
+          {
+            "label": "Validit? de l?ETA",
+            "value": "12 mois ou jusqu?? l?expiration du passeport"
+          }
+        ]
+      },
+      "australia-eta-evisitor-entry": {
+        "title": "Visa australien ? l?eVisitor ou l?ETA peut ?tre disponible",
+        "summary": "Les titulaires d?un passeport admissible doivent d?tenir un visa australien valide avant le voyage ; l?eVisitor 651 ou l?ETA 601 peut ?tre disponible.",
+        "conditions": [
+          "Les ant?c?dents judiciaires, le motif, la dur?e pr?vue du s?jour et le type de passeport peuvent imposer un autre visa.",
+          "Le visa est li? num?riquement au passeport utilis? lors de la demande."
+        ],
+        "keyFacts": [
+          {
+            "label": "Statut du visa",
+            "value": "Un visa est requis avant le voyage"
+          },
+          {
+            "label": "Options disponibles",
+            "value": "L?eVisitor 651 ou l?ETA 601 peut ?tre disponible"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 3 mois par entr?e"
+          },
+          {
+            "label": "Validit? du visa",
+            "value": "Entr?es multiples pendant une p?riode de validit? de 12 mois"
+          }
+        ]
+      },
+      "australia-evisitor-entry": {
+        "title": "eVisitor australien ou autre visa appropri?",
+        "summary": "Les titulaires admissibles d?un passeport europ?en doivent d?tenir un visa australien valide avant le voyage ; l?eVisitor 651 peut ?tre disponible.",
+        "conditions": [
+          "Les ant?c?dents judiciaires, le motif, la dur?e pr?vue du s?jour et le type de passeport peuvent imposer un autre visa.",
+          "Le visa est li? num?riquement au passeport utilis? lors de la demande."
+        ],
+        "keyFacts": [
+          {
+            "label": "Statut du visa",
+            "value": "Un visa est requis avant le voyage"
+          },
+          {
+            "label": "Option disponible",
+            "value": "L?eVisitor 651 peut ?tre disponible"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 3 mois par entr?e"
+          },
+          {
+            "label": "Validit? de l?eVisitor",
+            "value": "Entr?es multiples pendant 12 mois"
+          }
+        ]
+      },
+      "australia-transit-without-visa": {
+        "title": "Les conditions australiennes de transit sans visa peuvent s?appliquer",
+        "summary": "Les titulaires d?un passeport admissible peuvent transiter sans visa australien uniquement si toutes les conditions de transit sont remplies.",
+        "conditions": [
+          "Le voyageur doit arriver par avion et d?tenir un billet confirm? lui permettant de repartir par avion vers un pays tiers dans les 8 heures.",
+          "Le voyageur doit d?tenir les documents requis pour sa destination et ne doit ni passer le contr?le de l?immigration, ni quitter la salle de transit, ni r?cup?rer ses bagages."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa de transit",
+            "value": "Non requis uniquement si toutes les conditions TWOV sont remplies"
+          },
+          {
+            "label": "Dur?e maximale du transit",
+            "value": "Jusqu?? 8 heures"
+          },
+          {
+            "label": "Formalit?s frontali?res",
+            "value": "Rester c?t? piste et ne pas r?cup?rer les bagages"
+          }
+        ]
+      },
+      "brazil-norway-visa-exempt-entry": {
+        "title": "Tourisme : aucun visa ni ETA pour un s?jour allant jusqu?? 90 jours",
+        "summary": "Les titulaires norv?giens d?un passeport ordinaire peuvent se rendre au Br?sil ? des fins touristiques sans visa ni autorisation de voyage ?lectronique.",
+        "conditions": [
+          "L?ann?e migratoire de 12 mois commence ? la premi?re entr?e et continue de courir. Seuls les jours pass?s au Br?sil sont comptabilis?s ; quitter le pays ne restitue pas les jours d?j? utilis?s.",
+          "Demandez toute prolongation ? la Pol?cia Federal avant l?expiration du s?jour initial ; son approbation n?est pas garantie.",
+          "Le travail r?mun?r?, la r?sidence et les autres motifs ne relevant pas d?une visite n?cessitent l?autorisation appropri?e."
+        ],
+        "keyFacts": [
+          {
+            "label": "Visa ou ETA",
+            "value": "Non requis pour le tourisme"
+          },
+          {
+            "label": "S?jour initial",
+            "value": "Jusqu?? 90 jours ? compter de la premi?re entr?e"
+          },
+          {
+            "label": "Dur?e maximale si la prolongation est approuv?e",
+            "value": "Jusqu?? 180 jours au total pendant l?ann?e migratoire"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "Pendant toute la dur?e du s?jour ; aucune validit? suppl?mentaire de 6 mois requise"
+          }
+        ]
+      },
+      "canada-eta-entry": {
+        "title": "eTA canadienne ou visa canadien valide",
+        "summary": "Les ressortissants ?trangers exempt?s de visa ont normalement besoin d?une eTA pour se rendre au Canada par avion, sauf s?ils d?tiennent un visa canadien valide ou b?n?ficient d?une autre exemption.",
+        "conditions": [
+          "Les citoyens canadiens et les r?sidents permanents utilisent des documents diff?rents.",
+          "Les citoyens am?ricains et les r?sidents permanents l?gaux des ?tats-Unis admissibles sont exempt?s de l?obligation d?eTA."
+        ],
+        "keyFacts": [
+          {
+            "label": "Statut du visa",
+            "value": "Aucun visa de visiteur pour un voyage a?rien admissible avec une eTA"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "En principe, jusqu?? 6 mois par visite"
+          },
+          {
+            "label": "Validit? de l?eTA",
+            "value": "Jusqu?? 5 ans ou jusqu?? l?expiration du passeport"
+          },
+          {
+            "label": "Mode de transport",
+            "value": "L?eTA s?applique aux voyages et transits a?riens"
+          }
+        ]
+      },
+      "canada-eta-transit": {
+        "title": "eTA canadienne ou visa de transit/de visiteur",
+        "summary": "Les passagers a?riens en transit au Canada ont g?n?ralement besoin du document d?entr?e canadien applicable ? leur passeport, m?me pour une courte correspondance.",
+        "conditions": [
+          "Certains programmes de transit sans visa propres ? une nationalit?, ? un a?roport ou ? un itin?raire sont soumis ? des conditions strictes."
+        ],
+        "keyFacts": [
+          {
+            "label": "Avant le voyage",
+            "value": "eTA approuv?e ou visa canadien appropri?"
+          },
+          {
+            "label": "Mode de transport",
+            "value": "L?eTA s?applique au transit a?rien"
+          }
+        ]
+      },
+      "japan-ordinary-passport-non-waiver-check": {
+        "title": "Un visa japonais est normalement requis",
+        "summary": "Ce passeport ordinaire n?est couvert par aucune exemption de court s?jour enregistr?e localement. Un visa est normalement requis avant le voyage, mais une autorisation d?immigration existante ou une autre exemption li?e au document ou au statut peut modifier le r?sultat.",
+        "conditions": [
+          "Si aucune exemption distincte ni autorisation d?immigration japonaise valide ne s?applique, obtenez le visa appropri? avant le d?part.",
+          "Un visa japonais ne peut pas ?tre obtenu ? l?arriv?e.",
+          "V?rifiez les passeports diplomatiques, officiels et autres documents de voyage sp?ciaux selon les r?gles qui leur sont propres."
+        ],
+        "keyFacts": [
+          {
+            "label": "Exigence normale",
+            "value": "Visa avant le voyage"
+          },
+          {
+            "label": "Cas particuliers",
+            "value": "Une autorisation existante ou une exemption propre au document peut s?appliquer"
+          },
+          {
+            "label": "Visa ? l?arriv?e",
+            "value": "Indisponible"
+          }
+        ]
+      },
+      "new-zealand-nzeta-entry": {
+        "title": "Autorisation de voyage ?lectronique pour la Nouvelle-Z?lande (NZeTA)",
+        "summary": "Les voyageurs exempt?s de visa ont normalement besoin d?une NZeTA avant le voyage et re?oivent un visa de visiteur ? l?arriv?e si l?entr?e est autoris?e.",
+        "conditions": [
+          "Des restrictions li?es au passeport s?appliquent ? certaines nationalit?s.",
+          "Les voyageurs doivent satisfaire aux exigences relatives ? la sant?, ? la moralit?, au statut de visiteur de bonne foi, ? la poursuite du voyage et aux ressources financi?res.",
+          "Les citoyens australiens voyageant avec un passeport australien sont exempt?s."
+        ],
+        "keyFacts": [
+          {
+            "label": "Avant le voyage",
+            "value": "NZeTA requise ; un visa de visiteur est accord? ? la fronti?re si l?entr?e est autoris?e"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 3 mois par visite"
+          },
+          {
+            "label": "Limite sur 12 mois",
+            "value": "Jusqu?? 6 mois au total sur toute p?riode de 12 mois"
+          },
+          {
+            "label": "Validit? de la NZeTA",
+            "value": "2 ans pour la plupart des voyageurs"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "En principe, au moins 3 mois apr?s le d?part pr?vu"
+          }
+        ]
+      },
+      "new-zealand-nzeta-transit": {
+        "title": "NZeTA ou visa de transit n?o-z?landais",
+        "summary": "Les passagers admissibles en transit ont besoin d?une NZeTA ; les autres peuvent avoir besoin d?un visa de transit.",
+        "conditions": [
+          "Le transit sans visa est limit? ? l?a?roport international d?Auckland et ne peut normalement pas d?passer 24 heures.",
+          "La r?gle exacte d?pend du passeport, de la destination et du fait que le voyageur quitte ou non la zone de transit."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du transit",
+            "value": "Jusqu?? 24 heures"
+          },
+          {
+            "label": "A?roport",
+            "value": "A?roport international d?Auckland uniquement"
+          },
+          {
+            "label": "Formalit?s frontali?res",
+            "value": "Rester dans la zone de transit international"
+          }
+        ]
+      },
+      "new-zealand-transit-waiver-nzeta": {
+        "title": "NZeTA pour un transit ? Auckland",
+        "summary": "Les titulaires d?un passeport exempt? de visa de transit ont besoin d?une NZeTA avant de passer par l?a?roport international d?Auckland.",
+        "conditions": [
+          "Le transit doit rester dans la zone de transit international de l?a?roport d?Auckland et ne peut normalement pas d?passer 24 heures.",
+          "Le passage par un autre a?roport n?o-z?landais ou la sortie de la zone de transit n?cessite une autorisation d?entr?e comme visiteur."
+        ],
+        "keyFacts": [
+          {
+            "label": "Dur?e maximale du transit",
+            "value": "Jusqu?? 24 heures"
+          },
+          {
+            "label": "A?roport",
+            "value": "A?roport international d?Auckland uniquement"
+          },
+          {
+            "label": "Formalit?s frontali?res",
+            "value": "Rester dans la zone de transit international"
+          }
+        ]
+      },
+      "schengen-free-movement-document": {
+        "title": "Passeport ou carte nationale d?identit? valide",
+        "summary": "Les citoyens de l?UE ainsi que ceux d?Islande, du Liechtenstein, de Norv?ge et de Suisse peuvent entrer dans ce pays de l?espace Schengen avec un passeport valide ou une carte nationale d?identit? admissible.",
+        "conditions": [
+          "Le document de voyage doit ?tre valide le jour du voyage.",
+          "Les enfants et les mineurs doivent poss?der leur propre passeport ou une carte d?identit? admissible.",
+          "Des contr?les temporaires aux fronti?res et des v?rifications locales d?identit? peuvent imposer la pr?sentation du document."
+        ],
+        "keyFacts": [
+          {
+            "label": "Document accept?",
+            "value": "Passeport valide ou carte nationale d?identit? ouvrant un droit de voyage"
+          },
+          {
+            "label": "Validit? du document",
+            "value": "Doit ?tre valide le jour du voyage"
+          }
+        ]
+      },
+      "schengen-third-country-entry-documents": {
+        "title": "Exigences de passeport pour l?espace Schengen",
+        "summary": "Les titulaires d?un passeport ordinaire qui ne sont ressortissants ni de l?UE, ni de l?EEE, ni de la Suisse ont besoin d?un passeport admissible, m?me lorsque la r?gle distincte relative au visa indique qu?aucun visa n?est requis.",
+        "conditions": [
+          "? l?entr?e, le passeport doit avoir ?t? d?livr? au cours des 10 ann?es pr?c?dentes et rester normalement valide au moins 3 mois apr?s la date pr?vue de d?part de l?espace Schengen.",
+          "Les enfants et les mineurs doivent poss?der leur propre passeport ainsi que tout visa requis pour leur nationalit?.",
+          "Les autorit?s frontali?res peuvent demander une preuve d?h?bergement, de ressources financi?res et de poursuite du voyage ou de retour."
+        ],
+        "keyFacts": [
+          {
+            "label": "D?livrance du passeport",
+            "value": "D?livr? au cours des 10 ann?es pr?c?dant l?entr?e"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "Au moins 3 mois apr?s le d?part pr?vu de l?espace Schengen"
+          }
+        ]
+      },
+      "uk-eta-entry": {
+        "title": "ETA britannique ou autorisation d?immigration britannique existante",
+        "summary": "Les voyageurs titulaires d?un passeport admissible ? l?ETA ont normalement besoin d?une ETA avant de se rendre au Royaume-Uni, sauf s?ils d?tiennent d?j? un visa ou b?n?ficient d?une autre exemption r?pertori?e.",
+        "conditions": [
+          "Les citoyens irlandais et les personnes disposant d?une autorisation d?immigration britannique valide font partie de ceux qui n?ont pas besoin d?ETA.",
+          "Une ETA ne garantit pas l?entr?e et est li?e au passeport utilis? lors de la demande."
+        ],
+        "keyFacts": [
+          {
+            "label": "Statut du visa",
+            "value": "Aucun visa de visiteur avec une ETA approuv?e ou une autre exemption"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 6 mois par visite"
+          },
+          {
+            "label": "Validit? de l?ETA",
+            "value": "2 ans ou jusqu?? l?expiration du passeport"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "Valide pendant toute la dur?e du s?jour"
+          }
+        ]
+      },
+      "uk-eta-taiwan-entry": {
+        "title": "ETA britannique ou autorisation d?immigration britannique existante",
+        "summary": "Les voyageurs utilisant un passeport ta?wanais admissible ont normalement besoin d?une ETA avant de se rendre au Royaume-Uni, sauf s?ils d?tiennent d?j? un visa ou b?n?ficient d?une autre exemption r?pertori?e.",
+        "conditions": [
+          "Le passeport ta?wanais doit comporter le num?ro d?identification d?livr? par l?autorit? comp?tente.",
+          "Une ETA ne garantit pas l?entr?e et est li?e au passeport utilis? lors de la demande."
+        ],
+        "keyFacts": [
+          {
+            "label": "Statut du visa",
+            "value": "Aucun visa de visiteur avec une ETA approuv?e ou une autre exemption"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 6 mois par visite"
+          },
+          {
+            "label": "Validit? de l?ETA",
+            "value": "2 ans ou jusqu?? l?expiration du passeport"
+          },
+          {
+            "label": "Validit? du passeport",
+            "value": "Valide pendant toute la dur?e du s?jour"
+          }
+        ]
+      },
+      "us-vwp-entry": {
+        "title": "ESTA approuv?e ou visa am?ricain valide",
+        "summary": "Les voyageurs admissibles au Visa Waiver Program ont normalement besoin d?une ESTA approuv?e avant de se rendre aux ?tats-Unis par avion, sauf s?ils voyagent avec un visa valide.",
+        "conditions": [
+          "Les voyages dans le cadre du Visa Waiver Program sont normalement limit?s aux s?jours touristiques ou d?affaires de 90 jours ou moins.",
+          "Les ant?c?dents de voyage, la double nationalit?, le type de passeport et l?admissibilit? du transporteur peuvent rendre un voyageur inadmissible au Visa Waiver Program.",
+          "Un passeport ?lectronique est requis pour voyager dans le cadre du Visa Waiver Program."
+        ],
+        "keyFacts": [
+          {
+            "label": "Statut du visa",
+            "value": "Sans visa dans le cadre du Visa Waiver Program avec une ESTA approuv?e"
+          },
+          {
+            "label": "Dur?e maximale du s?jour",
+            "value": "Jusqu?? 90 jours par admission"
+          },
+          {
+            "label": "Validit? de l?ESTA",
+            "value": "G?n?ralement 2 ans ou jusqu?? l?expiration du passeport"
+          }
+        ]
+      },
+      "us-vwp-transit": {
+        "title": "ESTA approuv?e ou visa am?ricain valide",
+        "summary": "Les ?tats-Unis exigent g?n?ralement que les passagers en transit d?tiennent une ESTA dans le cadre du Visa Waiver Program ou un visa am?ricain appropri?.",
+        "conditions": [
+          "Les ?tats-Unis ne pr?voient pas d?exemption g?n?rale pour le transit international st?rile.",
+          "Les restrictions d?admissibilit? au Visa Waiver Program s?appliquent ?galement au transit."
+        ],
+        "keyFacts": [
+          {
+            "label": "Avant le voyage",
+            "value": "ESTA approuv?e ou visa am?ricain appropri?"
+          },
+          {
+            "label": "Formalit?s frontali?res",
+            "value": "Aucun transit international st?rile g?n?ral"
+          }
+        ]
+      },
+      "conservative-travel-document": {
+        "title": "Passeport ou document de voyage accept?",
+        "summary": "V?rifiez quel document de voyage est accept? et quelle dur?e de validit? minimale il doit encore avoir. Pour certains voyages r?gionaux, une carte nationale d?identit? peut remplacer le passeport.",
+        "conditions": [
+          "V?rifiez la validit? ? la date d?arriv?e comme ? la date de d?part pr?vue.",
+          "V?rifiez les exigences relatives aux pages vierges et ? l??tat du document."
+        ],
+        "keyFacts": []
+      },
+      "conservative-transit-permission": {
+        "title": "Autorisation de transit",
+        "summary": "Les r?gles de transit d?pendent de la nationalit?, de la dur?e de la correspondance, du parcours de transfert dans l?a?roport et du passage ?ventuel du contr?le frontalier.",
+        "conditions": [
+          "Les correspondances c?t? piste et c?t? ville peuvent ?tre soumises ? des r?gles diff?rentes.",
+          "Un changement d?a?roport ou de terminal n?cessite g?n?ralement une autorisation d?entr?e."
+        ],
+        "keyFacts": []
+      },
+      "conservative-entry-permission": {
+        "title": "Visa, visa ?lectronique ou autorisation ?lectronique",
+        "summary": "L?autorisation d?entr?e d?pend de la nationalit?, du lieu de r?sidence, du motif, de la dur?e du s?jour et des documents d?j? d?tenus.",
+        "conditions": [
+          "Les titres de s?jour et les visas valides d?livr?s par d?autres pays peuvent ouvrir droit ? des exemptions.",
+          "M?me une entr?e sans visa peut n?cessiter une ETA ou un enregistrement ? l?arriv?e."
+        ],
+        "keyFacts": []
+      }
+    }
+  },
+  "baggage": {
+    "advices": {
+      "DELHI_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "R?cup?rez et r?enregistrez vos bagages ? Delhi",
+        "explanation": "? Delhi, les passagers en correspondance d?un vol international vers un vol int?rieur doivent r?cup?rer leurs bagages enregistr?s, passer la douane et utiliser le comptoir de correspondance, m?me si les bagages sont ?tiquet?s jusqu?? destination."
+      },
+      "AUSTRALIA_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "R?cup?rez vos bagages pour les formalit?s frontali?res australiennes",
+        "explanation": "Les passagers arrivant de l??tranger et prenant une correspondance int?rieure en Australie doivent r?cup?rer leurs bagages enregistr?s, passer l?immigration et la douane, puis les r?enregistrer, m?me avec un billet unique."
+      },
+      "NEW_ZEALAND_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "R?cup?rez vos bagages pour la douane et le contr?le de bios?curit?",
+        "explanation": "? l?arriv?e en Nouvelle-Z?lande, les bagages enregistr?s doivent ?tre r?cup?r?s et soumis aux contr?les avant de poursuivre sur un vol int?rieur."
+      },
+      "JAPAN_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "R?cup?rez vos bagages au premier a?roport au Japon",
+        "explanation": "? l?arriv?e d?un vol international avec correspondance sur un vol int?rieur au Japon, r?cup?rez les bagages enregistr?s pour la douane, puis r?enregistrez-les."
+      },
+      "CANADA_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "La proc?dure de correspondance varie au Canada",
+        "explanation": "Les grands a?roports canadiens appliquent des programmes de transfert des bagages propres ? l?a?roport, ? l?origine du vol et ? la compagnie a?rienne. Certains passagers passent la douane sans r?cup?rer leurs bagages ; d?autres doivent les reprendre."
+      },
+      "GENERIC_INTERNATIONAL_TO_DOMESTIC": {
+        "title": "V?rifiez la proc?dure au premier point d?entr?e",
+        "explanation": "Vous arrivez de l??tranger et poursuivez sur un vol int?rieur. De nombreux pays exigent la pr?sentation des bagages au premier point d?entr?e, mais la proc?dure d?pend du pays et de l?a?roport."
+      },
+      "NOT_CHECKED_THROUGH": {
+        "title": "Le bagage n?est pas enregistr? jusqu?? destination",
+        "explanation": "L??tiquette du bagage ne couvre pas la suite du voyage ; r?cup?rez donc le bagage et r?enregistrez-le pour le vol suivant."
+      },
+      "CHECKED_THROUGH_NO_KNOWN_RECLAIM": {
+        "title": "Aucune obligation connue de r?cup?rer les bagages",
+        "explanation": "Votre bagage est enregistr? jusqu?? destination et cette correspondance ne rel?ve d?aucune r?gle prise en charge imposant sa r?cup?ration pour la douane."
+      },
+      "SEPARATE_TICKETS": {
+        "title": "Des billets s?par?s n?cessitent normalement un transfert autonome",
+        "explanation": "Des r?servations s?par?es constituent des voyages distincts ; les bagages doivent donc normalement ?tre r?cup?r?s et r?enregistr?s lors de la correspondance."
+      },
+      "CHECK_BAGGAGE_TAG": {
+        "title": "V?rifiez l??tiquette du bagage",
+        "explanation": "Aucune r?gle frontali?re prise en charge n?impose avec certitude de r?cup?rer le bagage ici, mais son transfert d?pend de l??tiquetage par la compagnie a?rienne au-del? de cet a?roport."
+      },
+      "US_PRECLEARANCE_NOT_CHECKED_THROUGH": {
+        "title": "R?cup?rez le bagage, car il n?est pas enregistr? jusqu?? destination",
+        "explanation": "Les formalit?s frontali?res am?ricaines ont ?t? effectu?es avant le d?part, mais l??tiquette du bagage ne couvre pas le vol suivant."
+      },
+      "US_PRECLEARANCE_CHECKED_THROUGH": {
+        "title": "Pr?contr?le effectu? avant le vol vers les ?tats-Unis",
+        "explanation": "Ce vol part d?un a?roport dot? du pr?contr?le du CBP ; les passagers admissibles arrivent donc comme des voyageurs sur un vol int?rieur et un bagage enregistr? jusqu?? destination est normalement transf?r? sur le vol suivant."
+      },
+      "US_PRECLEARANCE_CONFIRM_TAG": {
+        "title": "Le pr?contr?le supprime l??tape habituelle de r?cup?ration des bagages aux ?tats-Unis",
+        "explanation": "Les formalit?s du CBP ont lieu avant le d?part de cet a?roport. V?rifiez que l??tiquette du bagage couvre le vol suivant."
+      },
+      "US_SYD_LAX_SCREENING_PILOT": {
+        "title": "R?cup?rez vos bagages, sauf si votre vol participe au programme pilote de contr?le du CBP",
+        "explanation": "? l?arriv?e aux ?tats-Unis, les bagages enregistr?s sont normalement r?cup?r?s pour le contr?le du CBP. Un programme pilote de contr?le ? distance propre ? l?itin?raire peut transf?rer les bagages admissibles sur le vol American Airlines Sydney?Los Angeles."
+      },
+      "US_FIRST_ARRIVAL": {
+        "title": "R?cup?rez vos bagages au premier point d?arriv?e aux ?tats-Unis",
+        "explanation": "Les voyageurs entrant aux ?tats-Unis depuis l??tranger r?cup?rent normalement leurs bagages enregistr?s pour le contr?le du CBP et les r?enregistrent avant tout vol suivant."
+      }
+    }
+  }
+}
