@@ -24,38 +24,27 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 11px;
+  gap: 12px;
   color: var(--text);
   text-decoration: none;
 }
 .brand-mark {
-  width: 34px;
-  height: 34px;
+  width: 35px;
+  height: 35px;
   display: grid;
   place-items: center;
-  color: var(--on-primary);
-  background: var(--primary);
-  border: 1px solid color-mix(in srgb, var(--primary) 70%, var(--border-strong));
+  color: var(--text-soft);
+  background: var(--surface-soft);
+  border: 1px solid var(--border-strong);
   border-radius: 9px;
-  box-shadow: 0 1px 3px color-mix(in srgb, var(--primary) 24%, transparent);
-}
-.brand-copy {
-  display: grid;
-  gap: 1px;
+  box-shadow: var(--shadow-sm);
 }
 .brand-wordmark {
   color: var(--text);
-  font-size: 17.5px;
-  font-weight: 750;
+  font-size: 24px;
+  font-weight: 800;
   letter-spacing: 0;
-  line-height: 1.05;
-}
-.brand-subtitle {
-  color: var(--text-soft);
-  font-size: 11px;
-  font-weight: 650;
-  letter-spacing: 0;
-  line-height: 1.1;
+  line-height: 1;
 }
 .topbar-actions {
   display: flex;
@@ -150,25 +139,25 @@ footer {
   padding: 0 4px;
 }
 .page-kicker {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--primary);
-  font-size: 13px;
-  font-weight: 650;
+  font-size: 14px;
+  font-weight: 750;
   letter-spacing: 0;
 }
 .page-intro h1 {
   margin: 0;
-  font-size: clamp(2.55rem, 4.5vw, 3.45rem);
-  font-weight: 650;
-  line-height: 0.98;
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.05;
   letter-spacing: 0;
 }
 .page-intro-copy {
   max-width: 430px;
   margin: 0 0 3px;
   color: var(--text-soft);
-  font-size: 16px;
-  line-height: 1.58;
+  font-size: 17px;
+  line-height: 1.55;
 }
 
 .planner-card,
@@ -193,13 +182,13 @@ footer {
   display: block;
   margin-bottom: 5px;
   color: var(--text-soft);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 650;
 }
 .section-heading h2 {
   margin: 0;
-  font-size: 21px;
-  font-weight: 650;
+  font-size: 22px;
+  font-weight: 750;
   line-height: 1.25;
   letter-spacing: 0;
 }
@@ -210,7 +199,7 @@ footer {
   max-width: 650px;
   margin: 2px 0 0;
   color: var(--text-soft);
-  font-size: 12.5px;
+  font-size: 13.5px;
   line-height: 1.55;
 }
 .scope-dot {

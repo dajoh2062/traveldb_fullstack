@@ -81,8 +81,6 @@ export default function DocumentResults({
               }))
               .filter(({ condition }) => documentConditions({ conditions: [condition] }).length > 0)
               .map(({ condition, localized }) => localized ?? { text: condition, lang: "en" });
-            const visibleConditions = conditions.slice(0, 2);
-            const additionalConditions = conditions.slice(2);
             const lastVerified = formatRuleDate(document.lastVerified, i18n.resolvedLanguage);
 
             return (
@@ -104,82 +102,70 @@ export default function DocumentResults({
                       {document.localized.summary.text}
                     </p>
                   )}
-                  {keyFacts.length > 0 && (
-                    <dl className="document-key-facts" dir="auto">
-                      {keyFacts.map(fact => (
-                        <div
-                          className="document-key-fact"
-                          key={`${fact.label.text}:${fact.value.text}`}
-                        >
-                          <dt lang={fact.label.lang}>{fact.label.text}</dt>
-                          <dd lang={fact.value.lang}>{fact.value.text}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  )}
-                  {visibleConditions.length > 0 && (
-                    <div
-                      className="document-conditions"
-                      aria-label={t("results.documents.importantConditions")}
-                      dir="auto"
-                    >
-                      {visibleConditions.map(condition => (
-                        <p
-                          className="document-condition"
-                          key={condition.text}
-                          lang={condition.lang}
-                        >
-                          {condition.text}
-                        </p>
-                      ))}
-                    </div>
-                  )}
-                  {additionalConditions.length > 0 && (
+                  {(keyFacts.length > 0 ||
+                    conditions.length > 0 ||
+                    sources.length > 0 ||
+                    lastVerified) && (
                     <details className="document-more-conditions">
-                      <summary>
-                        {t("results.documents.additionalConditions", {
-                          count: additionalConditions.length,
-                        })}
-                      </summary>
-                      <div className="document-conditions" dir="auto">
-                        {additionalConditions.map(condition => (
-                          <p
-                            className="document-condition"
-                            key={condition.text}
-                            lang={condition.lang}
-                          >
-                            {condition.text}
-                          </p>
-                        ))}
-                      </div>
-                    </details>
-                  )}
-                  {sources.length > 0 && (
-                    <div className="document-source-links">
-                      {sources.map(source => (
-                        <a
-                          href={source.url}
-                          key={source.url}
-                          rel="noopener noreferrer"
-                          target="_blank"
+                      <summary>{t("results.documents.viewMore")}</summary>
+                      {keyFacts.length > 0 && (
+                        <dl className="document-key-facts" dir="auto">
+                          {keyFacts.map(fact => (
+                            <div
+                              className="document-key-fact"
+                              key={`${fact.label.text}:${fact.value.text}`}
+                            >
+                              <dt lang={fact.label.lang}>{fact.label.text}</dt>
+                              <dd lang={fact.value.lang}>{fact.value.text}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )}
+                      {conditions.length > 0 && (
+                        <div
+                          className="document-conditions"
+                          aria-label={t("results.documents.importantConditions")}
+                          dir="auto"
                         >
-                          <span dir="auto" lang={source.label ? "en" : undefined}>
-                            {sourceLabel(source, sources.length, t)}
-                          </span>
-                          <ExternalLink
-                            aria-hidden="true"
-                            className="icon"
-                            size={12}
-                            strokeWidth={1.8}
-                          />
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                  {lastVerified && (
-                    <small className="document-rule-meta">
-                      {t("results.documents.verifiedDate", { date: lastVerified })}
-                    </small>
+                          {conditions.map(condition => (
+                            <p
+                              className="document-condition"
+                              key={condition.text}
+                              lang={condition.lang}
+                            >
+                              {condition.text}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                      {sources.length > 0 && (
+                        <div className="document-source-links">
+                          {sources.map(source => (
+                            <a
+                              href={source.url}
+                              key={source.url}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              <span dir="auto" lang={source.label ? "en" : undefined}>
+                                {sourceLabel(source, sources.length, t)}
+                              </span>
+                              <ExternalLink
+                                aria-hidden="true"
+                                className="icon"
+                                size={12}
+                                strokeWidth={1.8}
+                              />
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                      {lastVerified && (
+                        <small className="document-rule-meta">
+                          {t("results.documents.verifiedDate", { date: lastVerified })}
+                        </small>
+                      )}
+                    </details>
                   )}
                 </div>
               </li>

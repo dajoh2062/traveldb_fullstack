@@ -170,7 +170,8 @@
         "primaryDocumentExpiryDate": "data de validade do documento de viagem principal",
         "departureDate": "data de partida",
         "travelPurpose": "motivo da viagem"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

@@ -164,7 +164,8 @@
         "primaryDocumentExpiryDate": "ensisijaisen matkustusasiakirjan viimeinen voimassaolopäivä",
         "departureDate": "lähtöpäivä",
         "travelPurpose": "matkan tarkoitus"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

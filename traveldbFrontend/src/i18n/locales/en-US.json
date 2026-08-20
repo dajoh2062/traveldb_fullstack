@@ -19,9 +19,9 @@
     "supportingSource": "Supporting source"
   },
   "intro": {
-    "kicker": "Travel brief",
-    "title": "Check your trip.",
-    "description": "Build your route to review regular-passport and checked-baggage requirements before you fly."
+    "kicker": "Trip check",
+    "title": "Travel requirements",
+    "description": "Enter your route to see what to check before you fly."
   },
   "footer": {
     "disclaimer": "Information is provided for general guidance only and may be incomplete or outdated. Always verify requirements with official authorities before traveling. TravelDB accepts no responsibility for decisions, losses, or consequences arising from use of this information."
@@ -145,6 +145,7 @@
         "notRequired": "Not required"
       },
       "importantConditions": "Important conditions",
+      "viewMore": "View more",
       "additionalConditions_one": "{{count}} more condition",
       "additionalConditions_other": "{{count}} more conditions",
       "verifiedDate": "Rule verified {{date}}",

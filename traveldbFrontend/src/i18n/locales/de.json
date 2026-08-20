@@ -164,7 +164,8 @@
         "primaryDocumentExpiryDate": "Ablaufdatum des primären Reisedokuments",
         "departureDate": "Abreisedatum",
         "travelPurpose": "Reisezweck"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

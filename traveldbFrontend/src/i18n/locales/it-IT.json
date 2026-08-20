@@ -170,7 +170,8 @@
         "primaryDocumentExpiryDate": "data di scadenza del documento di viaggio principale",
         "departureDate": "data di partenza",
         "travelPurpose": "motivo del viaggio"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

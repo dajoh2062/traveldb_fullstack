@@ -176,7 +176,8 @@
         "primaryDocumentExpiryDate": "data ważności głównego dokumentu podróży",
         "departureDate": "data wylotu",
         "travelPurpose": "cel podróży"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

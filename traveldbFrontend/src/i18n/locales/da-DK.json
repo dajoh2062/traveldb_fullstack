@@ -164,7 +164,8 @@
         "primaryDocumentExpiryDate": "udløbsdato for det primære rejsedokument",
         "departureDate": "afrejsedato",
         "travelPurpose": "rejseformål"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

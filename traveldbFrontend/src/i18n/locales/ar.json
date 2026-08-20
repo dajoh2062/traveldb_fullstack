@@ -188,7 +188,8 @@
         "primaryDocumentExpiryDate": "تاريخ انتهاء وثيقة السفر الأساسية",
         "departureDate": "تاريخ المغادرة",
         "travelPurpose": "غرض السفر"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

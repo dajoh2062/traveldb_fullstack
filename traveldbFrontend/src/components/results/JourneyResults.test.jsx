@@ -158,7 +158,7 @@ describe("JourneyResults", () => {
       within(documents).getByText("Carry the passport used for this check."),
     ).toBeInTheDocument();
     expect(within(documents).getByText("The passport must be undamaged.")).toBeInTheDocument();
-    expect(within(documents).getByText("1 more condition")).toBeInTheDocument();
+    expect(within(documents).getAllByText("View more").length).toBeGreaterThan(0);
     expect(
       within(documents).getByText("Each child needs a separate passport."),
     ).toBeInTheDocument();

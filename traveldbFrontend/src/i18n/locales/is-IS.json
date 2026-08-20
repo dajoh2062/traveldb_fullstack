@@ -164,7 +164,8 @@
         "primaryDocumentExpiryDate": "gildistími aðalferðaskilríkis",
         "departureDate": "brottfarardagur",
         "travelPurpose": "tilgangur ferðar"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

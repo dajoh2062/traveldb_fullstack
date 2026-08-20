@@ -13,10 +13,7 @@ export default function AppHeader({ theme, onToggleTheme }) {
           <span className="brand-mark" aria-hidden="true">
             <Plane size={19} strokeWidth={2.2} />
           </span>
-          <span className="brand-copy">
-            <span className="brand-wordmark">TravelDB</span>
-            <span className="brand-subtitle">Travel requirements</span>
-          </span>
+          <span className="brand-wordmark">TravelDB</span>
         </a>
         <div className="topbar-actions">
           <LanguagePicker />

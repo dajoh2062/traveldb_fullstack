@@ -158,7 +158,8 @@
         "primaryDocumentExpiryDate": "주 여행 서류 만료일",
         "departureDate": "출발일",
         "travelPurpose": "여행 목적"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

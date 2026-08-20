@@ -158,7 +158,8 @@
         "primaryDocumentExpiryDate": "主な渡航文書の有効期限",
         "departureDate": "出発日",
         "travelPurpose": "渡航目的"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

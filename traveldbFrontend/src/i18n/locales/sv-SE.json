@@ -164,7 +164,8 @@
         "primaryDocumentExpiryDate": "det primära resedokumentets utgångsdatum",
         "departureDate": "avresedatum",
         "travelPurpose": "resans syfte"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }

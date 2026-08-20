@@ -176,7 +176,8 @@
         "primaryDocumentExpiryDate": "дата окончания срока действия основного проездного документа",
         "departureDate": "дата отправления",
         "travelPurpose": "цель поездки"
-      }
+      },
+      "viewMore": "View more"
     }
   }
 }
