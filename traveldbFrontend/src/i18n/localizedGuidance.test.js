@@ -82,4 +82,27 @@ describe("localized guidance", () => {
     expect(british.localized.explanation.text).toContain("Travellers");
     expect(american.localized.explanation.text).toContain("Travelers");
   });
+
+  it("marks unchanged non-English guidance entries as English fallback", async () => {
+    await i18n.changeLanguage("es");
+    const localized = localizeDocumentRequirement(
+      {
+        ruleId: "australia-valid-visa-entry",
+        title: "Confirm your Australian visa covers this trip",
+        summary:
+          "The supplied profile records an Australian visa, but its type, validity, purpose and permitted entries must be checked.",
+        conditions: ["The visa must permit the intended purpose, dates and number of entries."],
+        keyFacts: [{ label: "Profile input", value: "Australian visa recorded" }],
+      },
+      i18n,
+      CURRENT_DATASET,
+    );
+
+    expect(localized.localized.title).toEqual({
+      text: "Confirm your Australian visa covers this trip",
+      lang: "en",
+      isLocalized: false,
+    });
+    expect(localized.isFullyLocalized).toBe(false);
+  });
 });

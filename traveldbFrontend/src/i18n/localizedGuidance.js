@@ -5,7 +5,11 @@ function localizedText(i18n, locale, key, englishText, catalogIsCurrent = true) 
     ? i18n.getResource(locale, "translation", key)
     : undefined;
 
-  if (typeof translatedText === "string" && translatedText.trim()) {
+  if (
+    typeof translatedText === "string" &&
+    translatedText.trim() &&
+    (locale.startsWith("en") || translatedText !== englishText)
+  ) {
     return { text: translatedText, lang: locale, isLocalized: true };
   }
 
