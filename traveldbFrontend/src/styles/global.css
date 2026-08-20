@@ -4,7 +4,7 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  --bg: #ffffff;
+  --bg: #f5f5f3;
   --surface: #ffffff;
   --surface-soft: #f7f7f5;
   --surface-hover: #efefed;
@@ -29,7 +29,7 @@
   --button-text: #ffffff;
   --shadow-sm: 0 1px 2px rgba(15, 15, 15, 0.08);
   --shadow-lg: none;
-  --content-width: 1120px;
+  --content-width: 1180px;
 }
 
 [data-theme="dark"] {

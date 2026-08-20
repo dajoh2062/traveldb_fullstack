@@ -8,7 +8,7 @@
   top: 0;
   z-index: 50;
   height: 56px;
-  background: var(--bg);
+  background: var(--surface);
   border-bottom: 1px solid var(--border);
 }
 .topbar-inner {
@@ -158,7 +158,7 @@ footer {
   border-radius: 7px;
 }
 .planner-card {
-  padding: 0 28px;
+  padding: 0 32px;
 }
 .section-heading {
   display: grid;
