@@ -1,14 +1,14 @@
 @media (max-width: 820px) {
   .page-intro {
-    margin-top: 38px;
+    margin-top: 46px;
   }
   .page-intro-copy {
     max-width: 620px;
   }
   .section-heading,
   .planner-block {
-    grid-template-columns: 160px minmax(0, 1fr);
-    gap: 24px;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 32px;
   }
   .baggage-question-grid {
     grid-template-columns: 1fr;
@@ -31,7 +31,9 @@
 }
 
 @media (max-width: 640px) {
-  .topbar-inner,
+  .topbar-inner {
+    width: calc(100% - 20px);
+  }
   main,
   footer {
     width: min(100% - 28px, var(--content-width));
@@ -51,7 +53,7 @@
     font-size: 12px;
   }
   .page-intro {
-    margin: 32px 0 22px;
+    margin: 38px 0 32px;
   }
   .page-intro h1 {
     font-size: 2rem;
@@ -61,8 +63,8 @@
   }
   .planner-card,
   .results {
-    padding-inline: 18px;
-    border-radius: 6px;
+    padding-inline: 0;
+    border-radius: 0;
   }
   .section-heading,
   .planner-block {
@@ -70,13 +72,13 @@
     gap: 18px;
   }
   .section-heading {
-    padding: 23px 0 21px;
+    padding: 0 0 20px;
   }
   .planner-block {
-    padding: 25px 0;
+    padding: 26px 0;
   }
   .planner-block-heading {
-    grid-template-columns: 28px minmax(0, 1fr);
+    display: block;
   }
   .planner-block-content > .nationality-field {
     max-width: none;
@@ -151,7 +153,7 @@
     display: none;
   }
   .language-picker select {
-    max-width: 96px;
+    max-width: 112px;
   }
   .page-intro {
     margin-top: 28px;
