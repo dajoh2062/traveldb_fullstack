@@ -35,6 +35,8 @@ jobs:
         run: |
           node scripts/audit-document-rules.mjs --as-of "$(date -u +%F)"
           node --test scripts/document-rules-audit.test.mjs
+      - name: Verify PostgreSQL test runtime
+        run: docker info --format '{{.ServerVersion}}'
       - name: Run backend tests
         run: ./mvnw -B test
 

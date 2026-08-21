@@ -16,6 +16,11 @@ Run the backend test suite with:
 .\mvnw.cmd test
 ```
 
+The suite includes a PostgreSQL 18 integration test powered by Testcontainers.
+When Docker is available, it runs the real Flyway migrations and data bootstraps
+against a temporary PostgreSQL instance. Only that test is skipped on local
+machines without Docker; GitHub Actions requires Docker and always runs it.
+
 On macOS or Linux, use `./mvnw` instead of `.\mvnw.cmd`.
 
 ## Source layout
