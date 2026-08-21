@@ -5,24 +5,20 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.ObjectMapper;
 
 @Component
 public class DocumentRuleDatasetBootstrap implements ApplicationRunner {
 
-    private final DocumentRuleRepository repository;
-    private final ObjectMapper objectMapper;
+    private final DocumentRulePublicationService publicationService;
     private final Resource snapshotResource;
     private final boolean enabled;
 
     public DocumentRuleDatasetBootstrap(
-            DocumentRuleRepository repository,
-            ObjectMapper objectMapper,
+            DocumentRulePublicationService publicationService,
             @Value("${traveldb.documents.rules-location:classpath:data/document-rules.json}") Resource snapshotResource,
             @Value("${traveldb.documents.bootstrap-enabled:true}") boolean enabled
     ) {
-        this.repository = repository;
-        this.objectMapper = objectMapper;
+        this.publicationService = publicationService;
         this.snapshotResource = snapshotResource;
         this.enabled = enabled;
     }
@@ -32,13 +28,6 @@ public class DocumentRuleDatasetBootstrap implements ApplicationRunner {
         if (!enabled) {
             return;
         }
-        DocumentRuleSnapshot snapshot = DocumentRuleSnapshotLoader.load(objectMapper, snapshotResource);
-        if (repository.findActive()
-                .map(DocumentRuleSnapshot::datasetVersion)
-                .filter(snapshot.datasetVersion()::equals)
-                .isPresent()) {
-            return;
-        }
-        repository.saveAndActivate(snapshot);
+        publicationService.publish(snapshotResource);
     }
 }

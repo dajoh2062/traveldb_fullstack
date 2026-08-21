@@ -3,7 +3,7 @@ package io.github.dajoh2062.traveldb.documents;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import io.github.dajoh2062.traveldb.api.dto.TravelDocument;
 import io.github.dajoh2062.traveldb.api.dto.TravelDocument.Type;
 import io.github.dajoh2062.traveldb.documents.DocumentRequirement.Category;
@@ -24,7 +24,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-@Component
+@Service
 @Primary
 public class LocalDocumentRulesProvider implements DocumentRequirementsProvider {
 
@@ -69,17 +69,19 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
 
     @Override
     public DocumentCheckResult check(DocumentCheckInput input) {
+        DocumentRuleSnapshot activeSnapshot = snapshot();
         DocumentCheckResult conservativeResult = conservativeProvider.check(input);
         LocalDate travelDate = input.departureDate() == null ? LocalDate.now(clock) : input.departureDate();
         List<DocumentRequirement> requirements = new ArrayList<>();
         Set<String> staleRuleIds = new LinkedHashSet<>();
 
-        addJourneyRequirements(input, travelDate, conservativeResult, requirements, staleRuleIds);
+        addJourneyRequirements(activeSnapshot, input, travelDate, conservativeResult, requirements, staleRuleIds);
         for (DocumentRouteVisitResolver.CountryVisit visit : DocumentRouteVisitResolver.resolve(
                 input.route(),
                 input.entryAirportCodes()
         )) {
             addVisitRequirements(
+                    activeSnapshot,
                     input,
                     visit,
                     travelDate,
@@ -111,18 +113,19 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 conservativeResult.missingInputs(),
                 warnings,
                 matchedSources,
-                snapshot().datasetVersion()
+                activeSnapshot.datasetVersion()
         );
     }
 
     private void addJourneyRequirements(
+            DocumentRuleSnapshot activeSnapshot,
             DocumentCheckInput input,
             LocalDate travelDate,
             DocumentCheckResult conservativeResult,
             List<DocumentRequirement> requirements,
             Set<String> staleRuleIds
     ) {
-        List<DocumentRule> rules = selectRules(input, null, Scope.JOURNEY, travelDate);
+        List<DocumentRule> rules = selectRules(activeSnapshot, input, null, Scope.JOURNEY, travelDate);
         if (rules.isEmpty()) {
             conservativeResult.requirements().stream()
                     .filter(requirement -> requirement.scope() == Scope.JOURNEY)
@@ -139,6 +142,7 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
     }
 
     private void addVisitRequirements(
+            DocumentRuleSnapshot activeSnapshot,
             DocumentCheckInput input,
             DocumentRouteVisitResolver.CountryVisit visit,
             LocalDate travelDate,
@@ -148,7 +152,7 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
     ) {
         List<DocumentRule> rules = visit.scope() == Scope.ENTRY && hasNonVisitorPurpose(input.travelPurpose())
                 ? List.of()
-                : selectRules(input, visit.countryCode(), visit.scope(), travelDate);
+                : selectRules(activeSnapshot, input, visit.countryCode(), visit.scope(), travelDate);
 
         if (rules.isEmpty()) {
             conservativeRequirementsForVisit(conservativeResult, visit, false).forEach(requirements::add);
@@ -180,6 +184,7 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
     }
 
     private List<DocumentRule> selectRules(
+            DocumentRuleSnapshot activeSnapshot,
             DocumentCheckInput input,
             String destinationCountryCode,
             Scope scope,
@@ -192,7 +197,7 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 : input.passportIssuingCountryCode();
         Map<String, DocumentRule> decisions = new LinkedHashMap<>();
 
-        snapshot().rules().stream()
+        activeSnapshot.rules().stream()
                 .filter(rule -> rule.scope() == scope)
                 .filter(rule -> !restrictNationalityRules
                         || isNationalIdPrimary(input) && supportsNationalIdRule(rule))
@@ -355,18 +360,30 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
 
     private DocumentRuleSnapshot snapshot() {
         DocumentRuleSnapshot current = snapshot;
-        if (current != null) {
+        if (repository == null) {
+            if (current == null) {
+                throw new IllegalStateException("No document-rule repository is configured.");
+            }
+            return current;
+        }
+
+        String activeVersion = activeDatasetVersion();
+        if (current != null && current.datasetVersion().equals(activeVersion)) {
             return current;
         }
         synchronized (this) {
-            if (snapshot == null) {
-                if (repository == null) {
-                    throw new IllegalStateException("No document-rule repository is configured.");
-                }
+            current = snapshot;
+            activeVersion = activeDatasetVersion();
+            if (current == null || !current.datasetVersion().equals(activeVersion)) {
                 snapshot = repository.findActive().orElseThrow(() ->
                         new IllegalStateException("No active document-rule dataset is available."));
             }
             return snapshot;
         }
+    }
+
+    private String activeDatasetVersion() {
+        return repository.findActiveDatasetVersion().orElseThrow(() ->
+                new IllegalStateException("No active document-rule dataset is available."));
     }
 }

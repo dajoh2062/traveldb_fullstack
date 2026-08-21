@@ -73,8 +73,10 @@ class AirportDataIntegrationTests {
     @Test
     void exposesCountriesForNationalitySearch() {
         List<Country> countries = countryService.listCountries();
+        List<Country> reloadedCountries = countryService.listCountries();
 
-        assertSame(countries, countryService.listCountries());
+        assertEquals(countries, reloadedCountries);
+        assertNotSame(countries, reloadedCountries);
         assertTrue(countries.size() >= 240);
         assertTrue(countries.stream()
                 .anyMatch(country -> country.countryId().equals("NO")

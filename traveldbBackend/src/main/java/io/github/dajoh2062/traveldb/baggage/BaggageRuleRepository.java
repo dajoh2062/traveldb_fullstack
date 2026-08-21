@@ -51,6 +51,14 @@ public class BaggageRuleRepository {
                 .map(this::loadSnapshot);
     }
 
+    Optional<String> findActiveDatasetVersion() {
+        return jdbc.queryForList("""
+                SELECT dataset_version
+                FROM active_baggage_rule_dataset
+                WHERE slot = 1
+                """, String.class).stream().findFirst();
+    }
+
     private BaggageRuleSnapshot loadSnapshot(DatasetRow dataset) {
         Map<String, Set<String>> groups = loadAirportGroups(dataset.version());
         List<RuleRow> rows = jdbc.query(FIND_RULES_SQL, (resultSet, rowNumber) -> new RuleRow(

@@ -29,6 +29,7 @@ On macOS or Linux, use `./mvnw` instead of `.\mvnw.cmd`.
 src/main/java/io/github/dajoh2062/traveldb/
   api/          HTTP endpoints, DTOs, filters, and error responses
   baggage/      Checked-baggage transfer rules
+  bootstrap/    Thin application-startup adapters
   config/       Application configuration shared across services
   documents/    Passport rule loading and evaluation
   model/        Airport and country records
@@ -56,10 +57,11 @@ at startup instead of silently using the local H2 fallback. `/api/health` also r
 a lightweight database query and returns HTTP 503 while PostgreSQL is unavailable.
 
 On an empty database, the application loads the bundled country and airport reference data. Set `TRAVELDB_REFERENCE_DATA_BOOTSTRAP_ENABLED=false` when those tables are managed separately.
+Country reads go directly to the database. Airport search keeps a short-lived index for ranking; configure its refresh interval with `TRAVELDB_REFERENCE_DATA_SEARCH_INDEX_TTL` (ISO-8601 duration, default `PT5M`).
 
-The reviewed `document-rules.json` artifact is validated and imported into versioned relational tables. One dataset is activated atomically. A deployment containing a newer dataset version imports and activates it; redeploying the same version is idempotent. Set `TRAVELDB_DOCUMENT_RULES_BOOTSTRAP_ENABLED=false` when rule publication is handled by a separate administrative process.
+The reviewed `document-rules.json` artifact is validated and imported into versioned relational tables. One dataset is activated atomically. A deployment containing a newer dataset version imports and activates it; redeploying the same version is idempotent. Running application instances detect a newly activated version and refresh their in-memory evaluation snapshot. Set `TRAVELDB_DOCUMENT_RULES_BOOTSTRAP_ENABLED=false` when rule publication is handled by a separate administrative process.
 
-Baggage policies are also database-backed. Flyway seeds a versioned dataset containing ordered rule selectors, airport groups, output text, exceptions, sources, and its reviewed date. `BaggageRuleRepository` loads the active dataset and `BaggageRuleMatcher` evaluates it without database access inside the matching algorithm.
+Baggage policies are also database-backed. Flyway seeds a versioned dataset containing ordered rule selectors, airport groups, output text, exceptions, sources, and its reviewed date. `BaggageRuleRepository` loads the active dataset, services refresh their snapshot when its active version changes, and `BaggageRuleMatcher` evaluates it without database access inside the matching algorithm.
 
 H2 remains useful for local development and tests, but production data survives deployments only when a persistent PostgreSQL datasource is configured.
 

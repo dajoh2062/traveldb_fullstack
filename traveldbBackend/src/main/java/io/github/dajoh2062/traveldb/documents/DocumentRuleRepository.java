@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -56,7 +55,16 @@ public class DocumentRuleRepository {
                 .map(this::loadSnapshot);
     }
 
-    public boolean datasetExists(String datasetVersion) {
+    Optional<String> findActiveDatasetVersion() {
+        return jdbc.queryForList("""
+                SELECT datasets.dataset_version
+                FROM active_document_rule_dataset active
+                JOIN document_rule_datasets datasets ON datasets.id = active.dataset_id
+                WHERE active.slot = 1
+                """, String.class).stream().findFirst();
+    }
+
+    private boolean datasetExists(String datasetVersion) {
         Integer count = jdbc.queryForObject(
                 "SELECT COUNT(*) FROM document_rule_datasets WHERE dataset_version = ?",
                 Integer.class,
@@ -65,8 +73,7 @@ public class DocumentRuleRepository {
         return count != null && count > 0;
     }
 
-    @Transactional
-    public void saveAndActivate(DocumentRuleSnapshot snapshot) {
+    void saveAndActivate(DocumentRuleSnapshot snapshot) {
         if (datasetExists(snapshot.datasetVersion())) {
             activateExisting(snapshot.datasetVersion());
             return;

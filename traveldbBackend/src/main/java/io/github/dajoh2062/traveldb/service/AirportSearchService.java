@@ -1,6 +1,7 @@
 package io.github.dajoh2062.traveldb.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 import io.github.dajoh2062.traveldb.api.InvalidRequestParameterException;
 import io.github.dajoh2062.traveldb.api.dto.AirportSearchItem;
 import io.github.dajoh2062.traveldb.api.dto.AirportSearchResponse;
@@ -8,6 +9,9 @@ import io.github.dajoh2062.traveldb.model.Airport;
 import io.github.dajoh2062.traveldb.repository.AirportRepository;
 
 import java.text.Normalizer;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,22 +37,33 @@ public class AirportSearchService {
             .thenComparing(match -> match.airport().iataCode());
 
     private final AirportRepository repository;
-    private final Map<String, List<Airport>> searchCache = Collections.synchronizedMap(
+    private final Clock clock;
+    private final Duration indexTtl;
+    private final Map<SearchCacheKey, List<Airport>> searchCache = Collections.synchronizedMap(
             new LinkedHashMap<>(SEARCH_CACHE_CAPACITY, 0.75f, true) {
                 @Override
-                protected boolean removeEldestEntry(Map.Entry<String, List<Airport>> eldest) {
+                protected boolean removeEldestEntry(Map.Entry<SearchCacheKey, List<Airport>> eldest) {
                     return size() > SEARCH_CACHE_CAPACITY;
                 }
             }
     );
-    private volatile List<AirportSearchEntry> searchIndex;
+    private volatile SearchIndex searchIndex;
+    private long searchIndexGeneration;
 
-    public AirportSearchService(AirportRepository repository) {
+    public AirportSearchService(
+            AirportRepository repository,
+            Clock clock,
+            @Value("${traveldb.reference-data.search-index-ttl:PT5M}") Duration indexTtl
+    ) {
+        if (indexTtl.isZero() || indexTtl.isNegative()) {
+            throw new IllegalArgumentException("Airport search-index TTL must be positive.");
+        }
         this.repository = repository;
+        this.clock = clock;
+        this.indexTtl = indexTtl;
     }
 
     public AirportSearchResponse searchAirports(String query, int offset, int limit) {
-        ensureSearchIndex();
         int pageOffset = Math.max(0, offset);
         int pageSize = Math.max(1, Math.min(limit, MAX_RESULTS_PER_PAGE));
         String searchQuery = query == null ? "" : query.trim();
@@ -76,41 +91,42 @@ public class AirportSearchService {
     }
 
     List<Airport> rankedMatches(String query) {
-        ensureSearchIndex();
+        SearchIndex index = currentSearchIndex();
         String normalizedQuery = normalize(query);
         if (normalizedQuery.isBlank()) {
             return List.of();
         }
 
-        List<Airport> cached = cachedResult(normalizedQuery);
+        SearchCacheKey cacheKey = new SearchCacheKey(index.generation(), normalizedQuery);
+        List<Airport> cached = cachedResult(cacheKey);
         if (cached != null) {
             return cached;
         }
 
         List<AirportMatch> matches = new ArrayList<>();
-        for (AirportSearchEntry entry : searchIndex) {
+        for (AirportSearchEntry entry : index.entries()) {
             int score = matchScore(entry, normalizedQuery);
             if (score != NO_MATCH) {
                 matches.add(new AirportMatch(entry.airport(), score));
             }
         }
         matches.sort(MATCH_ORDER);
-        return cacheResult(normalizedQuery, matches.stream().map(AirportMatch::airport).toList());
+        return cacheResult(cacheKey, matches.stream().map(AirportMatch::airport).toList());
     }
 
-    private List<Airport> cachedResult(String normalizedQuery) {
+    private List<Airport> cachedResult(SearchCacheKey cacheKey) {
         synchronized (searchCache) {
-            return searchCache.get(normalizedQuery);
+            return searchCache.get(cacheKey);
         }
     }
 
-    private List<Airport> cacheResult(String normalizedQuery, List<Airport> result) {
+    private List<Airport> cacheResult(SearchCacheKey cacheKey, List<Airport> result) {
         synchronized (searchCache) {
-            List<Airport> existing = searchCache.get(normalizedQuery);
+            List<Airport> existing = searchCache.get(cacheKey);
             if (existing != null) {
                 return existing;
             }
-            searchCache.put(normalizedQuery, result);
+            searchCache.put(cacheKey, result);
             return result;
         }
     }
@@ -156,20 +172,33 @@ public class AirportSearchService {
                 .toLowerCase(Locale.ROOT);
     }
 
-    private void ensureSearchIndex() {
-        if (searchIndex != null) {
-            return;
+    private SearchIndex currentSearchIndex() {
+        Instant now = clock.instant();
+        SearchIndex current = searchIndex;
+        if (current != null && now.isBefore(current.loadedAt().plus(indexTtl))) {
+            return current;
         }
         synchronized (this) {
-            if (searchIndex == null) {
-                searchIndex = repository.findAll().stream()
+            now = clock.instant();
+            current = searchIndex;
+            if (current == null || !now.isBefore(current.loadedAt().plus(indexTtl))) {
+                List<AirportSearchEntry> entries = repository.findAll().stream()
                         .map(AirportSearchEntry::from)
                         .toList();
+                searchIndex = new SearchIndex(++searchIndexGeneration, now, entries);
+                synchronized (searchCache) {
+                    searchCache.clear();
+                }
             }
+            return searchIndex;
         }
     }
 
     private record AirportMatch(Airport airport, int score) {}
+
+    private record SearchCacheKey(long generation, String query) {}
+
+    private record SearchIndex(long generation, Instant loadedAt, List<AirportSearchEntry> entries) {}
 
     private record AirportSearchEntry(
             Airport airport,

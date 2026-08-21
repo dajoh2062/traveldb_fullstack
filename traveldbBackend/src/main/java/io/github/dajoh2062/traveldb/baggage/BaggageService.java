@@ -38,15 +38,23 @@ public class BaggageService {
 
     private BaggageRuleSnapshot activeRules() {
         BaggageRuleSnapshot current = snapshot;
-        if (current != null) {
+        String activeVersion = activeDatasetVersion();
+        if (current != null && current.datasetVersion().equals(activeVersion)) {
             return current;
         }
         synchronized (this) {
-            if (snapshot == null) {
+            current = snapshot;
+            activeVersion = activeDatasetVersion();
+            if (current == null || !current.datasetVersion().equals(activeVersion)) {
                 snapshot = repository.findActive().orElseThrow(() ->
                         new IllegalStateException("No active baggage-rule dataset is available."));
             }
             return snapshot;
         }
+    }
+
+    private String activeDatasetVersion() {
+        return repository.findActiveDatasetVersion().orElseThrow(() ->
+                new IllegalStateException("No active baggage-rule dataset is available."));
     }
 }

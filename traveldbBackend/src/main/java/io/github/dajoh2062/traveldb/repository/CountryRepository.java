@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import io.github.dajoh2062.traveldb.model.Country;
 
 import java.util.List;
+import java.util.Locale;
 
 @Repository
 public class CountryRepository {
@@ -34,5 +35,14 @@ public class CountryRepository {
 
     public List<Country> findAll() {
         return List.copyOf(jdbc.query(FIND_ALL_SQL, COUNTRY_MAPPER));
+    }
+
+    public boolean existsByCountryCode(String countryCode) {
+        Integer count = jdbc.queryForObject(
+                "SELECT COUNT(*) FROM countries WHERE country_id = ?",
+                Integer.class,
+                countryCode.trim().toUpperCase(Locale.ROOT)
+        );
+        return count != null && count > 0;
     }
 }
