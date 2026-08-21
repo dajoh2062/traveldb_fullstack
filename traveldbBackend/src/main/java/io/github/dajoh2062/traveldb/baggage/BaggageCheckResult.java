@@ -9,10 +9,19 @@ import java.util.Set;
 
 public class BaggageCheckResult {
 
+    private final String guidanceReviewedDate;
     private final Set<String> baggagePickupAt = new LinkedHashSet<>();
     private final List<BaggageAdvice> baggageAdvice = new ArrayList<>();
     private final Set<String> assumptions = new LinkedHashSet<>();
     private final Set<String> notes = new LinkedHashSet<>();
+
+    BaggageCheckResult(String guidanceReviewedDate) {
+        this.guidanceReviewedDate = guidanceReviewedDate;
+    }
+
+    public String guidanceReviewedDate() {
+        return guidanceReviewedDate;
+    }
 
     public Set<String> baggagePickupAt() {
         return Collections.unmodifiableSet(baggagePickupAt);

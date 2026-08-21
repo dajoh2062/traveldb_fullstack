@@ -1,6 +1,6 @@
 package io.github.dajoh2062.traveldb.documents;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -40,16 +40,29 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
     private static final Set<String> NON_VISITOR_PURPOSES = Set.of("WORK", "STUDY", "OTHER");
 
     private final ConservativeDocumentProvider conservativeProvider;
-    private final DocumentRuleSnapshot snapshot;
+    private final DocumentRuleRepository repository;
+    private volatile DocumentRuleSnapshot snapshot;
     private final Clock clock;
+
+    @Autowired
+    public LocalDocumentRulesProvider(
+            ConservativeDocumentProvider conservativeProvider,
+            DocumentRuleRepository repository,
+            Clock clock
+    ) {
+        this.conservativeProvider = conservativeProvider;
+        this.repository = repository;
+        this.clock = clock;
+    }
 
     public LocalDocumentRulesProvider(
             ConservativeDocumentProvider conservativeProvider,
             ObjectMapper objectMapper,
-            @Value("${traveldb.documents.rules-location:classpath:data/document-rules.json}") Resource snapshotResource,
+            Resource snapshotResource,
             Clock clock
     ) {
         this.conservativeProvider = conservativeProvider;
+        this.repository = null;
         this.snapshot = DocumentRuleSnapshotLoader.load(objectMapper, snapshotResource);
         this.clock = clock;
     }
@@ -98,7 +111,7 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 conservativeResult.missingInputs(),
                 warnings,
                 matchedSources,
-                snapshot.datasetVersion()
+                snapshot().datasetVersion()
         );
     }
 
@@ -179,7 +192,7 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
                 : input.passportIssuingCountryCode();
         Map<String, DocumentRule> decisions = new LinkedHashMap<>();
 
-        snapshot.rules().stream()
+        snapshot().rules().stream()
                 .filter(rule -> rule.scope() == scope)
                 .filter(rule -> !restrictNationalityRules
                         || isNationalIdPrimary(input) && supportsNationalIdRule(rule))
@@ -248,7 +261,7 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
 
     private List<String> buildWarnings(DocumentCheckInput input, Set<String> staleRuleIds) {
         List<String> warnings = new ArrayList<>();
-        warnings.add("TravelDB evaluated this journey locally from rule snapshot " + snapshot.datasetVersion()
+        warnings.add("TravelDB evaluated this journey locally from rule snapshot " + snapshot().datasetVersion()
                 + "; no external requirements service was contacted.");
         if (!staleRuleIds.isEmpty()) {
             warnings.add("Some local rules are past their review date and were downgraded to verification-only: "
@@ -338,5 +351,22 @@ public class LocalDocumentRulesProvider implements DocumentRequirementsProvider 
 
     private static String normalize(String value) {
         return value == null ? null : value.trim().toUpperCase(Locale.ROOT);
+    }
+
+    private DocumentRuleSnapshot snapshot() {
+        DocumentRuleSnapshot current = snapshot;
+        if (current != null) {
+            return current;
+        }
+        synchronized (this) {
+            if (snapshot == null) {
+                if (repository == null) {
+                    throw new IllegalStateException("No document-rule repository is configured.");
+                }
+                snapshot = repository.findActive().orElseThrow(() ->
+                        new IllegalStateException("No active document-rule dataset is available."));
+            }
+            return snapshot;
+        }
     }
 }

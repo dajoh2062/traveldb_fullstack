@@ -10,3 +10,24 @@ services:
       paths:
         - traveldbBackend/**
     healthCheckPath: /api/health
+    envVars:
+      - key: TRAVELDB_DATABASE_URL
+        fromDatabase:
+          name: traveldb-db
+          property: connectionString
+      - key: TRAVELDB_DATABASE_USERNAME
+        fromDatabase:
+          name: traveldb-db
+          property: user
+      - key: TRAVELDB_DATABASE_PASSWORD
+        fromDatabase:
+          name: traveldb-db
+          property: password
+
+databases:
+  - name: traveldb-db
+    plan: free
+    region: frankfurt
+    databaseName: traveldb
+    user: traveldb
+    ipAllowList: []

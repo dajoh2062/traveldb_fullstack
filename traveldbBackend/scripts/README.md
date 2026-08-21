@@ -15,6 +15,8 @@ The audit and import commands support `--help`.
 
 Import changes to `target/document-rules.candidate.json` first. Audit the candidate, inspect its diff, and only then replace `src/main/resources/data/document-rules.json`. See the [document rule guide](../docs/document-rules.md#refreshing-the-snapshot) for the full review procedure.
 
+The bundled snapshot is an import artifact. On application startup, a new reviewed dataset version is written to the database and atomically made active; journey requests read the active database dataset through `DocumentRuleRepository`.
+
 The importer creates its output directory when necessary and writes rules in priority order, using the rule ID as a stable tie-breaker.
 
 ## Airport and country data

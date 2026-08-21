@@ -81,7 +81,7 @@ public class JourneyService {
                 documentActions,
                 documentCheck,
                 baggageCheck.baggageAdvice(),
-                BaggageService.GUIDANCE_REVIEWED_DATE,
+                baggageCheck.guidanceReviewedDate(),
                 List.copyOf(baggageCheck.assumptions()),
                 List.copyOf(baggageCheck.notes())
         );

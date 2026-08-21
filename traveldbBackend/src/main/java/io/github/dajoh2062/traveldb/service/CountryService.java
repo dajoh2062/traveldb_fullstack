@@ -1,6 +1,5 @@
 package io.github.dajoh2062.traveldb.service;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import io.github.dajoh2062.traveldb.model.Country;
 import io.github.dajoh2062.traveldb.repository.CountryRepository;
@@ -14,29 +13,38 @@ import java.util.stream.Collectors;
 public class CountryService {
 
     private final CountryRepository repository;
-    private List<Country> countries = List.of();
-    private Set<String> countryCodes = Set.of();
+    private volatile List<Country> countries;
+    private volatile Set<String> countryCodes;
 
     public CountryService(CountryRepository repository) {
         this.repository = repository;
     }
 
-    @PostConstruct
-    void loadCountries() {
-        countries = repository.findAll();
-        countryCodes = countries.stream()
-                .map(Country::countryId)
-                .collect(Collectors.toUnmodifiableSet());
-    }
-
     public List<Country> listCountries() {
+        ensureLoaded();
         return countries;
     }
 
     public boolean countryExists(String countryCode) {
+        ensureLoaded();
         if (countryCode == null || countryCode.isBlank()) {
             return false;
         }
         return countryCodes.contains(countryCode.trim().toUpperCase(Locale.ROOT));
+    }
+
+    private void ensureLoaded() {
+        if (countries != null) {
+            return;
+        }
+        synchronized (this) {
+            if (countries == null) {
+                List<Country> loadedCountries = repository.findAll();
+                countries = List.copyOf(loadedCountries);
+                countryCodes = loadedCountries.stream()
+                        .map(Country::countryId)
+                        .collect(Collectors.toUnmodifiableSet());
+            }
+        }
     }
 }

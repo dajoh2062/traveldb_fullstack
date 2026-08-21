@@ -41,6 +41,7 @@ class BaggageRulesIntegrationTests {
 
         assertTrue(response.pickupRequired());
         assertEquals(List.of("ATL", "JFK"), response.pickupAt());
+        assertEquals("2026-07-31", response.baggageGuidanceReviewed());
     }
 
     @Test

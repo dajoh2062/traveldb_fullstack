@@ -1,6 +1,6 @@
 # Travel-document rules
 
-TravelDB evaluates a versioned rule snapshot bundled with the backend. Journey checks do not call government websites or third-party immigration services at runtime.
+TravelDB evaluates a reviewed, versioned rule dataset stored in the application database. The bundled JSON snapshot is the validated import artifact used to publish a new dataset during deployment. Journey checks do not call government websites or third-party immigration services at runtime.
 
 The browser client is limited to tourist trips using a regular (ordinary) passport. It sends nationality, route, baggage details, and `travelPurpose: TOURISM`; it does not collect passport numbers or other sensitive document identifiers.
 
@@ -8,9 +8,11 @@ The browser client is limited to tourist trips using a regular (ordinary) passpo
 
 `DocumentRouteVisitResolver` determines where each immigration jurisdiction is first reached. Consecutive domestic airports count as one country visit, and consecutive Schengen airports count as one Schengen visit. A connection is treated as an entry point when the itinerary continues domestically or within Schengen, or when the traveller must collect checked baggage there.
 
-`LocalDocumentRulesProvider` matches the visit and traveller profile against the loaded rules. Within a visit, a higher-priority rule replaces a lower-priority rule with the same `decisionKey`. A rule past its `reviewAfter` date is returned as `VERIFY` instead of a definitive `REQUIRED` or `NOT_REQUIRED` result.
+`DocumentRuleRepository` loads the active dataset from relational tables. `LocalDocumentRulesProvider` caches that immutable dataset and matches the visit and traveller profile against its rules. Within a visit, a higher-priority rule replaces a lower-priority rule with the same `decisionKey`. A rule past its `reviewAfter` date is returned as `VERIFY` instead of a definitive `REQUIRED` or `NOT_REQUIRED` result.
 
-If no local rule covers a visit, `ConservativeDocumentProvider` returns location-specific verification guidance. The backend accepts only classpath and local-file snapshot locations; HTTP and HTTPS locations are rejected during startup.
+If no local rule covers a visit, `ConservativeDocumentProvider` returns location-specific verification guidance. The bootstrap importer accepts only classpath and local-file snapshot locations; HTTP and HTTPS locations are rejected during startup.
+
+Flyway creates the dataset, rule, selector, condition, source, and key-fact tables. Dataset activation is represented by a single database row and is changed in the same transaction as an import. Rules are never updated in place: a new reviewed snapshot creates a new dataset version, and the previous dataset remains available for audit history.
 
 ## Snapshot format
 
@@ -60,6 +62,8 @@ Rule changes require a source review. Search results and third-party summaries a
    node scripts/audit-document-rules.mjs --as-of YYYY-MM-DD
    .\mvnw.cmd test
    ```
+
+7. Deploy the backend. At startup, the validated bundled version is inserted into the database and atomically activated if it differs from the active version. An unchanged version is not inserted again.
 
 The audit checks dates, review windows, IDs, source URLs, and the official-source host allowlist in `scripts/document-rules-audit-lib.mjs`. It cannot confirm that a source page still supports a rule; that remains a manual review step.
 

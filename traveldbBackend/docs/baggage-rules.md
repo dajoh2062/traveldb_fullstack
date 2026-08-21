@@ -2,6 +2,8 @@
 
 For journeys with checked baggage, the baggage engine returns one result for each connection airport.
 
+The active baggage-rule dataset is stored in relational tables. `BaggageRuleRepository` loads the version, review date, airport groups, ordered selectors, output text, exceptions, and sources. `BaggageService` caches that immutable dataset, while the pure `BaggageRuleMatcher` evaluates each connection.
+
 | Status | Meaning |
 | --- | --- |
 | `REQUIRED` | A matching rule says the traveller must collect and recheck the bag. |
@@ -22,6 +24,17 @@ The engine considers:
 
 Connections are evaluated in itinerary order. Border-handling rules take priority, followed by the baggage-tag answer and ticket arrangement. When a supported rule cannot give a reliable answer, the result is `CONFIRM`.
 
+Rules are declarative and ordered by priority, then by their stable position. A rule can select on:
+
+- entering a new country;
+- continuing on a domestic flight;
+- current country or airport;
+- previous airport or a named airport group;
+- ticket arrangement; and
+- through-check status.
+
+Route traversal and the calculation of entry/domestic facts remain Java logic. The policy conditions, messages, exceptions, sources, airport-group membership, and source-review date are database data.
+
 ## Supported cases
 
 | Journey condition | Result | Source |
@@ -38,11 +51,13 @@ Connections are evaluated in itinerary order. Border-handling rules take priorit
 
 ## Maintenance
 
-Last source review: **2026-07-31**.
+Active seed dataset: **2026-07-31.1**. Last source review: **2026-07-31**.
 
-When changing a rule, update these together:
+Flyway migrations `V3` and `V4` create and seed the initial baggage dataset. Do not edit an already-deployed migration. To publish a change:
 
-- `BaggageService` for the condition, result text, source, and review date; and
-- `BaggageRulesIntegrationTests` for route-level coverage.
+1. Add a new migration that inserts a new `baggage_rule_datasets` version and all of its rules and supporting records.
+2. In that migration, change the single `active_baggage_rule_dataset` row only after the new dataset is complete.
+3. Update `BaggageRulesIntegrationTests` and repository tests for route-level and data-integrity coverage.
+4. Review the complete SQL diff, including source URLs and the dataset review date.
 
 Run `.\mvnw.cmd test` from `traveldbBackend` after making a change.

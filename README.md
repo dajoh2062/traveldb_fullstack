@@ -54,7 +54,7 @@ npm run check
 - [`traveldbFrontend`](traveldbFrontend) contains the React application. See its [development guide](traveldbFrontend/README.md).
 - [`traveldbBackend`](traveldbBackend) contains the API, journey services, bundled data, tests, and maintenance scripts. See its [development guide](traveldbBackend/README.md).
 
-Airport and country records are loaded into an in-memory H2 database when the backend starts. Travel-document rules are loaded from a versioned JSON snapshot. Journey checks do not fetch immigration or airport data at runtime.
+Flyway manages the backend schema. Local development defaults to in-memory H2, while the Render Blueprint wires the API to PostgreSQL. Country and airport reference data bootstrap empty databases, the reviewed document-rule artifact is imported into versioned relational tables, and baggage policies are seeded as an independently versioned active dataset. Journey checks do not fetch immigration or airport data at runtime.
 
 ## API
 

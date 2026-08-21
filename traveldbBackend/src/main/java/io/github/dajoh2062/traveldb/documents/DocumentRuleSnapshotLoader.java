@@ -35,10 +35,10 @@ final class DocumentRuleSnapshotLoader {
             validateSchemaVersion(root);
 
             String datasetVersion = requiredText(root, "datasetVersion");
-            Instant.parse(requiredText(root, "generatedAt"));
+            Instant generatedAt = Instant.parse(requiredText(root, "generatedAt"));
             List<DocumentSource> sources = parseSources(root.path("sources"));
             List<DocumentRule> rules = parseRules(root.path("rules"));
-            return new DocumentRuleSnapshot(datasetVersion, sources, rules);
+            return new DocumentRuleSnapshot(datasetVersion, generatedAt, sources, rules);
         } catch (IOException | RuntimeException error) {
             throw new IllegalStateException("Could not load local document-rule snapshot from " + resource, error);
         }

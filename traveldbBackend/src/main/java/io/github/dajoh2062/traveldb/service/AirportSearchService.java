@@ -1,6 +1,5 @@
 package io.github.dajoh2062.traveldb.service;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import io.github.dajoh2062.traveldb.api.InvalidRequestParameterException;
 import io.github.dajoh2062.traveldb.api.dto.AirportSearchItem;
@@ -42,20 +41,14 @@ public class AirportSearchService {
                 }
             }
     );
-    private List<AirportSearchEntry> searchIndex = List.of();
+    private volatile List<AirportSearchEntry> searchIndex;
 
     public AirportSearchService(AirportRepository repository) {
         this.repository = repository;
     }
 
-    @PostConstruct
-    void buildSearchIndex() {
-        searchIndex = repository.findAll().stream()
-                .map(AirportSearchEntry::from)
-                .toList();
-    }
-
     public AirportSearchResponse searchAirports(String query, int offset, int limit) {
+        ensureSearchIndex();
         int pageOffset = Math.max(0, offset);
         int pageSize = Math.max(1, Math.min(limit, MAX_RESULTS_PER_PAGE));
         String searchQuery = query == null ? "" : query.trim();
@@ -83,6 +76,7 @@ public class AirportSearchService {
     }
 
     List<Airport> rankedMatches(String query) {
+        ensureSearchIndex();
         String normalizedQuery = normalize(query);
         if (normalizedQuery.isBlank()) {
             return List.of();
@@ -160,6 +154,19 @@ public class AirportSearchService {
                 .replaceAll("")
                 .trim()
                 .toLowerCase(Locale.ROOT);
+    }
+
+    private void ensureSearchIndex() {
+        if (searchIndex != null) {
+            return;
+        }
+        synchronized (this) {
+            if (searchIndex == null) {
+                searchIndex = repository.findAll().stream()
+                        .map(AirportSearchEntry::from)
+                        .toList();
+            }
+        }
     }
 
     private record AirportMatch(Airport airport, int score) {}
