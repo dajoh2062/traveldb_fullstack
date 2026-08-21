@@ -28,7 +28,7 @@ jobs:
           java-version: "21"
           cache: maven
           cache-dependency-path: traveldbBackend/pom.xml
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
       - name: Audit bundled document rules
@@ -49,7 +49,7 @@ jobs:
         working-directory: traveldbFrontend
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
           cache: npm
