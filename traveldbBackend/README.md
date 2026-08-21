@@ -45,6 +45,11 @@ TRAVELDB_DATABASE_PASSWORD=...
 
 `TRAVELDB_DATABASE_URL` accepts both JDBC URLs and provider-style `postgresql://` URLs. The checked-in Render Blueprint provisions and wires a free PostgreSQL instance; choose a paid database plan before relying on it for production durability or availability.
 
+Render activates the `production` Spring profile. That profile requires all three
+database environment variables, so a deployment with broken database wiring fails
+at startup instead of silently using the local H2 fallback. `/api/health` also runs
+a lightweight database query and returns HTTP 503 while PostgreSQL is unavailable.
+
 On an empty database, the application loads the bundled country and airport reference data. Set `TRAVELDB_REFERENCE_DATA_BOOTSTRAP_ENABLED=false` when those tables are managed separately.
 
 The reviewed `document-rules.json` artifact is validated and imported into versioned relational tables. One dataset is activated atomically. A deployment containing a newer dataset version imports and activates it; redeploying the same version is idempotent. Set `TRAVELDB_DOCUMENT_RULES_BOOTSTRAP_ENABLED=false` when rule publication is handled by a separate administrative process.
