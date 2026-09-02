@@ -49,6 +49,65 @@ export function sortDocumentRequirementsByCountry(requirements = [], route = [])
     .map(({ requirement }) => requirement);
 }
 
+export function groupDocumentRequirementsByCountry(requirements = [], route = []) {
+  const destinationCountries = [];
+  const seenDestinationCountries = new Set();
+
+  for (const airport of route.slice(1)) {
+    const countryCode = normalizedCountryCode(airport.countryCode);
+    if (countryCode && !seenDestinationCountries.has(countryCode)) {
+      seenDestinationCountries.add(countryCode);
+      destinationCountries.push(countryCode);
+    }
+  }
+
+  const groups = new Map();
+  const addToGroup = (countryCode, requirement) => {
+    if (!groups.has(countryCode)) {
+      groups.set(countryCode, []);
+    }
+    groups.get(countryCode).push(requirement);
+  };
+
+  for (const requirement of requirements) {
+    const countryCode = documentCountryCode(requirement, route);
+    if (countryCode) {
+      addToGroup(countryCode, requirement);
+    } else if (requirement.scope === "JOURNEY" && destinationCountries.length > 0) {
+      destinationCountries.forEach(destinationCountry =>
+        addToGroup(destinationCountry, requirement),
+      );
+    } else {
+      addToGroup("", requirement);
+    }
+  }
+
+  const routeOrder = new Map(
+    destinationCountries.map((countryCode, index) => [countryCode, index]),
+  );
+  return [...groups.entries()]
+    .sort(([leftCountry], [rightCountry]) => {
+      const leftOrder = countryOrder(leftCountry, routeOrder);
+      const rightOrder = countryOrder(rightCountry, routeOrder);
+      if (leftOrder !== rightOrder) return leftOrder - rightOrder;
+      return leftCountry.localeCompare(rightCountry);
+    })
+    .map(([countryCode, countryRequirements]) => ({
+      countryCode,
+      requirements: countryRequirements,
+    }));
+}
+
+export function documentCountryName(countryCode, locale = "en") {
+  if (!countryCode) return null;
+
+  try {
+    return new Intl.DisplayNames([locale], { type: "region" }).of(countryCode) ?? countryCode;
+  } catch {
+    return countryCode;
+  }
+}
+
 export function documentRequirementKey(requirement) {
   return [
     requirement.ruleId ?? requirement.code ?? requirement.title,

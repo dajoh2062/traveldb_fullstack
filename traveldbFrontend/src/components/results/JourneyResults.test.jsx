@@ -4,6 +4,7 @@ import JourneyResults from "./JourneyResults";
 import {
   documentRequirementKey,
   formatRuleDate,
+  groupDocumentRequirementsByCountry,
   sortDocumentRequirementsByCountry,
 } from "./resultHelpers";
 
@@ -151,6 +152,16 @@ describe("JourneyResults", () => {
     ]);
   });
 
+  it("groups journey requirements under every transit and destination country", () => {
+    const passport = { code: "PASSPORT", scope: "JOURNEY" };
+    const usVisa = { airportCode: "JFK", code: "US_VISA", scope: "TRANSIT" };
+    const groups = groupDocumentRequirementsByCountry([passport, usVisa], route);
+
+    expect(groups.map(group => group.countryCode)).toEqual(["US", "AU"]);
+    expect(groups[0].requirements).toEqual([passport, usVisa]);
+    expect(groups[1].requirements).toEqual([passport]);
+  });
+
   it("shows required, alternative, and unverified document actions at the correct airports", () => {
     render(<JourneyResults result={result} route={route} />);
 
@@ -170,18 +181,21 @@ describe("JourneyResults", () => {
     expect(within(baggage).queryByText("Melbourne Airport (MEL)")).not.toBeInTheDocument();
 
     const documents = screen.getByRole("region", { name: "Travel documents" });
-    expect(within(documents).getAllByRole("listitem")).toHaveLength(5);
-    expect(within(documents).getByText("Valid passport")).toBeInTheDocument();
-    expect(within(documents).getByText("Verbose passport summary")).toBeInTheDocument();
-    expect(within(documents).getByText("Norwegian ordinary passport")).toBeInTheDocument();
-    expect(within(documents).getByText("Valid for the whole journey")).toBeInTheDocument();
+    const unitedStates = within(documents).getByRole("region", { name: "United States" });
+    const australia = within(documents).getByRole("region", { name: "Australia" });
+    expect(within(documents).getAllByRole("listitem")).toHaveLength(6);
+    expect(within(unitedStates).getByText("Valid passport")).toBeInTheDocument();
+    expect(within(australia).getByText("Valid passport")).toBeInTheDocument();
+    expect(within(documents).getAllByText("Verbose passport summary")).toHaveLength(2);
+    expect(within(documents).getAllByText("Norwegian ordinary passport")).toHaveLength(2);
+    expect(within(documents).getAllByText("Valid for the whole journey")).toHaveLength(2);
     expect(
-      within(documents).getByText("Carry the passport used for this check."),
+      within(unitedStates).getByText("Carry the passport used for this check."),
     ).toBeInTheDocument();
-    expect(within(documents).getByText("The passport must be undamaged.")).toBeInTheDocument();
+    expect(within(unitedStates).getByText("The passport must be undamaged.")).toBeInTheDocument();
     expect(within(documents).getAllByText("View more").length).toBeGreaterThan(0);
     expect(
-      within(documents).getByText("Each child needs a separate passport."),
+      within(unitedStates).getByText("Each child needs a separate passport."),
     ).toBeInTheDocument();
     expect(within(documents).queryByText(/Local rule passport-validity/)).not.toBeInTheDocument();
     expect(within(documents).queryByText("Rule verified 30 Jul 2026")).not.toBeInTheDocument();
