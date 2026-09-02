@@ -81,4 +81,26 @@ describe("NationalitySearch", () => {
       "no",
     );
   });
+
+  it("keeps a tapped option available until mobile browsers dispatch its click", () => {
+    const onSelect = vi.fn();
+    render(
+      <NationalitySearch
+        countries={countries}
+        error=""
+        isLoading={false}
+        nationality=""
+        query="Nor"
+        onQueryChange={vi.fn()}
+        onSelect={onSelect}
+      />,
+    );
+
+    fireEvent.focus(screen.getByRole("combobox", { name: "Traveller nationality" }));
+    const option = screen.getByRole("option", { name: /Norway/ });
+    expect(fireEvent.mouseDown(option)).toBe(false);
+    fireEvent.click(option);
+
+    expect(onSelect).toHaveBeenCalledWith(countries[1]);
+  });
 });

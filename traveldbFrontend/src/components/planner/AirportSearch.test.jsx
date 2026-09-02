@@ -94,6 +94,24 @@ describe("AirportSearch", () => {
     expect(input).toHaveValue("");
   });
 
+  it("keeps a tapped option available until mobile browsers dispatch its click", async () => {
+    vi.useFakeTimers();
+    searchAirports.mockResolvedValue({ airports: [oslo], total: 1 });
+    const onSelect = vi.fn();
+    render(<AirportSearch onSelect={onSelect} />);
+
+    fireEvent.change(screen.getByRole("combobox", { name: "Add an airport" }), {
+      target: { value: "OSL" },
+    });
+    await finishSearchDelay();
+
+    const option = screen.getByRole("option", { name: /Oslo Airport/ });
+    expect(fireEvent.mouseDown(option)).toBe(false);
+    fireEvent.click(option);
+
+    expect(onSelect).toHaveBeenCalledWith(oslo);
+  });
+
   it("aborts the previous request when the query changes", () => {
     vi.useFakeTimers();
     searchAirports.mockImplementation(() => new Promise(() => {}));

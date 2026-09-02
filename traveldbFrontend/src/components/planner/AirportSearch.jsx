@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowRight, LoaderCircle, Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import useAirportSearch from "../../hooks/useAirportSearch";
@@ -9,6 +9,7 @@ const MAX_SEARCH_LENGTH = 100;
 
 export default function AirportSearch({ onSelect }) {
   const { i18n, t } = useTranslation();
+  const inputRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const {
     clearSearch,
@@ -36,7 +37,10 @@ export default function AirportSearch({ onSelect }) {
   }
 
   function selectAirport(airport) {
-    if (onSelect(airport) !== false) clearSearch();
+    if (onSelect(airport) !== false) {
+      clearSearch();
+      inputRef.current?.blur();
+    }
   }
 
   function handleBlur(event) {
@@ -98,6 +102,7 @@ export default function AirportSearch({ onSelect }) {
           }}
           onKeyDown={handleKeyDown}
           placeholder={t("airport.placeholder")}
+          ref={inputRef}
           role="combobox"
           spellCheck={false}
           value={query}
@@ -136,6 +141,7 @@ export default function AirportSearch({ onSelect }) {
                 className={`dropdown-item ${index === resolvedActiveIndex ? "is-active" : ""}`}
                 id={`airport-option-${airport.iataCode}`}
                 key={airport.iataCode}
+                onMouseDown={event => event.preventDefault()}
                 onMouseMove={() => setActiveIndex(index)}
                 onClick={() => selectAirport(airport)}
                 role="option"

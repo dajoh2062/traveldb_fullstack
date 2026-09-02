@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Check, Globe2, LoaderCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
@@ -20,6 +20,7 @@ export default function NationalitySearch({
   onSelect,
 }) {
   const { i18n, t } = useTranslation();
+  const inputRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const countrySearchIndex = useMemo(
@@ -36,6 +37,7 @@ export default function NationalitySearch({
   function selectCountry(country) {
     onSelect(country);
     setIsOpen(false);
+    inputRef.current?.blur();
   }
 
   function handleBlur(event) {
@@ -101,6 +103,7 @@ export default function NationalitySearch({
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder={t("nationality.placeholder")}
+          ref={inputRef}
           role="combobox"
           spellCheck={false}
           value={query}
@@ -134,6 +137,7 @@ export default function NationalitySearch({
               className={`dropdown-item country-option ${index === resolvedActiveIndex ? "is-active" : ""}`}
               id={`nationality-option-${country.countryId}`}
               key={country.countryId}
+              onMouseDown={event => event.preventDefault()}
               onMouseMove={() => setActiveIndex(index)}
               onClick={() => selectCountry(country)}
               role="option"
