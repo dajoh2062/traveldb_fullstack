@@ -1,7 +1,6 @@
-import { CircleHelp, ExternalLink, Luggage, TriangleAlert } from "lucide-react";
+import { CircleHelp, Luggage, TriangleAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { airportLabel } from "../../utils/journey";
-import { baggageSources } from "./resultHelpers";
 
 const BAGGAGE_STATUS = {
   REQUIRED: { labelKey: "results.baggage.statuses.required", Icon: TriangleAlert },
@@ -17,14 +16,7 @@ export default function BaggageResults({ route, stops }) {
         <span className="result-heading-icon">
           <Luggage aria-hidden="true" className="icon" size={22} strokeWidth={1.8} />
         </span>
-        <div>
-          <h3 id="baggage-results-title">{t("results.baggage.title")}</h3>
-          <small>
-            {stops.length > 0
-              ? t("results.baggage.actions", { count: stops.length })
-              : t("results.baggage.noAction")}
-          </small>
-        </div>
+        <h3 id="baggage-results-title">{t("results.baggage.title")}</h3>
       </div>
 
       {stops.length > 0 ? (
@@ -32,7 +24,6 @@ export default function BaggageResults({ route, stops }) {
           {stops.map((stop, index) => {
             const status = BAGGAGE_STATUS[stop.status];
             const StatusIcon = status.Icon;
-            const sources = baggageSources(stop);
 
             return (
               <li
@@ -56,28 +47,6 @@ export default function BaggageResults({ route, stops }) {
                     <p dir="auto" lang={stop.localized.explanation.lang}>
                       {stop.localized.explanation.text}
                     </p>
-                  )}
-                  {sources.length > 0 && (
-                    <div className="document-source-links">
-                      {sources.map(source => (
-                        <a
-                          href={source.url}
-                          key={source.url}
-                          rel="noopener noreferrer"
-                          target="_blank"
-                        >
-                          <span dir="auto" lang={source.label ? "en" : undefined}>
-                            {source.label ?? t("results.baggage.sourceFallback")}
-                          </span>
-                          <ExternalLink
-                            aria-hidden="true"
-                            className="icon"
-                            size={12}
-                            strokeWidth={1.8}
-                          />
-                        </a>
-                      ))}
-                    </div>
                   )}
                 </div>
               </li>

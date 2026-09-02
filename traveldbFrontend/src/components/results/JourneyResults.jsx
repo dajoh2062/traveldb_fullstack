@@ -4,7 +4,6 @@ import BaggageResults from "./BaggageResults";
 import DocumentResults from "./DocumentResults";
 import {
   actionableBaggageStops,
-  documentReviewCount,
   missingInputMessage,
   sortDocumentRequirementsByCountry,
   visibleDocumentRequirements,
@@ -21,8 +20,6 @@ export default function JourneyResults({ result, route }) {
   const localizedDocumentRequirements = documentRequirements.map(requirement =>
     localizeDocumentRequirement(requirement, i18n, result.documentCheck?.datasetVersion),
   );
-  const documentActions = documentReviewCount(documentRequirements);
-  const attentionCount = baggageStops.length + documentActions;
   const hasEnglishFallback = [...localizedBaggageStops, ...localizedDocumentRequirements].some(
     item => !item.isFullyLocalized,
   );
@@ -30,26 +27,18 @@ export default function JourneyResults({ result, route }) {
   return (
     <section className="results" aria-labelledby="results-title" aria-live="polite">
       <header className="results-heading">
-        <div>
-          <span>{t("results.eyebrow")}</span>
-          <h2 id="results-title">{t("results.title")}</h2>
-        </div>
-        {attentionCount > 0 && (
-          <strong>{t("results.reviewItems", { count: attentionCount })}</strong>
-        )}
+        <h2 id="results-title">{t("results.title")}</h2>
       </header>
 
       <div className="results-grid">
         <BaggageResults route={route} stops={localizedBaggageStops} />
         <DocumentResults
-          datasetVersion={result.documentCheck?.datasetVersion}
           missingDetails={missingInputMessage(
             result.documentCheck?.missingInputs,
             t,
             i18n.resolvedLanguage,
           )}
           requirements={localizedDocumentRequirements}
-          reviewCount={documentActions}
           route={route}
         />
       </div>

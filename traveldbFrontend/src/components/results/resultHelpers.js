@@ -49,10 +49,6 @@ export function sortDocumentRequirementsByCountry(requirements = [], route = [])
     .map(({ requirement }) => requirement);
 }
 
-export function documentReviewCount(requirements) {
-  return requirements.filter(requirement => requirement.status !== "NOT_REQUIRED").length;
-}
-
 export function documentRequirementKey(requirement) {
   return [
     requirement.ruleId ?? requirement.code ?? requirement.title,
@@ -89,12 +85,6 @@ export function documentLocation(requirement, route, t = key => key) {
     return t("results.documents.locations.entry", { location });
   }
   return location;
-}
-
-export function documentSources(requirement) {
-  const sources = requirement.sources ?? [];
-  const governmentSources = sources.filter(source => source.sourceType === "GOVERNMENT");
-  return (governmentSources.length > 0 ? governmentSources : sources).slice(0, 2);
 }
 
 export function documentKeyFacts(requirement) {
@@ -173,19 +163,5 @@ export function missingInputMessage(missingInputs = [], t = key => key, locale =
     style: "long",
     type: "conjunction",
   }).format(inputs);
-  return t("results.documents.missingInputs", {
-    count: inputs.length,
-    details: formattedInputs,
-  });
-}
-
-export function baggageSources(stop) {
-  return (stop.sources ?? []).slice(0, 2);
-}
-
-export function sourceLabel(source, sourceCount, t = key => key) {
-  if (source.label?.includes("eVisitor")) return "eVisitor 651";
-  if (source.label?.includes("Electronic Travel Authority")) return "ETA 601";
-  if (source.label) return source.label;
-  return sourceCount === 1 ? t("common.supportingSource") : t("common.source");
+  return `${t("results.documents.notConfirmed")}: ${formattedInputs}.`;
 }

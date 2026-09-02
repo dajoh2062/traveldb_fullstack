@@ -173,6 +173,15 @@
     grid-template-columns: 1fr;
     gap: 3px;
   }
+  .document-more-conditions summary {
+    list-style: none;
+  }
+  .document-more-conditions summary::marker {
+    content: "";
+  }
+  .document-more-conditions summary::-webkit-details-marker {
+    display: none;
+  }
   footer {
     padding-inline: 2px;
   }

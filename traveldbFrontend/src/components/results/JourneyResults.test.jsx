@@ -164,9 +164,7 @@ describe("JourneyResults", () => {
       ),
     ).toBeInTheDocument();
     expect(within(baggage).getByText("Pick up and recheck")).toBeInTheDocument();
-    expect(
-      within(baggage).getByRole("link", { name: "U.S. CBP baggage guidance" }),
-    ).toHaveAttribute("href", "https://www.cbp.gov/travel");
+    expect(within(baggage).queryByRole("link")).not.toBeInTheDocument();
     expect(within(baggage).getByText("Brisbane International Airport (BNE)")).toBeInTheDocument();
     expect(within(baggage).getByText("Confirm with airline")).toBeInTheDocument();
     expect(within(baggage).queryByText("Melbourne Airport (MEL)")).not.toBeInTheDocument();
@@ -186,7 +184,7 @@ describe("JourneyResults", () => {
       within(documents).getByText("Each child needs a separate passport."),
     ).toBeInTheDocument();
     expect(within(documents).queryByText(/Local rule passport-validity/)).not.toBeInTheDocument();
-    expect(within(documents).getByText("Rule verified 30 Jul 2026")).toBeInTheDocument();
+    expect(within(documents).queryByText("Rule verified 30 Jul 2026")).not.toBeInTheDocument();
     expect(within(documents).getByText("Approved ESTA or valid U.S. visa")).toBeInTheDocument();
     expect(within(documents).getByText("Visa-free stay")).toBeInTheDocument();
     expect(within(documents).getByText("Up to 90 days")).toBeInTheDocument();
@@ -203,14 +201,7 @@ describe("JourneyResults", () => {
     expect(
       within(documents).getByText("Entry at Brisbane International Airport (BNE)"),
     ).toBeInTheDocument();
-    expect(within(documents).getByRole("link", { name: "eVisitor 651" })).toHaveAttribute(
-      "href",
-      "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651",
-    );
-    expect(within(documents).getByRole("link", { name: "ETA 601" })).toHaveAttribute(
-      "href",
-      "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601",
-    );
+    expect(within(documents).queryByRole("link")).not.toBeInTheDocument();
     expect(within(documents).getByText("Passport validity")).toBeInTheDocument();
     expect(within(documents).getAllByText("Required unless exempt")).toHaveLength(2);
     expect(within(documents).getByText("Could not confirm")).toBeInTheDocument();
@@ -218,13 +209,9 @@ describe("JourneyResults", () => {
     expect(within(documents).getByText("Not required")).toBeInTheDocument();
     expect(screen.queryByText("Additional entry evidence")).not.toBeInTheDocument();
 
-    expect(within(documents).getByText("Local rule set 2026-07-31.1")).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Not included: departure date. Verify this detail in the linked official guidance.",
-      ),
-    ).toBeInTheDocument();
-    expect(screen.getByText("6 items to review")).toBeInTheDocument();
+    expect(within(documents).queryByText("Local rule set 2026-07-31.1")).not.toBeInTheDocument();
+    expect(screen.getByText("Not confirmed: departure date.")).toBeInTheDocument();
+    expect(screen.queryByText("6 items to review")).not.toBeInTheDocument();
     expect(screen.getByText("Recheck official guidance before travel.")).toBeInTheDocument();
   });
 

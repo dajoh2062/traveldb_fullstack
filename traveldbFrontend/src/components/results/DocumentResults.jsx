@@ -1,13 +1,10 @@
-import { Check, CircleHelp, ExternalLink, FileText, TriangleAlert } from "lucide-react";
+import { Check, CircleHelp, FileText, TriangleAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
   documentConditions,
   documentKeyFacts,
   documentLocation,
   documentRequirementKey,
-  documentSources,
-  formatRuleDate,
-  sourceLabel,
 } from "./resultHelpers";
 
 const DOCUMENT_STATUS = {
@@ -33,14 +30,8 @@ const DOCUMENT_STATUS = {
   },
 };
 
-export default function DocumentResults({
-  datasetVersion,
-  missingDetails,
-  requirements,
-  reviewCount,
-  route,
-}) {
-  const { t, i18n } = useTranslation();
+export default function DocumentResults({ missingDetails, requirements, route }) {
+  const { t } = useTranslation();
 
   return (
     <section className="result-section" aria-labelledby="document-results-title">
@@ -48,16 +39,7 @@ export default function DocumentResults({
         <span className="result-heading-icon">
           <FileText aria-hidden="true" className="icon" size={22} strokeWidth={1.8} />
         </span>
-        <div>
-          <h3 id="document-results-title">{t("results.documents.title")}</h3>
-          <small>
-            {requirements.length === 0
-              ? t("results.documents.notConfirmed")
-              : reviewCount > 0
-                ? t("results.documents.reviewCount", { count: reviewCount })
-                : t("results.documents.noAction")}
-          </small>
-        </div>
+        <h3 id="document-results-title">{t("results.documents.title")}</h3>
       </div>
 
       {requirements.length > 0 ? (
@@ -65,11 +47,10 @@ export default function DocumentResults({
           {requirements.map(document => {
             const status = DOCUMENT_STATUS[document.status];
             const StatusIcon = status.Icon;
-            const sources = documentSources(document);
             const keyFacts = (document.keyFacts ?? [])
               .map((fact, index) => ({ fact, localized: document.localized.keyFacts[index] }))
               .filter(({ fact }) => documentKeyFacts({ keyFacts: [fact] }).length > 0)
-              .slice(0, 6)
+              .slice(0, 4)
               .map(({ fact, localized }) => ({
                 label: localized?.label ?? { text: fact.label, lang: "en" },
                 value: localized?.value ?? { text: fact.value, lang: "en" },
@@ -80,8 +61,8 @@ export default function DocumentResults({
                 localized: document.localized.conditions[index],
               }))
               .filter(({ condition }) => documentConditions({ conditions: [condition] }).length > 0)
+              .slice(0, 3)
               .map(({ condition, localized }) => localized ?? { text: condition, lang: "en" });
-            const lastVerified = formatRuleDate(document.lastVerified, i18n.resolvedLanguage);
 
             return (
               <li
@@ -102,10 +83,7 @@ export default function DocumentResults({
                       {document.localized.summary.text}
                     </p>
                   )}
-                  {(keyFacts.length > 0 ||
-                    conditions.length > 0 ||
-                    sources.length > 0 ||
-                    lastVerified) && (
+                  {(keyFacts.length > 0 || conditions.length > 0) && (
                     <details className="document-more-conditions">
                       <summary>{t("results.documents.viewMore")}</summary>
                       {keyFacts.length > 0 && (
@@ -138,33 +116,6 @@ export default function DocumentResults({
                           ))}
                         </div>
                       )}
-                      {sources.length > 0 && (
-                        <div className="document-source-links">
-                          {sources.map(source => (
-                            <a
-                              href={source.url}
-                              key={source.url}
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              <span dir="auto" lang={source.label ? "en" : undefined}>
-                                {sourceLabel(source, sources.length, t)}
-                              </span>
-                              <ExternalLink
-                                aria-hidden="true"
-                                className="icon"
-                                size={12}
-                                strokeWidth={1.8}
-                              />
-                            </a>
-                          ))}
-                        </div>
-                      )}
-                      {lastVerified && (
-                        <small className="document-rule-meta">
-                          {t("results.documents.verifiedDate", { date: lastVerified })}
-                        </small>
-                      )}
                     </details>
                   )}
                 </div>
@@ -174,11 +125,6 @@ export default function DocumentResults({
         </ul>
       ) : (
         <p className="empty-result">{t("results.documents.empty")}</p>
-      )}
-      {datasetVersion && (
-        <p className="document-dataset">
-          {t("results.documents.dataset", { version: datasetVersion })}
-        </p>
       )}
       {missingDetails && <p className="result-note missing-input-note">{missingDetails}</p>}
     </section>
