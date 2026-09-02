@@ -31,6 +31,9 @@
 }
 
 @media (max-width: 640px) {
+  html {
+    scroll-padding-top: 68px;
+  }
   .topbar-inner,
   main,
   footer {
@@ -40,15 +43,24 @@
     height: 56px;
   }
   .topbar-actions {
-    gap: 2px;
+    gap: 4px;
+  }
+  .brand {
+    min-height: 44px;
   }
   .language-picker {
     gap: 5px;
+    height: 44px;
     padding-inline: 6px;
   }
   .language-picker select {
     max-width: 116px;
-    font-size: 12px;
+    min-height: 42px;
+    font-size: 16px;
+  }
+  .theme-toggle {
+    width: 44px;
+    height: 44px;
   }
   .page-intro {
     margin: 24px 0 22px;
@@ -80,6 +92,28 @@
   }
   .planner-block-content > .nationality-field {
     max-width: none;
+  }
+  .field {
+    scroll-margin-top: 72px;
+  }
+  .input-shell {
+    height: 48px;
+  }
+  .input-shell input {
+    font-size: 16px;
+  }
+  .dropdown {
+    max-height: min(340px, 48dvh);
+  }
+  .airport-dropdown-results {
+    max-height: min(310px, 40dvh);
+  }
+  .dropdown-item {
+    min-height: 58px;
+  }
+  .load-more-airports,
+  .service-error button {
+    min-height: 44px;
   }
   .service-error {
     grid-template-columns: auto minmax(0, 1fr);
@@ -119,6 +153,7 @@
   }
   .primary-button {
     width: 100%;
+    min-height: 48px;
   }
   .results-heading {
     min-height: 0;
@@ -140,6 +175,9 @@
   }
   footer {
     padding-inline: 2px;
+  }
+  .segmented-control button {
+    min-height: 44px;
   }
 }
 
@@ -200,6 +238,30 @@
     grid-template-columns: 68px minmax(0, 1fr) auto;
     gap: 9px;
     padding-inline: 8px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .theme-toggle:active,
+  .language-picker:active,
+  .load-more-airports:active:not(:disabled) {
+    background: var(--surface-hover);
+    border-color: var(--border-strong);
+  }
+  .dropdown-item:active,
+  .segmented-control button:active:not(:disabled) {
+    background: var(--surface-soft);
+  }
+  .segmented-control button.is-selected:active {
+    background: var(--primary-hover);
+  }
+  .move-airport:active:not(:disabled) {
+    color: var(--primary);
+    background: var(--surface-soft);
+  }
+  .remove-airport:active {
+    color: var(--danger);
+    background: var(--danger-soft);
   }
 }
 

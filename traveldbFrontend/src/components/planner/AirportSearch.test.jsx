@@ -53,6 +53,14 @@ afterEach(() => {
 });
 
 describe("AirportSearch", () => {
+  it("does not submit the journey from an empty mobile search", () => {
+    render(<AirportSearch onSelect={vi.fn()} />);
+
+    const input = screen.getByRole("combobox", { name: "Add an airport" });
+
+    expect(fireEvent.keyDown(input, { key: "Enter" })).toBe(false);
+  });
+
   it("shows the destination country flag for airport suggestions", async () => {
     vi.useFakeTimers();
     searchAirports.mockResolvedValue({ airports: [oslo], total: 1 });

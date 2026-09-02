@@ -9,6 +9,24 @@ const countries = [
 ];
 
 describe("NationalitySearch", () => {
+  it("does not submit the journey when the search has no selectable result", () => {
+    render(
+      <NationalitySearch
+        countries={[]}
+        error=""
+        isLoading={false}
+        nationality=""
+        query=""
+        onQueryChange={vi.fn()}
+        onSelect={vi.fn()}
+      />,
+    );
+
+    const input = screen.getByRole("combobox", { name: "Traveller nationality" });
+
+    expect(fireEvent.keyDown(input, { key: "Enter" })).toBe(false);
+  });
+
   it("keeps keyboard navigation aligned with alphabetized suggestions", () => {
     const onSelect = vi.fn();
     render(

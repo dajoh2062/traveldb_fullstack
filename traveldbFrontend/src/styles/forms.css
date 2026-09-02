@@ -116,6 +116,8 @@
   z-index: 30;
   max-height: 340px;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 6px;
   background: var(--surface);
   border: 1px solid var(--border-strong);
@@ -132,6 +134,8 @@
 .airport-dropdown-results {
   max-height: 310px;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 6px;
 }
 .dropdown-item {

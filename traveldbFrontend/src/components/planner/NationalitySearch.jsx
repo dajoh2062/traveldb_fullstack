@@ -53,7 +53,10 @@ export default function NationalitySearch({
       setIsOpen(false);
       return;
     }
-    if (suggestions.length === 0) return;
+    if (suggestions.length === 0) {
+      if (event.key === "Enter") event.preventDefault();
+      return;
+    }
 
     if (event.key === "ArrowDown") {
       event.preventDefault();
@@ -89,13 +92,17 @@ export default function NationalitySearch({
           }
           aria-expanded={isOpen}
           aria-invalid={Boolean(error)}
+          autoCapitalize="none"
           autoComplete="off"
+          enterKeyHint="search"
           id="nationality-search"
+          inputMode="search"
           onChange={handleQueryChange}
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder={t("nationality.placeholder")}
           role="combobox"
+          spellCheck={false}
           value={query}
         />
         {nationality && <span className="selected-code">{nationality}</span>}

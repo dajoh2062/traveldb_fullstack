@@ -53,7 +53,10 @@ export default function AirportSearch({ onSelect }) {
       setIsOpen(false);
       return;
     }
-    if (suggestions.length === 0) return;
+    if (suggestions.length === 0) {
+      if (event.key === "Enter") event.preventDefault();
+      return;
+    }
 
     if (event.key === "ArrowDown") {
       event.preventDefault();
@@ -83,8 +86,11 @@ export default function AirportSearch({ onSelect }) {
           }
           aria-controls="airport-suggestions"
           aria-expanded={isOpen}
+          autoCapitalize="none"
           autoComplete="off"
+          enterKeyHint="search"
           id="airport-search"
+          inputMode="search"
           maxLength={MAX_SEARCH_LENGTH}
           onChange={handleQueryChange}
           onFocus={() => {
@@ -93,6 +99,7 @@ export default function AirportSearch({ onSelect }) {
           onKeyDown={handleKeyDown}
           placeholder={t("airport.placeholder")}
           role="combobox"
+          spellCheck={false}
           value={query}
         />
         {isSearching && (
