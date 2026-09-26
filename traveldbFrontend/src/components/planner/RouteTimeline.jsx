@@ -39,7 +39,7 @@ function RouteStop({ airport, index, onMove, onRemove, stopCount }) {
           <strong dir="auto">{airport.name}</strong>
           <span className="airport-location" dir="auto">
             <CountryFlag countryCode={airport.countryCode} />
-            {location}
+            <span className="airport-location-text">{location}</span>
           </span>
         </div>
         <div className="route-stop-actions">

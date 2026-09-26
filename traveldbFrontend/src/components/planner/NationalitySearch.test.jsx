@@ -9,6 +9,29 @@ const countries = [
 ];
 
 describe("NationalitySearch", () => {
+  it("does not select a hidden country after Escape", () => {
+    const onSelect = vi.fn();
+    render(
+      <NationalitySearch
+        countries={countries}
+        isLoading={false}
+        nationality=""
+        query=""
+        onQueryChange={vi.fn()}
+        onSelect={onSelect}
+      />,
+    );
+    const input = screen.getByRole("combobox", { name: "Traveller nationality" });
+    fireEvent.focus(input);
+    fireEvent.keyDown(input, { key: "Escape" });
+    fireEvent.keyDown(input, { key: "Enter" });
+    expect(onSelect).not.toHaveBeenCalled();
+    fireEvent.keyDown(input, { key: "ArrowDown" });
+    expect(input).toHaveAttribute("aria-expanded", "true");
+    fireEvent.keyDown(input, { key: "Enter" });
+    expect(onSelect).toHaveBeenCalledWith(countries[2]);
+  });
+
   it("does not submit the journey when the search has no selectable result", () => {
     render(
       <NationalitySearch

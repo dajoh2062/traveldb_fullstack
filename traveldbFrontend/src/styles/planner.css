@@ -45,8 +45,11 @@
 }
 .baggage-question-grid {
   display: grid;
-  grid-template-columns: 0.8fr 1.1fr 1.2fr;
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.baggage-question:last-child {
+  grid-column: 1 / -1;
 }
 .baggage-question {
   min-width: 0;
@@ -55,6 +58,7 @@
   border: 0;
 }
 .baggage-question legend {
+  max-width: 100%;
   margin-bottom: 8px;
   padding: 0;
   color: var(--text);
@@ -84,8 +88,10 @@
   font-size: 12.5px;
   font-weight: 550;
   line-height: 1.2;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
-.segmented-control button:hover:not(:disabled) {
+.segmented-control button:hover:not(:disabled):not(.is-selected) {
   color: var(--text);
   background: var(--surface-soft);
 }
@@ -108,6 +114,8 @@
   padding: 15px 0 16px;
 }
 .primary-button {
+  flex-shrink: 0;
+  max-width: 100%;
   min-width: 124px;
   min-height: 40px;
   display: inline-flex;

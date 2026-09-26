@@ -53,6 +53,26 @@ afterEach(() => {
 });
 
 describe("AirportSearch", () => {
+  it("does not select hidden suggestions after Escape and reopens with an arrow key", async () => {
+    vi.useFakeTimers();
+    searchAirports.mockResolvedValue({ airports: [oslo, london], total: 2 });
+    const onSelect = vi.fn();
+    render(<AirportSearch onSelect={onSelect} />);
+    const input = screen.getByRole("combobox", { name: "Add an airport" });
+    fireEvent.change(input, { target: { value: "escape-keyboard-route" } });
+    await finishSearchDelay();
+
+    fireEvent.keyDown(input, { key: "Escape" });
+    fireEvent.keyDown(input, { key: "Enter" });
+    expect(onSelect).not.toHaveBeenCalled();
+    expect(input).toHaveAttribute("aria-expanded", "false");
+
+    fireEvent.keyDown(input, { key: "ArrowDown" });
+    expect(input).toHaveAttribute("aria-expanded", "true");
+    fireEvent.keyDown(input, { key: "Enter" });
+    expect(onSelect).toHaveBeenCalledWith(oslo);
+  });
+
   it("does not submit the journey from an empty mobile search", () => {
     render(<AirportSearch onSelect={vi.fn()} />);
 

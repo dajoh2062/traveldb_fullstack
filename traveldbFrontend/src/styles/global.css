@@ -13,7 +13,7 @@
   --text-faint: #787774;
   --border: rgba(55, 53, 47, 0.16);
   --border-strong: rgba(55, 53, 47, 0.24);
-  --primary: #2383e2;
+  --primary: #176fc1;
   --primary-hover: #1f6fc1;
   --on-primary: #ffffff;
   --primary-soft: rgba(35, 131, 226, 0.12);
@@ -45,7 +45,7 @@
   --border-strong: rgba(255, 255, 255, 0.22);
   --primary: #5da9e9;
   --primary-hover: #79b8ed;
-  --on-primary: #ffffff;
+  --on-primary: #102333;
   --primary-soft: rgba(93, 169, 233, 0.16);
   --focus-ring: #5da9e9;
   --focus-ring-soft: rgba(93, 169, 233, 0.24);
@@ -65,6 +65,7 @@
 }
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 72px;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -78,6 +79,11 @@ body {
   background: var(--bg);
   font-size: 15.5px;
   line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.icon,
+.spinner {
+  flex-shrink: 0;
 }
 button,
 input,

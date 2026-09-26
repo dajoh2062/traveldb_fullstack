@@ -1,10 +1,14 @@
 .route-block-content > .airport-field {
   max-width: 100%;
 }
+.route-block-content {
+  container-type: inline-size;
+}
 .route-builder {
   margin-top: 16px;
 }
 .route-header {
+  flex-wrap: wrap;
   min-height: 38px;
   display: flex;
   align-items: center;
@@ -121,9 +125,7 @@
 .route-stop-details strong,
 .route-stop-details span {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 .route-stop-details strong {
   color: var(--text);
@@ -139,6 +141,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
+}
+.route-stop-details .airport-location-text {
+  min-width: 0;
+  margin: 0;
 }
 .route-stop-details .airport-location .country-flag {
   width: 18px;
@@ -176,4 +182,39 @@
 }
 .route-builder.has-error .route-header {
   border-color: var(--danger);
+}
+
+/* The route shares its row with the section heading on tablets and desktops. */
+@container (max-width: 680px) {
+  .route-stop-card {
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    gap: 9px;
+  }
+  .route-stop-role {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+  .route-code {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .route-stop-details {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .route-stop-actions {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+}
+
+@container (max-width: 440px) {
+  .route-stop-card {
+    grid-template-columns: 50px minmax(0, 1fr);
+  }
+  .route-stop-actions {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-content: flex-start;
+  }
 }

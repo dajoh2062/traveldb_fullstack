@@ -1,4 +1,5 @@
 .field {
+  scroll-margin-top: 72px;
   position: relative;
   display: block;
   min-width: 0;
@@ -168,9 +169,7 @@
 .airport-meta strong,
 .airport-meta small {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 .airport-meta strong {
   font-size: 14px;
@@ -236,6 +235,10 @@
   background: var(--danger-soft);
   border-top: 1px solid var(--border);
   font-size: 12px;
+}
+
+[dir="rtl"] .airport-dropdown .lucide-arrow-right {
+  transform: scaleX(-1);
 }
 
 .service-error {

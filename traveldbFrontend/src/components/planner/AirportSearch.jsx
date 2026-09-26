@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { ArrowRight, LoaderCircle, Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import useAirportSearch from "../../hooks/useAirportSearch";
+import useActiveOption from "../../hooks/useActiveOption";
 import { countryDisplayName } from "../../utils/search";
 import CountryFlag from "../ui/CountryFlag";
 
@@ -27,6 +28,10 @@ export default function AirportSearch({ onSelect }) {
 
   const resolvedActiveIndex =
     suggestions.length === 0 ? 0 : Math.min(activeIndex, suggestions.length - 1);
+  const activeId = suggestions[resolvedActiveIndex]
+    ? `airport-option-${suggestions[resolvedActiveIndex].iataCode}`
+    : undefined;
+  const listRef = useActiveOption(activeId, isOpen);
 
   function localizedAirportLocation(airport) {
     const countryName = countryDisplayName(
@@ -57,6 +62,14 @@ export default function AirportSearch({ onSelect }) {
       setIsOpen(false);
       return;
     }
+    if (!isOpen) {
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        setIsOpen(true);
+      }
+      if (event.key === "Enter") event.preventDefault();
+      return;
+    }
     if (suggestions.length === 0) {
       if (event.key === "Enter") event.preventDefault();
       return;
@@ -83,11 +96,7 @@ export default function AirportSearch({ onSelect }) {
         <Search aria-hidden="true" className="icon" size={20} strokeWidth={1.8} />
         <input
           aria-autocomplete="list"
-          aria-activedescendant={
-            isOpen && suggestions[resolvedActiveIndex]
-              ? `airport-option-${suggestions[resolvedActiveIndex].iataCode}`
-              : undefined
-          }
+          aria-activedescendant={isOpen ? activeId : undefined}
           aria-controls="airport-suggestions"
           aria-expanded={isOpen}
           autoCapitalize="none"
@@ -118,7 +127,13 @@ export default function AirportSearch({ onSelect }) {
       </span>
       {isOpen && query.trim() && (
         <div className="dropdown airport-dropdown">
-          <div className="airport-dropdown-results" id="airport-suggestions" role="listbox">
+          <div
+            aria-label={t("airport.label")}
+            className="airport-dropdown-results"
+            id="airport-suggestions"
+            ref={listRef}
+            role="listbox"
+          >
             {isSearching && suggestions.length === 0 && (
               <div className="dropdown-status">
                 <LoaderCircle
@@ -145,6 +160,7 @@ export default function AirportSearch({ onSelect }) {
                 onMouseMove={() => setActiveIndex(index)}
                 onClick={() => selectAirport(airport)}
                 role="option"
+                tabIndex={-1}
                 type="button"
               >
                 <span className="country-code-cell">

@@ -2,6 +2,8 @@
   min-height: 100vh;
   min-height: 100svh;
   background: var(--bg);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 .topbar {
@@ -19,8 +21,10 @@
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
+  gap: 12px;
 }
 .brand {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -42,11 +46,13 @@
   line-height: 1;
 }
 .topbar-actions {
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 .language-picker {
+  min-width: 0;
   height: 34px;
   display: inline-flex;
   align-items: center;
@@ -77,9 +83,9 @@
   border-color: var(--border-strong);
 }
 .language-picker select {
+  min-width: 0;
   max-width: 142px;
   padding: 0;
-  padding-inline-end: 18px;
   overflow: hidden;
   color: currentColor;
   background: transparent;
@@ -96,6 +102,7 @@
   background: Canvas;
 }
 .theme-toggle {
+  flex-shrink: 0;
   width: 34px;
   height: 34px;
   display: grid;

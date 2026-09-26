@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { checkJourney } from "../api/travelApi";
 import useJourneyPlanner from "./useJourneyPlanner";
+import i18n from "../i18n";
 
 vi.mock("../api/travelApi", async importOriginal => ({
   ...(await importOriginal()),
@@ -25,6 +26,21 @@ afterEach(() => {
 });
 
 describe("useJourneyPlanner", () => {
+  it("updates visible validation messages when the language changes", async () => {
+    const { result } = renderHook(() => useJourneyPlanner());
+    await act(async () => result.current.submitJourney(submitEvent()));
+    const englishError = result.current.error;
+    const englishNationality = result.current.fieldErrors.nationality;
+
+    await act(async () => i18n.changeLanguage("nb-NO"));
+
+    expect(result.current.error).toBe(i18n.t("validation.reviewHighlighted"));
+    expect(result.current.error).not.toBe(englishError);
+    expect(result.current.fieldErrors.nationality).toBe(i18n.t("validation.nationalityRequired"));
+    expect(result.current.fieldErrors.nationality).not.toBe(englishNationality);
+    expect(result.current.fieldErrors.route).toBe(i18n.t("validation.routeMinimum"));
+  });
+
   it("submits a tourism-only regular passport search", async () => {
     checkJourney.mockResolvedValue({ pickupRequired: false });
 

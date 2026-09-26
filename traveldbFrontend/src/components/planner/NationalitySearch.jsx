@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { Check, Globe2, LoaderCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import useActiveOption from "../../hooks/useActiveOption";
 import {
   buildCountrySearchIndex,
   countryDisplayName,
@@ -33,6 +34,10 @@ export default function NationalitySearch({
   );
   const resolvedActiveIndex =
     suggestions.length === 0 ? 0 : Math.min(activeIndex, suggestions.length - 1);
+  const activeId = suggestions[resolvedActiveIndex]
+    ? `nationality-option-${suggestions[resolvedActiveIndex].countryId}`
+    : undefined;
+  const listRef = useActiveOption(activeId, isOpen);
 
   function selectCountry(country) {
     onSelect(country);
@@ -53,6 +58,14 @@ export default function NationalitySearch({
   function handleKeyDown(event) {
     if (event.key === "Escape") {
       setIsOpen(false);
+      return;
+    }
+    if (!isOpen) {
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        setIsOpen(true);
+      }
+      if (event.key === "Enter") event.preventDefault();
       return;
     }
     if (suggestions.length === 0) {
@@ -87,11 +100,7 @@ export default function NationalitySearch({
           aria-autocomplete="list"
           aria-controls="nationality-suggestions"
           aria-describedby={error ? "nationality-error" : undefined}
-          aria-activedescendant={
-            isOpen && suggestions[resolvedActiveIndex]
-              ? `nationality-option-${suggestions[resolvedActiveIndex].countryId}`
-              : undefined
-          }
+          aria-activedescendant={isOpen ? activeId : undefined}
           aria-expanded={isOpen}
           aria-invalid={Boolean(error)}
           autoCapitalize="none"
@@ -116,7 +125,13 @@ export default function NationalitySearch({
         </span>
       )}
       {isOpen && (
-        <div className="dropdown" id="nationality-suggestions" role="listbox">
+        <div
+          aria-label={t("nationality.label")}
+          className="dropdown"
+          id="nationality-suggestions"
+          ref={listRef}
+          role="listbox"
+        >
           {isLoading && (
             <div className="dropdown-status">
               <LoaderCircle
@@ -141,6 +156,7 @@ export default function NationalitySearch({
               onMouseMove={() => setActiveIndex(index)}
               onClick={() => selectCountry(country)}
               role="option"
+              tabIndex={-1}
               type="button"
             >
               <span className="country-code-cell">

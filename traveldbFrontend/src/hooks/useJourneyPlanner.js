@@ -12,6 +12,10 @@ import { countryDisplayName } from "../utils/search";
 const MAX_AIRPORTS_PER_ROUTE = 20;
 const JOURNEY_CHECK_TIMEOUT_MS = 15_000;
 
+function message(key, values) {
+  return { key, values };
+}
+
 export default function useJourneyPlanner() {
   const { i18n, t } = useTranslation();
   const activeRequestRef = useRef(null);
@@ -66,11 +70,11 @@ export default function useJourneyPlanner() {
 
   function addAirport(airport) {
     if (route.some(routeAirport => routeAirport.iataCode === airport.iataCode)) {
-      setError(t("validation.duplicateAirport", { code: airport.iataCode }));
+      setError(message("validation.duplicateAirport", { code: airport.iataCode }));
       return false;
     }
     if (route.length >= MAX_AIRPORTS_PER_ROUTE) {
-      setError(t("validation.routeMaximum", { count: MAX_AIRPORTS_PER_ROUTE }));
+      setError(message("validation.routeMaximum", { count: MAX_AIRPORTS_PER_ROUTE }));
       return false;
     }
 
@@ -82,7 +86,7 @@ export default function useJourneyPlanner() {
 
   function removeAirport(code) {
     setRoute(currentRoute => currentRoute.filter(airport => airport.iataCode !== code));
-    setResult(null);
+    clearResultAndError();
     clearFieldError("route");
   }
 
@@ -114,10 +118,10 @@ export default function useJourneyPlanner() {
     setError("");
     setResult(null);
 
-    const validationErrors = validateJourneyForm({ nationality, route }, t);
+    const validationErrors = validateJourneyForm({ nationality, route }, message);
     if (Object.keys(validationErrors).length > 0) {
       setFieldErrors(validationErrors);
-      setError(t("validation.reviewHighlighted"));
+      setError(message("validation.reviewHighlighted"));
       window.requestAnimationFrame(() => document.getElementById("journey-form-error")?.focus());
       return;
     }
@@ -137,12 +141,12 @@ export default function useJourneyPlanner() {
     } catch (requestError) {
       if (activeRequestRef.current !== controller) return;
       if (requestError instanceof JourneyApiError && requestError.fieldErrors.length > 0) {
-        setFieldErrors(mapApiErrorsToFields(requestError.fieldErrors, t));
+        setFieldErrors(mapApiErrorsToFields(requestError.fieldErrors, message));
       }
       setError(
         requestError.name === "AbortError"
-          ? t("errors.journeyTimeout")
-          : t("errors.journeyFallback"),
+          ? message("errors.journeyTimeout")
+          : message("errors.journeyFallback"),
       );
     } finally {
       window.clearTimeout(timeout);
@@ -155,8 +159,10 @@ export default function useJourneyPlanner() {
 
   return {
     baggage,
-    error,
-    fieldErrors,
+    error: error ? t(error.key, error.values) : "",
+    fieldErrors: Object.fromEntries(
+      Object.entries(fieldErrors).map(([field, error]) => [field, t(error.key, error.values)]),
+    ),
     isLoading,
     nationality,
     nationalityQuery,
